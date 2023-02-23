@@ -8,8 +8,20 @@ import { TechnologyListComponent } from './technology/technology-list/technology
 import { TechnologyEditComponent } from './technology/technology-edit/technology-edit.component';
 import { EnglishLevelEditComponent } from './english-level/english-level-edit/english-level-edit.component';
 import { EnglishLevelListComponent } from './english-level/english-level-list/english-level-list.component';
+import { TableModule } from "primeng/table";
+import { ToastModule } from "primeng/toast";
+import { DynamicDialogModule } from "primeng/dynamicdialog";
 
 
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from "primeng/tooltip";
+import { InputTextModule } from "primeng/inputtext";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
+import { PaginatorModule } from "primeng/paginator";
+import { TabViewModule } from 'primeng/tabview';
+import { TreeModule } from 'primeng/tree';
+import { ConfirmationService } from "primeng/api";
+import { PickListModule } from 'primeng/picklist';
 
 @NgModule({
   declarations: [
@@ -20,10 +32,24 @@ import { EnglishLevelListComponent } from './english-level/english-level-list/en
     TechnologyListComponent,
     TechnologyEditComponent,
     EnglishLevelEditComponent,
-    EnglishLevelListComponent
+    EnglishLevelListComponent,
+    
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    TableModule,
+    ToastModule,
+    DynamicDialogModule,
+    ButtonModule,
+    TooltipModule,
+    ConfirmDialogModule,
+    PaginatorModule,
+    InputTextModule,
+    TooltipModule,
+    ToastModule,
+    TabViewModule,
+    TreeModule,
+    PickListModule,
   ]
 })
 export class MaintenanceModule { }
