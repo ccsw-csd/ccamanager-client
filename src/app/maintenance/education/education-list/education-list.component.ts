@@ -30,6 +30,15 @@ export class EducationListComponent implements OnInit {
 
   ngOnInit(): void {
     this.findAll();
+    
+    
+  }
+
+   sortTable() {
+    console.log("antes:",this.listOfData)
+    this.listOfData.sort((a, b) => a.name.localeCompare(b.name));
+    console.log("despues:",this.listOfData)
+
   }
 
   findAll(){
@@ -37,6 +46,7 @@ export class EducationListComponent implements OnInit {
     this.educationService.findAll().subscribe({
        next: (results) => {
          this.listOfData = results;
+         this.sortTable()
        },
        error: ()=>{},
        complete: () => { this.isLoading = false; }

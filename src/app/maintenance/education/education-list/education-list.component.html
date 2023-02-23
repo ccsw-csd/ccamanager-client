@@ -1,6 +1,10 @@
 <p-toast position="top-center"></p-toast>
+<div class="mt-3 flex justify-content-end pb-3">
+  <button pButton type="button" class="w-9rem p-3" (click)="newItem()" label="Nueva titulación"></button>
+</div>
 <p-table [value]="listOfData" [loading]="isLoading" [scrollable]="true" scrollHeight="calc(100vh - 184px)"
-  responsiveLayout="scroll" selectionMode="single" styleClass="p-datatable-striped">
+  responsiveLayout="scroll" selectionMode="single" styleClass="p-datatable-striped"
+  (onInit)="sortTable()">
   <ng-template pTemplate="header">
     <tr class="justify-content-between">
       <th pSortableColumn="name">Nombre<p-sortIcon field="name"></p-sortIcon></th>
@@ -27,6 +31,3 @@
   </ng-template>
 </p-table>
 
-<div class="mt-3 flex justify-content-end">
-  <button pButton type="button" class="w-9rem p-3" (click)="newItem()" label="Nueva titulación"></button>
-</div>
