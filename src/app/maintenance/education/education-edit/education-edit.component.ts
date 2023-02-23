@@ -47,11 +47,12 @@ export class EducationEditComponent implements OnInit {
         this.closeWindow();
       },
       error: () => {
-        this.snackbarService.error("El registro tiene el mismo código que otro registro y no se puede guardar");
+          this.snackbarService.error("El código o el nombre de la titulación no se puede repetir");
+        
       }
     })
   }
-
+  
  
   onClose(ref: any): void {
     ref.onClose.subscribe(
