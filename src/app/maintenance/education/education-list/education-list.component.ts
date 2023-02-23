@@ -60,20 +60,20 @@ export class EducationListComponent implements OnInit {
   }
 
   deleteItem(id: number) {
-    console.log("hello");
     this.confirmationService.confirm({
         message: '¿Seguro/a que quieres borrar la titulacion?',
         accept: () => {
+            this.confirmationService.close();
             this.educationService.deleteEducation(id).subscribe(() => {
                 this.educationService.findAll().subscribe((result: any) => {
                     this.listOfData = result;
-                    // this.ngOnInit()
+                    this.ngOnInit()
 
                 });
             });
         },
         reject:()=>{
-          // this.ngOnInit()
+          this.confirmationService.close();
         }
         
     });
