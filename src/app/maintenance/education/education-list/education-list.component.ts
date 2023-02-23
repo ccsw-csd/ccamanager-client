@@ -1,15 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Education } from '../models/Education';
-// import {ApplicationService} from "../../services/application.service";
-// import { ApplicationNewComponent } from "../application-new/application-new.component";
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
 import { SnackbarService } from "../../../core/services/snackbar.service";
 import { EducationEditComponent } from '../education-edit/education-edit.component';
-// import { ApplicationEditComponent } from "../application-edit/application-edit.component";
-// import { RoleClass } from '../../models/RoleClass';
-// import {ApplicationDeployComponent} from "../application-deploy/application-deploy.component";
+import { EducationNewComponent } from '../education-new/education-new.component';
 import { EducationService } from '../services/education.service';
-
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 
@@ -49,12 +44,12 @@ export class EducationListComponent implements OnInit {
   }
 
   newItem(){
-    // this.ref = this.dialogService.open(ApplicationNewComponent, {
-    //   header: 'Nuevo elemento',
-    //   width: '40%',
-    //   data:{},
-    //   closable: false
-    // });
+    this.ref = this.dialogService.open(EducationNewComponent, {
+       header: 'Nuevo elemento',
+       width: '40%',
+       data:{},
+       closable: false
+     });
 
     this.onClose();
   }
