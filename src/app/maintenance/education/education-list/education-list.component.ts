@@ -46,7 +46,7 @@ export class EducationListComponent implements OnInit {
     this.educationService.findAll().subscribe({
        next: (results) => {
          this.listOfData = results;
-         this.sortTable()
+        //  this.sortTable()
        },
        error: ()=>{},
        complete: () => { this.isLoading = false; }

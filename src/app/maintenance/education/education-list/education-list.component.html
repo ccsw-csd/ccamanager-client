@@ -4,7 +4,7 @@
 </div>
 <p-table [value]="listOfData" [loading]="isLoading" [scrollable]="true" scrollHeight="calc(100vh - 184px)"
   responsiveLayout="scroll" selectionMode="single" styleClass="p-datatable-striped"
-  (onInit)="sortTable()">
+  sortField="name" [sortOrder]="1">
   <ng-template pTemplate="header">
     <tr class="justify-content-between">
       <th pSortableColumn="name">Nombre<p-sortIcon field="name"></p-sortIcon></th>
