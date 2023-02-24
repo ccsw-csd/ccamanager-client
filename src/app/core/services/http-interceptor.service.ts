@@ -23,7 +23,6 @@ export class HttpInterceptorService implements HttpInterceptor {
       return next.handle(cloned).pipe(
         catchError((error: HttpErrorResponse) => {
           let errorMessage;
-          console.log(error)
           switch (error.status) {
             
             case 400:

@@ -14,7 +14,7 @@ import { Education } from '../models/Education';
 export class EducationEditComponent implements OnInit {
 
   educationElement: Education;
-
+  
   item: any;
 
   constructor(
@@ -26,7 +26,6 @@ export class EducationEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.educationElement = Object.assign({ educationData: Education }, this.config.data.educationData)
-
   }
 
 
@@ -54,6 +53,7 @@ export class EducationEditComponent implements OnInit {
 
   showDialog(element?: any) {
     this.item = element
+
   }
 
 }
