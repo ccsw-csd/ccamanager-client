@@ -50,14 +50,21 @@ export class EducationListComponent implements OnInit {
     this.confirmationService.confirm({
         message: '¿Seguro/a que quieres borrar la titulacion?',
         accept: () => {
-            this.confirmationService.close();
-            this.educationService.deleteEducation(id).subscribe(() => {
+            this.confirmationService.close()
+            this.educationService.deleteEducation(id).subscribe({
+              next: () => {
                 this.educationService.findAll().subscribe((result: any) => {
-                    this.listOfData = result;
-                    this.ngOnInit()
-
-                });
-            });
+                          this.listOfData = result;
+                          this.ngOnInit()
+      
+                       });
+              },
+              error: (errorResponse) => {
+        
+                this.snackbarService.error(errorResponse['message']);
+        
+              }
+            })
         },
         reject:()=>{
           this.confirmationService.close();
@@ -65,6 +72,7 @@ export class EducationListComponent implements OnInit {
         
     });
   }
+
 
   onClose(): void{
     this.ref.onClose.subscribe(
@@ -92,7 +100,7 @@ export class EducationListComponent implements OnInit {
        header: 'Nuevo elemento',
        width: '40%',
        data:{
-        educationData: null
+        educationData:null
        },
       
      });
