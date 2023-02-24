@@ -13,8 +13,6 @@ import { Education } from '../models/Education';
 })
 export class EducationEditComponent implements OnInit {
 
-
-
   educationElement: Education;
 
   isLoading: boolean;
@@ -28,14 +26,13 @@ export class EducationEditComponent implements OnInit {
   constructor(
     private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
-    private dialogService: DialogService,
     private educationService: EducationService,
     private snackbarService: SnackbarService,
   ) { }
 
   ngOnInit(): void {
     this.educationElement = Object.assign({ educationData: Education }, this.config.data.educationData)
-    
+
   }
 
 
@@ -46,21 +43,14 @@ export class EducationEditComponent implements OnInit {
         this.snackbarService.showMessage("El registro se ha guardado con éxito");
         this.closeWindow();
       },
-      error: () => {
-          this.snackbarService.error("El código o el nombre de la titulación no se puede repetir");
-        
+      error: (errorResponse) => {
+
+        this.snackbarService.error(errorResponse['message']);
+
       }
     })
   }
-  
- 
-  onClose(ref: any): void {
-    ref.onClose.subscribe(
-      (results: any) => {
-        
-      }
-    )
-  }
+
 
   closeWindow() {
     if (this.ref) {
@@ -68,24 +58,8 @@ export class EducationEditComponent implements OnInit {
     }
   }
 
-
-
- 
-
   showDialog(element?: any) {
     this.item = element
-    //this.snackbarService.showConfirmDialog()
-  }
-
-  
-
-  closeDialog() {
-    // this.snackbarService.closeConfirmDialog()
-    // if (this.isDeleted == false) {
-    //   this.getRoles(this.applicationElement.id)
-    //   this.getTreeOfRolesAndGroups(this.applicationElement.id)
-    //   this.getGroups(this.applicationElement.id)
-    // }
   }
 
 }

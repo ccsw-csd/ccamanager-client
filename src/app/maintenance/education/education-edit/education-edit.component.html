@@ -1,9 +1,7 @@
 <div style="height: flex;">
     <p-confirmDialog header="Confirmation" [closable]="false" icon="pi pi-exclamation-triangle"
       [transitionOptions]="'0ms'">
-      <p-footer>
-        <button type="button" pButton label="Cerrar" class="p-button-secondary" (click)="closeDialog()"></button>
-      </p-footer>
+      
     </p-confirmDialog>
     <br>
     <div class="flex flex-row">
@@ -21,7 +19,7 @@
 
       <div>
         <button type="button" class="p-button-primary mb-2" (click)="saveItem(educationElement)"
-          [disabled]="educationElement.name=='' || educationElement.name==null || educationElement.id==null"
+          [disabled]="educationElement.name=='' || educationElement.name==null "
           pButton label="Guardar"></button>
       </div>
       <div class="px-2">
@@ -29,6 +27,6 @@
       </div>
   
     
-    </div>
+    </div>  
 
   </div>

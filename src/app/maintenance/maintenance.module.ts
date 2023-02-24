@@ -22,7 +22,6 @@ import { TabViewModule } from 'primeng/tabview';
 import { TreeModule } from 'primeng/tree';
 import { ConfirmationService } from "primeng/api";
 import { PickListModule } from 'primeng/picklist';
-import { EducationNewComponent } from './education/education-new/education-new.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +33,6 @@ import { EducationNewComponent } from './education/education-new/education-new.c
     TechnologyEditComponent,
     EnglishLevelEditComponent,
     EnglishLevelListComponent,
-    EducationNewComponent,
     
   ],
   imports: [

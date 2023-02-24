@@ -3,7 +3,6 @@ import { Education } from '../models/Education';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
 import { SnackbarService } from "../../../core/services/snackbar.service";
 import { EducationEditComponent } from '../education-edit/education-edit.component';
-import { EducationNewComponent } from '../education-new/education-new.component';
 import { EducationService } from '../services/education.service';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
@@ -45,16 +44,7 @@ export class EducationListComponent implements OnInit {
      });
   }
 
-  newItem(){
-    this.ref = this.dialogService.open(EducationNewComponent, {
-       header: 'Nuevo elemento',
-       width: '40%',
-       data:{},
-       closable: false
-     });
-
-    this.onClose();
-  }
+  
 
   deleteItem(id: number) {
     this.confirmationService.confirm({
@@ -76,7 +66,6 @@ export class EducationListComponent implements OnInit {
     });
   }
 
-
   onClose(): void{
     this.ref.onClose.subscribe(
        (results:any) => {
@@ -92,9 +81,22 @@ export class EducationListComponent implements OnInit {
       data: {
         educationData:item
       },
-      closable: false
+      
     });
   
+    this.onClose();
+  }
+
+  newItem(){
+    this.ref = this.dialogService.open(EducationEditComponent, {
+       header: 'Nuevo elemento',
+       width: '40%',
+       data:{
+        educationData: null
+       },
+      
+     });
+
     this.onClose();
   }
   
