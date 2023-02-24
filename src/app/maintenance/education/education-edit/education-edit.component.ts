@@ -15,12 +15,6 @@ export class EducationEditComponent implements OnInit {
 
   educationElement: Education;
 
-  isLoading: boolean;
-
-  isLoading2: boolean;
-
-  isDeleted: boolean = false;
-
   item: any;
 
   constructor(
