@@ -24,6 +24,7 @@ export class HttpInterceptorService implements HttpInterceptor {
         catchError((error: HttpErrorResponse) => {
           let errorMessage;
           switch (error.status) {
+            
             case 400:
               errorMessage = 'Error de usuario: ' + error.error;
               break;
@@ -44,7 +45,12 @@ export class HttpInterceptorService implements HttpInterceptor {
               errorMessage = 'Se ha producido un error del servidor. Por favor, póngase en contacto con un administrador. Disculpe las molestias.';
               break;
             default:
-              errorMessage = 'Se ha producido un error. Por favor, inténtelo de nuevo.';
+              if(error.error.message == null){
+                errorMessage = 'Se ha producido un error. Por favor, inténtelo de nuevo.';
+              }
+              else{
+                errorMessage = error.error.message
+              }
           }
           return throwError(() => new Error(errorMessage));
         })

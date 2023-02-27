@@ -10,6 +10,7 @@
 
     .header-button {
         .p-button {
+            min-width: 0px;
             background: transparent;
 
             .p-avatar{
@@ -25,7 +26,4 @@
             background: transparent;
         }
     }
-}
-.image {
-    filter:  brightness(0) invert(1);
 }

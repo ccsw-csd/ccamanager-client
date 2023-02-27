@@ -1,1 +1,30 @@
-<p>education-edit works!</p>
+<div style="height: flex;">
+  <p-confirmDialog header="Confirmation" [closable]="false" icon="pi pi-exclamation-triangle"
+    [transitionOptions]="'0ms'">
+
+  </p-confirmDialog>
+  <br>
+  <div class="flex flex-row">
+    <br>
+    <span class="p-float-label field">
+      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="educationElement.name" required>
+      <label for="name">Nombre</label>
+    </span>
+
+  </div>
+
+  <br>
+
+  <div class="flex flex-row-reverse w-auto mt-5">
+
+    <div>
+      <button type="button" class="p-button-primary mb-2" (click)="saveItem(educationElement)"
+        [disabled]="educationElement.name=='' || educationElement.name==null " pButton label="Guardar"></button>
+    </div>
+    <div class="px-2">
+      <button type="button" class="p-button-outlined mb-2 " (click)="closeWindow()" pButton label="Cerrar"></button>
+    </div>
+
+  </div>
+
+</div>
