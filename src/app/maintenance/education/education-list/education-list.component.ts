@@ -4,14 +4,14 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from "primeng/dy
 import { SnackbarService } from "../../../core/services/snackbar.service";
 import { EducationEditComponent } from '../education-edit/education-edit.component';
 import { EducationService } from '../services/education.service';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {ConfirmationService} from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-education-list',
   templateUrl: './education-list.component.html',
   styleUrls: ['./education-list.component.scss'],
-  providers: [DialogService, DynamicDialogRef, DynamicDialogConfig,ConfirmationService]
+  providers: [DialogService, DynamicDialogRef, DynamicDialogConfig, ConfirmationService]
 })
 export class EducationListComponent implements OnInit {
 
@@ -29,86 +29,75 @@ export class EducationListComponent implements OnInit {
 
   ngOnInit(): void {
     this.findAll();
-    
-    
   }
 
-  findAll(){
+  findAll() {
     this.isLoading = true;
     this.educationService.findAll().subscribe({
-       next: (results) => {
-         this.listOfData = results;
-       },
-       error: ()=>{},
-       complete: () => { this.isLoading = false; }
-     });
+      next: (results) => {
+        this.listOfData = results;
+      },
+      error: () => { },
+      complete: () => { this.isLoading = false; }
+    });
   }
-
-  
 
   deleteItem(id: number) {
     this.confirmationService.confirm({
-        message: '¿Seguro/a que quieres borrar la titulacion?',
-        accept: () => {
-            this.confirmationService.close()
-            this.educationService.deleteEducation(id).subscribe({
-              next: () => {
-                this.educationService.findAll().subscribe((result: any) => {
-                          this.listOfData = result;
-                          this.snackbarService.showMessage("El registro se ha borrado con éxito");
-                          this.ngOnInit()
-      
-                       });
-              },
-              error: (errorResponse) => {
-        
-                this.snackbarService.error(errorResponse['message']);
-        
-              }
-            })
-        },
-        reject:()=>{
-          this.confirmationService.close();
-        }
-        
+      message: '¿Seguro/a que quieres borrar la titulacion?',
+      accept: () => {
+        this.confirmationService.close()
+        this.educationService.deleteEducation(id).subscribe({
+          next: () => {
+            this.educationService.findAll().subscribe((result: any) => {
+              this.listOfData = result;
+              this.snackbarService.showMessage("El registro se ha borrado con éxito");
+              this.ngOnInit()
+            });
+          },
+          error: (errorResponse) => {
+            this.snackbarService.error(errorResponse['message']);
+          }
+        })
+      },
+      reject: () => {
+        this.confirmationService.close();
+      }
+
     });
   }
 
 
-  onClose(): void{
+  onClose(): void {
     this.ref.onClose.subscribe(
-       (results:any) => {
-         this.findAll();
-       }
-     )
+      (results: any) => {
+        this.findAll();
+      }
+    )
   }
 
-  editItem(item: Education){
+  editItem(item: Education) {
     this.ref = this.dialogService.open(EducationEditComponent, {
-      header:'Editar ' + item.name,
+      header: 'Editar ' + item.name,
       width: '40%',
       data: {
-        educationData:item
+        educationData: item
       },
-      
     });
-  
+
     this.onClose();
   }
 
-  newItem(){
+  newItem() {
     this.ref = this.dialogService.open(EducationEditComponent, {
-       header: 'Nuevo elemento',
-       width: '40%',
-       data:{
-        educationData:null
-       },
-      
-     });
-
+      header: 'Nuevo elemento',
+      width: '40%',
+      data: {
+        educationData: null
+      },
+    });
     this.onClose();
   }
-  
 }
 
 

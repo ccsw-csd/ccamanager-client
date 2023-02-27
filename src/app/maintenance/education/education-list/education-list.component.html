@@ -3,8 +3,7 @@
   <button pButton type="button" class="w-9rem p-3" (click)="newItem()" label="Nueva titulación"></button>
 </div>
 <p-table [value]="listOfData" [loading]="isLoading" [scrollable]="true" scrollHeight="calc(100vh - 184px)"
-  responsiveLayout="scroll" selectionMode="single" styleClass="p-datatable-striped"
-  sortField="name" [sortOrder]="1">
+  responsiveLayout="scroll" selectionMode="single" styleClass="p-datatable-striped" sortField="name" [sortOrder]="1">
   <ng-template pTemplate="header">
     <tr class="justify-content-between">
       <th pSortableColumn="name">Nombre<p-sortIcon field="name"></p-sortIcon></th>
@@ -30,4 +29,3 @@
     </tr>
   </ng-template>
 </p-table>
-

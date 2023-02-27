@@ -5,7 +5,6 @@ import { SnackbarService } from "../../../core/services/snackbar.service";
 import { Education } from '../models/Education';
 
 
-
 @Component({
   selector: 'app-education-edit',
   templateUrl: './education-edit.component.html',
@@ -14,7 +13,7 @@ import { Education } from '../models/Education';
 export class EducationEditComponent implements OnInit {
 
   educationElement: Education;
-  
+
   item: any;
 
   constructor(
@@ -27,7 +26,6 @@ export class EducationEditComponent implements OnInit {
   ngOnInit(): void {
     this.educationElement = Object.assign({ educationData: Education }, this.config.data.educationData)
   }
-
 
 
   saveItem(item: Education) {
@@ -51,6 +49,7 @@ export class EducationEditComponent implements OnInit {
     }
   }
 
+  
   showDialog(element?: any) {
     this.item = element
 
