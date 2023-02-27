@@ -78,27 +78,13 @@ export class EducationListComponent implements OnInit {
 
   addOrEditItem(item: Education) {
 
-    if (item != null) {
-      this.ref = this.dialogService.open(EducationEditComponent, {
-        header: 'Editar ' + item.name,
-        width: '600px',
-        data: {
-          educationData: item
-        },
-      });
-    }
-
-    else {
-      this.ref = this.dialogService.open(EducationEditComponent, {
-        header: 'Nuevo elemento',
-        width: '600px',
-        data: {
-          educationData: null
-        },
-      });
-      
-    }
-
+    this.ref = this.dialogService.open(EducationEditComponent,{
+      header: item==null ? 'Nueva titulación' : 'Editar ' + item.name,
+      width: '600px',
+      data:{
+        educationData :  item
+      },
+    });
 
     this.onClose();
   }
