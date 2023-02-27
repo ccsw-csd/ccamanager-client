@@ -55,6 +55,7 @@ export class EducationListComponent implements OnInit {
               next: () => {
                 this.educationService.findAll().subscribe((result: any) => {
                           this.listOfData = result;
+                          this.snackbarService.showMessage("El registro se ha borrado con éxito");
                           this.ngOnInit()
       
                        });
