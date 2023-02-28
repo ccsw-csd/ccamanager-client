@@ -13,6 +13,7 @@ import { ConfirmationService } from 'primeng/api';
   providers: [DialogService, DynamicDialogRef, DynamicDialogConfig, ConfirmationService]
 
 })
+
 export class TechnologyListComponent implements OnInit {
 
   listOfData: Technology[];
@@ -36,7 +37,6 @@ export class TechnologyListComponent implements OnInit {
       next: (results) => {
         this.listOfData = results;
       },
-      error: () => { },
       complete: () => { this.isLoading = false; }
     });
   }
@@ -61,16 +61,12 @@ export class TechnologyListComponent implements OnInit {
       reject: () => {
         this.confirmationService.close();
       }
-      
     });
   }
 
-  
-
   addOrEditItem(item: Technology) {
-
     let window = this.dialogService.open(TechnologyEditComponent,{
-      header: item==null ? 'Nueva tecnología' : 'Editar ' + item.name,
+      header: item == null ? 'Nueva tecnología' : 'Editar ' + item.name,
       width: '600px',
       data:{
         technologyData :  item
@@ -80,8 +76,5 @@ export class TechnologyListComponent implements OnInit {
     window.onClose.subscribe((result: boolean) => {
       if(result) this.findAll();
     });
-      
   }
-
-
 }

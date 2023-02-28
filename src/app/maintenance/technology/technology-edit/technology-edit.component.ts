@@ -26,32 +26,25 @@ export class TechnologyEditComponent implements OnInit {
     this.technologyElement = Object.assign({ technologyData: Technology }, this.config.data.technologyData)
   }
 
-
   saveItem(item: Technology) {
     this.technologyService.save(item).subscribe({
       next: () => {
         this.snackbarService.showMessage("El registro se ha guardado con éxito");
         this.ref.close(true);
-        
       },
       error: (errorResponse) => {
-
         this.snackbarService.error(errorResponse['message']);
-
       }
     })
   }
-
 
   closeWindow() {
       this.ref.close(false);
     
   }
 
-  
   showDialog(element?: any) {
     this.item = element
 
   }
-
 }
