@@ -32,7 +32,8 @@ export class EducationEditComponent implements OnInit {
     this.educationService.save(item).subscribe({
       next: () => {
         this.snackbarService.showMessage("El registro se ha guardado con éxito");
-        this.closeWindow();
+        this.ref.close(true);
+        
       },
       error: (errorResponse) => {
 
@@ -44,9 +45,8 @@ export class EducationEditComponent implements OnInit {
 
 
   closeWindow() {
-    if (this.ref) {
-      this.ref.close();
-    }
+      this.ref.close(false);
+    
   }
 
   

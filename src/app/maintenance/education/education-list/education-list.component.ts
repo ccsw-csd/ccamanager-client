@@ -4,7 +4,6 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from "primeng/dy
 import { SnackbarService } from "../../../core/services/snackbar.service";
 import { EducationEditComponent } from '../education-edit/education-edit.component';
 import { EducationService } from '../services/education.service';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
@@ -21,13 +20,12 @@ export class EducationListComponent implements OnInit {
 
   constructor(
     private educationService: EducationService,
-    private ref: DynamicDialogRef,
     private dialogService: DialogService,
     private snackbarService: SnackbarService,
     private confirmationService: ConfirmationService
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.findAll();
   }
 
@@ -52,7 +50,6 @@ export class EducationListComponent implements OnInit {
             this.educationService.findAll().subscribe((result: any) => {
               this.listOfData = result;
               this.snackbarService.showMessage("El registro se ha borrado con éxito");
-              this.ngOnInit()
             });
           },
           error: (errorResponse) => {
@@ -63,41 +60,29 @@ export class EducationListComponent implements OnInit {
       reject: () => {
         this.confirmationService.close();
       }
-
+      
     });
   }
 
+  
 
-  onClose(): void {
-    this.ref.onClose.subscribe(
-      (results: any) => {
-        this.findAll();
-      }
-    )
-  }
+  addOrEditItem(item: Education) {
 
-  editItem(item: Education) {
-    this.ref = this.dialogService.open(EducationEditComponent, {
-      header: 'Editar ' + item.name,
-      width: '40%',
-      data: {
-        educationData: item
+    let window = this.dialogService.open(EducationEditComponent,{
+      header: item==null ? 'Nueva titulación' : 'Editar ' + item.name,
+      width: '600px',
+      data:{
+        educationData :  item
       },
     });
 
-    this.onClose();
+    window.onClose.subscribe((result: boolean) => {
+      if(result) this.findAll();
+    });
+      
   }
 
-  newItem() {
-    this.ref = this.dialogService.open(EducationEditComponent, {
-      header: 'Nuevo elemento',
-      width: '40%',
-      data: {
-        educationData: null
-      },
-    });
-    this.onClose();
-  }
+ 
 }
 
 
