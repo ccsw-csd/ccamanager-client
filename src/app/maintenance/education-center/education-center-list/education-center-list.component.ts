@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
+import { Province } from 'src/app/core/models/Province';
+import { ProvinceService } from '../../../core/services/province.service';
 import { SnackbarService } from "../../../core/services/snackbar.service";
 import { EducationCenterEditComponent } from '../education-center-edit/education-center-edit.component';
-import { EducationCenter } from '../model/EducationCenter';
-import { Province } from '../model/Province';
-import { EducationCenterService } from '../service/education-center.service';
-import { ProvinceService } from '../service/province.service';
+import { EducationCenter } from '../models/EducationCenter';
+import { EducationCenterService } from '../services/education-center.service';
 @Component({
   selector: 'app-education-center-list',
   templateUrl: './education-center-list.component.html',

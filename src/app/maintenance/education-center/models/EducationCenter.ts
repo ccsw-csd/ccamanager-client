@@ -1,4 +1,4 @@
-import { Province } from "./Province";
+import { Province } from "src/app/core/models/Province";
 export class EducationCenter{
     id:number;
     name:string;

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { EducationCenter } from '../model/EducationCenter';
-import { Province } from '../model/Province';
-import { EducationCenterService } from '../service/education-center.service';
-import { FormBuilder,FormGroup,Validators,FormControl } from '@angular/forms';
-import {MessageService} from 'primeng/api';
+import { Province } from 'src/app/core/models/Province';
+import { EducationCenter } from '../models/EducationCenter';
+import { EducationCenterService } from '../services/education-center.service';
 
 @Component({
   selector: 'app-education-center-edit',
