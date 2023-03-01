@@ -18,7 +18,7 @@ export class EducationService {
 
   save(item: Education): Observable<Education> {
 
-    return this.http.put<Education>(environment.server + '/education/', item);
+    return this.http.post<Education>(environment.server + '/education/', item);
   }
 
   deleteEducation(id: number): Observable<void> {
