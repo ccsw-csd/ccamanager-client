@@ -53,7 +53,6 @@ export class EducationCenterEditComponent implements OnInit {
   save(){
     this.educationCenter.province = this.selectedProvince;
     this.educationCenter.type=this.selectedType;
-    console.log(this.validate());
 
     if(this.validate()){
       this.educationCenterService.save(this.educationCenter).subscribe(

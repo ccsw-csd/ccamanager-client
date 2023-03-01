@@ -35,9 +35,6 @@ export class EducationCenterListComponent implements OnInit {
     this.getAllEducationCenters();
     
   }
-  show(value:any){
-    console.log(value);
-  }
   getAllProvinces() {
     this.provinceService.getAllProvinces().subscribe({
       next: (res: Province[]) => {
