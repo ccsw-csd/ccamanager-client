@@ -1,31 +1,58 @@
-<p-toast position="top-center"></p-toast>
-<div class="mt-3 flex justify-content-end pb-3">
-  <button pButton type="button" class="w-9rem p-3" (click)="addOrEditItem(null)" label="Nueva tecnología"></button>
+<div class="mt-0 pt-0 flex justify-content-end pb-3">
+  <button
+    pButton
+    pRipple
+    type="button"
+    class="w-9rem p-3"
+    label="Nueva tecnología"
+    (click)="addOrEditItem(null)"
+  ></button>
 </div>
-<p-table [value]="listOfData" [loading]="isLoading" [scrollable]="true" scrollHeight="calc(100vh - 184px)"
-  responsiveLayout="scroll" selectionMode="single" styleClass="p-datatable-striped" sortField="name" [sortOrder]="1">
-  <ng-template pTemplate="header">
-    <tr class="justify-content-between">
-      <th pSortableColumn="name">Nombre<p-sortIcon field="name"></p-sortIcon></th>
-      <th style='flex: 0 0 150px'></th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-element>
-    <tr class="h-2_5rem white-space-normal overflow-hidden text-overflow-clip">
-      <td class="h-2_5rem white-space-normal overflow-hidden text-overflow-clip">{{element.name}}</td>
 
-      <td style='flex: 0 0 150px'>
-        <div class="inline-flex ">
-          <button pButton type="button" icon="pi pi-pencil" pTooltip="Editar tecnología" tooltipPosition="top"
-            class="p-button-rounded p-button-text p-button-plain icon" (click)="addOrEditItem(element)"></button>
-
-          <p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle" #confirmDialog></p-confirmDialog>
-          <div>
-            <button pButton type="button" icon="pi pi-trash" pTooltip="Eliminar tecnología" tooltipPosition="top"
-              class="p-button-rounded p-button-text p-button-plain icon" (click)="deleteItem(element.id)"></button>
-          </div>
+<p-table
+  [style]="{ height: 'calc(100vh - 180px)' }"
+  [scrollable]="true"
+  scrollHeight="flex"
+  selectionMode="single"
+  [value]="listOfData"
+  styleClass="p-datatable-striped"
+  [paginator]="true"
+  [rows]="10"
+  sortField="name"
+  [sortOrder]="1"
+>
+  <ng-template pTemplate="body" let-element let-columns="columns">
+    <tr [pSelectableRow]="educationCenter">
+      <td class="flex-1">
+        {{ element.name }}
+      </td>
+      <td class="flex-none" style="width: 125px">
+        <div class="justify-content-between">
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-text"
+            (click)="addOrEditItem(element)"
+          ></button>
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger p-button-text"
+            (click)="deleteItem(element.id)"
+          ></button>
         </div>
       </td>
     </tr>
   </ng-template>
 </p-table>
+
+<p-toast position="top-center"></p-toast>
+<p-confirmDialog
+  header="Confirmación"
+  icon="pi pi-exclamation-triangle"
+  #confirmDialog
+></p-confirmDialog>
