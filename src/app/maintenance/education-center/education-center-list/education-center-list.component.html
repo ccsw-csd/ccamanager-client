@@ -1,8 +1,7 @@
-  
+
 <div class="mt-0 pt-0 flex justify-content-end pb-3">    
     <button pButton pRipple type="button" class="w-9rem p-3" label="Añadir"(click)="editEducationCenter()"></button>
 </div>
-
 <p-table [style]="{'height':'calc(100vh - 180px)'}" [scrollable]="true" scrollHeight="flex" selectionMode="single" 
     [value]="educationCenters" styleClass="p-datatable-striped" [paginator]="true" [rows]="10" sortField="name" [sortOrder]="1" >
     <ng-template pTemplate="header" >
@@ -17,7 +16,6 @@
                 Provincia <p-sortIcon field="province.province"></p-sortIcon>
             </th> 
             <th class="flex-none" style="width: 125px;"></th>
-            
         </tr>
         <tr>
             <th class="flex-1" >
@@ -26,7 +24,6 @@
             <th class="flex-none w-1">
                 <p-columnFilter class="w-full" type="text" field="type" matchMode="contains" [showMenu]="false"></p-columnFilter>
             </th>
-            
             <th class="flex-none w-2">
                 <p-columnFilter class="w-full" field="province.province" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">

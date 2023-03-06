@@ -1,47 +1,26 @@
 <div class="flex flex-column">
-
-
   <h1 *ngIf="educationCenter.id == null" class="text-center">Nuevo Centro Educativo</h1>
   <h1 *ngIf="educationCenter.id != null" class="text-center">Modificar Centro Educativo</h1>
-
   <div class="h-2rem">
-
   </div>
-
   <span class="p-float-label">
     <input id="name" type="text" pInputText class="w-full" [(ngModel)]="educationCenter.name"  required>
     <label for="firstname1">Nombre</label>
   </span>
-
-  <div class="flex flex-row flex-1 gap-2">
-   
-   
+  <div class="flex flex-row flex-1 gap-2">   
      <div class="flex-2">
        <p>Provicia</p>
-       <p-dropdown styleClass="w-full" [options]="provinces" appendTo="body" [(ngModel)]="selectedProvince" optionLabel="province" > </p-dropdown>
-
-     </div>
-
-   
+       <p-dropdown styleClass="w-full" [options]="provinces" appendTo="body" [(ngModel)]="educationCenter.province.province" optionLabel="province" > </p-dropdown>
+     </div>  
     <div class="flex-1">
-
       <p>Tipo</p>
-      <p-dropdown styleClass="w-full" [options]="types" appendTo="body" [(ngModel)]="selectedType" optionLabel="label" optionValue="value" > </p-dropdown>
-    </div>
-     
-   
+      <p-dropdown styleClass="w-full" [options]="types" appendTo="body" [(ngModel)]="educationCenter.type" optionLabel="label" optionValue="value" > </p-dropdown>
+    </div>  
+     </div>
+    <div class="h-4rem">
   </div>
-  
-  <div class="h-4rem">
-
-  </div>
-
-  <div class="flex flex-row justify-content-end gap-2">
-    
+  <div class="flex flex-row justify-content-end gap-2">    
     <button pButton pRipple styleClass="" label="Cancel" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
     <button pButton pRipple p-button-label="10px" label="Save" icon="pi pi-check"  [disabled]="educationCenter.name=='' || educationCenter.name==null" (click)="save()"></button>
-    
   </div>
-
-
 </div>
