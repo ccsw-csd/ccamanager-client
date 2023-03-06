@@ -1,1 +1,237 @@
-<p>intern-list works!</p>
+<div class="flex flex-row justify-content-between">
+    <div class="flex justify-content-start">
+        <h1>
+            Gestion de Becarios
+        </h1>
+    </div>
+    <div class="flex justify-content-end align-items-center">
+        <button pButton pRipple type="button" class="w-9rem p-3" label="Añadir"></button>
+    </div>
+</div>
+
+<p-table [style]="{'height':'calc(100vh - 180px)','width':'calc(2* 100vh -20px)'}" [scrollable]="true"  selectionMode="single" scrollHeight="flex"
+    [value]="interns" styleClass="p-datatable-striped" [paginator]="true" [rows]="10" sortField="name" [sortOrder]="1" >
+    <ng-template pTemplate="header" >
+        <tr>
+            <th class='{{cols.Periodo}} '>
+                Periodo
+            </th>
+            <th class="{{cols.Periodo}}">
+                Username
+            </th>
+            <th class="{{cols.Periodo}}">
+                Nombre
+            </th>
+            <th class="{{cols.Apellidos}}">
+                Apellidos
+            </th>
+            <th class={{cols.Genero}}>
+                Genero
+            </th>
+            <th class="{{cols.Titulacion}}">
+                Titulacion
+            </th>
+            <th class="{{cols.Centro}}">
+                Centro
+            </th>
+            <th class="{{cols.Oficina}}">
+                Oficina
+            </th>
+            <th class="{{cols.Localizacion}}">
+                Localización
+            </th>
+            <th class="{{cols.Inicio}}">
+                Inicio
+            </th>
+            <th class="{{cols.Fin}}">
+                Fin
+            </th>
+            <th class="{{cols.Horas}}">
+                Horas
+            </th>
+            <th class="{{cols.Ingles}}">
+                Inglés
+            </th>
+            <th class="{{cols.Mentor}}">
+                Mentor
+            </th>
+            <th class="{{cols.Coordinador}}">
+                Coordinador
+            </th>
+            <th class="{{cols.RRHH}}">
+                Resp. RRHH
+            </th>
+            <th class="{{cols.Accion}}">
+                Accion
+            </th>
+            <th class="{{cols.Contrato}}">
+                F.Contrato
+            </th>
+            <th class="{{cols.Estado}}">
+                Estado
+            </th>
+            <th class="{{cols.Botones}}"> 
+                Botones
+            </th>
+        </tr>
+        <tr class="flex ">
+            <th class="{{cols.Periodo}}" >
+                <p-columnFilter class="w-full" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Username}}" >
+                <p-columnFilter class="w-4rem" type="text" field="username" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Nombre}}" >
+                <p-columnFilter class="w-4rem" type="text" field="name" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Apellidos}}" >
+                <p-columnFilter class="w-4rem" type="text" field="surname" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Genero}}" >
+                <p-columnFilter class="w-full" field="gender" matchMode="equals" [showMenu]="false" [showClearButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown [options]="genres" optionLabel="label" optionValue="value" (onChange)="filter($event.value?.gender)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                    </ng-template>
+                </p-columnFilter>
+            </th>
+            <th class="{{cols.Titulacion}}" >
+                <p-columnFilter class="w-4rem" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Centro}} " >
+                <p-columnFilter class="w-4rem" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Oficina}} " >
+                <p-columnFilter class="w-4rem" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Localizacion}}" >
+                <p-columnFilter class="w-4rem" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Inicio}}" >
+                <p-columnFilter class="w-4rem" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Fin}} " >
+                <p-columnFilter class="w-4rem" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Horas}}" >
+                <p-columnFilter class="w-4rem" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Ingles}} " >
+                <p-columnFilter class="w-4rem" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Mentor}}" >
+                <p-columnFilter class="w-4rem" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Coordinador}}" >
+                <p-columnFilter class="w-4rem" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.RRHH}} " >
+                <p-columnFilter class="w-4rem" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Accion}} " >
+                <p-columnFilter class="w-4rem" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Contrato}} " >
+                <p-columnFilter class="w-4rem" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Estado}}" >
+                <p-columnFilter class="w-4rem" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+            <th class="{{cols.Botones}}" >
+                <p-columnFilter class="w-4rem" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
+
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-intern let-columns="columns">
+        <tr class="flex  flex-row">
+           <td class='{{cols.Periodo}}'>
+            {{intern.period}}
+           </td>
+           <td class="{{cols.Username}}">
+             {{intern.username}}
+           </td>
+           <td class="{{cols.Nombre}}" *ngIf="intern.name">
+            {{intern.name}}
+           </td>
+           <td class="{{cols.Apellidos}}">
+            {{intern.lastname}}
+           </td>
+           <td class="{{cols.Genero}}" *ngIf="intern.gender == 0">
+            Otros
+          </td>
+          <td class="{{cols.Genero}}" *ngIf="intern.gender == 1">
+            Mujer
+          </td>
+          <td class="{{cols.Genero}}" *ngIf="intern.gender == 2">
+            Hombre
+          </td>
+          <td class="{{cols.Genero}}" *ngIf="!intern.gender">
+
+          </td>
+           <td class="flex-1" *ngIf="intern.education">
+            {{intern.education.name}}
+           </td>
+           <td class="flex-1" *ngIf="!intern.education">
+
+           </td>
+           <td class="flex-1">
+            {{intern.educationCenter.name}}
+           </td>
+           <td class="flex-1">
+            {{intern.center.name}}
+           </td>
+           <td class="flex-1" *ngIf="intern.province">
+            {{intern.province.province}}
+           </td>
+           <td class="flex-1" *ngIf="intern.province"></td>
+           <td>
+            {{intern.startDate | date : "dd/MM/yyyy"}}
+           </td>
+           <td class="flex-1">
+             {{intern.endDate | date : "dd/MM/yyyy"}}
+           </td>
+           <td class="flex-1">
+            {{intern.hours}}
+           </td>
+           <td class="flex-1" *ngIf="intern.level">
+             {{intern.level.name}}
+           </td>
+           <td class="flex-1" *ngIf="!intern.level">
+
+           </td>
+           <td class="flex-1">
+             {{intern.mentor}}
+           </td>
+           <td class="flex-1">
+            {{intern.coordinator}}
+           </td>
+           <td class="flex-1">
+            {{intern.hrManager}}
+           </td>
+           <td class="flex-1" *ngIf="intern.action">
+            {{intern.action.name}}
+           </td>
+           <td class="flex-1" *ngIf="!intern.action">
+            </td>
+           <td class="flex-1">
+            {{intern.contractDate | date : "dd/MM/yyyy"}}
+           </td>
+           <td class="flex-1" *ngIf="intern.active == 0">
+             Inactivo
+           </td>
+           <td class="flex-1" *ngIf="intern.active == 1">
+             Activo
+           </td>
+           <td class="flex-1" *ngIf="intern.active == 2">
+            Pendiente
+           </td>
+           <td class="flex-1" *ngIf="!intern.active">
+
+           </td>
+           <td class="flex-1">
+            Botones
+           </td>
+        </tr>
+    </ng-template>
+</p-table>
