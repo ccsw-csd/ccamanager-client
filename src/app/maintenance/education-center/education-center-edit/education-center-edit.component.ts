@@ -20,6 +20,7 @@ export class EducationCenterEditComponent implements OnInit {
   types : any[];
   educationCenterForm : FormGroup;
   isNew :boolean;
+  
   constructor(
     private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
