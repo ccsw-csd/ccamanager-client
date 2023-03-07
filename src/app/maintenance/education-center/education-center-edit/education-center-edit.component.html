@@ -8,19 +8,19 @@
     <label for="firstname1">Nombre</label>
   </span>
   <div class="flex flex-row flex-1 gap-2">   
-     <div class="flex-2">
-       <p>Provicia</p>
-       <p-dropdown styleClass="w-full" [options]="provinces" appendTo="body" [(ngModel)]="educationCenter.province" optionLabel="province" > </p-dropdown>
-     </div>  
     <div class="flex-1">
       <p>Tipo</p>
       <p-dropdown styleClass="w-full" [options]="types" appendTo="body" [(ngModel)]="educationCenter.type" optionLabel="label" optionValue="value" > </p-dropdown>
     </div>  
-     </div>
+    <div class="flex-2">
+       <p>Provicia</p>
+       <p-dropdown styleClass="w-full" [options]="provinces" appendTo="body" [(ngModel)]="educationCenter.province" optionLabel="province" > </p-dropdown>
+     </div>  
+    </div>
     <div class="h-4rem">
   </div>
   <div class="flex flex-row justify-content-end gap-2">    
-    <button pButton pRipple styleClass="" label="Cancel" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
-    <button pButton pRipple p-button-label="10px" label="Save" icon="pi pi-check"  [disabled]="educationCenter.name=='' || educationCenter.name==null" (click)="save()"></button>
+    <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
+    <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check"  [disabled]="educationCenter.name=='' || educationCenter.name==null" (click)="save()"></button>
   </div>
 </div>
