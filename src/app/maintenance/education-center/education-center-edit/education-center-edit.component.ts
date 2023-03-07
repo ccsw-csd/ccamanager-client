@@ -62,6 +62,7 @@ export class EducationCenterEditComponent implements OnInit {
   } 
 
   validate():boolean{
+
       if(this.educationCenter.name && this.educationCenter.type && this.educationCenter.province){
         return true;
       }
@@ -69,6 +70,7 @@ export class EducationCenterEditComponent implements OnInit {
   }
 
   closeWindow(){
+    
     this.ref.close();
   }
 }
