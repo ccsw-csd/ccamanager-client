@@ -77,7 +77,6 @@ export class EducationListComponent implements OnInit {
 
   addOrEditItem(item: Education) {
     let window = this.dialogService.open(EducationEditComponent, {
-      header: item == null ? 'Nueva titulación' : 'Editar ' + item.name,
       width: '600px',
       data: {
         educationData: item,

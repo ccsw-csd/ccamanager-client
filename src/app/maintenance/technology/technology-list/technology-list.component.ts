@@ -76,7 +76,6 @@ export class TechnologyListComponent implements OnInit {
 
   addOrEditItem(item: Technology) {
     let window = this.dialogService.open(TechnologyEditComponent, {
-      header: item == null ? 'Nueva tecnología' : 'Editar ' + item.name,
       width: '600px',
       data: {
         technologyData: item,
