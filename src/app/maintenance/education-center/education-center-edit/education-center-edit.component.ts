@@ -3,6 +3,7 @@ import { FormGroup} from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Province } from 'src/app/core/models/Province';
+import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { EducationCenter } from '../models/EducationCenter';
 import { EducationCenterService } from '../services/education-center.service';
 
@@ -24,18 +25,20 @@ export class EducationCenterEditComponent implements OnInit {
   constructor(
     private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
+    private snackbarService:SnackbarService,
     private messageService: MessageService,
     private educationCenterService:EducationCenterService,
   ) {}
   
   ngOnInit(): void {
 
-    if (this.config.data != null) {
-      this.educationCenter = Object.assign({educationCenter:EducationCenter},this.config.data.educationCenter);
-      this.isNew=false;
-    }else{
+    console.log(this.config.data);
+    if (this.config.data.educationCenter === undefined) {
       this.educationCenter = new EducationCenter();
       this.isNew=true;
+    }else{
+      this.educationCenter = Object.assign({educationCenter:EducationCenter},this.config.data.educationCenter);
+      this.isNew=false;
     }
     this.provinces = this.config.data.provinces;
     this.types = [{label:"UN",value:"UN"},{label:"FP",value:"FP"}];
@@ -47,14 +50,14 @@ export class EducationCenterEditComponent implements OnInit {
       this.educationCenterService.save(this.educationCenter).subscribe(
         (result)=>{
           if(this.isNew){
-            this.showSuccess("Se ha añadido correctamente el Centro Educativo");
+            this.snackbarService.showMessage("Se ha añadido correctamente el Centro Educativo");
           }else{
-            this.showSuccess("Se ha actualizado el Centro Educativo");
+            this.snackbarService.showMessage("Se ha actualizado el Centro Educativo");
           }
           this.closeWindow();
         },
         (error)=>{
-          this.showError();
+          this.snackbarService.error(error.message);
         }
       );
     }
@@ -67,13 +70,13 @@ export class EducationCenterEditComponent implements OnInit {
       return false;
   }
 
-  showSuccess(message:string) {
-    this.messageService.add({severity:'success', summary: 'Success', detail:message});
-  }
+  // showSuccess(message:string) {
+  //   this.messageService.add({severity:'success', summary: 'Success', detail:message});
+  // }
 
-  showError() {
-    this.messageService.add({severity:'error', summary: 'Error', detail: 'Message Content'});
-  }
+  // showError(message:string) {
+  //   this.messageService.add({severity:'error', summary: 'Error', detail: message});
+  // }
 
   closeWindow(){
     this.ref.close();
