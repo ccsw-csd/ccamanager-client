@@ -20,7 +20,6 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { PaginatorModule } from "primeng/paginator";
 import { TabViewModule } from 'primeng/tabview';
 import { TreeModule } from 'primeng/tree';
-import { ConfirmationService } from "primeng/api";
 import { PickListModule } from 'primeng/picklist';
 
 @NgModule({
