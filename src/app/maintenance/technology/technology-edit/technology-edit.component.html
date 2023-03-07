@@ -16,8 +16,7 @@
   <div class="h-4rem"></div>
 
   <div class="flex flex-row justify-content-end gap-2">
-    <button pButtonpRipple styleClass="" label="Cancel" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
-    <button pButton pRipple p-button-label="10px" label="Save" icon="pi pi-check" [disabled]="technologyElement.name == '' || technologyElement.name == null" (click)="saveItem(technologyElement)">
-    </button>
+    <button pButton pRipple styleClass="p-button-secondary" label="Cancel" icon="pi pi-times" (click)="closeWindow()"></button>
+    <button pButton pRipple p-button-label="10px" label="Save" icon="pi pi-check" [disabled]="technologyElement.name == '' || technologyElement.name == null" (click)="saveItem(technologyElement)"></button>
   </div>
 </div>
