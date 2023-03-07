@@ -8,9 +8,8 @@ describe('TechnologyListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TechnologyListComponent ]
-    })
-    .compileComponents();
+      declarations: [TechnologyListComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
