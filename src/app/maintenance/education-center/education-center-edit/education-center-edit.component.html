@@ -1,6 +1,6 @@
 <div class="flex flex-column">
   <h1 *ngIf="educationCenter.id == null" class="text-center">Nuevo Centro Educativo</h1>
-  <h1 *ngIf="educationCenter.id != null" class="text-center">Modificar Centro Educativo</h1>
+  <h1 *ngIf="educationCenter.id != null" class="text-center">{{this.config.data.educationCenter.name}}</h1>
   <div class="h-2rem">
   </div>
   <span class="p-float-label">
