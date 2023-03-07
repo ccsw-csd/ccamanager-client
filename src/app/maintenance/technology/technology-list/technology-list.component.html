@@ -1,5 +1,5 @@
 <div class="mt-0 pt-0 flex justify-content-end pb-3">    
-  <button pButton pRipple type="button" class="w-9rem p-3" label="Añadir tecnología"(click)="addOrEditItem(null)"></button>
+  <button pButton pRipple type="button" class="w-9rem p-3" label="Añadir"(click)="addOrEditItem(null)"></button>
 </div>
 <p-table [style]="{'height':'calc(100vh - 180px)'}" [scrollable]="true" scrollHeight="flex" selectionMode="single" 
   [value]="listOfData" styleClass="p-datatable-striped" [paginator]="true" [rows]="10" sortField="name" [sortOrder]="1" >
@@ -10,6 +10,20 @@
           </th>
           <th class="flex-none" style="width: 125px;"></th>
       </tr>
+  </ng-template>
+
+  <ng-template pTemplate="header" >
+    <tr>
+        <th class="flex-1 align-items-center justify-content-center"  pSortableColumn="name" >
+            Nombre<p-sortIcon field="name"></p-sortIcon>
+        </th> 
+        <th class="flex-none" style="width: 125px;"></th>
+    </tr>
+    <tr>
+        <th class="flex-1" >
+            <p-columnFilter class="w-full" type="text" field="name" matchMode="contains" [showMenu]="false"></p-columnFilter>
+        </th>
+    </tr>
   </ng-template>
 
   <ng-template pTemplate="body" let-technologyElement let-columns="columns">
