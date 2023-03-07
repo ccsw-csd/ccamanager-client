@@ -1,45 +1,18 @@
 <div class="flex flex-column">
-  <h1 *ngIf="educationElement.id == null" class="text-center">
-    Nueva titulación
-  </h1>
-  <h1 *ngIf="educationElement.id != null" class="text-center">
-    Modificar titulación
-  </h1>
+  <h1 class="text-center" *ngIf="educationElement.id == null">Nueva titulación</h1>
+  <h1 class="text-center" *ngIf="educationElement.id != null">Modificar titulación</h1>
 
   <div class="h-2rem"></div>
 
   <span class="p-float-label">
-    <input
-      id="name"
-      type="text"
-      pInputText
-      class="w-full"
-      [(ngModel)]="educationElement.name"
-      required
-    />
+    <input id="name" type="text" pInputText class="w-full" [(ngModel)]="educationElement.name" required />
     <label for="firstname1">Nombre</label>
   </span>
 
   <div class="h-4rem"></div>
 
   <div class="flex flex-row justify-content-end gap-2">
-    <button
-      pButton
-      pRipple
-      styleClass=""
-      label="Cancel"
-      icon="pi pi-times"
-      class="p-button p-button-secondary"
-      (click)="closeWindow()"
-    ></button>
-    <button
-      pButton
-      pRipple
-      p-button-label="10px"
-      label="Save"
-      icon="pi pi-check"
-      [disabled]="educationElement.name == '' || educationElement.name == null"
-      (click)="saveItem(educationElement)"
-    ></button>
+    <button pButton pRipple styleClass="p-button-secondary" label="Cancel" icon="pi pi-times" (click)="closeWindow()"></button>
+    <button pButton pRipple p-button-label="10px" label="Save" icon="pi pi-check" [disabled]="educationElement.name == '' || educationElement.name == null" (click)="saveItem(educationElement)"></button>
   </div>
 </div>

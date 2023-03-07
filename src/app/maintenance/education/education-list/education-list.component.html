@@ -1,49 +1,15 @@
-<div class="mt-0 pt-0 flex justify-content-end pb-3">
-  <button
-    pButton
-    pRipple
-    type="button"
-    class="w-9rem p-3"
-    label="Nueva titulación"
-    (click)="addOrEditItem(null)"
-  ></button>
+<div class="flex justify-content-end pt-0 mt-0 pb-3">
+  <button pButton pRipple type="button" class="w-9rem p-3" label="Nueva titulación" (click)="addOrEditItem(null)"></button>
 </div>
 
-<p-table
-  [style]="{ height: 'calc(100vh - 180px)' }"
-  [scrollable]="true"
-  scrollHeight="flex"
-  selectionMode="single"
-  [value]="listOfData"
-  styleClass="p-datatable-striped"
-  [paginator]="true"
-  [rows]="10"
-  sortField="name"
-  [sortOrder]="1"
->
+<p-table [style]="{ height: 'calc(100vh - 180px)' }" [scrollable]="true" scrollHeight="flex" selectionMode="single" [value]="listOfData" styleClass="p-datatable-striped" [paginator]="true" [rows]="10" sortField="name" [sortOrder]="1">
   <ng-template pTemplate="body" let-element let-columns="columns">
     <tr [pSelectableRow]="educationCenter">
-      <td class="flex-1">
-        {{ element.name }}
-      </td>
+      <td class="flex-1">{{ element.name }}</td>
       <td class="flex-none" style="width: 125px">
         <div class="justify-content-between">
-          <button
-            pButton
-            pRipple
-            type="button"
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-text"
-            (click)="addOrEditItem(element)"
-          ></button>
-          <button
-            pButton
-            pRipple
-            type="button"
-            icon="pi pi-trash"
-            class="p-button-rounded p-button-danger p-button-text"
-            (click)="deleteItem(element.id)"
-          ></button>
+          <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text" (click)="addOrEditItem(element)"></button>
+          <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text" (click)="deleteItem(element.id)"></button>
         </div>
       </td>
     </tr>
@@ -51,8 +17,4 @@
 </p-table>
 
 <p-toast position="top-center"></p-toast>
-<p-confirmDialog
-  header="Confirmación"
-  icon="pi pi-exclamation-triangle"
-  #confirmDialog
-></p-confirmDialog>
+<p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle" #confirmDialog></p-confirmDialog>
