@@ -1,22 +1,16 @@
 <div class="flex flex-column">
-  <h1 *ngIf="technologyElement.id == null" class="text-center">
-    Nueva tecnología
-  </h1>
-  <h1 *ngIf="technologyElement.id != null" class="text-center">
-    Modificar tecnología
-  </h1>
-
-  <div class="h-2rem"></div>
-
+  <h1 *ngIf="technologyElement == null" class="text-center">Nueva tecnología</h1>
+  <h1 *ngIf="technologyElement.id != null" class="text-center">Modificar tecnología</h1>
+  <div class="h-2rem">
+  </div>
   <span class="p-float-label">
-    <input id="name" type="text" pInputText class="w-full" [(ngModel)]="technologyElement.name" required>
+    <input id="name" type="text" pInputText class="w-full" [(ngModel)]="technologyElement.name"  required>
     <label for="firstname1">Nombre</label>
   </span>
-
-  <div class="h-4rem"></div>
-
-  <div class="flex flex-row justify-content-end gap-2">
-    <button pButton pRipple styleClass="p-button-secondary" label="Cancel" icon="pi pi-times" (click)="closeWindow()"></button>
-    <button pButton pRipple p-button-label="10px" label="Save" icon="pi pi-check" [disabled]="technologyElement.name == '' || technologyElement.name == null" (click)="saveItem(technologyElement)"></button>
+    <div class="h-4rem">
+  </div>
+  <div class="flex flex-row justify-content-end gap-2">    
+    <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
+    <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check"  [disabled]="technologyElement.name=='' || technologyElement.name==null" (click)="saveItem(technologyElement)"></button>
   </div>
 </div>
