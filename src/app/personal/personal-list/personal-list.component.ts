@@ -102,6 +102,18 @@ export class PersonalListComponent implements OnInit {
       this.ngOnInit();
     });
   }
+
+  cleanFilters(): void {
+    if(this.cols.length>0){
+      this.cols.forEach(col => {
+        // Si la columna tiene un filtro, lo reseteamos
+        if (col.filter) {
+          col.filter.reset();
+        }
+      });
+    }
+    
+  }
   // delete(id: number) {
   //   this.confirmationService.confirm({
   //     message: '¿Deseas borrar el Centro de Educacion?',
