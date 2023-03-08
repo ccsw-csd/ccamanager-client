@@ -1,1 +1,283 @@
-<p>personal-list works!</p>
+<div class="mt-0 pt-0 flex justify-content-end pb-3">
+    <button
+      pButton
+      pRipple
+      type="button"
+      class="w-9rem p-3"
+      label="Añadir"
+      (click)="(null)"
+    ></button>
+  
+    <button
+      pButton
+      pRipple
+      type="button"
+      class="w-9rem p-3 ml-4"
+      label="Descargar evidencias"
+      (click)="(downloadEvidence())"
+    ></button>
+    
+    <button
+      pButton
+      pRipple
+      type="button"
+      class="w-9rem p-3 ml-4"
+      label="Limpiar filtros"
+      (click)="(null)"
+    ></button>
+  </div>
+  
+  <p-table
+    [style]="{ height: 'calc(100vh - 180px)' }"
+    [scrollable]="true"
+    scrollHeight="flex"
+    selectionMode="single"
+    [value]="persons"
+    styleClass="p-datatable-striped"
+    [paginator]="true"
+    [rows]="10"
+    sortField="name"
+    [sortOrder]="1"
+  >
+    <ng-template pTemplate="header">
+      <tr class="flex-none">
+        <th
+          class="flex-1 text-center justify-content-center w-125"
+          pSortableColumn="name"
+        >
+          Nombre<p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th
+          class="flex-1 text-center justify-content-center w-125"
+          pSortableColumn="lastname"
+        >
+          Lastname<p-sortIcon field="lastname"></p-sortIcon>
+        </th>
+        <th
+          class="flex-1 text-center justify-content-center w-125"
+          pSortableColumn="center.name"
+        >
+          Center<p-sortIcon field="center.name"></p-sortIcon>
+        </th>
+        <th
+          class="flex-1 text-center justify-content-center w-125"
+          pSortableColumn="role"
+        >
+          Role<p-sortIcon field="role"></p-sortIcon>
+        </th>
+        <th
+          class="flex-1 text-center justify-content-center w-125"
+          pSortableColumn="saga"
+        >
+          Saga<p-sortIcon field="saga"></p-sortIcon>
+        </th>
+        <th
+          class="flex-1 text-center justify-content-center w-125"
+          pSortableColumn="username"
+        >
+          Username<p-sortIcon field="username"></p-sortIcon>
+        </th>
+        <th
+          class="flex-1 text-center justify-content-center w-125"
+          pSortableColumn="customer"
+        >
+          Customer<p-sortIcon field="customer"></p-sortIcon>
+        </th>
+        <th
+          class="flex-1 text-center justify-content-center w-125"
+          pSortableColumn="grade"
+        >
+          Grade<p-sortIcon field="grade"></p-sortIcon>
+        </th>
+        <th
+          class="flex-1 text-center justify-content-center w-125"
+          pSortableColumn="hours"
+        >
+          Hours<p-sortIcon field="hours"></p-sortIcon>
+        </th>
+        <th
+          class="flex-1 text-center justify-content-center w-125"
+          pSortableColumn="businesscode"
+        >
+          Business code<p-sortIcon field="businesscode"></p-sortIcon>
+        </th>
+        <th
+          class="flex-1 text-center justify-content-center w-125"
+          pSortableColumn="province.province"
+        >
+          Provincia <p-sortIcon field="province.province"></p-sortIcon>
+        </th>
+        <th
+          class="flex-1 text-center justify-content-center w-125"
+          pSortableColumn="active"
+        >
+          Active <p-sortIcon field="active"></p-sortIcon>
+        </th>
+        <th class="flex-none" style="width: 125px"></th>
+      </tr>
+      <tr>
+         <th class="flex-1">
+          <p-columnFilter
+            class="w-full"
+            type="text"
+            field="name"
+            matchMode="contains"
+            [showMenu]="false"
+          ></p-columnFilter>
+        </th> 
+         <th class="flex-none w-1">
+          <p-columnFilter
+            class="w-full"
+            type="text"
+            field="type"
+            matchMode="contains"
+            [showMenu]="false"
+          ></p-columnFilter>
+        </th> 
+  
+        <th class="flex-none w-2">
+          <p-columnFilter
+            class="w-full"
+            field="role.role"
+            matchMode="equals"
+            [showMenu]="false"
+            [showClearButton]="false"
+          >
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-dropdown
+                [options]="roles"
+                optionLabel="role"
+                (onChange)="filter($event.value?.role)"
+                [showClear]="true"
+                placeholder="Cualquiera"
+              >
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+  
+        <th class="flex-none w-2">
+          <p-columnFilter
+            class="w-full"
+            field="province.province"
+            matchMode="equals"
+            [showMenu]="false"
+            [showClearButton]="false"
+          >
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-dropdown
+                [options]="provinces"
+                optionLabel="province"
+                (onChange)="filter($event.value?.province)"
+                [showClear]="true"
+                placeholder="Cualquiera"
+              >
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+  
+        <th class="flex-none w-2">
+          <p-columnFilter
+            class="w-full"
+            field="center.name"
+            matchMode="equals"
+            [showMenu]="false"
+            [showClearButton]="false"
+          >
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-dropdown
+                [options]="centers"
+                optionLabel="name"
+                (onChange)="filter($event.value?.name)"
+                [showClear]="true"
+                placeholder="Cualquiera"
+              >
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th class="flex-none" style="width: 125px"></th>
+      </tr>
+    </ng-template>
+  
+    <ng-template pTemplate="body" let-person let-columns="columns">
+      <tr [pSelectableRow]="person">
+        <td class="flex-1 text-center justify-content-center w-125">
+          {{ person.name }}
+        </td>
+        <td class="flex-1 text-center justify-content-center w-125">
+          {{ person.lastname }}
+        </td>
+        <td
+          class="flex-1 text-center justify-content-center w-125"
+          *ngIf="person.center"
+        >
+          {{ person.center.name }}
+        </td>
+        <td
+          class="flex-1 text-center justify-content-center w-125"
+          *ngIf="person.role"
+        >
+          {{ person.role }}
+        </td>
+  
+        <td class="flex-1 text-center justify-content-center w-125">
+          {{ person.saga }}
+        </td>
+        <td class="flex-1 text-center justify-content-center w-125">
+          {{ person.username }}
+        </td>
+        <td class="flex-1 text-center justify-content-center w-125">
+          {{ person.customer }}
+        </td>
+        <td class="flex-1 text-center justify-content-center w-125">
+          {{ person.grade }}
+        </td>
+        <td class="flex-1 text-center justify-content-center w-125">
+          {{ person.hours }}
+        </td>
+        <td class="flex-1 text-center justify-content-center w-125">
+          {{ person.businesscode }}
+        </td>
+        <td
+          class="flex-1 text-center justify-content-center w-125"
+          *ngIf="person.province"
+        >
+          {{ person.province.province }}
+        </td>
+        <td class="flex-1 text-center justify-content-center w-125">
+          {{ person.active }}
+        </td>
+  
+        <td class="flex-none" style="width: 125px">
+          <div class="justify-content-between">
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-text"
+              (click)="editEducationCenter(educationCenter)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-danger p-button-text"
+              (click)="delete(person.id)"
+            ></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  
+  <p-toast position="top-center"></p-toast>
+  <p-confirmDialog
+    header="Confirmación"
+    icon="pi pi-exclamation-triangle"
+    #confirmDialog
+  ></p-confirmDialog>
+  
