@@ -36,6 +36,7 @@ export class PersonalListComponent implements OnInit {
   centers: Center[];
   roles: Person_role[];
   showDropdownFilters: boolean;
+  defaultFilters: any;
 
   cols: any[];
 
@@ -52,6 +53,15 @@ export class PersonalListComponent implements OnInit {
     this.getAllPersons();
     this.getAllCenters();
     this.getAllRoles();
+
+    this.defaultFilters = {
+      'active': {
+        'value': '1'
+      },
+      'department': {
+        'value': 'CCSw'
+      }
+    };
   }
   getAllProvinces() {
     this.provinceService.getAllProvinces().subscribe({
@@ -81,6 +91,8 @@ export class PersonalListComponent implements OnInit {
       },
     });
   }
+  
+  
 
   onClose(): void {
     this.ref.onClose.subscribe((results: any) => {
@@ -90,7 +102,6 @@ export class PersonalListComponent implements OnInit {
 
   cleanFilters(): void {
     this.filterDropdowns.forEach((dropdown) => dropdown.clear(null));
-
     this.table.clear();
   }
 

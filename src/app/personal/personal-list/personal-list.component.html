@@ -30,7 +30,7 @@
 </div>
 
 <p-table [style]="{'height':'calc(100vh - 200px)'}" [scrollable]="true" scrollHeight="flex" selectionMode="single"
-    [value]="persons" styleClass="p-datatable-striped" [paginator]="false" sortField="name" [sortOrder]="1">
+    [value]="persons" styleClass="p-datatable-striped" [paginator]="false" sortField="lastname" [sortOrder]="1" [(filters)]="defaultFilters">
     <ng-template pTemplate="header">
         <tr>
             <th class="flex-1  align-items-center justify align-items-center " pSortableColumn="saga">
@@ -41,7 +41,7 @@
                 Username<p-sortIcon field="name"></p-sortIcon>
             </th>
 
-            <th class="flex-1 align-items-center justify-content-center" pSortableColumn="nombre">
+            <th class="flex-1 align-items-center justify-content-center" pSortableColumn="name">
                 Nombre<p-sortIcon field="name"></p-sortIcon>
             </th>
 
@@ -49,7 +49,7 @@
                 Apellidos<p-sortIcon field="lastname"></p-sortIcon>
             </th>
 
-            <th class="flex-1 align-items-center justify-content-center" pSortableColumn="client">
+            <th class="flex-1 align-items-center justify-content-center" pSortableColumn="customer">
                 Cliente<p-sortIcon field="client"></p-sortIcon>
             </th>
 
@@ -77,10 +77,10 @@
                 Evaluador<p-sortIcon field="manager"></p-sortIcon>
             </th>
 
-            <th class="flex-1 align-items-center justify-content-center" pSortableColumn="center">
-                Oficina<p-sortIcon field="center"></p-sortIcon>
+            <th class="flex-1 align-items-center justify-content-center" pSortableColumn="center.name">
+                Oficina<p-sortIcon field="center.name"></p-sortIcon>
             </th>
-            <th class="flex-1 align-items-center justify-content-center" pSortableColumn="location">
+            <th class="flex-1 align-items-center justify-content-center" pSortableColumn="province">
                 Localización<p-sortIcon field="location"></p-sortIcon>
             </th>
             <th class="flex-1 align-items-center justify-content-center" pSortableColumn="active">
@@ -142,7 +142,7 @@
                     [showClearButton]="false"></p-columnFilter>
             </th>
             <th class="flex-1 align-items-center justify-content-center">
-                <p-columnFilter class="w-full" field="center" matchMode="equals" [showMenu]="false"
+                <p-columnFilter class="w-full" field="center.name" matchMode="equals" [showMenu]="false"
                     [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                         <p-dropdown #filterDropdown [options]="centers" optionLabel="name"
@@ -165,7 +165,6 @@
                 <p-columnFilter class="w-full" type="text" field="active" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-
             <th class="flex-none" style="width: 125px;"></th>
         </tr>
     </ng-template>
