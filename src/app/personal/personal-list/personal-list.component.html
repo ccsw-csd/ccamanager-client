@@ -4,7 +4,6 @@
             Gestión personal
         </h1>
     </div>
-
 </div>
 
 <div class="flex flex-row justify-content-between">
@@ -21,7 +20,8 @@
 
         <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2"> </button>
 
-        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2" (click)="downloadPersons()"></button>
+        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2"
+            (click)="downloadPersons()"></button>
 
         <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2"
             (click)="cleanFilters()">
@@ -30,7 +30,8 @@
 </div>
 
 <p-table [style]="{'height':'calc(100vh - 200px)'}" [scrollable]="true" scrollHeight="flex" selectionMode="single"
-    [value]="persons" styleClass="p-datatable-striped" [paginator]="false" sortField="lastname" [sortOrder]="1" [(filters)]="defaultFilters">
+    [value]="persons" styleClass="p-datatable-striped" [paginator]="false" sortField="lastname" [sortOrder]="1"
+    [(filters)]="defaultFilters">
     <ng-template pTemplate="header">
         <tr>
             <th class="flex-1  align-items-center justify align-items-center " pSortableColumn="saga">
@@ -213,7 +214,6 @@
             <td class="flex-1 align-items-center justify-content-center">
                 {{person.active}}
             </td>
-
             <td class="flex-none" style="width: 125px;">
                 <div class="justify-content-between">
                     <button pButton pRipple type="button" icon="pi pi-pencil"
