@@ -21,7 +21,7 @@
         <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir usuario"> </button>
 
         <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2"
-            (click)="downloadPersons()" pTooltip="Descargar listado"></button>
+            (click)="dt.exportCSV()" pTooltip="Descargar listado"></button>
 
         <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2" pTooltip="Limpiar filtros"
             (click)="cleanFilters()" >
@@ -29,7 +29,7 @@
     </div>
 </div>
 
-<p-table [style]="{'height':'700px' }" [scrollable]="true" scrollHeight="flex" selectionMode="single"
+<p-table #dt [columns]="cols" [style]="{'height':'700px' }" [scrollable]="true" scrollHeight="flex" selectionMode="single"
     [value]="persons" styleClass="p-datatable-striped" [paginator]="false" sortField="lastname" [sortOrder]="1"
     [(filters)]="defaultFilters" (onFilter)="onFilter($event)">
     <ng-template pTemplate="header">
@@ -165,7 +165,7 @@
             <th class="flex-none w-10rem">
                 <p-columnFilter class="w-full" field="active" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown [options]="states" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="states" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>

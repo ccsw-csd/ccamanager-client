@@ -9,9 +9,7 @@ import { RoleService } from 'src/app/core/services/role.service';
 import { Person } from '../models/Person';
 import { PersonService } from '../services/person.service';
 import { Center } from 'src/app/core/models/Center';
-import { Person_role } from 'src/app/core/models/Person_role';
-import * as XLSX from 'xlsx';
-import * as FileSaver from 'file-saver';
+import { Role } from 'src/app/core/models/Role';
 import { Dropdown } from 'primeng/dropdown';
 
 @Component({
@@ -32,18 +30,33 @@ export class PersonalListComponent implements OnInit {
 
   persons: Person[];
   centers: Center[];
-  roles: Person_role[];
+  roles: Role[];
   showDropdownFilters: boolean;
   defaultFilters: any;
   totalPersons: number;
-  states: any[]
+  states: any[];
+  cols: any[] = [
+    {field: 'saga'},
+    {field: 'username'},
+    {field: 'name'},
+    {field: 'lastname'},
+    {field: 'customer'},
+    {field: 'grade'},
+    {field: 'role'},
+    {field: 'hours'},
+    {field: 'businesscode'},
+    {field: 'department'},
+    {field: 'manager'},
+    {field: 'center.name'},
+    {field: 'province.province'},
+];
 
   constructor(
     private ref: DynamicDialogRef,
     private provinceService: ProvinceService,
     private personService: PersonService,
     private centerService: CenterService,
-    private roleService: RoleService
+    private roleService: RoleService,
   ) {}
 
   ngOnInit(): void {
@@ -67,6 +80,7 @@ export class PersonalListComponent implements OnInit {
       {label:"Pendiente",value:'2'}
     ];
   }
+
   getAllProvinces() {
     this.provinceService.getAllProvinces().subscribe({
       next: (res: Province[]) => {
@@ -74,13 +88,15 @@ export class PersonalListComponent implements OnInit {
       },
     });
   }
+
   getAllRoles() {
     this.roleService.getAllRoles().subscribe({
-      next: (res: Person_role[]) => {
+      next: (res: Role[]) => {
         this.roles = res;
       },
     });
   }
+
   getAllCenters() {
     this.centerService.getAllCenters().subscribe({
       next: (res: Center[]) => {
@@ -88,6 +104,7 @@ export class PersonalListComponent implements OnInit {
       },
     });
   }
+  
   getAllPersons() {
     this.personService.getAllPersons().subscribe({
       next: (res: Person[]) => {
@@ -108,33 +125,10 @@ export class PersonalListComponent implements OnInit {
   }
 
   cleanFilters(): void {
+    console.log(this.table)
     this.filterDropdowns.forEach((dropdown) => dropdown.clear(null));
+    console.log(this.cols)
     this.table.clear();
-  }
-
-  downloadPersons() {
-    const worksheet = XLSX.utils.json_to_sheet(this.persons);
-    const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-    const excelBuffer: any = XLSX.write(workbook, {
-      bookType: 'xlsx',
-      type: 'array',
-    });
-    const data: Blob = new Blob([excelBuffer], {
-      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    });
-    FileSaver.saveAs(data, 'persons.xlsx');
-  }
-
-  downloadFile(data: any, type: string) {
-    let blob = new Blob([data], { type: type });
-    let url = window.URL.createObjectURL(blob);
-    var a: any = document.createElement('a');
-    document.body.appendChild(a);
-    a.style = 'display: none';
-    a.href = url;
-    a.download = 'Report.xlsx';
-    a.click();
-    window.URL.revokeObjectURL(url);
   }
 
   closeWindow() {
