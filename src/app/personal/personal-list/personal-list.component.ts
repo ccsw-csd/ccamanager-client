@@ -62,9 +62,9 @@ export class PersonalListComponent implements OnInit {
     };
 
     this.states = [
-      {label:"Inactivo" ,value:0},
-      {label:"Activo",value:1},
-      {label:"Pendiente",value:2}
+      {label:"Inactivo" ,value:'0'},
+      {label:"Activo",value:'1'},
+      {label:"Pendiente",value:'2'}
     ];
 
   }
@@ -93,6 +93,7 @@ export class PersonalListComponent implements OnInit {
     this.personService.getAllPersons().subscribe({
       next: (res: Person[]) => {
         this.persons = res;
+        
         this.totalPersons = this.persons.length;
 
       },

@@ -88,7 +88,7 @@
                 Estado
             </th>
 
-            <th class="flex-none" style="width: 125px;"></th>
+            <th class="flex-1"></th>
         </tr>
         <tr>
             <th class="flex-none w-7rem">
@@ -165,11 +165,11 @@
             <th class="flex-none w-10rem">
                 <p-columnFilter class="w-full" field="active" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown [options]="states" optionLabel="label" optionValue="value" (onChange)="filter($event.value?.active)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown [options]="states" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="flex-none" style="width: 125px;"></th>
+            <th class="flex-1" style="width: 125px;"></th>
         </tr>
     </ng-template>
 
@@ -223,7 +223,7 @@
             <td class="flex-none w-9rem align-items-center justify-content-center"  *ngIf="person.active == 2">
                 Pendiente
             </td>
-            <td class="flex-none" style="width: 125px;">
+            <td class="flex-1" >
                 <div class="justify-content-between">
                     <button pButton pRipple type="button" icon="pi pi-pencil"
                         class="p-button-rounded p-button-text" pTooltip="Editar"></button>
