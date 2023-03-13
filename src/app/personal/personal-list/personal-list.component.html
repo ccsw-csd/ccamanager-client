@@ -58,7 +58,7 @@
                 Grado<p-sortIcon field="grade"></p-sortIcon>
             </th>
 
-            <th class="flex-1 align-items-center justify-content-center" pSortableColumn="role">
+            <th class="flex-none w-6rem" pSortableColumn="role">
                 Rol<p-sortIcon field="role"></p-sortIcon>
             </th>
 
@@ -78,45 +78,45 @@
                 Evaluador<p-sortIcon field="manager"></p-sortIcon>
             </th>
 
-            <th class="flex-1 align-items-center justify-content-center" pSortableColumn="center.name">
+            <th class="flex-none w-6rem" pSortableColumn="center.name">
                 Oficina<p-sortIcon field="center.name"></p-sortIcon>
             </th>
-            <th class="flex-1 align-items-center justify-content-center" pSortableColumn="province">
+            <th class="flex-none w-6rem" pSortableColumn="province">
                 Localización<p-sortIcon field="location"></p-sortIcon>
             </th>
-            <th class="flex-1 align-items-center justify-content-center" pSortableColumn="active">
+            <th class="flex-none w-6rem" pSortableColumn="active">
                 Estado<p-sortIcon field="active"></p-sortIcon>
             </th>
 
             <th class="flex-none" style="width: 125px;"></th>
         </tr>
         <tr>
-            <th class="flex-1 align-items-center justify-content-center ">
-                <p-columnFilter class="w-full" type="text" field="saga" matchMode="contains" [showMenu]="false"
+            <th class="flex-1">
+                <p-columnFilter class="w-full " type="text" field="saga" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-1 align-items-center justify-content-center ">
-                <p-columnFilter class="w-full" type="text" field="username" matchMode="contains" [showMenu]="false"
+            <th class="flex-1">
+                <p-columnFilter class="w-full " type="text" field="username" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-1 align-items-center justify-content-center ">
-                <p-columnFilter class="w-full" type="text" field="name" matchMode="contains" [showMenu]="false"
+            <th class="flex-1">
+                <p-columnFilter class="w-full " type="text" field="name" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-1 align-items-center justify-content-center ">
-                <p-columnFilter class="w-full" type="text" field="lastname" matchMode="contains" [showMenu]="false"
+            <th class="flex-1">
+                <p-columnFilter class="w-full " type="text" field="lastname" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-1 align-items-center justify-content-center ">
-                <p-columnFilter class="w-full" type="text" field="customer" matchMode="contains" [showMenu]="false"
+            <th class="flex-1">
+                <p-columnFilter class="w-full " type="text" field="customer" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-1 align-items-center justify-content-center ">
-                <p-columnFilter class="w-full" type="text" field="grade" matchMode="contains" [showMenu]="false"
+            <th class="flex-1">
+                <p-columnFilter class="w-full " type="text" field="grade" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-1 align-items-center justify-content-center ">
-                <p-columnFilter class="w-full" field="role" matchMode="equals" [showMenu]="false"
+            <th class="flex-none w-6rem">
+                <p-columnFilter class="w-full " field="role" matchMode="equals" [showMenu]="false"
                     [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                         <p-dropdown #filterDropdown [options]="roles" optionLabel="role"
@@ -126,24 +126,24 @@
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="flex-1 align-items-center justify-content-center ">
-                <p-columnFilter class="w-full" type="text" field="hours" matchMode="contains" [showMenu]="false"
+            <th class="flex-1">
+                <p-columnFilter class="w-full " type="text" field="hours" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-1 align-items-center justify-content-center ">
-                <p-columnFilter class="w-full" type="text" field="businesscode" matchMode="contains" [showMenu]="false"
+            <th class="flex-1">
+                <p-columnFilter class="w-full " type="text" field="businesscode" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-1 align-items-center justify-content-center ">
-                <p-columnFilter class="w-full" type="text" field="department" matchMode="contains" [showMenu]="false"
+            <th class="flex-1">
+                <p-columnFilter class="w-full " type="text" field="department" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-1 align-items-center justify-content-center ">
-                <p-columnFilter class="w-full" type="text" field="manager" matchMode="contains" [showMenu]="false"
+            <th class="flex-1">
+                <p-columnFilter class="w-full " type="text" field="manager" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-1 align-items-center justify-content-center ">
-                <p-columnFilter class="w-full" field="center.name" matchMode="equals" [showMenu]="false"
+            <th class="flex-none w-6rem">
+                <p-columnFilter class="w-full " field="center.name" matchMode="equals" [showMenu]="false"
                     [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                         <p-dropdown #filterDropdown [options]="centers" optionLabel="name"
@@ -152,8 +152,8 @@
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="flex-1 align-items-center justify-content-center ">
-                <p-columnFilter class="w-full" field="province.province" matchMode="equals" [showMenu]="false"
+            <th class="flex-none w-6rem">
+                <p-columnFilter class="w-full " field="province.province" matchMode="equals" [showMenu]="false"
                     [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                         <p-dropdown #filterDropdown [options]="provinces" optionLabel="province"
@@ -162,9 +162,12 @@
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="flex-1 align-items-center justify-content-center ">
-                <p-columnFilter class="w-full" type="text" field="active" matchMode="contains" [showMenu]="false"
-                    [showClearButton]="false"></p-columnFilter>
+            <th class="flex-none w-6rem">
+                <p-columnFilter class="w-full" field="active" matchMode="equals" [showMenu]="false" [showClearButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown [options]="states" optionLabel="label" optionValue="value" (onChange)="filter($event.value?.active)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                    </ng-template>
+                </p-columnFilter>
             </th>
             <th class="flex-none" style="width: 125px;"></th>
         </tr>
@@ -211,8 +214,14 @@
             <td class="flex-1 align-items-center justify-content-center">
                 {{person.province?.province}}
             </td>
-            <td class="flex-1 align-items-center justify-content-center">
-                {{person.active}}
+            <td class="flex-1 align-items-center justify-content-center" *ngIf="person.active == 0">
+                Inactivo
+            </td>
+            <td class="flex-1 align-items-center justify-content-center"  *ngIf="person.active == 1">
+                Activo
+            </td>
+            <td class="flex-1 align-items-center justify-content-center"  *ngIf="person.active == 2">
+                Pendiente
             </td>
             <td class="flex-none" style="width: 125px;">
                 <div class="justify-content-between">

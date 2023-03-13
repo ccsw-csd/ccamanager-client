@@ -36,6 +36,7 @@ export class PersonalListComponent implements OnInit {
   showDropdownFilters: boolean;
   defaultFilters: any;
   totalPersons: number;
+  states: any[]
 
   constructor(
     private ref: DynamicDialogRef,
@@ -59,6 +60,12 @@ export class PersonalListComponent implements OnInit {
         value: 'CCSw',
       },
     };
+
+    this.states = [
+      {label:"Inactivo" ,value:0},
+      {label:"Activo",value:1},
+      {label:"Pendiente",value:2}
+    ];
 
   }
   getAllProvinces() {
