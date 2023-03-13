@@ -66,7 +66,6 @@ export class PersonalListComponent implements OnInit {
       {label:"Activo",value:'1'},
       {label:"Pendiente",value:'2'}
     ];
-
   }
   getAllProvinces() {
     this.provinceService.getAllProvinces().subscribe({
@@ -93,9 +92,7 @@ export class PersonalListComponent implements OnInit {
     this.personService.getAllPersons().subscribe({
       next: (res: Person[]) => {
         this.persons = res;
-        
         this.totalPersons = this.persons.length;
-
       },
     });
   }
