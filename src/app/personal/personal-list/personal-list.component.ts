@@ -35,6 +35,7 @@ export class PersonalListComponent implements OnInit {
   roles: Person_role[];
   showDropdownFilters: boolean;
   defaultFilters: any;
+  totalPersons: number;
 
   constructor(
     private ref: DynamicDialogRef,
@@ -58,6 +59,7 @@ export class PersonalListComponent implements OnInit {
         value: 'CCSw',
       },
     };
+
   }
   getAllProvinces() {
     this.provinceService.getAllProvinces().subscribe({
@@ -84,6 +86,8 @@ export class PersonalListComponent implements OnInit {
     this.personService.getAllPersons().subscribe({
       next: (res: Person[]) => {
         this.persons = res;
+        this.totalPersons = this.persons.length;
+
       },
     });
   }
@@ -92,6 +96,10 @@ export class PersonalListComponent implements OnInit {
     this.ref.onClose.subscribe((results: any) => {
       this.ngOnInit();
     });
+  }
+
+  onFilter(event) {
+    this.totalPersons = event.filteredValue.length;
   }
 
   cleanFilters(): void {
