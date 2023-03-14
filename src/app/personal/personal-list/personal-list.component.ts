@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import {Component,OnInit,ViewChild,ViewChildren,QueryList } from '@angular/core';
 import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
-import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import {DialogService,DynamicDialogConfig,DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Province } from 'src/app/core/models/Province';
 import { ProvinceService } from 'src/app/core/services/province.service';
 import { CenterService } from 'src/app/core/services/center.service';
@@ -11,6 +11,7 @@ import { PersonService } from '../services/person.service';
 import { Center } from 'src/app/core/models/Center';
 import { Role } from 'src/app/core/models/Role';
 import { Dropdown } from 'primeng/dropdown';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-personal-list',
@@ -35,28 +36,13 @@ export class PersonalListComponent implements OnInit {
   defaultFilters: any;
   totalPersons: number;
   states: any[];
-  cols: any[] = [
-    {field: 'saga'},
-    {field: 'username'},
-    {field: 'name'},
-    {field: 'lastname'},
-    {field: 'customer'},
-    {field: 'grade'},
-    {field: 'role'},
-    {field: 'hours'},
-    {field: 'businesscode'},
-    {field: 'department'},
-    {field: 'manager'},
-    {field: 'center.name'},
-    {field: 'province.province'},
-];
-
+ 
   constructor(
     private ref: DynamicDialogRef,
     private provinceService: ProvinceService,
     private personService: PersonService,
     private centerService: CenterService,
-    private roleService: RoleService,
+    private roleService: RoleService
   ) {}
 
   ngOnInit(): void {
@@ -67,17 +53,17 @@ export class PersonalListComponent implements OnInit {
 
     this.defaultFilters = {
       active: {
-        value: '1',
+        value: '1'
       },
       department: {
-        value: 'CCSw',
-      },
+        value: 'CCSw'
+      }
     };
 
     this.states = [
-      {label:"Inactivo" ,value:'0'},
-      {label:"Activo",value:'1'},
-      {label:"Pendiente",value:'2'}
+      { label: 'Inactivo', value: '0' },
+      { label: 'Activo', value: '1' },
+      { label: 'Pendiente', value: '2' }
     ];
   }
 
@@ -97,20 +83,63 @@ export class PersonalListComponent implements OnInit {
     });
   }
 
+  exportExcel() {
+
+    import('xlsx').then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(this.persons.map(person => {
+        return {
+          saga:person.saga,
+          username:person.username,
+          nombre:person.name,
+          apellidos:person.lastname,
+          cliente:person.customer,
+          grado:person.grade,
+          rol:person.role,
+          horas:person.hours,
+          practica:person.businesscode,
+          department: person.department,
+          evaluador: person.manager,
+          oficina:person.center?.name,
+          provincia:person.province?.province,
+          estado:person.active          
+        };
+      }));
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, {
+        bookType: 'xlsx',
+        type: 'array'
+      });
+      this.saveAsExcelFile(excelBuffer, 'persons');
+    });
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE =
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    let EXCEL_EXTENSION = '.xlsx';
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(
+      data,
+      fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+    );
+  }
+
   getAllCenters() {
     this.centerService.getAllCenters().subscribe({
       next: (res: Center[]) => {
         this.centers = res;
-      },
+      }
     });
   }
-  
+
   getAllPersons() {
     this.personService.getAllPersons().subscribe({
       next: (res: Person[]) => {
         this.persons = res;
         this.totalPersons = this.persons.length;
-      },
+      }
     });
   }
 
@@ -125,9 +154,7 @@ export class PersonalListComponent implements OnInit {
   }
 
   cleanFilters(): void {
-    console.log(this.table)
     this.filterDropdowns.forEach((dropdown) => dropdown.clear(null));
-    console.log(this.cols)
     this.table.clear();
   }
 

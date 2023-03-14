@@ -12,6 +12,8 @@ export class Person {
   grade: string;
   role: Role;
   hours: number;
+  department: string;
+  manager: string;
   center: Center;
   province: Province;
   active: number;

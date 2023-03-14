@@ -21,7 +21,7 @@
         <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir usuario"> </button>
 
         <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2"
-            (click)="dt.exportCSV()" pTooltip="Descargar listado"></button>
+            (click)="exportExcel()" pTooltip="Descargar listado"></button>
 
         <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2" pTooltip="Limpiar filtros"
             (click)="cleanFilters()" >
@@ -29,93 +29,93 @@
     </div>
 </div>
 
-<p-table #dt [columns]="cols" [style]="{'height':'700px' }" [scrollable]="true" scrollHeight="flex" selectionMode="single"
+<p-table [style]="{'height':'700px' }" [scrollable]="true" scrollHeight="flex" selectionMode="single"
     [value]="persons" styleClass="p-datatable-striped" [paginator]="false" sortField="lastname" [sortOrder]="1"
     [(filters)]="defaultFilters" (onFilter)="onFilter($event)">
     <ng-template pTemplate="header">
         <tr>
-            <th class="flex-none w-7rem align-items-center justify-content-center" pSortableColumn="saga" pTooltip="Ordenar por saga">
-                Saga<p-sortIcon field="name"></p-sortIcon>
+            <th class="flex-1" pSortableColumn="saga" pTooltip="Ordenar por saga">
+                Saga<p-sortIcon field="saga"></p-sortIcon>
             </th>
 
-            <th class="flex-none w-7rem align-items-center justify-content-center" pSortableColumn="username" pTooltip="Ordenar por username" > 
-                Username<p-sortIcon field="name"></p-sortIcon>
+            <th class="flex-1" pSortableColumn="username" pTooltip="Ordenar por username" > 
+                Username<p-sortIcon field="username"></p-sortIcon>
             </th>
 
-            <th class="flex-none w-7rem align-items-center justify-content-center" pSortableColumn="name" pTooltip="Ordenar por nombre">
+            <th class="flex-1" pSortableColumn="name" pTooltip="Ordenar por nombre">
                 Nombre<p-sortIcon field="name"></p-sortIcon>
             </th>
 
-            <th class="flex-none w-12rem align-items-center justify-content-center" pSortableColumn="lastname" pTooltip="Ordenar por apellidos">
+            <th class="flex-1 " pSortableColumn="lastname" pTooltip="Ordenar por apellidos">
                 Apellidos<p-sortIcon field="lastname"></p-sortIcon>
             </th>
 
-            <th class="flex-none w-7rem align-items-center justify-content-center" pSortableColumn="customer" pTooltip="Ordenar por cliente"> 
+            <th class="flex-1" pSortableColumn="customer" pTooltip="Ordenar por cliente"> 
                 Cliente<p-sortIcon field="client"></p-sortIcon>
             </th>
 
-            <th class="flex-none w-4rem align-items-center justify-content-center" pSortableColumn="grade" pTooltip="Ordenar por grado">
+            <th class="flex-1" pSortableColumn="grade" pTooltip="Ordenar por grado">
                 Grado<p-sortIcon field="grade"></p-sortIcon>
             </th>
 
-            <th class="flex-none w-10rem" pSortableColumn="role" pTooltip="Ordenar por rol">
+            <th class="flex-1" pSortableColumn="role" pTooltip="Ordenar por rol">
                 Rol<p-sortIcon field="role"></p-sortIcon>
             </th>
 
-            <th class="flex-none w-4rem align-items-center justify-content-center" pSortableColumn="hours" pTooltip="Ordenar número de horas">
+            <th class="flex-1" pSortableColumn="hours" pTooltip="Ordenar número de horas">
                 Horas<p-sortIcon field="hours"></p-sortIcon>
             </th>
 
-            <th class="flex-none w-7rem align-items-center justify-content-center" pSortableColumn="businesscode" pTooltip="Ordenar por práctica">
+            <th class="flex-1" pSortableColumn="businesscode" pTooltip="Ordenar por práctica">
                 Práctica<p-sortIcon field="businesscode"></p-sortIcon>
             </th>
 
-            <th class="flex-none w-7rem aligremn-items-center justify-content-center" pSortableColumn="department" pTooltip="Ordenar por departamento">
+            <th class="flex-1" pSortableColumn="department" pTooltip="Ordenar por departamento">
                 Departamento<p-sortIcon field="department"></p-sortIcon>
             </th>
 
-            <th class="flex-none w-7rem align-items-center justify-content-center" pSortableColumn="manager" pTooltip="Ordenar por evaluador">
+            <th class="flex-1" pSortableColumn="manager" pTooltip="Ordenar por evaluador">
                 Evaluador<p-sortIcon field="manager"></p-sortIcon>
             </th>
 
-            <th class="flex-none w-9rem" pSortableColumn="center.name" pTooltip="Ordenar por oficina">
+            <th class="flex-1" pSortableColumn="center.name" pTooltip="Ordenar por oficina">
                 Oficina<p-sortIcon field="center.name"></p-sortIcon>
             </th>
-            <th class="flex-none w-9rem" pSortableColumn="province" pTooltip="Ordenar por localización">
+            <th class="flex-1" pSortableColumn="province" pTooltip="Ordenar por localización">
                 Localización<p-sortIcon field="location"></p-sortIcon>
             </th>
-            <th class="flex-none w-10rem" >
+            <th class="flex-1" >
                 Estado
             </th>
 
             <th class="flex-1"></th>
         </tr>
         <tr>
-            <th class="flex-none w-7rem">
+            <th class="flex-1">
                 <p-columnFilter class="w-full " type="text" field="saga" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-none w-7rem">
+            <th class="flex-1">
                 <p-columnFilter class="w-full " type="text" field="username" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-none w-7rem">
+            <th class="flex-1">
                 <p-columnFilter class="w-full " type="text" field="name" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-none w-12rem">
+            <th class="flex-1 w-12rem">
                 <p-columnFilter class="w-full " type="text" field="lastname" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-none w-7rem">
+            <th class="flex-1">
                 <p-columnFilter class="w-full " type="text" field="customer" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-none w-4rem">
+            <th class="flex-1">
                 <p-columnFilter class="w-full " type="text" field="grade" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-none w-10rem">
+            <th class="flex-1 w-10rem">
                 <p-columnFilter class="w-full " field="role" matchMode="equals" [showMenu]="false"
                     [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -126,23 +126,23 @@
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="flex-none w-4rem">
+            <th class="flex-1">
                 <p-columnFilter class="w-full " type="text" field="hours" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-none w-7rem">
+            <th class="flex-1">
                 <p-columnFilter class="w-full " type="text" field="businesscode" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-none w-7rem">
+            <th class="flex-1">
                 <p-columnFilter class="w-full " type="text" field="department" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-none w-7rem">
+            <th class="flex-1">
                 <p-columnFilter class="w-full " type="text" field="manager" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-none w-9rem">
+            <th class="flex-1 w-9rem">
                 <p-columnFilter class="w-full " field="center.name" matchMode="equals" [showMenu]="false"
                     [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -152,7 +152,7 @@
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="flex-none w-9rem">
+            <th class="flex-1 w-9rem">
                 <p-columnFilter class="w-full " field="province.province" matchMode="equals" [showMenu]="false"
                     [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -162,10 +162,10 @@
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="flex-none w-10rem">
+            <th class="flex-1 w-9rem">
                 <p-columnFilter class="w-full" field="active" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [options]="states" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown [options]="states" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
@@ -175,52 +175,52 @@
 
     <ng-template pTemplate="body" let-person let-columns="columns">
         <tr [pSelectableRow]="person">
-            <td class="flex-none w-7rem align-items-center justify-content-center">
+            <td class="flex-1 ">
                 {{person.saga}}
             </td>
-            <td class="flex-none w-7rem align-items-center justify-content-center">
+            <td class="flex-1">
                 {{person.username}}
             </td>
-            <td class="flex-none w-7rem align-items-center justify-content-center">
+            <td class="flex-1">
                 {{person.name}}
             </td>
-            <td class="flex-none w-12rem align-items-center justify-content-center">
+            <td class="flex-none w-12rem">
                 {{person.lastname}}
             </td>
-            <td class="flex-none w-7rem align-items-center justify-content-center">
+            <td class="flex-1">
                 {{person.customer}}
             </td>
-            <td class="flex-none w-4rem align-items-center justify-content-center">
+            <td class="flex-1">
                 {{person.grade}}
             </td>
-            <td class="flex-none w-10rem align-items-center justify-content-center">
+            <td class="flex-none w-10rem">
                 {{person.role}}
             </td>
-            <td class="flex-none w-4rem align-items-center justify-content-center">
+            <td class="flex-1">
                 {{person.hours}}
             </td>
-            <td class="flex-none w-7rem align-items-center justify-content-center">
+            <td class="flex-1">
                 {{person.businesscode}}
             </td>
-            <td class="flex-none w-7rem align-items-center justify-content-center">
+            <td class="flex-1">
                 {{person.department}}
             </td>
-            <td class="flex-none w-7rem align-items-center justify-content-center">
+            <td class="flex-1">
                 {{person.manager}}
             </td>
-            <td class="flex-none w-9rem align-items-center justify-content-center">
+            <td class="flex-1">
                 {{person.center?.name}}
             </td>
-            <td class="flex-none w-9rem align-items-center justify-content-center">
+            <td class="flex-1">
                 {{person.province?.province}}
             </td>
-            <td class="flex-none w-9rem align-items-center justify-content-center" *ngIf="person.active == 0">
+            <td class="flex-1" *ngIf="person.active == 0">
                 Inactivo
             </td>
-            <td class="flex-none w-9rem align-items-center justify-content-center"  *ngIf="person.active == 1">
+            <td class="flex-1"  *ngIf="person.active == 1">
                 Activo
             </td>
-            <td class="flex-none w-9rem align-items-center justify-content-center"  *ngIf="person.active == 2">
+            <td class="flex-1"  *ngIf="person.active == 2">
                 Pendiente
             </td>
             <td class="flex-1" >
