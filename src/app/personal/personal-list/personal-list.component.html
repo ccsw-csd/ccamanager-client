@@ -18,19 +18,20 @@
     </div>
     <div class="flex justify-content-end ">
 
-        <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir usuario"> </button>
+        <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir usuario">
+        </button>
 
-        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2"
-            (click)="exportExcel()" pTooltip="Descargar listado"></button>
+        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2" (click)="exportExcel()"
+            pTooltip="Descargar listado"></button>
 
-        <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2" pTooltip="Limpiar filtros"
-            (click)="cleanFilters()" >
+        <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2"
+            pTooltip="Limpiar filtros" (click)="cleanFilters()">
         </button>
     </div>
 </div>
 
-<p-table [style]="{'height':'700px' }" [scrollable]="true" scrollHeight="flex" selectionMode="single"
-    [value]="persons" styleClass="p-datatable-striped" [paginator]="false" sortField="lastname" [sortOrder]="1"
+<p-table [style]="{'height': 'calc(100vh - 275px)' }" [scrollable]="true" scrollHeight="flex" selectionMode="single" [value]="persons"
+    styleClass="p-datatable-striped" [paginator]="false" sortField="lastname" [sortOrder]="1"
     [(filters)]="defaultFilters" (onFilter)="onFilter($event)">
     <ng-template pTemplate="header">
         <tr>
@@ -38,7 +39,7 @@
                 Saga<p-sortIcon field="saga"></p-sortIcon>
             </th>
 
-            <th class="flex-1" pSortableColumn="username" pTooltip="Ordenar por username" > 
+            <th class="flex-1" pSortableColumn="username" pTooltip="Ordenar por username">
                 Username<p-sortIcon field="username"></p-sortIcon>
             </th>
 
@@ -46,11 +47,11 @@
                 Nombre<p-sortIcon field="name"></p-sortIcon>
             </th>
 
-            <th class="flex-1 " pSortableColumn="lastname" pTooltip="Ordenar por apellidos">
+            <th class="flex flex-none w-10rem" pSortableColumn="lastname" pTooltip="Ordenar por apellidos">
                 Apellidos<p-sortIcon field="lastname"></p-sortIcon>
             </th>
 
-            <th class="flex-1" pSortableColumn="customer" pTooltip="Ordenar por cliente"> 
+            <th class="flex-1" pSortableColumn="customer" pTooltip="Ordenar por cliente">
                 Cliente<p-sortIcon field="client"></p-sortIcon>
             </th>
 
@@ -58,11 +59,11 @@
                 Grado<p-sortIcon field="grade"></p-sortIcon>
             </th>
 
-            <th class="flex-1" pSortableColumn="role" pTooltip="Ordenar por rol">
+            <th class="flex flex-none w-10rem" pSortableColumn="role" pTooltip="Ordenar por rol">
                 Rol<p-sortIcon field="role"></p-sortIcon>
             </th>
 
-            <th class="flex-1" pSortableColumn="hours" pTooltip="Ordenar número de horas">
+            <th class="flex flex-none w-5rem" pSortableColumn="hours" pTooltip="Ordenar número de horas">
                 Horas<p-sortIcon field="hours"></p-sortIcon>
             </th>
 
@@ -84,7 +85,7 @@
             <th class="flex-1" pSortableColumn="province" pTooltip="Ordenar por localización">
                 Localización<p-sortIcon field="location"></p-sortIcon>
             </th>
-            <th class="flex-1" >
+            <th class="flex-1">
                 Estado
             </th>
 
@@ -103,7 +104,7 @@
                 <p-columnFilter class="w-full " type="text" field="name" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-1 w-12rem">
+            <th class="flex flex-none w-10rem">
                 <p-columnFilter class="w-full " type="text" field="lastname" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
@@ -115,7 +116,7 @@
                 <p-columnFilter class="w-full " type="text" field="grade" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="flex-1 w-10rem">
+            <th class="flex flex-none w-10rem">
                 <p-columnFilter class="w-full " field="role" matchMode="equals" [showMenu]="false"
                     [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -126,7 +127,7 @@
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="flex-1">
+            <th class="flex flex-none w-5rem">
                 <p-columnFilter class="w-full " type="text" field="hours" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
@@ -163,9 +164,11 @@
                 </p-columnFilter>
             </th>
             <th class="flex-1 w-9rem">
-                <p-columnFilter class="w-full" field="active" matchMode="equals" [showMenu]="false" [showClearButton]="false">
+                <p-columnFilter class="w-full" field="active" matchMode="equals" [showMenu]="false"
+                    [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown [options]="states" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown [options]="states" optionLabel="label" optionValue="value"
+                            (onChange)="filter($event.value)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
@@ -184,8 +187,10 @@
             <td class="flex-1">
                 {{person.name}}
             </td>
-            <td class="flex-none w-12rem">
-                {{person.lastname}}
+            <td class="flex flex-none w-10rem">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis">
+                    {{person.lastname}}
+                </div>
             </td>
             <td class="flex-1">
                 {{person.customer}}
@@ -193,10 +198,13 @@
             <td class="flex-1">
                 {{person.grade}}
             </td>
-            <td class="flex-none w-10rem">
-                {{person.role}}
+            <td class="flex flex-none w-10rem">
+
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis">
+                    {{person.role}}
+                </div>
             </td>
-            <td class="flex-1">
+            <td class="flex flex-none w-5rem justify-content-center">
                 {{person.hours}}
             </td>
             <td class="flex-1">
@@ -217,16 +225,16 @@
             <td class="flex-1" *ngIf="person.active == 0">
                 Inactivo
             </td>
-            <td class="flex-1"  *ngIf="person.active == 1">
+            <td class="flex-1" *ngIf="person.active == 1">
                 Activo
             </td>
-            <td class="flex-1"  *ngIf="person.active == 2">
+            <td class="flex-1" *ngIf="person.active == 2">
                 Pendiente
             </td>
-            <td class="flex-1" >
+            <td class="flex-1">
                 <div class="justify-content-between">
-                    <button pButton pRipple type="button" icon="pi pi-pencil"
-                        class="p-button-rounded p-button-text" pTooltip="Editar"></button>
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                        pTooltip="Editar"></button>
                     <button pButton pRipple type="button" icon="pi pi-trash"
                         class="p-button-rounded p-button-danger p-button-text" pTooltip="Eliminar"></button>
                 </div>

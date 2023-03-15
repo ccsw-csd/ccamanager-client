@@ -11,7 +11,7 @@ import { PersonService } from '../services/person.service';
 import { Center } from 'src/app/core/models/Center';
 import { Role } from 'src/app/core/models/Role';
 import { Dropdown } from 'primeng/dropdown';
-import * as FileSaver from 'file-saver';
+import { ExportService } from 'src/app/core/services/export.service';
 
 @Component({
   selector: 'app-personal-list',
@@ -42,7 +42,8 @@ export class PersonalListComponent implements OnInit {
     private provinceService: ProvinceService,
     private personService: PersonService,
     private centerService: CenterService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private exportService: ExportService
   ) {}
 
   ngOnInit(): void {
@@ -83,47 +84,8 @@ export class PersonalListComponent implements OnInit {
     });
   }
 
-  exportExcel() {
-
-    import('xlsx').then((xlsx) => {
-      const worksheet = xlsx.utils.json_to_sheet(this.persons.map(person => {
-        return {
-          saga:person.saga,
-          username:person.username,
-          nombre:person.name,
-          apellidos:person.lastname,
-          cliente:person.customer,
-          grado:person.grade,
-          rol:person.role,
-          horas:person.hours,
-          practica:person.businesscode,
-          department: person.department,
-          evaluador: person.manager,
-          oficina:person.center?.name,
-          provincia:person.province?.province,
-          estado:person.active          
-        };
-      }));
-      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-      const excelBuffer: any = xlsx.write(workbook, {
-        bookType: 'xlsx',
-        type: 'array'
-      });
-      this.saveAsExcelFile(excelBuffer, 'persons');
-    });
-  }
-
-  saveAsExcelFile(buffer: any, fileName: string): void {
-    let EXCEL_TYPE =
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-    let EXCEL_EXTENSION = '.xlsx';
-    const data: Blob = new Blob([buffer], {
-      type: EXCEL_TYPE
-    });
-    FileSaver.saveAs(
-      data,
-      fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
-    );
+  exportExcel(){
+    this.exportService.exportPersons(this.persons)
   }
 
   getAllCenters() {
