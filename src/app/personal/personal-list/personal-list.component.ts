@@ -34,6 +34,7 @@ export class PersonalListComponent implements OnInit {
   states: any[];
   tableWidth: string;
   personsToExport : Person[];
+  
 
   constructor(
     private ref: DynamicDialogRef,
@@ -41,11 +42,16 @@ export class PersonalListComponent implements OnInit {
     private personService: PersonService,
     private centerService: CenterService,
     private roleService: RoleService,
-    private exportService: ExportService
+    private exportService: ExportService,
+    private navigatorService: NavigatorService
   ) {}
 
   ngOnInit(): void {
-
+    this.navigatorService.getNavivagorChangeEmitter().subscribe(menuVisible => {
+      if (menuVisible) this.tableWidth = 'calc(100vw - 250px)';
+       else this.tableWidth = 'calc(100vw - 50px)';
+       });
+      
     this.getAllProvinces();
     this.getAllPersons();
     this.getAllCenters();

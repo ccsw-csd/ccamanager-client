@@ -30,7 +30,7 @@
     </div>
 </div>
 
-<p-table [style]="{'height': 'calc(100vh - 275px)'}" [scrollable]="true" scrollHeight="flex" selectionMode="single" [value]="persons"
+<p-table [style]="{'height': 'calc(100vh - 275px)', 'width':tableWidth}" [scrollable]="true" scrollHeight="flex" selectionMode="single" [value]="persons"
     styleClass="p-datatable-striped " [paginator]="false" sortField="lastname" [sortOrder]="1"
     [(filters)]="defaultFilters" (onFilter)="onFilter($event)">
     <ng-template pTemplate="header">
@@ -244,13 +244,19 @@
                 </div>
             </td>
             <td style="min-width: 100px;" *ngIf="person.active == 0">
-                Inactivo
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="Inactivo" tooltipPosition="top">
+                    
+                </div>
             </td>
             <td style="min-width: 100px;" *ngIf="person.active == 1">
-                Activo
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="Activo" tooltipPosition="top">
+                    Activo
+                </div>
             </td>
             <td style="min-width: 100px;" *ngIf="person.active == 2">
-                Pendiente
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.province?.province" tooltipPosition="top">
+                    Pendiente
+                </div>
             </td>
             <td style="min-width: 115px; max-width: 115px;">
                 <div class="justify-content-between">
