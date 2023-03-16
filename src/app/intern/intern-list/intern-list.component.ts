@@ -210,30 +210,30 @@ export class InternListComponent implements OnInit {
         this.interns.forEach((element) => {
           if (element.startDate) {
             //this.show("Before:"+element.startDate);
-            element.startDate = this.convertToBrowserTimezone(element.startDate);
+            element.startDate = this.parseStringIsoToDate(element.startDate);
             //this.show("After:"+element.startDate);
           }
 
           if (element.endDate) {
-            element.endDate = this.convertToBrowserTimezone(element.endDate);
+            element.endDate = this.parseStringIsoToDate(element.endDate);
           }
           if (element.contractDate) {
-            element.contractDate = this.convertToBrowserTimezone(element.contractDate);
+            element.contractDate = this.parseStringIsoToDate(element.contractDate);
           }
         });
       },
     });
   }
-  convertToBrowserTimezone(dateStr: any): Date {
+  // convertToBrowserTimezone(dateStr: any): Date {
 
-    const utcMoment = moment(dateStr);
-    //this.show(utcMoment.toDate());
-    //const timeZone = moment.tz.guess();
-    const localMoment = utcMoment.tz("Europe/Madrid");
-    const localDate = localMoment.toDate();
-    //this.show(localMoment.toDate());
-    return localDate;
-  }
+  //   const utcMoment = moment(dateStr);
+  //   //this.show(utcMoment.toDate());
+  //   //const timeZone = moment.tz.guess();
+  //   const localMoment = utcMoment.tz("Europe/Madrid");
+  //   const localDate = localMoment.toDate();
+  //   //this.show(localMoment.toDate());
+  //   return localDate;
+  // }
   parseStringIsoToDate(dateString: any): Date {
     const isoString = dateString.replace(' ', 'T');
     return new Date(isoString);
