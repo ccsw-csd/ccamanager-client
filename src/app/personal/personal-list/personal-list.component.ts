@@ -1,7 +1,7 @@
-import {Component,OnInit,ViewChild,ViewChildren,QueryList } from '@angular/core';
+import { Component,OnInit,ViewChild,ViewChildren,QueryList } from '@angular/core';
 import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
-import {DialogService,DynamicDialogConfig,DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService,DynamicDialogConfig,DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Province } from 'src/app/core/models/Province';
 import { ProvinceService } from 'src/app/core/services/province.service';
 import { CenterService } from 'src/app/core/services/center.service';
@@ -12,17 +12,13 @@ import { Center } from 'src/app/core/models/Center';
 import { Role } from 'src/app/core/models/Role';
 import { Dropdown } from 'primeng/dropdown';
 import { ExportService } from 'src/app/core/services/export.service';
+import { NavigatorService } from 'src/app/core/services/navigator.service';
 
 @Component({
   selector: 'app-personal-list',
   templateUrl: './personal-list.component.html',
   styleUrls: ['./personal-list.component.scss'],
-  providers: [
-    DialogService,
-    DynamicDialogRef,
-    DynamicDialogConfig,
-    ConfirmationService,
-  ],
+  providers: [DialogService, DynamicDialogRef, DynamicDialogConfig, ConfirmationService]
 })
 export class PersonalListComponent implements OnInit {
   @ViewChild(Table) table: Table;
@@ -36,7 +32,9 @@ export class PersonalListComponent implements OnInit {
   defaultFilters: any;
   totalPersons: number;
   states: any[];
- 
+  tableWidth: string;
+  personsToExport : Person[];
+
   constructor(
     private ref: DynamicDialogRef,
     private provinceService: ProvinceService,
@@ -47,6 +45,7 @@ export class PersonalListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     this.getAllProvinces();
     this.getAllPersons();
     this.getAllCenters();
@@ -72,7 +71,7 @@ export class PersonalListComponent implements OnInit {
     this.provinceService.getAllProvinces().subscribe({
       next: (res: Province[]) => {
         this.provinces = res;
-      },
+      }
     });
   }
 
@@ -80,12 +79,12 @@ export class PersonalListComponent implements OnInit {
     this.roleService.getAllRoles().subscribe({
       next: (res: Role[]) => {
         this.roles = res;
-      },
+      }
     });
   }
 
   exportExcel(){
-    this.exportService.exportPersons(this.persons)
+    this.exportService.exportPersons(this.personsToExport)
   }
 
   getAllCenters() {
@@ -101,6 +100,7 @@ export class PersonalListComponent implements OnInit {
       next: (res: Person[]) => {
         this.persons = res;
         this.totalPersons = this.persons.length;
+        this.personsToExport = this.persons
       }
     });
   }
@@ -112,6 +112,7 @@ export class PersonalListComponent implements OnInit {
   }
 
   onFilter(event) {
+    this.personsToExport = event.filteredValue;
     this.totalPersons = event.filteredValue.length;
   }
 
