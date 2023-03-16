@@ -6,7 +6,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import * as FileSaver from 'file-saver';
-import moment from 'moment-timezone';
+//import moment from 'moment-timezone';
 import { FilterService, PrimeNGConfig } from 'primeng/api';
 import { Calendar } from 'primeng/calendar';
 import { Dropdown } from 'primeng/dropdown';
@@ -185,9 +185,9 @@ export class InternListComponent implements OnInit {
       }
       this.show(value);
       this.show(filter);
-      if (typeof filter === 'string') {
-        filter = this.parseDateFromString(filter);
-      }
+      // if (typeof filter === 'string') {
+      //   filter = this.parseDateFromString(filter);
+      // }
       return (
         value.getFullYear() === filter.getFullYear() &&
         value.getMonth() === filter.getMonth() &&
@@ -195,10 +195,10 @@ export class InternListComponent implements OnInit {
       );
     });
   }
-  parseDateFromString(dateString: string): Date {
-    const momentDate = moment(dateString, 'DD/MM/YYYY');
-    return momentDate.toDate();
-  }
+  // parseDateFromString(dateString: string): Date {
+  //   const momentDate = moment(dateString, 'DD/MM/YYYY');
+  //   return momentDate.toDate();
+  // }
 
   getAllInterns() {
     this.internService.getAllInterns().subscribe({
