@@ -1,95 +1,101 @@
-<div class="max-w-min">
-
-    <div class="flex flex-row justify-content-between">
-        <div class="flex-column justify-content-start">
+<div class="flex flex-row justify-content-between" style="height:3.7rem">
+    <div class="flex justify-content-start">
         <h1>
-            Gestion de Becarios
+            Gestión Becarios
         </h1>
-        <div style="background-color:#e7edef" class="flex w-9rem h-1rem  gap-2 border-round-2xl  align-items-center ">
-            <div class="pl-3">
-                <i class="pi pi-users text-xl text-primary" ></i>
-            </div>
-            <div class="flex flex-row align-items-center gap-1">
-                <p>{{internsLength}}</p>
-                Personas
-            </div>
-        </div>
-        <div class="h-1rem"></div>
-    </div>
-    <div class="flex justify-content-end align-items-center">
-        <button pButton pRipple type="button" class="w-9rem p-3" label="Añadir"></button>
     </div>
 </div>
+<div class="flex flex-row justify-content-between">
+    <div class="flex w-9rem h-2rem gap-2 border-round-2xl align-items-center mt-3" style="background-color:#e7edef">
+        <div class="pl-3">
+            <i class="pi pi-users text-xl text-primary"></i>
+        </div>
+        <div class="flex flex-row align-items-center gap-1">
+            <p>{{internsLength}}</p>
+            Personas
+        </div>
+    </div>
+    <div class="flex justify-content-end ">
 
-<p-table [style]="{'height':'calc(100vh - 275px)'}"  [scrollable]="true"  selectionMode="single" scrollHeight="flex"
-    [value]="interns" styleClass="p-datatable-striped" >
+        <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir becario"> </button>
+
+        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2"
+            (click)="exportExcel()" pTooltip="Descargar listado"></button>
+
+        <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2" pTooltip="Limpiar filtros"
+            (click)="cleanFilters()" >
+        </button>
+    </div>
+</div>
+<p-table [style]="{'height': 'calc(100vh - 275px)', 'width': tableWidth}" [scrollable]="true"  selectionMode="single"  scrollHeight="flex"
+    [value]="interns" styleClass="p-datatable-striped"  (onFilter)="onFilter($event)" sortField="endDate" sortMode="single" [sortOrder]="-1" >
     <ng-template pTemplate="header" >
         <tr>
-            <th class='{{cols.period}} '>
-                Periodo
+            <th class='{{cols.period}}' pSortableColumn="period">
+                Periodo <p-sortIcon field="period"></p-sortIcon>
             </th>
-            <th class="{{cols.username}}">
-                Username
+            <th class="{{cols.username}}" pSortableColumn="username">
+                Username <p-sortIcon field="username"></p-sortIcon>
             </th>
-            <th class="{{cols.name}}">
-                Nombre
+            <th class="{{cols.name}}" pSortableColumn="name">
+                Nombre <p-sortIcon field="name"></p-sortIcon>
             </th>
-            <th class="{{cols.lastname}}">
-                Apellidos
+            <th class="{{cols.lastname}}" pSortableColumn="lastname">
+                Apellidos <p-sortIcon field="lastname"></p-sortIcon>
             </th>
-            <th class={{cols.gender}}>
-                Genero
+            <th class={{cols.gender}} pSortableColumn="gender">
+                Genero <p-sortIcon field="gender"></p-sortIcon>
             </th>
-            <th class="{{cols.education}}">
-                Titulacion
+            <th class="{{cols.education}}" pSortableColumn="education.name">
+                Titulacion <p-sortIcon field="education.name"></p-sortIcon>
             </th>
-            <th class="{{cols.educationCenter}}">
-                Centro
+            <th class="{{cols.educationCenter}}" pSortableColumn="educationCenter.name">
+                Centro <p-sortIcon field="educationCenter.name"></p-sortIcon>
             </th>
-            <th class="{{cols.center}}">
-                Oficina
+            <th class="{{cols.center}}" pSortableColumn="center.name">
+                Oficina <p-sortIcon field="center.name"></p-sortIcon>
             </th>
-            <th class="{{cols.province}}">
-                Localización
+            <th class="{{cols.province}}" pSortableColumn="province.province">
+                Localización <p-sortIcon field="province.province"></p-sortIcon>
             </th>
-            <th class="{{cols.startDate}}">
-                Inicio
+            <th class="{{cols.startDate}}" pSortableColumn="startDate">
+                Inicio <p-sortIcon field="startDate"></p-sortIcon>
             </th>
-            <th class="{{cols.endDate}}">
-                Fin
+            <th class="{{cols.endDate}}"pSortableColumn="endDate">
+                Fin <p-sortIcon field="endDate"></p-sortIcon>
             </th>
-            <th class="{{cols.hours}}">
-                Horas
+            <th class="{{cols.hours}}" pSortableColumn="hours">
+                Horas <p-sortIcon field="hours"></p-sortIcon>
             </th>
-            <th class="{{cols.customer}}">
-                Cliente
+            <th class="{{cols.customer}}" pSortableColumn="customer">
+                Cliente <p-sortIcon field="customer"></p-sortIcon>
             </th>
-            <th class="{{cols.code}}">
-                Codigo
+            <th class="{{cols.code}}" pSortableColumn="code"> 
+                Codigo <p-sortIcon field="code"></p-sortIcon>
             </th>
             <th class="{{cols.technologies}}">
-                Tecnologias
+                Tecnologias 
             </th>
-            <th class="{{cols.englishLevel}}">
-                Inglés
+            <th class="{{cols.englishLevel}}" pSortableColumn="englishLevel.name">
+                Inglés <p-sortIcon field="englishLevel.name"></p-sortIcon>
+            </th> 
+            <th class="{{cols.mentor}}" pSortableColumn="mentor">
+                Mentor <p-sortIcon field="mentor"></p-sortIcon>
             </th>
-            <th class="{{cols.mentor}}">
-                Mentor
+            <th class="{{cols.coordinator}}" pSortableColumn="coordinator">
+                Coordinador <p-sortIcon field="coordinator"></p-sortIcon>
             </th>
-            <th class="{{cols.coordinator}}">
-                Coordinador
+            <th class="{{cols.rrhh}}"pSortableColumn="hrManager">
+                Resp. RRHH <p-sortIcon field="hrManager"></p-sortIcon>
             </th>
-            <th class="{{cols.rrhh}}">
-                Resp. RRHH
+            <th class="{{cols.action}}" pSortableColumn="action.name">
+                Accion <p-sortIcon field="action.name"></p-sortIcon>
             </th>
-            <th class="{{cols.action}}">
-                Accion
+            <th class="{{cols.contractDate}}" pSortableColumn="contractDate">
+                F.Contrato <p-sortIcon field="contractDate"></p-sortIcon>
             </th>
-            <th class="{{cols.contractDate}}">
-                F.Contrato
-            </th>
-            <th class="{{cols.active}}">
-                Estado
+            <th class="{{cols.active}}" pSortableColumn="active">
+                Estado <p-sortIcon field="active"></p-sortIcon>
             </th>
             <th class="{{cols.buttons}}">
             </th>
@@ -110,50 +116,49 @@
             <th class="{{cols.gender}}" >
                 <p-columnFilter class="w-full" field="gender" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown [options]="genders" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="genders" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
             <th class="{{cols.education}}" >
                 <p-columnFilter class="w-full" field="education.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown [options]="educations" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="educations" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
             <th class="{{cols.educationCenter}} " >
                 <p-columnFilter class="w-full" field="educationCenter.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown [options]="educationsCenter" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="educationsCenter" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>  
             <th class="{{cols.center}} " >
                 <p-columnFilter class="w-full" field="center.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown [options]="centers" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="centers" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
             <th class="{{cols.province}}" >
                 <p-columnFilter class="w-full" field="province.province" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown [options]="provinces" optionLabel="province" (onChange)="filter($event.value?.province)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="provinces" optionLabel="province" (onChange)="filter($event.value?.province)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
             <th class="{{cols.startDate}}" >
-                <p-columnFilter class="w-full" type="date" field="startDate" matchMode="is" [showMenu]="false" >
+                <p-columnFilter class="w-full" type="date" field="startDate" matchMode="compareDate" [showMenu]="false" [showClearButton]="true">
                     <ng-template pTemplate="filter" let-filter="filterCallback">
-                        <p-calendar appendTo="body" (onSelect)="filter($event)" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" [showClear]="true" ></p-calendar>
+                        <p-calendar #filterCalendar appendTo="body" (onSelect)="filter($event)" (keyup.enter)="filter($event.srcElement.value)"  [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" [showClear]="true" ></p-calendar>
                     </ng-template>
                 </p-columnFilter>
-               
             </th>
             <th class="{{cols.endDate}} " >
-                <p-columnFilter class="w-full" type="date" field="endDate" matchMode="is" [showMenu]="false" >
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-calendar appendTo="body" (onSelect)="filter($event)" dateFormat="dd/mm/yy"></p-calendar>
+                <p-columnFilter class="w-full" type="date" field="endDate" matchMode="is" [showMenu]="false" [showClearButton]="true">
+                    <ng-template pTemplate="filter" let-filter="filterCallback">
+                        <p-calendar #filterCalendar appendTo="body" (onSelect)="filter($event)" (keyup.enter)="filter($event.srcElement.value)"  [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" [showClear]="true" ></p-calendar>
                     </ng-template>
                 </p-columnFilter>
             </th>
@@ -167,16 +172,16 @@
                 <p-columnFilter class="w-full" type="text" field="code" matchMode="contains" [showMenu]="false"></p-columnFilter>
             </th>
             <th class="{{cols.technologies}}">
-                <p-columnFilter class="w-full" field="technologies" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                <p-columnFilter class="w-full" field="technologies" matchMode="valueInArray" [showMenu]="false" [showClearButton]="true">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown [options]="technologies" optionLabel="name" (onChange)="filter($event.value?.name);show($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="technologies" optionLabel="name" (onChange)="filter($event.value?.name);show($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
             <th class="{{cols.englishLevel}} " >
-                <p-columnFilter class="w-full" field="englishLevel.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
+                <p-columnFilter class="w-full" field="englishLevel.name" matchMode="equals" [showMenu]="false" [showClearButton]="true">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown [options]="englishLevels" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="englishLevels" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
                     </ng-template>
                     
                 </p-columnFilter>
@@ -193,21 +198,21 @@
             <th class="{{cols.action}} " >
                 <p-columnFilter class="w-full" field="action.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown [options]="actions" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="actions" optionLabel="name" (onChange)="filter($event.value?.name)"  [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
             <th class="{{cols.contractDate}} " >
-                <p-columnFilter class="w-full" type="date" field="contractDate" matchMode="is" [showMenu]="false" >
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-calendar appendTo="body" (onSelect)="filter($event)" [panelStyle]="{'width':'350px'}"  dateFormat="dd/mm/yy"></p-calendar>
+                <p-columnFilter class="w-full" type="date" field="contractDate" matchMode="is" [showMenu]="false" [showClearButton]="true">
+                    <ng-template pTemplate="filter" let-filter="filterCallback">
+                        <p-calendar #filterCalendar appendTo="body" (onSelect)="filter($event)" (keyup.enter)="filter($event.srcElement.value)"  [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" [showClear]="true" ></p-calendar>
                     </ng-template>
                 </p-columnFilter>
             </th>
             <th class="{{cols.active}}" >
                 <p-columnFilter class="w-full" field="active" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown [options]="actives" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="actives" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
@@ -217,41 +222,54 @@
     </ng-template>
 
     <ng-template pTemplate="body" let-intern let-columns="columns">
-        <tr class="flex  flex-row">
+        <tr class="flex  flex-row" [pSelectableRow]="intern">
            <td class='{{cols.period}}'>
-            {{intern.period}}
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.period}}" tooltipPosition="top">
+                {{intern.period}}
+            </div>
            </td>
            <td class="{{cols.username}}">
-             {{intern.username}}
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.username}}" tooltipPosition="top">
+                {{intern.username}}
+            </div>
            </td>
            <td class="{{cols.name}}" *ngIf="intern.name">
-            {{intern.name}}
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.name}}" tooltipPosition="top">
+                {{intern.name}}
+            </div>
            </td>
            <td class="{{cols.lastname}}">
-            {{intern.lastname}}
-        </td>
-        <td class="{{cols.gender}}" *ngIf="intern.gender == 0">
-            Otros
-          </td>
-          <td class="{{cols.gender}}" *ngIf="intern.gender == 1">
-            Mujer
-          </td>
-          <td class="{{cols.gender}}" *ngIf="intern.gender == 2">
-            Hombre
-          </td>
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.lastname}}" tooltipPosition="top">
+                {{intern.lastname}}
+            </div>
+           </td>
+           <td class="{{cols.gender}}">
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{showGender(intern.gender)}}" tooltipPosition="top">
+                {{showGender(intern.gender)}}
+            </div>
+           </td>
            <td class="{{cols.education}}" *ngIf="intern.education">
-            {{intern.education.name}}
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.education.name}}" tooltipPosition="top">
+                {{intern.education.name}}
+            </div>
            </td>
            <td class="{{cols.education}}" *ngIf="!intern.education">
            </td>
            <td class="{{cols.educationCenter}}">
-            {{intern.educationCenter.name}}
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{'['+intern.educationCenter.type+'] '}}{{intern.educationCenter.name}}" tooltipPosition="top">
+                {{'['+intern.educationCenter.type+'] '}}  
+                {{intern.educationCenter.name}}
+            </div>
            </td>
            <td class="{{cols.center}}">
-            {{intern.center.name}}
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.center.name}}" tooltipPosition="top">
+                {{intern.center.name}}
+            </div>
            </td>
            <td class="{{cols.province}}" *ngIf="intern.province">
-            {{intern.province.province}}
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.province.province}}" tooltipPosition="top">
+                {{intern.province.province}}
+            </div>
            </td>
            <td class="{{cols.province}}" *ngIf="!intern.province"></td>
            <td class="{{cols.startDate}}">
@@ -260,60 +278,71 @@
            <td class="{{cols.endDate}}">
              {{intern.endDate | date:"dd/MM/yyyy"}}
            </td>
-           <td class="{{cols.hours}}">
-            {{intern.hours}}
+           <td class="{{cols.hours}} ">
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.hours}}" tooltipPosition="top">
+                {{intern.hours}}
+            </div>
            </td>
            <td class="{{cols.customer}}">
-            {{intern.customer}}
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.customer}}" tooltipPosition="top">
+                {{intern.customer}}
+            </div>
            </td>
            <td class="{{cols.code}}">
-            {{intern.code}}
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.code}}" tooltipPosition="top">
+                {{intern.code}}
+            </div>
            </td>
-           <td class="{{cols.technologies}}">
-                <p *ngFor="let tech of intern.technologies">
-                    {{tech.name +","}}
-                </p>
+           <td class="{{cols.technologies}}">                 
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{showAllTech(intern.technologies)}}" tooltipPosition="top">
+              {{showAllTech(intern.technologies)}}
+            </div>
            </td>
-           <td class="{{cols.englishLevel}}" *ngIf="intern.englishLevel">
-             {{intern.englishLevel.name}}
+           <td class="{{cols.englishLevel}}" *ngIf="intern.englishLevel" >
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.englishLevel.name}}" tooltipPosition="top">
+                {{intern.englishLevel.name}}
+            </div>
            </td>
            <td class="{{cols.englishLevel}}" *ngIf="!intern.englishLevel">
            </td>
            <td class="{{cols.mentor}}">
-             {{intern.mentor}}
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.mentor}}" tooltipPosition="top">
+                {{intern.mentor}}
+            </div>
            </td>
            <td class="{{cols.coordinator}}">
-            {{intern.coordinator}}
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis"pTooltip="{{intern.coordinator}}" tooltipPosition="top">
+                {{intern.coordinator}}
+            </div>
            </td>
            <td class="{{cols.rrhh}}">
-            {{intern.hrManager}}
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.hrManager}}" tooltipPosition="top">
+                {{intern.hrManager}}
+            </div>
            </td>
            <td class="{{cols.action}}" *ngIf="intern.action">
-            {{intern.action.name}}
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.action.name}}" tooltipPosition="top">
+                {{intern.action.name}}
+            </div>
            </td>
            <td class="{{cols.action}}" *ngIf="!intern.action">
             </td>
            <td class="{{cols.contractDate}}">
             {{intern.contractDate | date : "dd/MM/yyyy"}}
            </td>
-           <td class="{{cols.active}}" *ngIf="intern.active == 0">
-             Inactivo
-           </td>
-           <td class="{{cols.active}}" *ngIf="intern.active == 1">
-             Activo
-           </td>
-           <td class="{{cols.active}}" *ngIf="intern.active == 2">
-            Pendiente
+           <td class="{{cols.active}}" >
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{showActive(intern.active)}}" tooltipPosition="top">
+                {{showActive(intern.active)}}
+            </div>
            </td>
            <td class="{{cols.buttons}}">
-                <button pButton pRipple type="button" *ngIf="intern.comment == null || intern.comment == ''" icon="pi pi-comment" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem" (click)="addCommentOrLink('comment',intern.comment)" ></button>            
-                <button pButton pRipple type="button" *ngIf="intern.comment != null " icon="pi pi-comment" class="p-button-rounded p-button-text w-2rem h-2rem" (click)="addCommentOrLink('comment',intern.comment)" ></button>
-                <button pButton pRipple type="button" *ngIf="intern.link == null || intern.link == ''" icon="pi pi-link" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem" (click)="addCommentOrLink('link',intern.link)" ></button>            
-                <button pButton pRipple type="button" *ngIf="intern.link != null " icon="pi pi-link" class="p-button-rounded p-button-text w-2rem h-2rem" (click)="addCommentOrLink('link',intern.link)" ></button>
-                <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text w-2rem h-2rem" ></button>
-                <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text w-2rem h-2rem" ></button>            
+                <button pButton pRipple type="button" pTooltip="Link" tooltipPosition="top" *ngIf="intern.link == null || intern.link == ''" icon="pi pi-link" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem" (click)="addCommentOrLink('link',intern.link)" ></button>            
+                <button pButton pRipple type="button" pTooltip="Link" tooltipPosition="top" *ngIf="intern.link != null " icon="pi pi-link" class="p-button-rounded p-button-text w-2rem h-2rem" (click)="addCommentOrLink('link',intern.link)" ></button>
+                <button pButton pRipple type="button" pTooltip="Comentario" tooltipPosition="top"  *ngIf="intern.comment == null || intern.comment == ''" icon="pi pi-comment" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem" (click)="addCommentOrLink('comment',intern.comment)" ></button>            
+                <button pButton pRipple type="button" pTooltip="Comentario" tooltipPosition="top" *ngIf="intern.comment != null " icon="pi pi-comment" class="p-button-rounded p-button-text w-2rem h-2rem" (click)="addCommentOrLink('comment',intern.comment)" ></button>
+                <button pButton pRipple type="button" pTooltip="Editar" tooltipPosition="top" icon="pi pi-pencil" class="p-button-rounded p-button-text w-2rem h-2rem" ></button>
+                <button pButton pRipple type="button" pTooltip="Eliminar" tooltipPosition="top" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text w-2rem h-2rem" ></button>            
            </td>
         </tr>
     </ng-template>
 </p-table>
-</div>
