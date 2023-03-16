@@ -1,12 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import moment from 'moment';
-import { PrimeNGConfig } from 'primeng/api';
+import {
+  Component,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
+import * as FileSaver from 'file-saver';
+import moment from 'moment-timezone';
+import { FilterService, PrimeNGConfig } from 'primeng/api';
+import { Calendar } from 'primeng/calendar';
+import { Dropdown } from 'primeng/dropdown';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Table } from 'primeng/table';
 import { Action } from 'src/app/core/models/Action';
 import { Center } from 'src/app/core/models/Center';
 import { Province } from 'src/app/core/models/Province';
 import { ActionService } from 'src/app/core/services/action.service';
 import { CenterService } from 'src/app/core/services/center.service';
+import { NavigatorService } from 'src/app/core/services/navigator.service';
 import { ProvinceService } from 'src/app/core/services/province.service';
 import { EducationCenter } from 'src/app/maintenance/education-center/models/EducationCenter';
 import { EducationCenterService } from 'src/app/maintenance/education-center/services/education-center.service';
@@ -16,10 +27,10 @@ import { Level } from 'src/app/maintenance/english-level/models/Level';
 import { LevelService } from 'src/app/maintenance/english-level/services/level.service';
 import { Technology } from 'src/app/maintenance/technology/models/Technology';
 import { TechnologyService } from 'src/app/maintenance/technology/services/technology.service';
-import { runInThisContext } from 'vm';
 import { InternButtonsComponent } from '../intern-buttons/intern-buttons.component';
 import { Intern } from '../models/Intern';
 import { InternService } from '../services/intern.service';
+
 @Component({
   selector: 'app-intern-list',
   templateUrl: './intern-list.component.html',
@@ -27,22 +38,36 @@ import { InternService } from '../services/intern.service';
   providers: [DialogService, DynamicDialogRef],
 })
 export class InternListComponent implements OnInit {
+  @ViewChild(Table) table: Table;
+  @ViewChildren('filterDropdown') filterDropdowns!: QueryList<Dropdown>;
+  @ViewChildren('filterCalendar') filterCalendars!: QueryList<Calendar>;
+
   interns: Intern[];
+  internsForExcel: Intern[];
   educations: Education[];
   educationsCenter: EducationCenter[];
   centers: Center[];
   provinces: Province[];
   englishLevels: Level[];
   actions: Action[];
-  technologies : Technology[];
-  genders: any[];
-  actives: any[];
+  technologies: Technology[];
+  genders: any[] = [
+    { label: 'Otros', value: 0 },
+    { label: 'Mujer', value: 1 },
+    { label: 'Hombre', value: 2 },
+  ];
+  actives: any[] = [
+    { label: 'Inactivo', value: 0 },
+    { label: 'Activo', value: 1 },
+    { label: 'Pendiente', value: 2 },
+  ];
+  defaultFilters:any ={active:{value:'1'}};
   internsLength: number;
   es: any;
-
+  tableWidth: string = 'calc(100vw - 50px)';
   cols = {
-    period: 'flex flex-none w-7rem',
-    username: 'flex flex-none w-10rem',
+    period: 'flex flex-none w-7rem ',
+    username: 'flex flex-none w-10rem ',
     name: 'flex flex-none w-15rem',
     lastname: 'flex flex-none w-15rem',
     gender: 'flex flex-none w-15rem',
@@ -53,9 +78,9 @@ export class InternListComponent implements OnInit {
     startDate: 'flex flex-none w-12rem',
     endDate: 'flex flex-none w-12rem',
     hours: 'flex flex-none w-6rem',
-    customer:'flex flex-none w-10rem',
-    code:'flex flex-none w-6rem',
-    technologies:'flex flex-none w-10rem',
+    customer: 'flex flex-none w-10rem',
+    code: 'flex flex-none w-6rem',
+    technologies: 'flex flex-none w-12rem',
     englishLevel: 'flex flex-none w-12rem',
     mentor: 'flex flex-none w-18rem',
     coordinator: 'flex flex-none w-18rem',
@@ -67,6 +92,7 @@ export class InternListComponent implements OnInit {
   };
   constructor(
     private primengConfig: PrimeNGConfig,
+    private navigatorService: NavigatorService,
     private ref: DynamicDialogRef,
     private dialogService: DialogService,
     private internService: InternService,
@@ -76,10 +102,17 @@ export class InternListComponent implements OnInit {
     private provinceService: ProvinceService,
     private levelService: LevelService,
     private actionService: ActionService,
-    private technologyService:TechnologyService,
+    private technologyService: TechnologyService,
+    private filterService: FilterService
   ) {}
 
   ngOnInit(): void {
+    this.navigatorService
+      .getNavivagorChangeEmitter()
+      .subscribe((menuVisible) => {
+        if (menuVisible) this.tableWidth = 'calc(100vw - 250px)';
+        else this.tableWidth = 'calc(100vw - 50px)';
+      });
     this.getAllInterns();
     this.getAllEducations();
     this.getAllEducationCenters();
@@ -88,16 +121,7 @@ export class InternListComponent implements OnInit {
     this.getAllLevels();
     this.getAllActions();
     this.getAllTechnologies();
-    this.genders = [
-      { label: 'Otros', value: 0 },
-      { label: 'Mujer', value: 1 },
-      { label: 'Hombre', value: 2 },
-    ];
-    this.actives = [
-      { label: 'Inactivo', value: 0 },
-      { label: 'Activo', value: 1 },
-      { label: 'Pendiente', value: 2 },
-    ];
+
     this.es = {
       dayNames: [
         'domingo',
@@ -141,24 +165,85 @@ export class InternListComponent implements OnInit {
       today: 'Hoy',
       clear: 'Borrar',
     };
-
     this.primengConfig.setTranslation(this.es);
+    this.filterService.register('valueInArray', (value, filter): boolean => {
+      if (filter === undefined || filter === null || filter.trim() === '') {
+        return true;
+      }
+
+      if (value === undefined || value === null) {
+        return false;
+      }
+      return value.some((t) => t.name === filter);
+    });
+    this.filterService.register('compareDate', (value, filter): boolean => {
+      if (filter === undefined || filter === null) {
+        return true;
+      }
+      if (value === undefined || value === null) {
+        return false;
+      }
+      this.show(value);
+      this.show(filter);
+      if (typeof filter === 'string') {
+        filter = this.parseDateFromString(filter);
+      }
+      return (
+        value.getFullYear() === filter.getFullYear() &&
+        value.getMonth() === filter.getMonth() &&
+        value.getDate() === filter.getDate()
+      );
+    });
+  }
+  parseDateFromString(dateString: string): Date {
+    const momentDate = moment(dateString, 'DD/MM/YYYY');
+    return momentDate.toDate();
   }
 
   getAllInterns() {
     this.internService.getAllInterns().subscribe({
       next: (res: Intern[]) => {
         this.interns = res;
+        this.internsForExcel = res;
         this.internsLength = res.length;
-       console.log(this.interns);
+        this.show(res);
+        this.interns.forEach((element) => {
+          if (element.startDate) {
+            //this.show("Before:"+element.startDate);
+            element.startDate = this.convertToBrowserTimezone(element.startDate);
+            //this.show("After:"+element.startDate);
+          }
+
+          if (element.endDate) {
+            element.endDate = this.convertToBrowserTimezone(element.endDate);
+          }
+          if (element.contractDate) {
+            element.contractDate = this.convertToBrowserTimezone(element.contractDate);
+          }
+        });
       },
     });
   }
-  getAllTechnologies(){
+  convertToBrowserTimezone(dateStr: any): Date {
+
+    const utcMoment = moment(dateStr);
+    //this.show(utcMoment.toDate());
+    //const timeZone = moment.tz.guess();
+    const localMoment = utcMoment.tz("Europe/Madrid");
+    const localDate = localMoment.toDate();
+    //this.show(localMoment.toDate());
+    return localDate;
+  }
+  parseStringIsoToDate(dateString: any): Date {
+    const isoString = dateString.replace(' ', 'T');
+    return new Date(isoString);
+  }
+
+  getAllTechnologies() {
     this.technologyService.getAllTechnologyService().subscribe({
-      next:(res :Technology[])=>{
+      next: (res: Technology[]) => {
         this.technologies = res;
-      }
+      },
     });
   }
   getAllEducations() {
@@ -219,27 +304,89 @@ export class InternListComponent implements OnInit {
     this.onClose();
   }
 
-  convertToUTC(date: Date): Date {
-
-    console.log("entra:"+date.toString());
-    const utcDate = moment.utc(date.toISOString());
-    const utcOffset = moment.duration('+01:00').as('milliseconds');
-    const dateout = utcDate.subtract(utcOffset).toDate();
-    console.log("sale:"+dateout.toString());
-    return dateout;
-  }
-
   onClose(): void {
     this.ref.onClose.subscribe((results: any) => {
       this.getAllInterns();
     });
   }
-  formatDate(date: Date): Date {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDay();
-  
-    return new Date(year, month, day);
+
+  showAllTech(techs: Technology[]): string {
+    return techs.map((t) => t.name).join(', ');
+  }
+
+  onFilter(event) {
+    this.internsForExcel = event.filteredValue;
+    this.internsLength = event.filteredValue.length;
+  }
+
+  exportExcel() {
+    import('xlsx').then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(
+        this.internsForExcel.map((intern) => {
+          return {
+            Periodo: intern.period,
+            Username: intern.username,
+            Nombre: intern.name,
+            Apellidos: intern.lastname,
+            Genero: this.showGender(intern.gender),
+            Titulacion: intern.education?.name,
+            Centro: intern.educationCenter?.name,
+            Oficina: intern.center?.name,
+            Inicio: intern.startDate,
+            Fin: intern.endDate,
+            Horas: intern.hours,
+            Cliente: intern.customer,
+            Codigo: intern.code,
+            Tecnologias: this.showAllTech(intern.technologies),
+            Ingles: intern.englishLevel?.name,
+            Mentor: intern.mentor,
+            Coordinador: intern.coordinator,
+            RRHH: intern.hrManager,
+            Accion: intern.action?.name,
+            Contrato: intern.contractDate,
+            Activo: this.showActive(intern.active),
+            Link: intern.link,
+            Comentario: intern.comment,
+          };
+        })
+      );
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, {
+        bookType: 'xlsx',
+        type: 'array',
+      });
+      this.saveAsExcelFile(excelBuffer, 'interns');
+    });
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE =
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    let EXCEL_EXTENSION = '.xlsx';
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE,
+    });
+    FileSaver.saveAs(
+      data,
+      fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+    );
+  }
+  showGender(value: number): string {
+    return this.genders.find((gender) => gender.value === value)?.label;
+  }
+
+  showActive(value: number): string {
+    return this.actives.find((active) => active.value === value)?.label;
+  }
+
+  cleanFilters(): void {
+    this.filterDropdowns.forEach((dropdown) => dropdown.clear(null));
+    this.filterCalendars.forEach((calendar) => {
+      calendar.value = null;
+      calendar.updateInputfield();
+    });
+
+    this.table.clear();
   }
   /**
    * ELIMINAR
