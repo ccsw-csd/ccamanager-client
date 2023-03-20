@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import * as FileSaver from 'file-saver';
 //import moment from 'moment-timezone';
-import { FilterService, PrimeNGConfig } from 'primeng/api';
+import { FilterMatchMode, FilterService, PrimeNGConfig } from 'primeng/api';
 import { Calendar } from 'primeng/calendar';
 import { Dropdown } from 'primeng/dropdown';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -66,7 +66,7 @@ export class InternListComponent implements OnInit {
   es: any;
   tableWidth: string = 'calc(100vw - 50px)';
   cols = {
-    period: 'flex flex-none w-7rem ',
+    period: 'flex flex-none w-7rem ', //TODO esto no esta bien y tampoco tiene que ir aqui son cosas visuales no de control
     username: 'flex flex-none w-10rem ',
     name: 'flex flex-none w-15rem',
     lastname: 'flex flex-none w-15rem',
@@ -122,7 +122,7 @@ export class InternListComponent implements OnInit {
     this.getAllActions();
     this.getAllTechnologies();
 
-    this.es = {
+    this.es = { //TODO esto tienes que estar todo fuera de aqui para que pueda ser reutilizado
       dayNames: [
         'domingo',
         'lunes',
@@ -166,7 +166,8 @@ export class InternListComponent implements OnInit {
       clear: 'Borrar',
     };
     this.primengConfig.setTranslation(this.es);
-    this.filterService.register('valueInArray', (value, filter): boolean => {
+
+    this.filterService.register('valueInArray', (value, filter): boolean => { //TODO esto revisalo que seguro que hay uno para hacerlo
       if (filter === undefined || filter === null || filter.trim() === '') {
         return true;
       }
@@ -176,29 +177,7 @@ export class InternListComponent implements OnInit {
       }
       return value.some((t) => t.name === filter);
     });
-    this.filterService.register('compareDate', (value, filter): boolean => {
-      if (filter === undefined || filter === null) {
-        return true;
-      }
-      if (value === undefined || value === null) {
-        return false;
-      }
-      this.show(value);
-      this.show(filter);
-      // if (typeof filter === 'string') {
-      //   filter = this.parseDateFromString(filter);
-      // }
-      return (
-        value.getFullYear() === filter.getFullYear() &&
-        value.getMonth() === filter.getMonth() &&
-        value.getDate() === filter.getDate()
-      );
-    });
   }
-  // parseDateFromString(dateString: string): Date {
-  //   const momentDate = moment(dateString, 'DD/MM/YYYY');
-  //   return momentDate.toDate();
-  // }
 
   getAllInterns() {
     this.internService.getAllInterns().subscribe({
@@ -206,37 +185,19 @@ export class InternListComponent implements OnInit {
         this.interns = res;
         this.internsForExcel = res;
         this.internsLength = res.length;
-        this.show(res);
         this.interns.forEach((element) => {
           if (element.startDate) {
-            //this.show("Before:"+element.startDate);
-            element.startDate = this.parseStringIsoToDate(element.startDate);
-            //this.show("After:"+element.startDate);
+            element.startDate = new Date(element.startDate);
           }
-
           if (element.endDate) {
-            element.endDate = this.parseStringIsoToDate(element.endDate);
+            element.endDate = new Date(element.endDate);
           }
           if (element.contractDate) {
-            element.contractDate = this.parseStringIsoToDate(element.contractDate);
+            element.contractDate = new Date(element.contractDate);
           }
         });
-      },
+      }
     });
-  }
-  // convertToBrowserTimezone(dateStr: any): Date {
-
-  //   const utcMoment = moment(dateStr);
-  //   //this.show(utcMoment.toDate());
-  //   //const timeZone = moment.tz.guess();
-  //   const localMoment = utcMoment.tz("Europe/Madrid");
-  //   const localDate = localMoment.toDate();
-  //   //this.show(localMoment.toDate());
-  //   return localDate;
-  // }
-  parseStringIsoToDate(dateString: any): Date {
-    const isoString = dateString.replace(' ', 'T');
-    return new Date(isoString);
   }
 
   getAllTechnologies() {
@@ -387,11 +348,5 @@ export class InternListComponent implements OnInit {
     });
 
     this.table.clear();
-  }
-  /**
-   * ELIMINAR
-   */
-  show(value: any) {
-    console.log(value);
   }
 }
