@@ -108,6 +108,7 @@ export class PersonalListComponent implements OnInit {
         this.persons = res;
         this.totalPersons = this.persons.length;
         this.personsToExport = this.persons
+        console.log(this.persons)
       }
     });
   }
