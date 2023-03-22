@@ -6,7 +6,6 @@ import {
   ViewChildren,
 } from '@angular/core';
 import * as FileSaver from 'file-saver';
-//import moment from 'moment-timezone';
 import { FilterMatchMode, FilterService, PrimeNGConfig } from 'primeng/api';
 import { Calendar } from 'primeng/calendar';
 import { Dropdown } from 'primeng/dropdown';
@@ -19,6 +18,7 @@ import { ActionService } from 'src/app/core/services/action.service';
 import { CenterService } from 'src/app/core/services/center.service';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
 import { ProvinceService } from 'src/app/core/services/province.service';
+import { TranslateService } from 'src/app/core/services/translate.service';
 import { EducationCenter } from 'src/app/maintenance/education-center/models/EducationCenter';
 import { EducationCenterService } from 'src/app/maintenance/education-center/services/education-center.service';
 import { Education } from 'src/app/maintenance/education/models/Education';
@@ -27,7 +27,7 @@ import { Level } from 'src/app/maintenance/english-level/models/Level';
 import { LevelService } from 'src/app/maintenance/english-level/services/level.service';
 import { Technology } from 'src/app/maintenance/technology/models/Technology';
 import { TechnologyService } from 'src/app/maintenance/technology/services/technology.service';
-import { InternButtonsComponent } from '../intern-buttons/intern-buttons.component';
+import { DialogComponent } from '../dialog/dialog.component';
 import { Intern } from '../models/Intern';
 import { InternService } from '../services/intern.service';
 
@@ -42,6 +42,7 @@ export class InternListComponent implements OnInit {
   @ViewChildren('filterDropdown') filterDropdowns!: QueryList<Dropdown>;
   @ViewChildren('filterCalendar') filterCalendars!: QueryList<Calendar>;
 
+  selectedActive:string;
   interns: Intern[];
   internsForExcel: Intern[];
   educations: Education[];
@@ -57,16 +58,16 @@ export class InternListComponent implements OnInit {
     { label: 'Hombre', value: 2 },
   ];
   actives: any[] = [
-    { label: 'Inactivo', value: 0 },
-    { label: 'Activo', value: 1 },
-    { label: 'Pendiente', value: 2 },
+    { label: 'Inactivo', value: '0' },
+    { label: 'Activo', value: '1' },
+    { label: 'Pendiente', value: '2'},
   ];
-  defaultFilters:any ={active:{value:'1'}};
+  defaultFilters: any = { active: { value: '1' } };
   internsLength: number;
   es: any;
   tableWidth: string = 'calc(100vw - 50px)';
   cols = {
-    period: 'flex flex-none w-7rem ', //TODO esto no esta bien y tampoco tiene que ir aqui son cosas visuales no de control
+    period: 'flex flex-none min-w-max max-w-7rem ', //TODO esto no esta bien y tampoco tiene que ir aqui son cosas visuales no de control
     username: 'flex flex-none w-10rem ',
     name: 'flex flex-none w-15rem',
     lastname: 'flex flex-none w-15rem',
@@ -95,6 +96,7 @@ export class InternListComponent implements OnInit {
     private navigatorService: NavigatorService,
     private ref: DynamicDialogRef,
     private dialogService: DialogService,
+    private translateService: TranslateService,
     private internService: InternService,
     private educationService: EducationService,
     private educationCenterService: EducationCenterService,
@@ -107,6 +109,7 @@ export class InternListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.selectedActive="1";
     this.navigatorService
       .getNavivagorChangeEmitter()
       .subscribe((menuVisible) => {
@@ -122,52 +125,10 @@ export class InternListComponent implements OnInit {
     this.getAllActions();
     this.getAllTechnologies();
 
-    this.es = { //TODO esto tienes que estar todo fuera de aqui para que pueda ser reutilizado
-      dayNames: [
-        'domingo',
-        'lunes',
-        'martes',
-        'miércoles',
-        'jueves',
-        'viernes',
-        'sábado',
-      ],
-      dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
-      dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-      monthNames: [
-        'enero',
-        'febrero',
-        'marzo',
-        'abril',
-        'mayo',
-        'junio',
-        'julio',
-        'agosto',
-        'septiembre',
-        'octubre',
-        'noviembre',
-        'diciembre',
-      ],
-      monthNamesShort: [
-        'ene',
-        'feb',
-        'mar',
-        'abr',
-        'may',
-        'jun',
-        'jul',
-        'ago',
-        'sep',
-        'oct',
-        'nov',
-        'dic',
-      ],
-      today: 'Hoy',
-      clear: 'Borrar',
-    };
-    this.primengConfig.setTranslation(this.es);
+    this.primengConfig.setTranslation(this.translateService.getSpanish());
 
-    this.filterService.register('valueInArray', (value, filter): boolean => { //TODO esto revisalo que seguro que hay uno para hacerlo
+    this.filterService.register('valueInArray', (value, filter): boolean => {
+      //TODO esto revisalo que seguro que hay uno para hacerlo
       if (filter === undefined || filter === null || filter.trim() === '') {
         return true;
       }
@@ -196,7 +157,7 @@ export class InternListComponent implements OnInit {
             element.contractDate = new Date(element.contractDate);
           }
         });
-      }
+      },
     });
   }
 
@@ -243,6 +204,7 @@ export class InternListComponent implements OnInit {
       },
     });
   }
+  
   getAllActions() {
     this.actionService.getAllActions().subscribe({
       next: (res: Action[]) => {
@@ -252,7 +214,7 @@ export class InternListComponent implements OnInit {
   }
 
   addCommentOrLink(type: string, value?: string) {
-    this.ref = this.dialogService.open(InternButtonsComponent, {
+    this.ref = this.dialogService.open(DialogComponent, {
       height: '420px',
       width: '600px',
       data: {
@@ -337,16 +299,24 @@ export class InternListComponent implements OnInit {
   }
 
   showActive(value: number): string {
-    return this.actives.find((active) => active.value === value)?.label;
+    return this.actives.find((active) => active.value === value.toString())?.label;
   }
 
-  cleanFilters(): void {
+  cleanFilters(table:Table): void {
     this.filterDropdowns.forEach((dropdown) => dropdown.clear(null));
     this.filterCalendars.forEach((calendar) => {
+      calendar.inputFieldValue = "";
       calendar.value = null;
       calendar.updateInputfield();
     });
+    table.reset();
+    table.clear();
+  }
 
-    this.table.clear();
+  clearCalendar(calendar:any){
+     
+      calendar.value=null;
+      calendar.updateInputfield();
+   
   }
 }

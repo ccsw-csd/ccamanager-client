@@ -3,20 +3,18 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { InternService } from '../services/intern.service';
 @Component({
-  selector: 'app-intern-buttons',
-  templateUrl: './intern-buttons.component.html',
-  styleUrls: ['./intern-buttons.component.scss']
+  selector: 'app-dialog',
+  templateUrl: './dialog.component.html',
+  styleUrls: ['./dialog.component.scss']
 })
-export class InternButtonsComponent implements OnInit {
+export class DialogComponent implements OnInit {
   text:string;  
-  linkOrComment:string;
+  label:string;
   constructor(private ref: DynamicDialogRef,
-    private config: DynamicDialogConfig,
-    private snackbarService:SnackbarService,
-    private internService:InternService) { }
+    private config: DynamicDialogConfig) { }
 
   ngOnInit(): void {
-    this.linkOrComment = this.config.data.action;
+    this.label = this.config.data.action;
     this.text = this.config.data.value;
   }
 
