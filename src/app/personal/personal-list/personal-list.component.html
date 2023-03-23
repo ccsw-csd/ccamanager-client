@@ -1,1 +1,275 @@
-<p>personal-list works!</p>
+<div class="flex flex-row justify-content-between">
+    <div class="flex justify-content-start">
+        <h1>
+            Gestión personal
+        </h1>
+    </div>
+</div>
+
+<div class="flex flex-row justify-content-between">
+    <div class="flex w-9rem h-2rem gap-2 border-round-2xl align-items-center mt-3" style="background-color:#e7edef">
+        <div class="pl-3">
+            <i class="pi pi-users text-xl text-primary"></i>
+        </div>
+        <div class="flex flex-row align-items-center gap-1">
+            <p>{{this.totalPersons}}</p>
+            Personas
+        </div>
+    </div>
+    <div class="flex justify-content-end ">
+
+        <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" (click)="null" pTooltip="Añadir usuario" >
+        </button>
+
+        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2" (click)="exportExcel()"
+            pTooltip="Descargar listado"></button>
+
+        <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2"
+            pTooltip="Limpiar filtros" (click)="cleanFilters()">
+        </button>
+    </div>
+</div>
+
+
+<p-table [style]="{'height': 'calc(100vh - 275px)', 'width':tableWidth }" [scrollable]="true" scrollHeight="flex" selectionMode="single" [value]="persons"
+    styleClass="p-datatable-striped " [paginator]="false" sortField="lastname" [sortOrder]="1"
+    [(filters)]="defaultFilters" (onFilter)="onFilter($event)">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="min-width: 80px; max-width: 100px;" pSortableColumn="saga">
+                Saga<p-sortIcon field="saga"></p-sortIcon>
+            </th>
+
+            <th style="min-width: 80px; max-width: 100px;" pSortableColumn="username">
+                Username<p-sortIcon field="username"></p-sortIcon>
+            </th>
+
+            <th style="min-width: 100px; " pSortableColumn="name">
+                Nombre<p-sortIcon field="name"></p-sortIcon>
+            </th>
+
+            <th style="min-width: 230px" pSortableColumn="lastname" >
+                Apellidos<p-sortIcon field="lastname"></p-sortIcon>
+            </th>
+
+            <th style="min-width: 100px;" pSortableColumn="customer">
+                Cliente<p-sortIcon field="customer"></p-sortIcon>
+            </th>
+
+            <th style="min-width: 80px; max-width: 100px;" pSortableColumn="grade">
+                Grado<p-sortIcon field="grade"></p-sortIcon>
+            </th>
+
+            <th style="min-width: 100px;" pSortableColumn="role">
+                Rol<p-sortIcon field="role"></p-sortIcon>
+            </th>
+
+            <th style="min-width: 60px; max-width: 80px;" pSortableColumn="hours">
+                Horas<p-sortIcon field="hours"></p-sortIcon>
+            </th>
+
+            <th style="min-width: 100px;" pSortableColumn="businesscode">
+                Práctica<p-sortIcon field="businesscode"></p-sortIcon>
+            </th>
+
+            <th style="min-width: 100px;" pSortableColumn="department">
+                Dpto<p-sortIcon field="department"></p-sortIcon>
+            </th>
+
+            <th style="min-width: 100px;" pSortableColumn="manager">
+                Evaluador<p-sortIcon field="manager"></p-sortIcon>
+            </th>
+
+            <th style="min-width: 100px;" pSortableColumn="center.name">
+                Oficina<p-sortIcon field="center.name"></p-sortIcon>
+            </th>
+            <th style="min-width: 100px;" pSortableColumn="province.province">
+                Localización<p-sortIcon field="province.province"></p-sortIcon>
+            </th>
+            <th style="min-width: 100px; max-width: 120px;" pSortableColumn="active">
+                Estado<p-sortIcon field="active"></p-sortIcon>
+            </th>
+
+            <th style="min-width: 115px; max-width: 115px;"></th>
+        </tr>
+        <tr>
+            <th style="min-width: 80px; max-width: 100px;">
+                <p-columnFilter class="w-full " type="text" field="saga" matchMode="contains" [showMenu]="false"
+                    [showClearButton]="false"></p-columnFilter>
+            </th>
+            <th style="min-width: 80px; max-width: 100px;">
+                <p-columnFilter class="w-full " type="text" field="username" matchMode="contains" [showMenu]="false"
+                    [showClearButton]="false"></p-columnFilter>
+            </th>
+            <th style="min-width: 100px;">
+                <p-columnFilter class="w-full " type="text" field="name" matchMode="contains" [showMenu]="false"
+                    [showClearButton]="false"></p-columnFilter>
+            </th>
+            <th style="min-width: 230px">
+                <p-columnFilter class="w-full " type="text" field="lastname" matchMode="contains" [showMenu]="false"
+                    [showClearButton]="false"></p-columnFilter>
+            </th>
+            <th style="min-width: 100px;">
+                <p-columnFilter class="w-full " type="text" field="customer" matchMode="contains" [showMenu]="false"
+                    [showClearButton]="false"></p-columnFilter>
+            </th>
+            <th style="min-width: 80px; max-width: 100px;">
+                <p-columnFilter class="w-full " type="text" field="grade" matchMode="contains" [showMenu]="false"
+                    [showClearButton]="false"></p-columnFilter>
+            </th>
+            <th style="min-width: 100px;">
+                <p-columnFilter class="w-full " field="role" matchMode="equals" [showMenu]="false"
+                    [showClearButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown #filterDropdown [options]="roles" optionLabel="role"
+                            (onChange)="filter($event.value?.role)" [showClear]="true" placeholder="..." 
+                            [showClearButton]="false">
+                        </p-dropdown>
+                    </ng-template>
+                </p-columnFilter>
+            </th>
+            <th style="min-width: 60px; max-width: 80px;">
+                <p-columnFilter class="w-full " type="text" field="hours" matchMode="contains" [showMenu]="false"
+                    [showClearButton]="false"></p-columnFilter>
+            </th>
+            <th style="min-width: 100px;">
+                <p-columnFilter class="w-full " type="text" field="businesscode" matchMode="contains" [showMenu]="false"
+                    [showClearButton]="false"></p-columnFilter>
+            </th>
+            <th style="min-width: 100px;">
+                <p-columnFilter class="w-full " type="text" field="department" matchMode="contains" [showMenu]="false"
+                    [showClearButton]="false"></p-columnFilter>
+            </th>
+            <th style="min-width: 100px;">
+                <p-columnFilter class="w-full " type="text" field="manager" matchMode="contains" [showMenu]="false"
+                    [showClearButton]="false"></p-columnFilter>
+            </th>
+            <th style="min-width: 100px;">
+                <p-columnFilter class="w-full " field="center.name" matchMode="equals" [showMenu]="false"
+                    [showClearButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown #filterDropdown [options]="centers" optionLabel="name"
+                            (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="...">
+                        </p-dropdown>
+                    </ng-template>
+                </p-columnFilter>
+            </th>
+            <th style="min-width: 100px;">
+                <p-columnFilter class="w-full " field="province.province" matchMode="equals" [showMenu]="false"
+                    [showClearButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown #filterDropdown [options]="provinces" optionLabel="province"
+                            (onChange)="filter($event.value?.province)" [showClear]="true" placeholder="...">
+                        </p-dropdown>
+                    </ng-template>
+                </p-columnFilter>
+            </th>
+            <th style="min-width: 100px; max-width: 120px;">
+                <p-columnFilter class="w-full" field="active" matchMode="equals" [showMenu]="false"
+                    [showClearButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown  [(ngModel)]="defaultActive" [options]="states" optionLabel="label" optionValue="value"
+                            (onChange)="filter($event.value)" [showClear]="true" placeholder="..."> </p-dropdown>
+                    </ng-template>
+                </p-columnFilter>
+            </th>
+            <th style="min-width: 115px; max-width: 115px;"></th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-person let-columns="columns">
+        <tr [pSelectableRow]="person">
+            <td style="min-width: 80px; max-width: 100px;">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.saga" tooltipPosition="top">
+                    {{person.saga}}
+                </div>
+            </td>
+            <td style="min-width: 80px; max-width: 100px;">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.username" tooltipPosition="top">
+                    {{person.username}}
+                </div>
+            </td>
+            <td style="min-width: 100px;">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.name" tooltipPosition="top">
+                    {{person.name}}
+                </div>
+            </td>
+            <td style="min-width: 230px">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.lastname" tooltipPosition="top">
+                    {{person.lastname}}
+                </div>
+            </td>
+            <td style="min-width: 100px;">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.customer" tooltipPosition="top">
+                    {{person.customer}}
+                </div>
+            </td>
+            <td style="min-width: 80px; max-width: 100px;">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.grade" tooltipPosition="top">
+                    {{person.grade}}
+                </div>
+            </td>
+            <td style="min-width: 100px;">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.role" tooltipPosition="top">
+                    {{person.role}}
+                </div>
+            </td>
+            <td  style="min-width: 60px; max-width: 80px;">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.hours" tooltipPosition="top">
+                    {{person.hours}}
+                </div>
+            </td>
+            <td style="min-width: 100px;">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.businesscode" tooltipPosition="top">
+                    {{person.businesscode}}
+                </div>
+            </td>
+            <td style="min-width: 100px;">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.department" tooltipPosition="top">
+                    {{person.department}}
+                </div>
+            </td>
+            <td style="min-width: 100px;">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.manager" tooltipPosition="top">
+                    {{person.manager}}
+                </div>
+            </td>
+            <td style="min-width: 100px;">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.center?.name" tooltipPosition="top">
+                    {{person.center?.name}}
+                </div>
+            </td>
+            <td style="min-width: 100px;">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.province?.province" tooltipPosition="top">
+                    {{person.province?.province}}
+                </div>
+            </td>
+            <td style="min-width: 100px; max-width: 120px;" *ngIf="person.active == 0">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="Inactivo" tooltipPosition="top">
+                    Inactivo
+                </div>
+            </td>
+            <td style="min-width: 100px; max-width: 120px;" *ngIf="person.active == 1">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="Activo" tooltipPosition="top">
+                    Activo
+                </div>
+            </td>
+            <td style="min-width: 100px; max-width: 120px;" *ngIf="person.active == 2">
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.province?.province" tooltipPosition="top">
+                    Pendiente
+                </div>
+            </td>
+            <td style="min-width: 115px; max-width: 115px;">
+                <div class="justify-content-between">
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                        pTooltip="Editar"></button>
+                    <button pButton pRipple type="button" icon="pi pi-trash"
+                        class="p-button-rounded p-button-danger p-button-text" pTooltip="Eliminar"></button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-toast position="top-center"></p-toast>
+<p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle" #confirmDialog></p-confirmDialog>

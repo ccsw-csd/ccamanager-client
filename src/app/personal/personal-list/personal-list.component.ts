@@ -1,15 +1,125 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,OnInit,ViewChild,ViewChildren,QueryList } from '@angular/core';
+import { Table } from 'primeng/table';
+import { ConfirmationService } from 'primeng/api';
+import { DialogService,DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { Province } from 'src/app/core/models/Province';
+import { ProvinceService } from 'src/app/core/services/province.service';
+import { CenterService } from 'src/app/core/services/center.service';
+import { RoleService } from 'src/app/core/services/role.service';
+import { Person } from '../models/Person';
+import { PersonService } from '../services/person.service';
+import { Center } from 'src/app/core/models/Center';
+import { Role } from 'src/app/core/models/Role';
+import { Dropdown } from 'primeng/dropdown';
+import { ExportService } from 'src/app/core/services/export.service';
+import { NavigatorService } from 'src/app/core/services/navigator.service';
 
 @Component({
   selector: 'app-personal-list',
   templateUrl: './personal-list.component.html',
-  styleUrls: ['./personal-list.component.scss']
+  styleUrls: ['./personal-list.component.scss'],
+  providers: [DialogService, DynamicDialogConfig, ConfirmationService]
 })
 export class PersonalListComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild(Table) table: Table;
+  @ViewChildren('filterDropdown') filterDropdowns!: QueryList<Dropdown>;
+
+  provinces: Province[];
+  persons: Person[];
+  centers: Center[];
+  roles: Role[];
+  totalPersons: number;
+  states: any[];
+  tableWidth: string;
+  personsToExport : Person[];
+  defaultActive : string;
+  defaultFilters: any =  {active: { value: '1' }, department: { value: 'CCSw' }};
+
+  constructor(
+    private provinceService: ProvinceService,
+    private personService: PersonService,
+    private centerService: CenterService,
+    private roleService: RoleService,
+    private exportService: ExportService,
+    private navigatorService: NavigatorService
+  ) {}
 
   ngOnInit(): void {
+    this.tableWidth = 'calc(100vw - 55px)'
+    this.navigatorService.getNavivagorChangeEmitter().subscribe(menuVisible => {
+      if (menuVisible) this.tableWidth = 'calc(100vw - 255px)';
+       else this.tableWidth = 'calc(100vw - 55px)';
+       });
+    
+    this.getAllProvinces();
+    this.getAllPersons();
+    this.getAllCenters();
+    this.getAllRoles();
+    this.defaultActive = '1';
+    
+    this.states = [
+      { label: 'Inactivo', value: '0' },
+      { label: 'Activo', value: '1' },
+      { label: 'Pendiente', value: '2' }
+    ];
+  }
+  
+  getAllProvinces() {
+    this.provinceService.getAllProvinces().subscribe({
+      next: (res: Province[]) => {
+        this.provinces = res;
+      }
+    });
   }
 
+  getAllRoles() {
+    this.roleService.getAllRoles().subscribe({
+      next: (res: Role[]) => {
+        this.roles = res;
+      }
+    });
+  }
+
+  exportExcel(){
+    this.exportService.exportPersons(this.personsToExport)
+  }
+
+  getAllCenters() {
+    this.centerService.getAllCenters().subscribe({
+      next: (res: Center[]) => {
+        this.centers = res;
+      }
+    });
+  }
+
+  getAllPersons() {
+    this.personService.getAllPersons().subscribe({
+      next: (res: Person[]) => {
+        this.persons = res;
+        this.totalPersons = this.persons.length;
+        this.personsToExport = this.persons;
+      }
+    });
+  }
+
+  onFilter(event) {
+    this.personsToExport = event.filteredValue;
+    this.totalPersons = event.filteredValue.length;
+  }
+
+  setFilters(): void{
+    this.defaultActive = '1';
+    this.table.filter('CCSw','department','equals');
+    this.table.filter('1','active','equals');
+
+  }
+
+  cleanFilters(): void {
+    this.filterDropdowns.forEach((dropdown) => dropdown.clear(null));
+    this.table.reset();
+    this.setFilters();
+    this.table.sort({ field: 'lastname', order: 1 });
+  }
+  
 }
