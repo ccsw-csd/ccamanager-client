@@ -89,7 +89,7 @@
                 Resp. RRHH <p-sortIcon field="hrManager"></p-sortIcon>
             </th>
             <th class="action" pSortableColumn="action.name">
-                Accion <p-sortIcon field="action.name"></p-sortIcon>
+                Acción <p-sortIcon field="action.name"></p-sortIcon>
             </th>
             <th class="contractDate" pSortableColumn="contractDate">
                 F.Contrato <p-sortIcon field="contractDate"></p-sortIcon>
@@ -102,7 +102,7 @@
         </tr>
         <tr >
             <th class="period">
-                <p-columnFilter class="w-full" type="text" field="period" matchMode="contains" [showMenu]="false"></p-columnFilter>
+                <p-columnFilter class="w-full" type="text" field="period" matchMode="contains" [showMenu]="false" ></p-columnFilter>
             </th>
             <th class="username" >
                 <p-columnFilter class="w-full" type="text" field="username" matchMode="contains" [showMenu]="false"></p-columnFilter>
@@ -149,16 +149,16 @@
                 </p-columnFilter>
             </th>
             <th class="startDate" >
-                <p-columnFilter class="w-full" type="date" field="startDate" matchMode="dateIs" [showMenu]="false" [showClearButton]="true">
+                <p-columnFilter class="w-full" type="date" field="startDate" matchMode="dateIs" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-filter="filterCallback">
-                        <p-calendar  #filterCalendar appendTo="body"  [(ngModel)]="selectedDate" (onSelect)="filter($event)" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" ></p-calendar>
+                        <p-calendar  #filterCalendar appendTo="body" readonlyInput="true" (onSelect)="filter($event)" (onClear)="filter($event)" (input)="filter()" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" [showClear]="true"></p-calendar>
                     </ng-template>
                 </p-columnFilter>
             </th>
             <th class="endDate" >
                 <p-columnFilter class="w-full" type="date" field="endDate" matchMode="dateIs" [showMenu]="false" [showClearButton]="true">
                     <ng-template pTemplate="filter" let-filter="filterCallback">
-                        <p-calendar #filterCalendar appendTo="body" (onSelect)="filter($event)"  [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy"></p-calendar>
+                        <p-calendar #filterCalendar appendTo="body" readonlyInput="true"  (onSelect)="filter($event)" (onClear)="filter($event)" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" [showClear]="true"></p-calendar>
                     </ng-template>
                 </p-columnFilter>
             </th>
@@ -206,14 +206,14 @@
             <th class="contractDate " >
                 <p-columnFilter class="w-full" type="date" field="contractDate" matchMode="dateIs" [showMenu]="false" [showClearButton]="true">
                     <ng-template pTemplate="filter" let-filter="filterCallback">
-                        <p-calendar #filterCalendar appendTo="body" (onSelect)="filter($event)" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy"></p-calendar>
+                        <p-calendar #filterCalendar appendTo="body" readonlyInput="true"  (onSelect)="filter($event)" (onClear)="filter($event)" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy"></p-calendar>
                     </ng-template>
                 </p-columnFilter>
             </th>
             <th class="active" >
                 <p-columnFilter class="w-full" field="active" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [(ngModel)]="selectedActive" [options]="actives" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown  [(ngModel)]="selectedActive" [options]="actives" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>

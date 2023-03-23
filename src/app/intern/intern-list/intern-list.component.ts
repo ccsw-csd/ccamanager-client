@@ -38,7 +38,6 @@ import { InternService } from '../services/intern.service';
   providers: [DialogService, DynamicDialogRef],
 })
 export class InternListComponent implements OnInit {
-  @ViewChild(Table) table: Table;
   @ViewChildren('filterDropdown') filterDropdowns!: QueryList<Dropdown>;
   @ViewChildren('filterCalendar') filterCalendars!: QueryList<Calendar>;
 
@@ -270,14 +269,17 @@ export class InternListComponent implements OnInit {
   }
 
   showGender(value: number): string {
+    
     return this.genders.find((gender) => gender.value === value)?.label;
   }
 
   showActive(value: number): string {
+
     return this.actives.find((active) => active.value === value.toString())?.label;
   }
 
   cleanFilters(table:Table): void {
+    
     this.filterDropdowns.forEach((dropdown) => dropdown.clear(null));
     this.filterCalendars.forEach((calendar) => {
       calendar.inputFieldValue = "";
@@ -285,14 +287,9 @@ export class InternListComponent implements OnInit {
       calendar.updateInputfield();
     });
     table.reset();
-    // this.selectedActive='1';
-    // table.filter(this.selectedActive,'active','contains');
-    // table.sortField = 'endDate';
-    // table.sortOrder = -1;
+    this.selectedActive='1';
+    table.filter(this.selectedActive,'active','contains');
+    table.sort({field:"endDate",order:-1});
   }
 
-  clearCalendar(calendar:any){
-      calendar.value=null;
-      calendar.updateInputfield();
-  }
 }
