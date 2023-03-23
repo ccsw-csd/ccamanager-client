@@ -1,12 +1,6 @@
-import {
-  Component,
-  OnInit,
-  QueryList,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
-import * as FileSaver from 'file-saver';
-import { FilterMatchMode, FilterService, PrimeNGConfig } from 'primeng/api';
+import {Component,OnInit,QueryList,ViewChild,ViewChildren} from '@angular/core';
+import { ExportService } from 'src/app/core/services/export.service';
+import { FilterService, PrimeNGConfig } from 'primeng/api';
 import { Calendar } from 'primeng/calendar';
 import { Dropdown } from 'primeng/dropdown';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -38,9 +32,9 @@ import { InternService } from '../services/intern.service';
   providers: [DialogService, DynamicDialogRef],
 })
 export class InternListComponent implements OnInit {
+  @ViewChild(Table) table: Table;
   @ViewChildren('filterDropdown') filterDropdowns!: QueryList<Dropdown>;
   @ViewChildren('filterCalendar') filterCalendars!: QueryList<Calendar>;
-
   selectedActive:string;
   selectedDate:Date;
   interns: Intern[];
@@ -71,6 +65,7 @@ export class InternListComponent implements OnInit {
     private navigatorService: NavigatorService,
     private ref: DynamicDialogRef,
     private dialogService: DialogService,
+    private exportService:ExportService,
     private translateService: TranslateService,
     private internService: InternService,
     private educationService: EducationService,
@@ -134,7 +129,7 @@ export class InternListComponent implements OnInit {
   }
 
   getAllTechnologies() {
-    this.technologyService.getAllTechnologyService().subscribe({
+    this.technologyService.findAll().subscribe({
       next: (res: Technology[]) => {
         this.technologies = res;
       },
@@ -148,6 +143,7 @@ export class InternListComponent implements OnInit {
       },
     });
   }
+
   getAllEducationCenters() {
     this.educationCenterService.getAllEducationCenters().subscribe({
       next: (res: EducationCenter[]) => {
@@ -155,6 +151,7 @@ export class InternListComponent implements OnInit {
       },
     });
   }
+
   getAllCenters() {
     this.centerService.getAllCenters().subscribe({
       next: (res: Center[]) => {
@@ -162,6 +159,7 @@ export class InternListComponent implements OnInit {
       },
     });
   }
+
   getAllProvinces() {
     this.provinceService.getAllProvinces().subscribe({
       next: (res: Province[]) => {
@@ -211,74 +209,52 @@ export class InternListComponent implements OnInit {
   }
 
   onFilter(event) {
+
     this.internsForExcel = event.filteredValue;
     this.internsLength = event.filteredValue.length;
   }
 
-  exportExcel() {
-    import('xlsx').then((xlsx) => {
-      const worksheet = xlsx.utils.json_to_sheet(
-        this.internsForExcel.map((intern) => {
-          return {
-            Periodo: intern.period,
-            Username: intern.username,
-            Nombre: intern.name,
-            Apellidos: intern.lastname,
-            Genero: this.showGender(intern.gender),
-            Titulacion: intern.education?.name,
-            Centro: intern.educationCenter?.name,
-            Oficina: intern.center?.name,
-            Inicio: intern.startDate,
-            Fin: intern.endDate,
-            Horas: intern.hours,
-            Cliente: intern.customer,
-            Codigo: intern.code,
-            Tecnologias: this.showAllTech(intern.technologies),
-            Ingles: intern.englishLevel?.name,
-            Mentor: intern.mentor,
-            Coordinador: intern.coordinator,
-            RRHH: intern.hrManager,
-            Accion: intern.action?.name,
-            Contrato: intern.contractDate,
-            Activo: this.showActive(intern.active),
-            Link: intern.link,
-            Comentario: intern.comment,
-          };
-        })
-      );
-      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-      const excelBuffer: any = xlsx.write(workbook, {
-        bookType: 'xlsx',
-        type: 'array',
-      });
-      this.saveAsExcelFile(excelBuffer, 'interns');
+  exportExcel(){
+
+    let sendIntern = this.internsForExcel.map((intern) => {
+      return {
+        Periodo: intern.period,
+        Username: intern.username,
+        Nombre: intern.name,
+        Apellidos: intern.lastname,
+        Genero: this.showGender(intern.gender),
+        Titulacion: intern.education?.name,
+        Centro: intern.educationCenter?.name,
+        Oficina: intern.center?.name,
+        Inicio: intern.startDate,
+        Fin: intern.endDate,
+        Horas: intern.hours,
+        Cliente: intern.customer,
+        Codigo: intern.code,
+        Tecnologias: this.showAllTech(intern.technologies),
+        Ingles: intern.englishLevel?.name,
+        Mentor: intern.mentor,
+        Coordinador: intern.coordinator,
+        RRHH: intern.hrManager,
+        Accion: intern.action?.name,
+        Contrato: intern.contractDate,
+        Activo: this.showActive(intern.active),
+        Link: intern.link,
+        Comentario: intern.comment,
+      };
     });
+    this.exportService.exportInterns(sendIntern);
   }
 
-  saveAsExcelFile(buffer: any, fileName: string): void {
-    let EXCEL_TYPE =
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-    let EXCEL_EXTENSION = '.xlsx';
-    const data: Blob = new Blob([buffer], {
-      type: EXCEL_TYPE,
-    });
-    FileSaver.saveAs(
-      data,
-      fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
-    );
-  }
-
-  showGender(value: number): string {
-    
+  showGender(value: number): string {    
     return this.genders.find((gender) => gender.value === value)?.label;
   }
 
   showActive(value: number): string {
-
     return this.actives.find((active) => active.value === value.toString())?.label;
   }
 
-  cleanFilters(table:Table): void {
+  cleanFilters(): void {
     
     this.filterDropdowns.forEach((dropdown) => dropdown.clear(null));
     this.filterCalendars.forEach((calendar) => {
@@ -286,10 +262,9 @@ export class InternListComponent implements OnInit {
       calendar.value = null;
       calendar.updateInputfield();
     });
-    table.reset();
+    this.table.reset();
     this.selectedActive='1';
-    table.filter(this.selectedActive,'active','contains');
-    table.sort({field:"endDate",order:-1});
+    this.table.filter(this.selectedActive,'active','contains');
+    this.table.sort({ field: 'endDate',sortOrder:-1});
   }
-
 }

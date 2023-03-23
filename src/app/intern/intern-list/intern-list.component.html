@@ -11,23 +11,16 @@
             <i class="pi pi-users text-xl text-primary"></i>
         </div>
         <div class="flex flex-row align-items-center gap-1">
-            <p>{{internsLength}}</p>
-            Personas
+            <p>{{internsLength}}</p> Personas
         </div>
     </div>
     <div class="flex justify-content-end ">
-
         <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir becario"> </button>
-
-        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2"
-            (click)="exportExcel()" pTooltip="Descargar listado"></button>
-
-        <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2" pTooltip="Limpiar filtros"
-            (click)="cleanFilters(dt1)" >
-        </button>
+        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2" (click)="exportExcel()" pTooltip="Descargar listado"></button>
+        <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2" pTooltip="Limpiar filtros" (click)="cleanFilters()" ></button>
     </div>
 </div>
-<p-table #dt1 [style]="{'height': 'calc(100vh - 275px)', 'width': tableWidth}" [scrollable]="true"  selectionMode="single"  scrollHeight="flex"
+<p-table [style]="{'height': 'calc(100vh - 275px)', 'width': tableWidth}" [scrollable]="true"  selectionMode="single"  scrollHeight="flex"
     [value]="interns" styleClass="p-datatable-striped"  [(filters)]="defaultFilters" (onFilter)="onFilter($event)" sortField="endDate" sortMode="single" [sortOrder]="-1" >
     <ng-template pTemplate="header" >
         <tr>
@@ -156,7 +149,7 @@
                 </p-columnFilter>
             </th>
             <th class="endDate" >
-                <p-columnFilter class="w-full" type="date" field="endDate" matchMode="dateIs" [showMenu]="false" [showClearButton]="true">
+                <p-columnFilter class="w-full" type="date" field="endDate" matchMode="dateIs" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-filter="filterCallback">
                         <p-calendar #filterCalendar appendTo="body" readonlyInput="true"  (onSelect)="filter($event)" (onClear)="filter($event)" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" [showClear]="true"></p-calendar>
                     </ng-template>
@@ -172,7 +165,7 @@
                 <p-columnFilter class="w-full" type="text" field="code" matchMode="contains" [showMenu]="false"></p-columnFilter>
             </th>
             <th class="technologies">
-                <p-columnFilter class="w-full" field="technologies" matchMode="contains" [showMenu]="false" [showClearButton]="true">
+                <p-columnFilter class="w-full" field="technologies" matchMode="valueInArray" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                         <p-dropdown #filterDropdown [options]="technologies" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
                     </ng-template>
@@ -180,11 +173,10 @@
                 
             </th>
             <th class="englishLevel " >
-                <p-columnFilter class="w-full" field="englishLevel.name" matchMode="equals" [showMenu]="false" [showClearButton]="true">
+                <p-columnFilter class="w-full" field="englishLevel.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                         <p-dropdown #filterDropdown [options]="englishLevels" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
-                    </ng-template>
-                    
+                    </ng-template>                    
                 </p-columnFilter>
             </th>
             <th class="mentor" >
@@ -204,9 +196,9 @@
                 </p-columnFilter>
             </th>
             <th class="contractDate " >
-                <p-columnFilter class="w-full" type="date" field="contractDate" matchMode="dateIs" [showMenu]="false" [showClearButton]="true">
+                <p-columnFilter class="w-full" type="date" field="contractDate" matchMode="dateIs" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-filter="filterCallback">
-                        <p-calendar #filterCalendar appendTo="body" readonlyInput="true"  (onSelect)="filter($event)" (onClear)="filter($event)" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy"></p-calendar>
+                        <p-calendar #filterCalendar appendTo="body" readonlyInput="true"  (onSelect)="filter($event)" (onClear)="filter($event)"[locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" [showClear]="true"></p-calendar>
                     </ng-template>
                 </p-columnFilter>
             </th>

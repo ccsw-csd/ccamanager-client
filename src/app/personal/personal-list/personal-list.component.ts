@@ -119,7 +119,8 @@ export class PersonalListComponent implements OnInit {
     this.filterDropdowns.forEach((dropdown) => dropdown.clear(null));
     this.table.reset();
     this.setFilters();
-    this.table.sort({ field: 'lastname', order: 1 });
+    this.table.sortOrder=-1;
+    this.table.sort({ field: 'lastname', order: -1});
   }
   
 }
