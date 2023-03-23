@@ -43,6 +43,7 @@ export class InternListComponent implements OnInit {
   @ViewChildren('filterCalendar') filterCalendars!: QueryList<Calendar>;
 
   selectedActive:string;
+  selectedDate:Date;
   interns: Intern[];
   internsForExcel: Intern[];
   educations: Education[];
@@ -66,31 +67,6 @@ export class InternListComponent implements OnInit {
   internsLength: number;
   es: any;
   tableWidth: string = 'calc(100vw - 50px)';
-  cols = {
-    period: 'flex flex-none min-w-max max-w-7rem ', //TODO esto no esta bien y tampoco tiene que ir aqui son cosas visuales no de control
-    username: 'flex flex-none w-10rem ',
-    name: 'flex flex-none w-15rem',
-    lastname: 'flex flex-none w-15rem',
-    gender: 'flex flex-none w-15rem',
-    education: 'flex flex-none w-17rem',
-    educationCenter: 'flex flex-none w-18rem',
-    center: 'flex flex-none w-15rem',
-    province: 'flex flex-none w-15rem',
-    startDate: 'flex flex-none w-12rem',
-    endDate: 'flex flex-none w-12rem',
-    hours: 'flex flex-none w-6rem',
-    customer: 'flex flex-none w-10rem',
-    code: 'flex flex-none w-6rem',
-    technologies: 'flex flex-none w-12rem',
-    englishLevel: 'flex flex-none w-12rem',
-    mentor: 'flex flex-none w-18rem',
-    coordinator: 'flex flex-none w-18rem',
-    rrhh: 'flex flex-none w-10rem',
-    action: 'flex flex-none w-16rem',
-    contractDate: 'flex flex-none w-12rem',
-    active: 'flex flex-none w-12rem',
-    buttons: 'flex flex-none w-10rem align-items-center justify-content-center',
-  };
   constructor(
     private primengConfig: PrimeNGConfig,
     private navigatorService: NavigatorService,
@@ -124,15 +100,12 @@ export class InternListComponent implements OnInit {
     this.getAllLevels();
     this.getAllActions();
     this.getAllTechnologies();
-
     this.primengConfig.setTranslation(this.translateService.getSpanish());
-
     this.filterService.register('valueInArray', (value, filter): boolean => {
       //TODO esto revisalo que seguro que hay uno para hacerlo
       if (filter === undefined || filter === null || filter.trim() === '') {
         return true;
       }
-
       if (value === undefined || value === null) {
         return false;
       }
@@ -168,6 +141,7 @@ export class InternListComponent implements OnInit {
       },
     });
   }
+
   getAllEducations() {
     this.educationService.findAll().subscribe({
       next: (res: Education[]) => {
@@ -294,6 +268,7 @@ export class InternListComponent implements OnInit {
       fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
     );
   }
+
   showGender(value: number): string {
     return this.genders.find((gender) => gender.value === value)?.label;
   }
@@ -310,13 +285,14 @@ export class InternListComponent implements OnInit {
       calendar.updateInputfield();
     });
     table.reset();
-    table.clear();
+    // this.selectedActive='1';
+    // table.filter(this.selectedActive,'active','contains');
+    // table.sortField = 'endDate';
+    // table.sortOrder = -1;
   }
 
   clearCalendar(calendar:any){
-     
       calendar.value=null;
       calendar.updateInputfield();
-   
   }
 }

@@ -151,14 +151,14 @@
             <th class="startDate" >
                 <p-columnFilter class="w-full" type="date" field="startDate" matchMode="dateIs" [showMenu]="false" [showClearButton]="true">
                     <ng-template pTemplate="filter" let-filter="filterCallback">
-                        <p-calendar  #filterCalendar appendTo="body"  (onSelect)="filter($event)" (keyup.enter)="filter($event.srcElement.value)" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" ></p-calendar>
+                        <p-calendar  #filterCalendar appendTo="body"  [(ngModel)]="selectedDate" (onSelect)="filter($event)" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" ></p-calendar>
                     </ng-template>
                 </p-columnFilter>
             </th>
             <th class="endDate" >
                 <p-columnFilter class="w-full" type="date" field="endDate" matchMode="dateIs" [showMenu]="false" [showClearButton]="true">
                     <ng-template pTemplate="filter" let-filter="filterCallback">
-                        <p-calendar #filterCalendar appendTo="body" (onSelect)="filter($event)" (keyup.enter)="filter($event.srcElement.value)" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy"></p-calendar>
+                        <p-calendar #filterCalendar appendTo="body" (onSelect)="filter($event)"  [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy"></p-calendar>
                     </ng-template>
                 </p-columnFilter>
             </th>
@@ -172,7 +172,7 @@
                 <p-columnFilter class="w-full" type="text" field="code" matchMode="contains" [showMenu]="false"></p-columnFilter>
             </th>
             <th class="technologies">
-                <p-columnFilter class="w-full" field="technologies" matchMode="valueInArray" [showMenu]="false" [showClearButton]="true">
+                <p-columnFilter class="w-full" field="technologies" matchMode="contains" [showMenu]="false" [showClearButton]="true">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                         <p-dropdown #filterDropdown [options]="technologies" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
                     </ng-template>
@@ -206,7 +206,7 @@
             <th class="contractDate " >
                 <p-columnFilter class="w-full" type="date" field="contractDate" matchMode="dateIs" [showMenu]="false" [showClearButton]="true">
                     <ng-template pTemplate="filter" let-filter="filterCallback">
-                        <p-calendar #filterCalendar appendTo="body" (onClear)="clearCalendar()" (onSelect)="filter($event)" (keyup.enter)="filter($event.srcElement.value)" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy"></p-calendar>
+                        <p-calendar #filterCalendar appendTo="body" (onSelect)="filter($event)" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy"></p-calendar>
                     </ng-template>
                 </p-columnFilter>
             </th>
