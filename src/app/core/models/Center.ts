@@ -1,4 +1,5 @@
-export class Center{
-    id:number;
-    name:string;
-}
+export class Center {
+    id: number;
+    name: string;
+  }
+  

@@ -2,16 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Center } from '../models/Center';
+import { Role } from '../models/Role';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CenterService {
+export class RoleService {
   constructor(private http: HttpClient) {}
 
-  getAllCenters(): Observable<Center[]> {
-    return this.http.get<Center[]>(environment.server + '/center/');
+  getAllRoles(): Observable<Role[]> {
+    return this.http.get<Role[]>(environment.server + '/person-roles/');
   }
 }
- 
