@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as FileSaver from 'file-saver';
+import { Intern } from 'src/app/intern/models/Intern';
 import { Person } from 'src/app/personal/models/Person';
 
 
@@ -40,6 +41,20 @@ export class ExportService {
     });
   }
 
+  exportInterns(interns:any) {
+    import('xlsx').then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(interns);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, {
+        bookType: 'xlsx',
+        type: 'array',
+      });
+      this.saveAsExcelFile(excelBuffer, 'interns');
+    });
+  }
+
+
+
   saveAsExcelFile(buffer: any, fileName: string): void {
     let EXCEL_TYPE =
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
@@ -52,4 +67,6 @@ export class ExportService {
       fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
     );
   }
+
+  
 }
