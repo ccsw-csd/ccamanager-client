@@ -11,9 +11,10 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogComponent } from './dialog/dialog.component';
 import { InternListComponent } from './intern-list/intern-list.component';
+import { InternEditComponent } from './intern-edit/intern-edit.component';
 
 @NgModule({
-  declarations: [InternListComponent, DialogComponent],
+  declarations: [InternListComponent, DialogComponent, InternEditComponent],
   imports: [
     CommonModule,
     ButtonModule,
