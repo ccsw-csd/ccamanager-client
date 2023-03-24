@@ -1,7 +1,7 @@
 import { Component,OnInit,ViewChild,ViewChildren,QueryList } from '@angular/core';
 import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
-import { DialogService,DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DialogService,DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Province } from 'src/app/core/models/Province';
 import { ProvinceService } from 'src/app/core/services/province.service';
 import { CenterService } from 'src/app/core/services/center.service';
@@ -13,12 +13,13 @@ import { Role } from 'src/app/core/models/Role';
 import { Dropdown } from 'primeng/dropdown';
 import { ExportService } from 'src/app/core/services/export.service';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
+import { PersonalEditComponent } from '../personal-edit/personal-edit/personal-edit.component';
 
 @Component({
   selector: 'app-personal-list',
   templateUrl: './personal-list.component.html',
   styleUrls: ['./personal-list.component.scss'],
-  providers: [DialogService, DynamicDialogConfig, ConfirmationService]
+  providers: [DialogService, DynamicDialogConfig, DynamicDialogRef, ConfirmationService]
 })
 export class PersonalListComponent implements OnInit {
 
@@ -40,6 +41,7 @@ export class PersonalListComponent implements OnInit {
     private provinceService: ProvinceService,
     private personService: PersonService,
     private centerService: CenterService,
+    private dialogService: DialogService,
     private roleService: RoleService,
     private exportService: ExportService,
     private navigatorService: NavigatorService
@@ -120,6 +122,21 @@ export class PersonalListComponent implements OnInit {
     this.table.reset();
     this.setFilters();
     this.table.sort({ field: 'lastname', order: 1 });
+  }
+
+  editPerson(person?:Person){
+    const ref = this.dialogService.open(PersonalEditComponent,{
+      height:"450px",
+      width:"680px",
+      data:{
+        person: person,
+        provinces: this.provinces,
+        roles: this.roles,
+        centers: this.centers
+      },
+      closable:true
+    });
+    
   }
   
 }

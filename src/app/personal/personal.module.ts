@@ -15,9 +15,10 @@ import { TabViewModule } from 'primeng/tabview';
 import { TreeModule } from 'primeng/tree';
 import { ConfirmationService } from 'primeng/api';
 import { PickListModule } from 'primeng/picklist';
+import { PersonalEditComponent } from './personal-edit/personal-edit/personal-edit.component';
 
 @NgModule({
-  declarations: [PersonalListComponent],
+  declarations: [PersonalListComponent, PersonalEditComponent],
 
   imports: [
     CommonModule,

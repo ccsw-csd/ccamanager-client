@@ -1,0 +1,77 @@
+<div class="flex flex-column">
+    <h1 *ngIf="personElement.id == null" class="text-center">Nueva Persona</h1>
+    <h1 *ngIf="personElement.id != null" class="text-center">Modificar Persona</h1>
+    <div class="h-2rem">
+    </div>
+    <span class="p-float-label mb-1">
+      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.saga"  required>
+      <label for="firstname1">Saga</label>
+    </span>
+    <span class="p-float-label mb-1">
+      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.username"  required>
+      <label for="firstname1">Username</label>
+    </span>
+    <span class="p-float-label mb-1">
+      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.name"  required>
+      <label for="firstname1">Nombre</label>
+    </span>
+    <span class="p-float-label mb-1">
+      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.lastname"  required>
+      <label for="firstname1">Apellidos</label>
+    </span>
+    <!-- <span class="p-float-label mb-1">
+      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.email"  required>
+      <label for="firstname1">Email</label>
+    </span> -->
+    <span class="p-float-label mb-1">
+      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.customer"  required>
+      <label for="firstname1">Cliente</label>
+    </span>
+    <span class="p-float-label mb-1">
+      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.grade"  required>
+      <label for="firstname1">Grado</label>
+    </span>
+    <span class="p-float-label mb-1">
+      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.hours"  required>
+      <label for="firstname1">Horas</label>
+    </span>
+    <span class="p-float-label mb-1">
+      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.businesscode"  required>
+      <label for="firstname1">Práctica</label>
+    </span>
+    <span class="p-float-label mb-1">
+      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.department"  required>
+      <label for="firstname1">Dpto</label>
+    </span>
+    <span class="p-float-label mb-1">
+      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.manager"  required>
+      <label for="firstname1">Evaluador</label>
+    </span>
+    <span class="p-float-label mb-1">
+      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.active"  required>
+      <label for="firstname1">Estado</label>
+    </span>
+    <div class="flex flex-row flex-1 gap-2">   
+       
+      <div class="flex-1">
+         <p>Rol</p>
+         <p-dropdown styleClass="w-full" [options]="roles" appendTo="body" [(ngModel)]="personElement.role" optionLabel="role" > </p-dropdown>
+       </div>
+       <div class="flex-1">
+        <p>Oficina</p>
+        <p-dropdown styleClass="w-full" [options]="centers" appendTo="body" [(ngModel)]="personElement.center" optionLabel="name" > </p-dropdown>
+      </div>
+      <div class="flex-1">
+        <p>Localizacion</p>
+        <p-dropdown styleClass="w-full" [options]="provinces" appendTo="body" [(ngModel)]="personElement.province" optionLabel="province" > </p-dropdown>
+      </div>  
+      </div>
+      <div class="h-4rem">
+    </div>
+    <div class="flex flex-row justify-content-end gap-2">    
+      <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
+      <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check"  [disabled]="personElement.name=='' || personElement.name==null" (click)="saveItem(personElement)"></button>
+    </div>
+  </div>
+
+
