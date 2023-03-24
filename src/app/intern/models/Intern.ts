@@ -29,6 +29,7 @@ export class Intern {
   hrManager: string;
   action: Action;
   contractDate: Date;
+  saga:string;
   active: number;
   link: string;
   comment: string;
