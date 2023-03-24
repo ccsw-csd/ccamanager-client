@@ -21,7 +21,7 @@
     </div>
 </div>
 <p-table [style]="{'height': 'calc(100vh - 275px)', 'width': tableWidth}" [scrollable]="true"  selectionMode="single"  scrollHeight="flex"
-    [value]="interns" styleClass="p-datatable-striped"  [(filters)]="defaultFilters" (onFilter)="onFilter($event)" sortField="endDate" sortMode="single" [sortOrder]="-1" >
+    [value]="interns" styleClass="p-datatable-striped"  [(filters)]="defaultFilters" (onFilter)="onFilter($event)"  sortMode="single"  >
     <ng-template pTemplate="header" >
         <tr>
             <th class="period" pSortableColumn="period">
@@ -86,6 +86,9 @@
             </th>
             <th class="contractDate" pSortableColumn="contractDate">
                 F.Contrato <p-sortIcon field="contractDate"></p-sortIcon>
+            </th>
+            <th class="saga" pSortableColumn="saga">
+                Saga <p-sortIcon field="saga"></p-sortIcon>
             </th>
             <th class="active" pSortableColumn="active">
                 Estado <p-sortIcon field="active"></p-sortIcon>
@@ -202,6 +205,9 @@
                     </ng-template>
                 </p-columnFilter>
             </th>
+            <th class="saga" >
+                <p-columnFilter class="w-full" type="text" field="saga" matchMode="contains" [showMenu]="false"></p-columnFilter>
+            </th>
             <th class="active" >
                 <p-columnFilter class="w-full" field="active" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -248,11 +254,13 @@
            </td>
            <td class="education" *ngIf="!intern.education">
            </td>
-           <td class="educationCenter">
+           <td class="educationCenter" *ngIf="intern.educationCenter">
             <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{'['+intern.educationCenter.type+'] '}}{{intern.educationCenter.name}}" tooltipPosition="top">
                 {{'['+intern.educationCenter.type+'] '}}  
                 {{intern.educationCenter.name}}
             </div>
+           </td>
+           <td class="educationCenter" *ngIf="!intern.educationCenter">
            </td>
            <td class="center">
             <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.center.name}}" tooltipPosition="top">
@@ -322,6 +330,13 @@
             </td>
            <td class="contractDate">
             {{intern.contractDate | date : "dd/MM/yyyy"}}
+           </td>
+           <td class="saga" *ngIf="intern.saga">
+            <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.saga}}" tooltipPosition="top">
+                {{intern.saga}}
+            </div>
+           </td>
+           <td *ngIf="!intern.saga" class="saga">
            </td>
            <td class="active" >
             <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{showActive(intern.active)}}" tooltipPosition="top">
