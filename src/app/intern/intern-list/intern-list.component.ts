@@ -1,4 +1,4 @@
-import {Component,OnInit,QueryList,ViewChild,ViewChildren} from '@angular/core';
+import {AfterViewInit, Component,OnInit,QueryList,ViewChild,ViewChildren} from '@angular/core';
 import { ExportService } from 'src/app/core/services/export.service';
 import { FilterService, PrimeNGConfig } from 'primeng/api';
 import { Calendar } from 'primeng/calendar';
@@ -31,7 +31,7 @@ import { InternService } from '../services/intern.service';
   styleUrls: ['./intern-list.component.scss'],
   providers: [DialogService, DynamicDialogRef],
 })
-export class InternListComponent implements OnInit {
+export class InternListComponent implements OnInit,AfterViewInit {
   @ViewChild(Table) table: Table;
   @ViewChildren('filterDropdown') filterDropdowns!: QueryList<Dropdown>;
   @ViewChildren('filterCalendar') filterCalendars!: QueryList<Calendar>;
@@ -107,10 +107,24 @@ export class InternListComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit(){
+    this.setDefaultOrders();
+  }
+
+  setDefaultOrders(){
+    this.table.sortField='endDate';
+    this.table.sort({field: 'endDate',order:-1});
+  }
+  setDefaultFilters(){
+    this.selectedActive='1';
+    this.table.filter(this.selectedActive,'active','contains');
+  }
+
   getAllInterns() {
     this.internService.getAllInterns().subscribe({
       next: (res: Intern[]) => {
         this.interns = res;
+        console.log(res);
         this.internsForExcel = res;
         this.internsLength = res.length;
         this.interns.forEach((element) => {
@@ -263,8 +277,8 @@ export class InternListComponent implements OnInit {
       calendar.updateInputfield();
     });
     this.table.reset();
-    this.selectedActive='1';
-    this.table.filter(this.selectedActive,'active','contains');
-    this.table.sort({ field: 'endDate',sortOrder:-1});
+    this.setDefaultFilters();
+    this.setDefaultOrders();
   }
+
 }
