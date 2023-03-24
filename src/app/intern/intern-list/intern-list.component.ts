@@ -124,7 +124,6 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.internService.getAllInterns().subscribe({
       next: (res: Intern[]) => {
         this.interns = res;
-        console.log(res);
         this.internsForExcel = res;
         this.internsLength = res.length;
         this.interns.forEach((element) => {
