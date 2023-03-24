@@ -24,6 +24,7 @@ import { TechnologyService } from 'src/app/maintenance/technology/services/techn
 import { DialogComponent } from '../dialog/dialog.component';
 import { Intern } from '../models/Intern';
 import { InternService } from '../services/intern.service';
+import { InternEditComponent } from '../intern-edit/intern-edit.component';
 
 @Component({
   selector: 'app-intern-list',
@@ -281,4 +282,27 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.setDefaultOrders();
   }
 
+
+  addOrEditIntern(intern?:Intern){
+    this.ref = this.dialogService.open(InternEditComponent,{
+      height:"450px",
+      width:"680px",
+      data:{
+        intern: intern,
+        provinces: this.provinces
+      },
+      closable:true
+
+    });
+    this.onClose();
+  }
+
+  // onClose():void{
+
+  //   this.ref.onClose.subscribe(
+  //     (results:any) => {
+  //       this.ngOnInit();
+  //     }
+  //   )
+  // }
 }
