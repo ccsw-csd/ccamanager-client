@@ -2,4 +2,49 @@
     <h1 *ngIf="isNew" class="text-center">Nuevo Becario</h1>
     <h1 *ngIf="!isNew" class="text-center">Modificar Becario</h1>
 
+    <div class="h-2rem"></div>
+    <span class="p-float-label" >
+        <input id="username" type="text" pInputText [(ngModel)]="intern.username" required>
+        <label for="username">Username</label>
+    </span>
+    <span class="p-float-label" >
+        <input id="name" type="text" pInputText [(ngModel)]="intern.name" required>
+        <label for="name">Nombre</label>
+    </span>
+    <span class="p-float-label" >
+        <input id="lastname" type="text" pInputText [(ngModel)]="intern.lastname" required>
+        <label for="lastname">Apellidos</label>
+    </span>
+    <span class="p-float-label" >
+        <input id="email" type="text" pInputText [(ngModel)]="intern.email" required>
+        <label for="email">Email</label>
+    </span>
+    <p>Genero</p>
+    <p-dropdown [options]="genders" optionLabel="label" optionValue="value" [(ngModel)]="intern.gender" [showClear]="true" > </p-dropdown>
+    <p>Titulación</p>
+    <p-dropdown [options]="educations" optionLabel="name" [(ngModel)]="intern.education" [showClear]="true" > </p-dropdown>
+    <p>Centro</p>
+    <p-dropdown [options]="educationsCenter" [(ngModel)]="intern.educationCenter" optionLabel="name"></p-dropdown>
+    <p>Oficina</p>
+    <p-dropdown [options]="centers" [(ngModel)]="intern.center" optionLabel="name"></p-dropdown>
+    <p>Localización</p>
+    <p-dropdown [options]="provinces" [(ngModel)]="intern.province" optionLabel="province"></p-dropdown>
+    <p>Inicio</p>
+    <p-calendar [(ngModel)]="intern.startDate"></p-calendar>
+    <p>Fin</p>
+    <p-calendar [(ngModel)]="intern.endDate"></p-calendar>
+    <span class="p-float-label" >
+        <p-inputNumber inputId="integeronly" [(ngModel)]="intern.hours"></p-inputNumber>
+        <label for="hours">Horas</label>
+    </span>
+    <span class="p-float-label" >
+        <input id="customer" type="text" pInputText [(ngModel)]="intern.customer" required>
+        <label for="customer">Cliente</label>
+    </span>
+    <span class="p-float-label" >
+        <input id="code" type="text" pInputText [(ngModel)]="intern.code" required>
+        <label for="code">Código</label>
+    </span>
+    <p>Tecnologías</p>
+    <p-multiSelect [options]="technologies" [(ngModel)]="intern.technologies" optionLabel="name"></p-multiSelect> 
 </div>
