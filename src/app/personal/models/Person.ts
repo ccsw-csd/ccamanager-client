@@ -7,6 +7,7 @@ export class Person {
   username: string;
   name: string;
   lastname: string;
+  email:string;
   customer: string;
   grade: string;
   role: string;

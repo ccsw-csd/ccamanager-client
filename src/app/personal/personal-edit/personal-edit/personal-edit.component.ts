@@ -22,7 +22,6 @@ export class PersonalEditComponent implements OnInit {
   roles: Role[]
   provinces: Province[]
   centers: Center[]
-
   item: any;
 
   constructor(
@@ -33,13 +32,12 @@ export class PersonalEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.personElement = Object.assign(
-      this.config.data.person
-    );
+   
+    this.personElement = Object.assign({ person: Person }, this.config.data.person)
+
     this.provinces = this.config.data.provinces 
     this.roles = this.config.data.roles 
     this.centers=  this.config.data.centers 
-    
   }
 
   saveItem(person: Person) {
