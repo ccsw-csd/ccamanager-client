@@ -48,9 +48,9 @@ export class InternListComponent implements OnInit,AfterViewInit {
   actions: Action[];
   technologies: Technology[];
   genders: any[] = [
-    { label: 'Otros', value: 0 },
-    { label: 'Mujer', value: 1 },
-    { label: 'Hombre', value: 2 },
+    { label: 'Otros', value: '0' },
+    { label: 'Mujer', value: '1' },
+    { label: 'Hombre', value: '2' },
   ];
   actives: any[] = [
     { label: 'Inactivo', value: '0' },
@@ -125,7 +125,6 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.internService.getAllInterns().subscribe({
       next: (res: Intern[]) => {
         this.interns = res;
-        console.log(res);
         this.internsForExcel = res;
         this.internsLength = res.length;
         this.interns.forEach((element) => {
@@ -262,7 +261,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
   }
 
   showGender(value: number): string {    
-    return this.genders.find((gender) => gender.value === value)?.label;
+    return this.genders.find((gender) => gender.value === value?.toString())?.label;
   }
 
   showActive(value: number): string {
@@ -285,11 +284,18 @@ export class InternListComponent implements OnInit,AfterViewInit {
 
   addOrEditIntern(intern?:Intern){
     this.ref = this.dialogService.open(InternEditComponent,{
-      height:"450px",
-      width:"680px",
+      height:"800px",
+      width:"1200px",
       data:{
         intern: intern,
-        provinces: this.provinces
+        genders: this.genders,
+        educations:this.educations,
+        educationsCenter:this.educationsCenter,
+        centers:this.centers,
+        provinces:this.provinces,
+        technologies:this.technologies,
+        actions:this.actions,
+        englishLevels:this.englishLevels,
       },
       closable:true
 
@@ -297,6 +303,9 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.onClose();
   }
 
+  show(value:any){
+    console.log(value);
+  }
   // onClose():void{
 
   //   this.ref.onClose.subscribe(
