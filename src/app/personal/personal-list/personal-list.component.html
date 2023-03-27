@@ -264,7 +264,7 @@
                     <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
                         pTooltip="Editar" (click)="editPerson(person)"></button>
                     <button pButton pRipple type="button" icon="pi pi-trash"
-                        class="p-button-rounded p-button-danger p-button-text" pTooltip="Eliminar"></button>
+                        class="p-button-rounded p-button-danger p-button-text" pTooltip="Eliminar" (click)="deletePerson(person.id)"></button>
                 </div>
             </td>
         </tr>

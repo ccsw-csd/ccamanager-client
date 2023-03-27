@@ -1,7 +1,8 @@
 import { Component,OnInit,ViewChild,ViewChildren,QueryList } from '@angular/core';
 import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
-import { DialogService,DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { SnackbarService } from 'src/app/core/services/snackbar.service';
+import { DialogService,DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
 import { Province } from 'src/app/core/models/Province';
 import { ProvinceService } from 'src/app/core/services/province.service';
 import { CenterService } from 'src/app/core/services/center.service';
@@ -44,7 +45,11 @@ export class PersonalListComponent implements OnInit {
     private dialogService: DialogService,
     private roleService: RoleService,
     private exportService: ExportService,
-    private navigatorService: NavigatorService
+    private navigatorService: NavigatorService,
+    private confirmationService: ConfirmationService,
+    private snackbarService: SnackbarService,
+
+
   ) {}
 
   ngOnInit(): void {
@@ -139,7 +144,31 @@ export class PersonalListComponent implements OnInit {
     ref.onClose.subscribe((result: boolean) => {
       if (result) this.getAllPersons();
     });
-    
+  }
+
+  deletePerson(id: number) {
+    this.confirmationService.confirm({
+      message: '¿Seguro/a que quieres borrar la persona?',
+      accept: () => {
+        this.confirmationService.close();
+        this.personService.delete(id).subscribe({
+          next: () => {
+            this.personService.getAllPersons().subscribe((result: any) => {
+              this.persons = result;
+              this.snackbarService.showMessage(
+                'El registro se ha borrado con éxito'
+              );
+            });
+          },
+          error: (errorResponse) => {
+            this.snackbarService.error(errorResponse['message']);
+          },
+        });
+      },
+      reject: () => {
+        this.confirmationService.close();
+      },
+    });
   }
 
   
