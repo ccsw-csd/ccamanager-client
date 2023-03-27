@@ -96,7 +96,6 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.getAllTechnologies();
     this.primengConfig.setTranslation(this.translateService.getSpanish());
     this.filterService.register('valueInArray', (value, filter): boolean => {
-      //TODO esto revisalo que seguro que hay uno para hacerlo
       if (filter === undefined || filter === null || filter.trim() === '') {
         return true;
       }
