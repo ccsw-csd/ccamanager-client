@@ -47,9 +47,9 @@ export class InternListComponent implements OnInit,AfterViewInit {
   actions: Action[];
   technologies: Technology[];
   genders: any[] = [
-    { label: 'Otros', value: 0 },
-    { label: 'Mujer', value: 1 },
-    { label: 'Hombre', value: 2 },
+    { label: 'Otros', value: '0' },
+    { label: 'Mujer', value: '1' },
+    { label: 'Hombre', value: '2' },
   ];
   actives: any[] = [
     { label: 'Inactivo', value: '0' },
@@ -260,7 +260,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
   }
 
   showGender(value: number): string {    
-    return this.genders.find((gender) => gender.value === value)?.label;
+    return this.genders.find((gender) => gender.value === value?.toString())?.label;
   }
 
   showActive(value: number): string {

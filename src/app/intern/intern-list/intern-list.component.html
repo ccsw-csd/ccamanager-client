@@ -1,4 +1,4 @@
-<div class="flex flex-row justify-content-between" style="height:3.7rem">
+<div class="flex flex-row justify-content-between">
     <div class="flex justify-content-start">
         <h1>
             Gestión Becarios
@@ -98,49 +98,49 @@
         </tr>
         <tr >
             <th class="period">
-                <p-columnFilter class="w-full" type="text" field="period" matchMode="contains" [showMenu]="false" ></p-columnFilter>
+                <p-columnFilter class="w-full" type="text" field="period" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
             <th class="username" >
-                <p-columnFilter class="w-full" type="text" field="username" matchMode="contains" [showMenu]="false"></p-columnFilter>
+                <p-columnFilter class="w-full" type="text" field="username" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
             <th class="name" >
-                <p-columnFilter class="w-full" type="text" field="name" matchMode="contains" [showMenu]="false"></p-columnFilter>
+                <p-columnFilter class="w-full" type="text" field="name" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
             <th class="lastname" >
-                <p-columnFilter class="w-full" type="text" field="lastname" matchMode="contains" [showMenu]="false"></p-columnFilter>
+                <p-columnFilter class="w-full" type="text" field="lastname" matchMode="contains" [showMenu]="false"[showClearButton]="false"></p-columnFilter>
             </th>
             <th class="gender" >
                 <p-columnFilter class="w-full" field="gender" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [options]="genders" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="genders" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
             <th class="education" >
                 <p-columnFilter class="w-full" field="education.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [options]="educations" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="educations" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
             <th class="educationCenter " >
                 <p-columnFilter class="w-full" field="educationCenter.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [options]="educationsCenter" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="educationsCenter" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>  
             <th class="center " >
                 <p-columnFilter class="w-full" field="center.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [options]="centers" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="centers" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
             <th class="province" >
                 <p-columnFilter class="w-full" field="province.province" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [options]="provinces" optionLabel="province" (onChange)="filter($event.value?.province)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="provinces" optionLabel="province" (onChange)="filter($event.value?.province)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
@@ -159,18 +159,18 @@
                 </p-columnFilter>
             </th>
             <th class="hours" >
-                <p-columnFilter class="w-full" type="text" field="hours" matchMode="equals" [showMenu]="false"></p-columnFilter>
+                <p-columnFilter class="w-full" type="text" field="hours" matchMode="equals" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
             <th class="customer" >
-                <p-columnFilter class="w-full" type="text" field="customer" matchMode="contains" [showMenu]="false"></p-columnFilter>
+                <p-columnFilter class="w-full" type="text" field="customer" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
             <th class="code" >
-                <p-columnFilter class="w-full" type="text" field="code" matchMode="contains" [showMenu]="false"></p-columnFilter>
+                <p-columnFilter class="w-full" type="text" field="code" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
             <th class="technologies">
                 <p-columnFilter class="w-full" field="technologies" matchMode="valueInArray" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [options]="technologies" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="technologies" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
                 
@@ -178,23 +178,23 @@
             <th class="englishLevel " >
                 <p-columnFilter class="w-full" field="englishLevel.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [options]="englishLevels" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="englishLevels" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>                    
                 </p-columnFilter>
             </th>
             <th class="mentor" >
-                <p-columnFilter class="w-full" type="text" field="mentor" matchMode="contains" [showMenu]="false"></p-columnFilter>
+                <p-columnFilter class="w-full" type="text" field="mentor" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
             <th class="coordinator" >
-                <p-columnFilter class="w-full" type="text" field="coordinator" matchMode="contains" [showMenu]="false"></p-columnFilter>
+                <p-columnFilter class="w-full" type="text" field="coordinator" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
             <th class="rrhh " >
-                <p-columnFilter class="w-full" type="text" field="hrManager" matchMode="contains" [showMenu]="false"></p-columnFilter>
+                <p-columnFilter class="w-full" type="text" field="hrManager" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
             <th class="action " >
                 <p-columnFilter class="w-full" field="action.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [options]="actions" optionLabel="name" (onChange)="filter($event.value?.name)"  [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="actions" optionLabel="name" (onChange)="filter($event.value?.name)"  [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
@@ -206,12 +206,12 @@
                 </p-columnFilter>
             </th>
             <th class="saga" >
-                <p-columnFilter class="w-full" type="text" field="saga" matchMode="contains" [showMenu]="false"></p-columnFilter>
+                <p-columnFilter class="w-full" type="text" field="saga" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
             <th class="active" >
                 <p-columnFilter class="w-full" field="active" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown  [(ngModel)]="selectedActive" [options]="actives" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="Cualquiera"> </p-dropdown>
+                        <p-dropdown  [(ngModel)]="selectedActive" [options]="actives" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>

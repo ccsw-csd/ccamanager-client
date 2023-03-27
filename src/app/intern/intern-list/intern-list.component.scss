@@ -4,11 +4,11 @@
     max-width: 110px;
 }
 .username{
-    min-width: 200px;
-    max-width: 200px;
+    min-width:80px;
+    max-width: 100px;
 }
 .name{
-    min-width:235px;
+    min-width:100px;
 }
 .lastname{
     min-width: 230px;
@@ -24,10 +24,10 @@
     min-width: 200px;
 }
 .center{
-    min-width: 230px;
+    min-width: 100px;
 }
 .province{
-    min-width: 200px;
+    min-width: 100px;
 }
 .startDate{
     min-width: 200px;
@@ -36,11 +36,11 @@
     min-width: 200px;
 }
 .hours{
-    min-width: 100px;
-    max-width: 100px;
+    min-width: 60px;
+    max-width: 80px;
 }
 .customer{
-    min-width: 230px;
+    min-width: 100px;
 }
 .code{
     min-width: 130px;
@@ -68,10 +68,12 @@
     min-width: 200px;
 }
 .saga{
-    min-width:230px;
+    min-width:80px;
+    max-width: 100px;
 }
 .active{
-    min-width: 180px;
+    min-width: 100px;
+    max-width: 120px;
 }
 .buttons{
     min-width: 170px;
