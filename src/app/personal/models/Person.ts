@@ -1,5 +1,4 @@
 import { Province } from 'src/app/core/models/Province';
-import { Role } from 'src/app/core/models/Role';
 import { Center } from 'src/app/core/models/Center';
 
 export class Person {
@@ -10,7 +9,7 @@ export class Person {
   lastname: string;
   customer: string;
   grade: string;
-  role: Role;
+  role: string;
   hours: number;
   department: string;
   manager: string;

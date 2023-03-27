@@ -125,6 +125,7 @@ export class PersonalListComponent implements OnInit {
   }
 
   editPerson(person?:Person){
+
     const ref = this.dialogService.open(PersonalEditComponent,{
       height:"450px",
       width:"680px",

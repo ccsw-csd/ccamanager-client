@@ -42,8 +42,9 @@ export class PersonalEditComponent implements OnInit {
     
   }
 
-  saveItem(item: Person) {
-    this.personService.save(item).subscribe({
+  saveItem(person: Person) {
+    person.role = person.role['role'];
+    this.personService.save(person).subscribe({
       next: () => {
         this.snackbarService.showMessage(
           'El registro se ha guardado con éxito'
