@@ -125,19 +125,23 @@ export class PersonalListComponent implements OnInit {
   }
 
   editPerson(person?:Person){
-
-    const ref = this.dialogService.open(PersonalEditComponent,{
+    const ref = this.dialogService.open(PersonalEditComponent, {
+      width: '600px',
       height:"450px",
-      width:"680px",
-      data:{
+      data: {
         person: person,
-        provinces: this.provinces,
-        roles: this.roles,
-        centers: this.centers
+          provinces: this.provinces,
+          roles: this.roles,
+          centers: this.centers
       },
-      closable:true
+    });
+  
+    ref.onClose.subscribe((result: boolean) => {
+      if (result) this.getAllPersons();
     });
     
   }
+
+  
   
 }
