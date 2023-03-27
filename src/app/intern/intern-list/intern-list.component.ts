@@ -59,7 +59,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
   defaultFilters: any = { active: { value: '1' } };
   internsLength: number;
   es: any;
-  tableWidth: string = 'calc(100vw - 50px)';
+  tableWidth: string = 'calc(100vw - 250px)';
   constructor(
     private primengConfig: PrimeNGConfig,
     private navigatorService: NavigatorService,
@@ -80,12 +80,10 @@ export class InternListComponent implements OnInit,AfterViewInit {
 
   ngOnInit(): void {
     this.selectedActive="1";
-    this.navigatorService
-      .getNavivagorChangeEmitter()
-      .subscribe((menuVisible) => {
-        if (menuVisible) this.tableWidth = 'calc(100vw - 250px)';
-        else this.tableWidth = 'calc(100vw - 50px)';
-      });
+    this.navigatorService.getNavivagorChangeEmitter().subscribe(menuVisible => {
+      if (menuVisible) this.tableWidth = 'calc(100vw - 255px)';
+       else this.tableWidth = 'calc(100vw - 55px)';
+       });
     this.getAllInterns();
     this.getAllEducations();
     this.getAllEducationCenters();

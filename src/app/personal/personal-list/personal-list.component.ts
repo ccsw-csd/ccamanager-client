@@ -46,7 +46,6 @@ export class PersonalListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.tableWidth = 'calc(100vw - 55px)'
     this.navigatorService.getNavivagorChangeEmitter().subscribe(menuVisible => {
       if (menuVisible) this.tableWidth = 'calc(100vw - 255px)';
        else this.tableWidth = 'calc(100vw - 55px)';
