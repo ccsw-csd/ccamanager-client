@@ -4,6 +4,10 @@
 
     <div class="h-2rem"></div>
     <span class="p-float-label" >
+        <input id="period" type="text" pInputText [(ngModel)]="intern.period" required>
+        <label for="period">Periodo</label>
+    </span>
+    <span class="p-float-label" >
         <input id="username" type="text" pInputText [(ngModel)]="intern.username" required>
         <label for="username">Username</label>
     </span>
@@ -46,5 +50,33 @@
         <label for="code">Código</label>
     </span>
     <p>Tecnologías</p>
-    <p-multiSelect [options]="technologies" [(ngModel)]="intern.technologies" optionLabel="name"></p-multiSelect> 
+    <p-multiSelect [options]="technologies" [(ngModel)]="intern.technologies" optionLabel="name"></p-multiSelect>
+    <p>Ingles</p>
+    <p-dropdown [options]="englishLevels" [(ngModel)]="intern.englishLevel" optionLabel="name"></p-dropdown>
+    <span class="p-float-label" >
+        <input id="mentor" type="text" pInputText [(ngModel)]="intern.mentor" required>
+        <label for="mentor">Mentor</label>
+    </span>
+    <span class="p-float-label" >
+        <input id="coordinator" type="text" pInputText [(ngModel)]="intern.coordinator" required>
+        <label for="coordinator">Coordinador</label>
+    </span>
+    <span class="p-float-label" >
+        <input id="hrManager" type="text" pInputText [(ngModel)]="intern.hrManager" required>
+        <label for="hrManager">Resp. RRHH</label>
+    </span>
+    <p>Accion</p>
+    <p-dropdown [options]="actions" [(ngModel)]="intern.action" optionLabel="name"></p-dropdown>
+    <p>F.Contrato</p>
+    <p-calendar [(ngModel)]="intern.contractDate"></p-calendar>
+    <p>Estado</p>
+    <p-dropdown [options]="actives" [(ngModel)]="intern.active" optionLabel="label" optionValue="value"></p-dropdown>
+    <p *ngIf="isNew">Link</p>
+    <textarea *ngIf="isNew"  pInputTextarea style="height:50px ; width: 150px;" [(ngModel)]="intern.link"></textarea>
+    <p *ngIf="isNew">Comentario</p>
+    <textarea *ngIf="isNew"  pInputTextarea style="height:50px; width: 150px;" [(ngModel)]="intern.comment"></textarea>
+    <div class="flex flex-row justify-content-end gap-2">    
+        <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
+        <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check"  [disabled]=""  ></button>
+      </div>
 </div>
