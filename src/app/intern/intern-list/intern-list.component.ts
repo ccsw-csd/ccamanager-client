@@ -105,7 +105,9 @@ export class InternListComponent implements OnInit,AfterViewInit {
   }
 
   ngAfterViewInit(){
-    this.setDefaultOrders();
+    setTimeout(()=>{
+      this.setDefaultOrders();
+    },0);
   }
 
   setDefaultOrders(){
@@ -122,7 +124,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
       next: (res: Intern[]) => {
         this.interns = res;
         this.internsForExcel = res;
-        this.internsLength = res.length;
+        this.internsLength = this.interns.length;
         this.interns.forEach((element) => {
           if (element.startDate) {
             element.startDate = new Date(element.startDate);
@@ -194,25 +196,34 @@ export class InternListComponent implements OnInit,AfterViewInit {
     });
   }
 
-  addCommentOrLink(type: string, value?: string) {
+  addComment(intern:Intern) {
     this.ref = this.dialogService.open(DialogComponent, {
       height: '420px',
       width: '600px',
       data: {
-        action: type,
-        value: value,
+        action: 'Comment',
+        value: intern.comment,
       },
       closable: false,
       showHeader: false,
     });
-    this.onClose();
+    this.ref.onClose.subscribe((res)=>{
+      intern.comment = res;
+    });
   }
-
-  onClose(): void {
-    this.ref.onClose.subscribe((results: any) => {
-      if(results){
-        this.getAllInterns();
-      }
+  addLink(intern:Intern) {
+    this.ref = this.dialogService.open(DialogComponent, {
+      height: '420px',
+      width: '600px',
+      data: {
+        action: 'Link',
+        value: intern.link,
+      },
+      closable: false,
+      showHeader: false,
+    });
+    this.ref.onClose.subscribe((res)=>{
+      intern.link = res;
     });
   }
 
@@ -221,9 +232,10 @@ export class InternListComponent implements OnInit,AfterViewInit {
   }
 
   onFilter(event) {
-
     this.internsForExcel = event.filteredValue;
-    this.internsLength = event.filteredValue.length;
+    setTimeout(()=>{
+      this.internsLength = event.filteredValue.length;
+    },0);
   }
 
   exportExcel(){
@@ -278,5 +290,4 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.setDefaultFilters();
     this.setDefaultOrders();
   }
-
 }
