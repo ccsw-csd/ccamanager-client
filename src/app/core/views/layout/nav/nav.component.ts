@@ -25,14 +25,26 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
 
     this.items = [
-      {label: "Gestión Personal", routerLink: '/personal'},
-      {label: "Gestión Becarios", routerLink: '/intern'},
-      {label: "Pyramid Index", routerLink: '/pyramid'},
-      {label: "Pyramid Team Index", routerLink: '/pyramid-team'},
-      {label: "Centros Educativos", routerLink: '/education-center'},
-      {label: "Titulaciones", routerLink: '/education'},
-      {label: "Tecnologías", routerLink: '/technology'},
-      {label: "Niveles de inglés", routerLink: '/level'},
+      {
+        label: "Gestión Personal", routerLink: '/personal'
+      },
+      {
+        label: "Gestión Becarios", routerLink: '/intern'
+      },
+      {
+        label: "Pyramid Index", routerLink: '/pyramid'
+      },
+      {
+        label: "Pyramid Team Index", routerLink: '/pyramid-team'
+      },
+      {
+        label: "Mantenimiento",
+        items: [
+          {label: "Centros Educativos", routerLink: '/education-center'},
+          {label: "Titulaciones", routerLink: '/education'},
+          {label: "Tecnologías", routerLink: '/technology'}
+       ]
+      }
     ];
 
     this.utilsService.getAppVersion().subscribe((result: any) => {
