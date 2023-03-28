@@ -112,7 +112,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
 
   setDefaultOrders(){
     this.table.sortField='endDate';
-    this.table.sort({field: 'endDate',order:-1});
+    this.table.sort({field: this.table.sortField,order:-1});
   }
   setDefaultFilters(){
     this.selectedActive='1';
