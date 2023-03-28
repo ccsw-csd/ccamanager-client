@@ -36,88 +36,88 @@
     [(filters)]="defaultFilters" (onFilter)="onFilter($event)">
     <ng-template pTemplate="header">
         <tr>
-            <th style="min-width: 80px; max-width: 100px;" pSortableColumn="saga">
+            <th class="saga" pSortableColumn="saga">
                 Saga<p-sortIcon field="saga"></p-sortIcon>
             </th>
 
-            <th style="min-width: 80px; max-width: 100px;" pSortableColumn="username">
+            <th class="username" pSortableColumn="username">
                 Username<p-sortIcon field="username"></p-sortIcon>
             </th>
 
-            <th style="min-width: 100px; " pSortableColumn="name">
+            <th class="name" pSortableColumn="name">
                 Nombre<p-sortIcon field="name"></p-sortIcon>
             </th>
 
-            <th style="min-width: 230px" pSortableColumn="lastname" >
+            <th class="lastname" pSortableColumn="lastname" >
                 Apellidos<p-sortIcon field="lastname"></p-sortIcon>
             </th>
 
-            <th style="min-width: 100px;" pSortableColumn="customer">
+            <th class="customer" pSortableColumn="customer">
                 Cliente<p-sortIcon field="customer"></p-sortIcon>
             </th>
 
-            <th style="min-width: 80px; max-width: 100px;" pSortableColumn="grade">
+            <th class="grade" pSortableColumn="grade">
                 Grado<p-sortIcon field="grade"></p-sortIcon>
             </th>
 
-            <th style="min-width: 100px;" pSortableColumn="role">
+            <th class="role" pSortableColumn="role">
                 Rol<p-sortIcon field="role"></p-sortIcon>
             </th>
 
-            <th style="min-width: 60px; max-width: 80px;" pSortableColumn="hours">
+            <th class="hours" pSortableColumn="hours">
                 Horas<p-sortIcon field="hours"></p-sortIcon>
             </th>
 
-            <th style="min-width: 100px;" pSortableColumn="businesscode">
+            <th class="businesscode" pSortableColumn="businesscode">
                 Práctica<p-sortIcon field="businesscode"></p-sortIcon>
             </th>
 
-            <th style="min-width: 100px;" pSortableColumn="department">
+            <th class="department" pSortableColumn="department">
                 Dpto<p-sortIcon field="department"></p-sortIcon>
             </th>
 
-            <th style="min-width: 100px;" pSortableColumn="manager">
+            <th class="manager" pSortableColumn="manager">
                 Evaluador<p-sortIcon field="manager"></p-sortIcon>
             </th>
 
-            <th style="min-width: 100px;" pSortableColumn="center.name">
+            <th class="center" pSortableColumn="center.name">
                 Oficina<p-sortIcon field="center.name"></p-sortIcon>
             </th>
-            <th style="min-width: 100px;" pSortableColumn="province.province">
+            <th class="province" pSortableColumn="province.province">
                 Localización<p-sortIcon field="province.province"></p-sortIcon>
             </th>
-            <th style="min-width: 100px; max-width: 120px;" pSortableColumn="active">
+            <th class="active" pSortableColumn="active">
                 Estado<p-sortIcon field="active"></p-sortIcon>
             </th>
 
-            <th style="min-width: 115px; max-width: 115px;"></th>
+            <th class="buttons"></th>
         </tr>
         <tr>
-            <th style="min-width: 80px; max-width: 100px;">
+            <th class="saga">
                 <p-columnFilter class="w-full " type="text" field="saga" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th style="min-width: 80px; max-width: 100px;">
+            <th class="username" >
                 <p-columnFilter class="w-full " type="text" field="username" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th style="min-width: 100px;">
+            <th class="name">
                 <p-columnFilter class="w-full " type="text" field="name" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th style="min-width: 230px">
+            <th class="lastname">
                 <p-columnFilter class="w-full " type="text" field="lastname" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th style="min-width: 100px;">
+            <th class="customer">
                 <p-columnFilter class="w-full " type="text" field="customer" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th style="min-width: 80px; max-width: 100px;">
+            <th class="grade">
                 <p-columnFilter class="w-full " type="text" field="grade" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th style="min-width: 100px;">
+            <th class="role">
                 <p-columnFilter class="w-full " field="role" matchMode="equals" [showMenu]="false"
                     [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -128,23 +128,23 @@
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th style="min-width: 60px; max-width: 80px;">
+            <th class="hours">
                 <p-columnFilter class="w-full " type="text" field="hours" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th style="min-width: 100px;">
+            <th class="businesscode">
                 <p-columnFilter class="w-full " type="text" field="businesscode" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th style="min-width: 100px;">
+            <th class="department">
                 <p-columnFilter class="w-full " type="text" field="department" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th style="min-width: 100px;">
+            <th class="manager">
                 <p-columnFilter class="w-full " type="text" field="manager" matchMode="contains" [showMenu]="false"
                     [showClearButton]="false"></p-columnFilter>
             </th>
-            <th style="min-width: 100px;">
+            <th class="center">
                 <p-columnFilter class="w-full " field="center.name" matchMode="equals" [showMenu]="false"
                     [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -154,7 +154,7 @@
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th style="min-width: 100px;">
+            <th class="province">
                 <p-columnFilter class="w-full " field="province.province" matchMode="equals" [showMenu]="false"
                     [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -164,7 +164,7 @@
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th style="min-width: 100px; max-width: 120px;">
+            <th class="active">
                 <p-columnFilter class="w-full" field="active" matchMode="equals" [showMenu]="false"
                     [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -173,93 +173,93 @@
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th style="min-width: 115px; max-width: 115px;"></th>
+            <th class="buttons"></th>
         </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-person let-columns="columns">
         <tr [pSelectableRow]="person">
-            <td style="min-width: 80px; max-width: 100px;">
+            <td class="saga">
                 <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.saga" tooltipPosition="top">
                     {{person.saga}}
                 </div>
             </td>
-            <td style="min-width: 80px; max-width: 100px;">
+            <td class="username" >
                 <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.username" tooltipPosition="top">
                     {{person.username}}
                 </div>
             </td>
-            <td style="min-width: 100px;">
+            <td class="name">
                 <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.name" tooltipPosition="top">
                     {{person.name}}
                 </div>
             </td>
-            <td style="min-width: 230px">
+            <td class="lastname">
                 <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.lastname" tooltipPosition="top">
                     {{person.lastname}}
                 </div>
             </td>
-            <td style="min-width: 100px;">
+            <td class="customer">
                 <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.customer" tooltipPosition="top">
                     {{person.customer}}
                 </div>
             </td>
-            <td style="min-width: 80px; max-width: 100px;">
+            <td class="grade">
                 <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.grade" tooltipPosition="top">
                     {{person.grade}}
                 </div>
             </td>
-            <td style="min-width: 100px;">
+            <td class="role">
                 <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.role" tooltipPosition="top">
                     {{person.role}}
                 </div>
             </td>
-            <td  style="min-width: 60px; max-width: 80px;">
+            <td  class="hours">
                 <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.hours" tooltipPosition="top">
                     {{person.hours}}
                 </div>
             </td>
-            <td style="min-width: 100px;">
+            <td class="businesscode">
                 <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.businesscode" tooltipPosition="top">
                     {{person.businesscode}}
                 </div>
             </td>
-            <td style="min-width: 100px;">
+            <td class="department">
                 <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.department" tooltipPosition="top">
                     {{person.department}}
                 </div>
             </td>
-            <td style="min-width: 100px;">
+            <td class="manager">
                 <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.manager" tooltipPosition="top">
                     {{person.manager}}
                 </div>
             </td>
-            <td style="min-width: 100px;">
+            <td class="center">
                 <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.center?.name" tooltipPosition="top">
                     {{person.center?.name}}
                 </div>
             </td>
-            <td style="min-width: 100px;">
+            <td class="province">
                 <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.province?.province" tooltipPosition="top">
                     {{person.province?.province}}
                 </div>
             </td>
-            <td style="min-width: 100px; max-width: 120px;" *ngIf="person.active == 0">
+            <td class="active" *ngIf="person.active == 0">
                 <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="Inactivo" tooltipPosition="top">
                     Inactivo
                 </div>
             </td>
-            <td style="min-width: 100px; max-width: 120px;" *ngIf="person.active == 1">
+            <td class="active" *ngIf="person.active == 1">
                 <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="Activo" tooltipPosition="top">
                     Activo
                 </div>
             </td>
-            <td style="min-width: 100px; max-width: 120px;" *ngIf="person.active == 2">
+            <td class="active" *ngIf="person.active == 2">
                 <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.province?.province" tooltipPosition="top">
                     Pendiente
                 </div>
             </td>
-            <td style="min-width: 115px; max-width: 115px;">
+            <td class="buttons">
                 <div class="justify-content-between">
                     <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
                         pTooltip="Editar"></button>
