@@ -210,7 +210,9 @@ export class InternListComponent implements OnInit,AfterViewInit {
 
   onClose(): void {
     this.ref.onClose.subscribe((results: any) => {
-      this.getAllInterns();
+      if(results){
+        this.getAllInterns();
+      }
     });
   }
 
