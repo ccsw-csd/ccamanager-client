@@ -21,5 +21,8 @@ export class PersonService {
     return this.http.delete(environment.server + '/person/' + id);
   }
 
+  searchPerson(filter: string): Observable<Person[]> {
+    return this.http.get<Person[]>(environment.server + "/person/filter/" + filter)
+  }
 
 }

@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PersonalListComponent } from './personal-list/personal-list.component';
-
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
-
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { InputTextModule } from 'primeng/inputtext';
@@ -16,9 +15,11 @@ import { TreeModule } from 'primeng/tree';
 import { ConfirmationService } from 'primeng/api';
 import { PickListModule } from 'primeng/picklist';
 import { PersonalEditComponent } from './personal-edit/personal-edit/personal-edit.component';
+import { PersonalSelectorComponent } from './personal-selector/personal-selector/personal-selector.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @NgModule({
-  declarations: [PersonalListComponent, PersonalEditComponent],
+  declarations: [PersonalListComponent, PersonalEditComponent, PersonalSelectorComponent],
 
   imports: [
     CommonModule,
@@ -28,6 +29,7 @@ import { PersonalEditComponent } from './personal-edit/personal-edit/personal-ed
     ButtonModule,
     TooltipModule,
     ConfirmDialogModule,
+    AutoCompleteModule,
     PaginatorModule,
     InputTextModule,
     TooltipModule,
@@ -35,6 +37,8 @@ import { PersonalEditComponent } from './personal-edit/personal-edit/personal-ed
     TabViewModule,
     TreeModule,
     PickListModule,
+    ReactiveFormsModule,
+    FormsModule    
   ],
 })
 export class PersonalModule {}

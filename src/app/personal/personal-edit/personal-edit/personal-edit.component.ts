@@ -8,6 +8,7 @@ import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { Person } from '../../models/Person';
 import { PersonService } from '../../services/person.service';
 import { Role } from 'src/app/core/models/Role';
+import { Input } from '@angular/core';
 
 
 @Component({
@@ -23,6 +24,11 @@ export class PersonalEditComponent implements OnInit {
   provinces: Province[]
   centers: Center[]
   item: any;
+  groupPerson: any[] = [];
+  personSelected;
+
+  @Input() data: Person;
+  @Input() formValidator: FormGroup;
 
   constructor(
     private ref: DynamicDialogRef,
@@ -34,10 +40,14 @@ export class PersonalEditComponent implements OnInit {
   ngOnInit(): void {
    
     this.personElement = Object.assign({ person: Person }, this.config.data.person)
-
     this.provinces = this.config.data.provinces 
     this.roles = this.config.data.roles 
-    this.centers=  this.config.data.centers 
+    this.centers=  this.config.data.centers
+
+    // if (this.personElement.id != null) {
+    //   this.personSelected = this.mappingPerson(this.personSelected);
+    //   this.groupPerson.push(this.personSelected);
+    // }
   }
 
   saveItem(person: Person) {
@@ -61,6 +71,30 @@ export class PersonalEditComponent implements OnInit {
 
   showDialog(element?: any) {
     this.item = element;
+  }
+
+  searchPerson($event) {
+    if ($event.query != null) {
+      this.personService.searchPerson($event.query).subscribe({
+        next: (res: Person[]) => {
+          this.groupPerson = res.map((person) => this.mappingPerson(person));
+          
+        },
+        error: () => {},
+        complete: () => {},
+      });
+    }
+  }
+
+  mappingPerson(person: Person): any {
+    return {
+      field: person.name + ' ' + person.lastname + ' - ' + person.username,
+      value: person,
+    };
+  }
+
+  onPersonSelect(event) {
+    this.personElement = event.value
   }
 
 }

@@ -3,6 +3,15 @@
     <h1 *ngIf="personElement.id != null" class="text-center">Modificar Persona</h1>
     <div class="h-2rem">
     </div>
+    
+    <span class="p-float-label">
+      <p-autoComplete [(ngModel)]="personSelected" (onSelect)="onPersonSelect($event)" [suggestions]="groupPerson"
+        [forceSelection]="true" [showEmptyMessage]="true" 
+        (completeMethod)="searchPerson($event)" (onSelect)="data= $event.value" field="field"
+        appendTo="body"></p-autoComplete>
+      <label>Persona</label>
+    </span>
+    
     <span class="p-float-label mb-1">
       <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.saga"  required>
       <label for="firstname1">Saga</label>
