@@ -252,9 +252,8 @@
                </div>
            </td>
            <td class="educationCenter" >
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{'['+intern.educationCenter?.type+'] '}}{{intern.educationCenter?.name}}" tooltipPosition="top">
-                {{'['+intern.educationCenter?.type+'] '}}  
-                {{intern.educationCenter?.name}}
+               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{showEducationCenter(intern.educationCenter)}}" tooltipPosition="top">
+                {{showEducationCenter(intern.educationCenter)}}
                </div>
            </td>
            <td class="center">

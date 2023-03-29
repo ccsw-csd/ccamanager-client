@@ -288,6 +288,13 @@ export class InternListComponent implements OnInit,AfterViewInit {
     return this.actives.find((active) => active.value === value.toString())?.label;
   }
 
+  showEducationCenter(educationCenter?:EducationCenter):string{
+    if(educationCenter){
+      return '['+educationCenter?.type+'] '+educationCenter?.name;
+    }
+    return '';
+  }
+
   cleanFilters(): void {
     
     this.filterDropdowns.forEach((dropdown) => dropdown.clear(null));
