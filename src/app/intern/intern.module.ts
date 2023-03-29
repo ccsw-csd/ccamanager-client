@@ -15,6 +15,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { InternListComponent } from './intern-list/intern-list.component';
 import { InternEditComponent } from './intern-edit/intern-edit.component';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 @NgModule({
   declarations: [InternListComponent, DialogComponent, InternEditComponent],
   imports: [
@@ -30,7 +31,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
     FormsModule,
     InputTextModule,
     InputNumberModule,
-    MultiSelectModule
+    MultiSelectModule,
+    AutoCompleteModule
   ],
 })
 export class InternModule {}

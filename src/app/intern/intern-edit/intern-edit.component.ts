@@ -45,6 +45,7 @@ export class InternEditComponent implements OnInit {
   ngOnInit(): void {
     if(this.config.data.intern === undefined){
       this.intern = new Intern();
+      this.intern.hours=5;
       this.isNew = true;
       this.intern.period = this.getActualQuarter();
     }else{

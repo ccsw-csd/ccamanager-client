@@ -1,9 +1,12 @@
-<div class="flex flex-column gap-2">
+<div class="flex flex-column gap-2 justify-content-center">
     <h1 *ngIf="isNew" class="text-center">Nuevo Becario</h1>
     <h1 *ngIf="!isNew" class="text-center">Modificar Becario</h1>
 
     <div class="h-2rem"></div>
-    <div class=" flex flex-row gap-2">
+   <div class="flex flex-row justify-content-center">
+
+   </div>
+    <div class="flex flex-row gap-2 justify-content-center justify-content-center">
         <span class="p-float-label" >
             <input id="period" type="text" pInputText [(ngModel)]="intern.period" required>
             <label for="period">Periodo</label>
@@ -17,7 +20,7 @@
             <label for="name">Nombre</label>
         </span>
     </div>
-    <div class="flex flex-row gap-2">
+    <div class="flex flex-row gap-2 justify-content-center">
         <span class="p-float-label" >
             <input id="lastname" type="text" pInputText [(ngModel)]="intern.lastname" required>
             <label for="lastname">Apellidos</label>
@@ -27,33 +30,46 @@
             <label for="email">Email</label>
         </span>
         <span class="p-float-label" >
-            <!-- <input id="gender" type="text" pInputText [(ngModel)]="intern.email" required> -->
             <p-dropdown [options]="genders" optionLabel="label" optionValue="value" [(ngModel)]="intern.gender" [showClear]="true" > </p-dropdown>
             <label for="gender">Genero</label>
         </span>
-        <!-- <p>Genero</p> -->
     </div>
-    <div class="flex flex-row gap-2">
-        <p>Titulación</p>
-        <p-dropdown [options]="educations" optionLabel="name" [(ngModel)]="intern.education" [showClear]="true" > </p-dropdown>
-        <p>Centro</p>
-        <p-dropdown [options]="educationsCenter" [(ngModel)]="intern.educationCenter" optionLabel="name"></p-dropdown>
-        <p>Oficina</p>
-        <p-dropdown [options]="centers" [(ngModel)]="intern.center" optionLabel="name"></p-dropdown>
-    </div>
-    <div class="flex flex-row gap-2">
-        <p>Localización</p>
-        <p-dropdown [options]="provinces" [(ngModel)]="intern.province" optionLabel="province"></p-dropdown>
-        <p>Inicio</p>
-        <p-calendar [(ngModel)]="intern.startDate"></p-calendar>
-        <p>Fin</p>
-        <p-calendar [(ngModel)]="intern.endDate"></p-calendar>
-    </div>
-    <div class="flex flex-row gap-2">
-        <span class="p-float-label" >
-            <p-inputNumber inputId="integeronly" [(ngModel)]="intern.hours"></p-inputNumber>
-            <label for="hours">Horas</label>
+    <div class="flex flex-row gap-2 justify-content-center">
+        <span class="p-float-label">
+            <p-dropdown [options]="educations" optionLabel="name" [(ngModel)]="intern.education" [showClear]="true" > </p-dropdown>
+            <label for="education">Titulación</label>
         </span>
+        <span class="p-float-label">
+            <p-dropdown [options]="educationsCenter" [(ngModel)]="intern.educationCenter" optionLabel="name"></p-dropdown>
+            <label for="center">Centro</label>
+        </span>
+        <span class="p-float-label">
+            <p-dropdown [options]="centers" [(ngModel)]="intern.center" optionLabel="name"></p-dropdown>
+            <label for="center">Oficina</label>
+        </span>
+    </div>
+    <div class="flex flex-row gap-2 justify-content-center">
+        <span class="p-float-label">
+            <p-dropdown [options]="provinces" [(ngModel)]="intern.province" optionLabel="province"></p-dropdown>
+            <label for="province">Localización</label>
+        </span>
+        <span class="p-float-label">
+            <p-calendar [(ngModel)]="intern.startDate"></p-calendar>
+            <label for="startDate">Inicio</label>
+        </span>
+        <span class="p-float-label">
+            <p-calendar [(ngModel)]="intern.endDate"></p-calendar>
+            <label for="endDate">Fin</label>
+        </span>
+    </div>
+    <div class="flex flex-row gap-2 justify-content-center">
+        <div class="hours">
+
+            <span class="p-float-label" >
+                <p-inputNumber  inputId="integeronly" [(ngModel)]="intern.hours"></p-inputNumber>
+                <label for="hours">Horas</label>
+            </span>
+        </div>
         <span class="p-float-label" >
             <input id="customer" type="text" pInputText [(ngModel)]="intern.customer" required>
             <label for="customer">Cliente</label>
@@ -63,11 +79,15 @@
             <label for="code">Código</label>
         </span>
     </div>
-    <div class="flex flex-row gap-2">
-        <p>Tecnologías</p>
-        <p-multiSelect [options]="technologies" [(ngModel)]="intern.technologies" optionLabel="name"></p-multiSelect>
-        <p>Ingles</p>
-        <p-dropdown [options]="englishLevels" [(ngModel)]="intern.englishLevel" optionLabel="name"></p-dropdown>
+    <div class="flex flex-row gap-2 justify-content-center">
+        <span class="p-float-label">
+            <p-multiSelect  [options]="technologies" [(ngModel)]="intern.technologies" optionLabel="name"></p-multiSelect>
+            <label for="technologies">Tecnologías</label>
+        </span>
+        <span class="p-float-label">
+            <p-dropdown [options]="englishLevels" [(ngModel)]="intern.englishLevel" optionLabel="name"></p-dropdown>
+            <label for="englishLevel">Ingles</label>
+        </span>
         <span class="p-float-label" >
             <input id="mentor" type="text" pInputText [(ngModel)]="intern.mentor" required>
             <label for="mentor">Mentor</label>
@@ -77,21 +97,25 @@
             <label for="coordinator">Coordinador</label>
         </span>
     </div>
-    <div class="flex flex-row gap-2">
+    <div class="flex flex-row gap-2 justify-content-center">
         <span class="p-float-label" >
             <input id="hrManager" type="text" pInputText [(ngModel)]="intern.hrManager" required>
             <label for="hrManager">Resp. RRHH</label>
         </span>
-        <p>Accion</p>
-        <p-dropdown [options]="actions" [(ngModel)]="intern.action" optionLabel="name"></p-dropdown>
-        <p>F.Contrato</p>
-        <p-calendar [(ngModel)]="intern.contractDate"></p-calendar>
+        <span class="p-float-label" >
+            <p-dropdown [options]="actions" [(ngModel)]="intern.action" optionLabel="name"></p-dropdown>
+            <label for="action">Accion</label>
+        </span>
+        <span class="p-float-label" >
+            <p-calendar [(ngModel)]="intern.contractDate"></p-calendar>
+            <label for="contractDate">Resp. RRHH</label>
+        </span>
     </div>
-    <div class="flex flex-row gap-2">
-        <div class="flex flex-column">
-            <p>Estado</p>
+    <div class="flex flex-row gap-2 justify-content-center">
+        <span class="p-float-label" >
             <p-dropdown [options]="actives" [(ngModel)]="intern.active" optionLabel="label" optionValue="value"></p-dropdown>
-        </div>
+            <label for="active">Estado</label>
+        </span>
         <div class="flex flex-column">
             <p *ngIf="isNew">Link</p>
             <textarea *ngIf="isNew"  pInputTextarea style="height:45px ; width: 150px;" [(ngModel)]="intern.link"></textarea>
@@ -101,8 +125,8 @@
             <textarea *ngIf="isNew"  pInputTextarea style="height:45px; width: 150px;" [(ngModel)]="intern.comment"></textarea>
         </div>
     </div>
-    <div class="flex flex-row justify-content-end gap-2">    
+    <div class="flex flex-row justify-content-end gap-2 justify-content-center">    
         <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
         <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check"  [disabled]=""  ></button>
-      </div>
+    </div>
 </div>
