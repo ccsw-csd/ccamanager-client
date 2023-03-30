@@ -8,7 +8,6 @@ import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { Person } from '../../models/Person';
 import { PersonService } from '../../services/person.service';
 import { Role } from 'src/app/core/models/Role';
-import { Input } from '@angular/core';
 
 
 @Component({
@@ -27,9 +26,6 @@ export class PersonalEditComponent implements OnInit {
   groupPerson: any[] = [];
   personSelected;
 
-  @Input() data: Person;
-  @Input() formValidator: FormGroup;
-
   constructor(
     private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
@@ -43,11 +39,6 @@ export class PersonalEditComponent implements OnInit {
     this.provinces = this.config.data.provinces 
     this.roles = this.config.data.roles 
     this.centers=  this.config.data.centers
-
-    // if (this.personElement.id != null) {
-    //   this.personSelected = this.mappingPerson(this.personSelected);
-    //   this.groupPerson.push(this.personSelected);
-    // }
   }
 
   saveItem(person: Person) {
@@ -91,10 +82,6 @@ export class PersonalEditComponent implements OnInit {
       field: person.name + ' ' + person.lastname + ' - ' + person.username,
       value: person,
     };
-  }
-
-  onPersonSelect(event) {
-    this.personElement = event.value
   }
 
 }

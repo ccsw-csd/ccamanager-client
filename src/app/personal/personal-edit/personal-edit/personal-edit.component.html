@@ -4,10 +4,10 @@
     <div class="h-2rem">
     </div>
     
-    <span class="p-float-label">
-      <p-autoComplete [(ngModel)]="personSelected" (onSelect)="onPersonSelect($event)" [suggestions]="groupPerson"
+    <span class="p-float-label" *ngIf="personElement.id == null">
+      <p-autoComplete [(ngModel)]="personSelected" (onSelect)="personElement = $event.value" [suggestions]="groupPerson"
         [forceSelection]="true" [showEmptyMessage]="true" 
-        (completeMethod)="searchPerson($event)" (onSelect)="data= $event.value" field="field"
+        (completeMethod)="searchPerson($event)" field="field"
         appendTo="body"></p-autoComplete>
       <label>Persona</label>
     </span>
