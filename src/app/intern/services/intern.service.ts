@@ -12,4 +12,5 @@ export class InternService {
   getAllInterns(): Observable<Intern[]> {
     return this.http.get<Intern[]>(environment.server + "/intern/");
   }
+  
 }

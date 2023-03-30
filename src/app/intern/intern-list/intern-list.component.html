@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="flex justify-content-end ">
-        <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir becario"> </button>
+        <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir becario" (click)="addOrEditIntern()"> </button>
         <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2" (click)="exportExcel()" pTooltip="Descargar listado"></button>
         <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2" pTooltip="Limpiar filtros" (click)="cleanFilters()" ></button>
     </div>
@@ -335,7 +335,7 @@
                 <button pButton pRipple type="button" pTooltip="Link" tooltipPosition="top" *ngIf="intern.link != null " icon="pi pi-link" class="p-button-rounded p-button-text w-2rem h-2rem" (click)="addLink(intern)" ></button>
                 <button pButton pRipple type="button" pTooltip="Comentario" tooltipPosition="top"  *ngIf="intern.comment == null || intern.comment == ''" icon="pi pi-comment" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem" (click)="addComment(intern)" ></button>            
                 <button pButton pRipple type="button" pTooltip="Comentario" tooltipPosition="top" *ngIf="intern.comment != null " icon="pi pi-comment" class="p-button-rounded p-button-text w-2rem h-2rem" (click)="addComment(intern)" ></button>
-                <button pButton pRipple type="button" pTooltip="Editar" tooltipPosition="top" icon="pi pi-pencil" class="p-button-rounded p-button-text w-2rem h-2rem" ></button>
+                <button pButton pRipple type="button" pTooltip="Editar" tooltipPosition="top" icon="pi pi-pencil" class="p-button-rounded p-button-text w-2rem h-2rem" (click)="addOrEditIntern(intern)" ></button>
                 <button pButton pRipple type="button" pTooltip="Eliminar" tooltipPosition="top" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text w-2rem h-2rem" ></button>            
            </td>
         </tr>

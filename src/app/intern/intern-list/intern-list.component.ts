@@ -24,7 +24,7 @@ import { TechnologyService } from 'src/app/maintenance/technology/services/techn
 import { DialogComponent } from '../dialog/dialog.component';
 import { Intern } from '../models/Intern';
 import { InternService } from '../services/intern.service';
-
+import { InternEditComponent } from '../intern-edit/intern-edit.component';
 @Component({
   selector: 'app-intern-list',
   templateUrl: './intern-list.component.html',
@@ -306,5 +306,30 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.table.reset();
     this.setDefaultFilters();
     this.setDefaultOrders();
+  }
+  addOrEditIntern(intern?:Intern){
+    this.ref = this.dialogService.open(InternEditComponent,{
+      height:"800px",
+      width:"1200px",
+      data:{
+        intern: intern,
+        genders: this.genders,
+        educations:this.educations,
+        educationsCenter:this.educationsCenter,
+        centers:this.centers,
+        provinces:this.provinces,
+        technologies:this.technologies,
+        actions:this.actions,
+        englishLevels:this.englishLevels,
+      },
+      closable:true
+
+    });
+    this.onClose();
+  }
+  onClose(): void {
+    this.ref.onClose.subscribe((results: any) => {
+      this.getAllInterns();
+    });
   }
 }
