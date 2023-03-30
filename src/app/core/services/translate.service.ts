@@ -9,7 +9,6 @@ export class TranslateService {
 
   getSpanish() {
     this.spanish = {
-      //TODO esto tienes que estar todo fuera de aqui para que pueda ser reutilizado
       dayNames: [
         'domingo',
         'lunes',

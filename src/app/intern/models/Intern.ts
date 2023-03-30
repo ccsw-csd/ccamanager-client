@@ -33,5 +33,4 @@ export class Intern {
   active: number;
   link: string;
   comment: string;
-  delete: boolean;
 }

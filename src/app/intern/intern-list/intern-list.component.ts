@@ -24,7 +24,6 @@ import { TechnologyService } from 'src/app/maintenance/technology/services/techn
 import { DialogComponent } from '../dialog/dialog.component';
 import { Intern } from '../models/Intern';
 import { InternService } from '../services/intern.service';
-import { InternEditComponent } from '../intern-edit/intern-edit.component';
 
 @Component({
   selector: 'app-intern-list',
@@ -60,7 +59,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
   defaultFilters: any = { active: { value: '1' } };
   internsLength: number;
   es: any;
-  tableWidth: string = 'calc(100vw - 50px)';
+  tableWidth: string ;
   constructor(
     private primengConfig: PrimeNGConfig,
     private navigatorService: NavigatorService,
@@ -81,12 +80,12 @@ export class InternListComponent implements OnInit,AfterViewInit {
 
   ngOnInit(): void {
     this.selectedActive="1";
-    this.navigatorService
-      .getNavivagorChangeEmitter()
-      .subscribe((menuVisible) => {
-        if (menuVisible) this.tableWidth = 'calc(100vw - 250px)';
-        else this.tableWidth = 'calc(100vw - 50px)';
-      });
+    
+    this.navigatorService.getNavivagorChangeEmitter().subscribe(menuVisible => {
+      if (menuVisible) this.tableWidth = 'calc(100vw - 255px)';
+       else this.tableWidth = 'calc(100vw - 55px)';
+       });
+    this.resizeTable();
     this.getAllInterns();
     this.getAllEducations();
     this.getAllEducationCenters();
@@ -97,7 +96,6 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.getAllTechnologies();
     this.primengConfig.setTranslation(this.translateService.getSpanish());
     this.filterService.register('valueInArray', (value, filter): boolean => {
-      //TODO esto revisalo que seguro que hay uno para hacerlo
       if (filter === undefined || filter === null || filter.trim() === '') {
         return true;
       }
@@ -108,13 +106,23 @@ export class InternListComponent implements OnInit,AfterViewInit {
     });
   }
 
+  resizeTable(){
+    if(document.getElementById("p-slideMenu")){
+      this.tableWidth = 'calc(100vw - 255px)';
+    }else{
+      this.tableWidth = 'calc(100vw - 55px)';
+    }
+  }
+
   ngAfterViewInit(){
-    this.setDefaultOrders();
+    setTimeout(()=>{
+      this.setDefaultOrders();
+    },0);
   }
 
   setDefaultOrders(){
     this.table.sortField='endDate';
-    this.table.sort({field: 'endDate',order:-1});
+    this.table.sort({field: this.table.sortField,order:-1});
   }
   setDefaultFilters(){
     this.selectedActive='1';
@@ -126,7 +134,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
       next: (res: Intern[]) => {
         this.interns = res;
         this.internsForExcel = res;
-        this.internsLength = res.length;
+        this.internsLength = this.interns.length;
         this.interns.forEach((element) => {
           if (element.startDate) {
             element.startDate = new Date(element.startDate);
@@ -198,23 +206,34 @@ export class InternListComponent implements OnInit,AfterViewInit {
     });
   }
 
-  addCommentOrLink(type: string, value?: string) {
+  addComment(intern:Intern) {
     this.ref = this.dialogService.open(DialogComponent, {
       height: '420px',
       width: '600px',
       data: {
-        action: type,
-        value: value,
+        action: 'Comment',
+        value: intern.comment,
       },
       closable: false,
       showHeader: false,
     });
-    this.onClose();
+    this.ref.onClose.subscribe((res)=>{
+      intern.comment = res;
+    });
   }
-
-  onClose(): void {
-    this.ref.onClose.subscribe((results: any) => {
-      this.getAllInterns();
+  addLink(intern:Intern) {
+    this.ref = this.dialogService.open(DialogComponent, {
+      height: '420px',
+      width: '600px',
+      data: {
+        action: 'Link',
+        value: intern.link,
+      },
+      closable: false,
+      showHeader: false,
+    });
+    this.ref.onClose.subscribe((res)=>{
+      intern.link = res;
     });
   }
 
@@ -223,9 +242,10 @@ export class InternListComponent implements OnInit,AfterViewInit {
   }
 
   onFilter(event) {
-
     this.internsForExcel = event.filteredValue;
-    this.internsLength = event.filteredValue.length;
+    setTimeout(()=>{
+      this.internsLength = event.filteredValue.length;
+    },0);
   }
 
   exportExcel(){
@@ -268,6 +288,13 @@ export class InternListComponent implements OnInit,AfterViewInit {
     return this.actives.find((active) => active.value === value.toString())?.label;
   }
 
+  showEducationCenter(educationCenter?:EducationCenter):string{
+    if(educationCenter){
+      return '['+educationCenter?.type+'] '+educationCenter?.name;
+    }
+    return '';
+  }
+
   cleanFilters(): void {
     
     this.filterDropdowns.forEach((dropdown) => dropdown.clear(null));
@@ -280,38 +307,4 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.setDefaultFilters();
     this.setDefaultOrders();
   }
-
-
-  addOrEditIntern(intern?:Intern){
-    this.ref = this.dialogService.open(InternEditComponent,{
-      height:"800px",
-      width:"1200px",
-      data:{
-        intern: intern,
-        genders: this.genders,
-        educations:this.educations,
-        educationsCenter:this.educationsCenter,
-        centers:this.centers,
-        provinces:this.provinces,
-        technologies:this.technologies,
-        actions:this.actions,
-        englishLevels:this.englishLevels,
-      },
-      closable:true
-
-    });
-    this.onClose();
-  }
-
-  show(value:any){
-    console.log(value);
-  }
-  // onClose():void{
-
-  //   this.ref.onClose.subscribe(
-  //     (results:any) => {
-  //       this.ngOnInit();
-  //     }
-  //   )
-  // }
 }

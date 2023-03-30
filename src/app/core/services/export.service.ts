@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import * as FileSaver from 'file-saver';
-import { Intern } from 'src/app/intern/models/Intern';
 import { Person } from 'src/app/personal/models/Person';
 
 
