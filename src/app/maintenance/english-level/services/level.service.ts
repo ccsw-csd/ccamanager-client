@@ -2,16 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Center } from '../models/Center';
-
+import { Level } from '../models/Level';
 @Injectable({
   providedIn: 'root',
 })
-export class CenterService {
+export class LevelService {
   constructor(private http: HttpClient) {}
 
-  getAllCenters(): Observable<Center[]> {
-    return this.http.get<Center[]>(environment.server + '/center/');
+  getAllLevels(): Observable<Level[]> {
+    return this.http.get<Level[]>(environment.server + '/level/');
   }
 }
- 

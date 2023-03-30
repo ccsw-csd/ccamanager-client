@@ -46,7 +46,6 @@ export class PersonalListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.tableWidth = 'calc(100vw - 55px)'
     this.navigatorService.getNavivagorChangeEmitter().subscribe(menuVisible => {
       if (menuVisible) this.tableWidth = 'calc(100vw - 255px)';
        else this.tableWidth = 'calc(100vw - 55px)';
@@ -119,7 +118,8 @@ export class PersonalListComponent implements OnInit {
     this.filterDropdowns.forEach((dropdown) => dropdown.clear(null));
     this.table.reset();
     this.setFilters();
-    this.table.sort({ field: 'lastname', order: 1 });
+    this.table.sortOrder=1;
+    this.table.sort({ field: 'lastname', order: this.table.sortOrder});
   }
   
 }

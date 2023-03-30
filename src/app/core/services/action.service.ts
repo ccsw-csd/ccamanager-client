@@ -2,16 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Center } from '../models/Center';
-
+import { Action } from '../models/Action';
 @Injectable({
   providedIn: 'root',
 })
-export class CenterService {
+export class ActionService {
   constructor(private http: HttpClient) {}
 
-  getAllCenters(): Observable<Center[]> {
-    return this.http.get<Center[]>(environment.server + '/center/');
+  getAllActions(): Observable<Action[]> {
+    return this.http.get<Action[]>(environment.server + '/action/');
   }
 }
- 
