@@ -8,7 +8,8 @@ import { Education } from 'src/app/maintenance/education/models/Education';
 import { Technology } from 'src/app/maintenance/technology/models/Technology';
 import { Level } from 'src/app/maintenance/english-level/models/Level';
 import { Action } from 'src/app/core/models/Action';
-
+import { PersonService } from 'src/app/personal/services/person.service';
+import { Person } from 'src/app/personal/models/Person';
 @Component({
   selector: 'app-intern-edit',
   templateUrl: './intern-edit.component.html',
@@ -25,6 +26,9 @@ export class InternEditComponent implements OnInit {
   technologies:Technology[];
   englishLevels:Level[];
   actions:Action[];
+  internSelected;
+  groupIntern:any[] = [];
+
 
   genders: any[] = [
     { label: 'Otros', value:0 },
@@ -39,7 +43,8 @@ export class InternEditComponent implements OnInit {
 
   constructor(
     private ref: DynamicDialogRef,
-    private config: DynamicDialogConfig
+    private config: DynamicDialogConfig,
+    private personService:PersonService,
     ) { }
 
   ngOnInit(): void {
@@ -47,6 +52,8 @@ export class InternEditComponent implements OnInit {
       this.intern = new Intern();
       this.intern.hours=5;
       this.isNew = true;
+      this.intern.active = 1;
+      
       this.intern.period = this.getActualQuarter();
     }else{
        this.intern = Object.assign({intern:Intern},this.config.data.intern);
@@ -59,6 +66,10 @@ export class InternEditComponent implements OnInit {
     this.englishLevels = this.config.data.englishLevels;
     this.provinces = this.config.data.provinces;
     this.actions = this.config.data.actions;
+  }
+
+  tryMatchingCenter(){
+
   }
 
   getActualQuarter():string{
@@ -74,6 +85,35 @@ export class InternEditComponent implements OnInit {
       quarter = 3;
     }    
     return `Q${quarter}'${String(year).slice(-2)}`;
+  }
+
+  onInternSelect(event){
+    this.intern=event.value;
+  }
+
+  searchIntern($event){
+    if ($event.query != null) {
+      this.personService.searchIntern($event.query).subscribe({
+        next: (res: Intern[]) => {
+          this.groupIntern = res.map((intern) => this.mappingIntern(intern));
+        },
+        error: () => {},
+        complete: () => {},
+      });
+    }
+  }
+  mappingIntern(intern: Intern): any {
+    let username  =  intern.username ? intern.username : "Añadir nuevo becario";
+    return {
+      field: intern.name + ' ' + intern.lastname + ' - ' + username,
+      value: intern,
+    };
+  }
+
+  onSelectIntern(event){
+    this.intern = event.value;
+    this.intern.center = this.intern.center ? this.intern.center : this.centers.find(center => center.name=="Valencia");
+    this.intern.province = this.provinces.find(province => province.province == this.intern.center.name);
   }
 
   closeWindow(){
