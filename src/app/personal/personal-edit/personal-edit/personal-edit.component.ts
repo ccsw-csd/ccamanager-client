@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import {  DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Center } from 'src/app/core/models/Center';
 import { Province } from 'src/app/core/models/Province';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
@@ -26,6 +25,12 @@ export class PersonalEditComponent implements OnInit {
   groupPerson: any[] = [];
   personSelected;
 
+  actives: any[] = [
+    { label: 'Inactivo', value: 0 },
+    { label: 'Activo', value: 1 },
+    { label: 'Pendiente', value: 2},
+  ];
+
   constructor(
     private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
@@ -39,6 +44,10 @@ export class PersonalEditComponent implements OnInit {
     this.provinces = this.config.data.provinces 
     this.roles = this.config.data.roles 
     this.centers=  this.config.data.centers
+    this.personElement.active = 1;
+
+
+
   }
 
   saveItem(person: Person) {
@@ -78,10 +87,22 @@ export class PersonalEditComponent implements OnInit {
   }
 
   mappingPerson(person: Person): any {
+    let username  =  person.username ? person.username : "Añadir nueva persona";
     return {
-      field: person.name + ' ' + person.lastname + ' - ' + person.username,
+      field: person.name + ' ' + person.lastname + ' - ' + username,
       value: person,
     };
+  }
+
+  onPersonSelect(event) {
+    console.log(event.value)
+    this.personElement = event.value
+    this.personElement.center = event.value.center ? this.personElement.center : this.centers.find(center => center.id==6)
+    this.matchByProvince();
+
+  }
+  matchByProvince(){
+    this.personElement.province = this.provinces.find(province => province.province == this.personElement.center.name);
   }
 
 }

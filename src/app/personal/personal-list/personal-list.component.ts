@@ -131,8 +131,8 @@ export class PersonalListComponent implements OnInit {
 
   editPerson(person?:Person){
     const ref = this.dialogService.open(PersonalEditComponent, {
-      width: '600px',
-      height:"450px",
+      width: '700px',
+      height:"750px",
       data: {
         person: person,
           provinces: this.provinces,
