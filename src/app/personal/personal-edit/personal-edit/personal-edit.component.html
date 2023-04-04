@@ -1,11 +1,13 @@
-<div class="flex flex-column gap-3">
-    <h1 *ngIf="personElement.id == null" class="text-center">Nueva Persona</h1>
-    <h1 *ngIf="personElement.id != null" class="text-center">Modificar Persona</h1>
+<h1 *ngIf="personElement.id == null" class="text-center">Nueva Persona</h1>
+<h1 *ngIf="personElement.id != null" class="text-center">Modificar Persona</h1>
+
+<div [formGroup]= "personForm" class="flex flex-column gap-3">
+    
     
     
     <div class="flex flex-row mb-5">
       <span class="p-float-label w-full" *ngIf="personElement.id == null">
-        <p-autoComplete styleClass="w-full" inputStyleClass="w-full" [(ngModel)]="personSelected" (onSelect)="onPersonSelect($event)" [suggestions]="groupPerson"
+        <p-autoComplete styleClass="w-full" inputStyleClass="w-full" [ngModelOptions]="{standalone: true}" [(ngModel)]="personSelected" (onSelect)="onPersonSelect($event)" [suggestions]="groupPerson"
           [forceSelection]="true" [showEmptyMessage]="true" 
           (completeMethod)="searchPerson($event)" field="field"
           appendTo="body"></p-autoComplete>
@@ -22,12 +24,12 @@
     <div class="flex flex-row gap-3">
 
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.saga"  required>
+      <input id="name" type="text" pInputText class="w-full" formControlName="saga"  required>
       <label for="firstname1">Saga</label>
     </span>
 
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.username"  required>
+      <input id="name" type="text" pInputText class="w-full" formControlName="username"  required>
       <label for="firstname1">Username</label>
     </span>
 
@@ -36,12 +38,12 @@
     <div class="flex flex-row gap-3">
 
       <span class="p-float-label flex-1">
-        <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.name"  required>
+        <input id="name" type="text" pInputText class="w-full" formControlName="name"  required>
         <label for="firstname1">Nombre</label>
       </span>
     
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.lastname"  required>
+      <input id="name" type="text" pInputText class="w-full" formControlName="lastname"  required>
       <label for="firstname1">Apellidos</label>
     </span>
 
@@ -51,12 +53,12 @@
     
     <div class="flex flex-row gap-3">
       <span class="p-float-label mb-1 flex-1">
-        <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.email"  required>
+        <input id="name" type="text" pInputText class="w-full" formControlName="email"  required>
         <label for="firstname1">Email</label>
       </span> 
 
       <span class="p-float-label flex-1">
-        <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.customer"  required>
+        <input id="name" type="text" pInputText class="w-full" formControlName="customer"  required>
         <label for="firstname1">Cliente</label>
       </span>
   
@@ -64,17 +66,17 @@
     
     <div class="flex flex-row gap-3">
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText  [(ngModel)]="personElement.grade"  required>
+      <input id="name" type="text" pInputText  formControlName="grade"  required>
       <label for="firstname1">Grado</label>
     </span>
 
     <span class="p-float-label flex-2">
-      <p-dropdown appendTo="body" styleClass="w-full" [(ngModel)]="personElement.role" optionLabel="role" [options]="roles"> </p-dropdown>
+      <p-dropdown appendTo="body" styleClass="w-full" formControlName="role" optionLabel="role" [options]="roles"> </p-dropdown>
       <label for="role">Rol</label>
     </span>
 
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText  [(ngModel)]="personElement.hours"  required>
+      <input id="name" type="text" pInputText  formControlName="hours"  required>
       <label for="firstname1">Horas</label>
     </span>
 
@@ -84,18 +86,18 @@
   <div class="flex flex-row gap-3">
 
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText [(ngModel)]="personElement.businesscode"  required>
+      <input id="name" type="text" pInputText formControlName="businesscode"  required>
       <label for="firstname1">Práctica</label>
     </span>
 
     <span class="p-float-label flex-2">
-      <input id="name" type="text" pInputText class="w-full" [(ngModel)]="personElement.department"  required>
+      <input id="name" type="text" pInputText class="w-full" formControlName="department"  required>
       <label for="firstname1">Dpto</label>
     </span>
 
     
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText  [(ngModel)]="personElement.manager"  required>
+      <input id="name" type="text" pInputText  formControlName="manager"  required>
       <label for="firstname1">Evaluador</label>
     </span>
 
@@ -107,16 +109,16 @@
   <div class="flex flex-row gap-3">
 
     <span class="p-float-label" style="width: 186px;">
-      <p-dropdown  [options]="centers" styleClass="w-full" [(ngModel)]="personElement.center" optionLabel="name" > </p-dropdown>
+      <p-dropdown  [options]="centers" styleClass="w-full" formControlName="center" optionLabel="name" > </p-dropdown>
       <label for="center">Oficina</label>
     </span>
     <span class="p-float-label flex-1">
-     <p-dropdown  [options]="provinces" styleClass="w-full" [(ngModel)]="personElement.province" optionLabel="province" > </p-dropdown>
+     <p-dropdown  [options]="provinces" styleClass="w-full" formControlName="province" optionLabel="province" > </p-dropdown>
      <label for="province">Provincia</label>
     </span> 
 
     <span class="p-float-label" style="width: 186px;">
-      <p-dropdown [options]="actives" styleClass="w-full" [(ngModel)]="personElement.active" optionLabel="label" optionValue="value"></p-dropdown>
+      <p-dropdown [options]="actives" styleClass="w-full" formControlName="active" optionLabel="label" optionValue="value"></p-dropdown>
       <label for="active">Estado</label>
     </span>
 
@@ -129,8 +131,13 @@
 
     <div class="flex flex-row gap-3 justify-content-end gap-2">    
       <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
-      <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check"  [disabled]="personElement.name=='' || personElement.name==null" (click)="saveItem(personElement)"></button>
+      <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check"  [disabled]="!personForm.valid" (click)="saveItem(personElement)"></button>
+
+
     </div>
+    <button pButton pRipple styleClass="" label="check" icon="pi pi-times" class="p-button p-button-secondary" (click)="showForm()"></button>
+
+
  
 
 

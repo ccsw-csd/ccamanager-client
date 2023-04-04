@@ -49,7 +49,6 @@ export class PersonalListComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private snackbarService: SnackbarService,
 
-
   ) {}
 
   ngOnInit(): void {
@@ -131,8 +130,8 @@ export class PersonalListComponent implements OnInit {
 
   editPerson(person?:Person){
     const ref = this.dialogService.open(PersonalEditComponent, {
-      width: '700px',
-      height:"750px",
+      width: '75vh',
+      height: '90vh',
       data: {
         person: person,
           provinces: this.provinces,

@@ -7,6 +7,8 @@ import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { Person } from '../../models/Person';
 import { PersonService } from '../../services/person.service';
 import { Role } from 'src/app/core/models/Role';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+
 
 
 @Component({
@@ -24,6 +26,8 @@ export class PersonalEditComponent implements OnInit {
   item: any;
   groupPerson: any[] = [];
   personSelected;
+  personForm: FormGroup;
+
 
   actives: any[] = [
     { label: 'Inactivo', value: 0 },
@@ -35,8 +39,28 @@ export class PersonalEditComponent implements OnInit {
     private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
     private personService: PersonService,
-    private snackbarService: SnackbarService
-  ) {}
+    private snackbarService: SnackbarService,
+    private formBuilder: FormBuilder
+
+  ) {
+    this.personForm = this.formBuilder.group({
+      saga: ['', Validators.required],
+      username: [''],
+      name: ['', Validators.required],
+      lastname: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      customer: ['', Validators.required],
+      grade: ['', Validators.required],
+      role: ['', Validators.required],
+      hours: ['', Validators.required],
+      department: ['', Validators.required],
+      manager: [''],
+      center: ['', Validators.required],
+      province: ['', Validators.required],
+      active: ['', Validators.required],
+      businesscode: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {
    
@@ -45,9 +69,6 @@ export class PersonalEditComponent implements OnInit {
     this.roles = this.config.data.roles 
     this.centers=  this.config.data.centers
     this.personElement.active = 1;
-
-
-
   }
 
   saveItem(person: Person) {
@@ -95,14 +116,34 @@ export class PersonalEditComponent implements OnInit {
   }
 
   onPersonSelect(event) {
-    console.log(event.value)
     this.personElement = event.value
-    this.personElement.center = event.value.center ? this.personElement.center : this.centers.find(center => center.id==6)
-    this.matchByProvince();
+    this.personForm.patchValue({
+      saga: this.personElement.saga,
+      username: this.personElement.username,
+      name: this.personElement.name,
+      lastname: this.personElement.lastname,
+      email: this.personElement.email,
+      customer: this.personElement.customer,
+      grade: this.personElement.grade,
+      role: this.personElement.role,
+      hours: this.personElement.hours,
+      department: this.personElement.department,
+      manager: this.personElement.manager,
+      center: this.personElement.center ? this.personElement.center : this.centers.find(center => center.id == 6),
+      province: this.personElement.province,
+      active: this.personElement.active,
+      businesscode: this.personElement.businesscode
+    });
 
+    this.matchByProvince();
   }
+  
   matchByProvince(){
     this.personElement.province = this.provinces.find(province => province.province == this.personElement.center.name);
+  }
+
+  showForm(){
+    console.log(this.personForm.value)
   }
 
 }

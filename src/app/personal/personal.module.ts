@@ -15,11 +15,10 @@ import { TreeModule } from 'primeng/tree';
 import { ConfirmationService } from 'primeng/api';
 import { PickListModule } from 'primeng/picklist';
 import { PersonalEditComponent } from './personal-edit/personal-edit/personal-edit.component';
-import { PersonalSelectorComponent } from './personal-selector/personal-selector/personal-selector.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @NgModule({
-  declarations: [PersonalListComponent, PersonalEditComponent, PersonalSelectorComponent],
+  declarations: [PersonalListComponent, PersonalEditComponent],
 
   imports: [
     CommonModule,
