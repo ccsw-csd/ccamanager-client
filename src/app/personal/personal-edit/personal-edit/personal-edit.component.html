@@ -24,12 +24,12 @@
     <div class="flex flex-row gap-3">
 
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText class="w-full" formControlName="saga"  required>
+      <input id="name" type="text" pInputText class="w-full" formControlName="saga">
       <label for="firstname1">Saga</label>
     </span>
 
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText class="w-full" formControlName="username"  required>
+      <input id="name" type="text" pInputText class="w-full" formControlName="username">
       <label for="firstname1">Username</label>
     </span>
 
@@ -38,12 +38,12 @@
     <div class="flex flex-row gap-3">
 
       <span class="p-float-label flex-1">
-        <input id="name" type="text" pInputText class="w-full" formControlName="name"  required>
+        <input id="name" type="text" pInputText class="w-full" formControlName="name">
         <label for="firstname1">Nombre</label>
       </span>
     
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText class="w-full" formControlName="lastname"  required>
+      <input id="name" type="text" pInputText class="w-full" formControlName="lastname">
       <label for="firstname1">Apellidos</label>
     </span>
 
@@ -53,12 +53,12 @@
     
     <div class="flex flex-row gap-3">
       <span class="p-float-label mb-1 flex-1">
-        <input id="name" type="text" pInputText class="w-full" formControlName="email"  required>
+        <input id="name" type="text" pInputText class="w-full" formControlName="email">
         <label for="firstname1">Email</label>
       </span> 
 
       <span class="p-float-label flex-1">
-        <input id="name" type="text" pInputText class="w-full" formControlName="customer"  required>
+        <input id="name" type="text" pInputText class="w-full" formControlName="customer">
         <label for="firstname1">Cliente</label>
       </span>
   
@@ -66,17 +66,17 @@
     
     <div class="flex flex-row gap-3">
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText  formControlName="grade"  required>
+      <input id="name" type="text" pInputText  formControlName="grade">
       <label for="firstname1">Grado</label>
     </span>
 
     <span class="p-float-label flex-2">
-      <p-dropdown appendTo="body" styleClass="w-full" formControlName="role" optionLabel="role" [options]="roles"> </p-dropdown>
+      <p-dropdown appendTo="body" styleClass="w-full" formControlName="role" optionLabel="role" [options]="roles" placeholder="..."> </p-dropdown>
       <label for="role">Rol</label>
     </span>
 
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText  formControlName="hours"  required>
+      <input id="name" type="text" pInputText  formControlName="hours">
       <label for="firstname1">Horas</label>
     </span>
 
@@ -86,18 +86,18 @@
   <div class="flex flex-row gap-3">
 
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText formControlName="businesscode"  required>
+      <input id="name" type="text" pInputText formControlName="businesscode">
       <label for="firstname1">Práctica</label>
     </span>
 
     <span class="p-float-label flex-2">
-      <input id="name" type="text" pInputText class="w-full" formControlName="department"  required>
+      <input id="name" type="text" pInputText class="w-full" formControlName="department">
       <label for="firstname1">Dpto</label>
     </span>
 
     
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText  formControlName="manager"  required>
+      <input id="name" type="text" pInputText  formControlName="manager">
       <label for="firstname1">Evaluador</label>
     </span>
 
@@ -109,16 +109,16 @@
   <div class="flex flex-row gap-3">
 
     <span class="p-float-label" style="width: 186px;">
-      <p-dropdown  [options]="centers" styleClass="w-full" formControlName="center" optionLabel="name" > </p-dropdown>
+      <p-dropdown  [options]="centers" styleClass="w-full" formControlName="center" optionLabel="name" placeholder="..."> </p-dropdown>
       <label for="center">Oficina</label>
     </span>
     <span class="p-float-label flex-1">
-     <p-dropdown  [options]="provinces" styleClass="w-full" formControlName="province" optionLabel="province" > </p-dropdown>
+     <p-dropdown  [options]="provinces" styleClass="w-full" formControlName="province" optionLabel="province" placeholder="..."> </p-dropdown>
      <label for="province">Provincia</label>
     </span> 
 
     <span class="p-float-label" style="width: 186px;">
-      <p-dropdown [options]="actives" styleClass="w-full" formControlName="active" optionLabel="label" optionValue="value"></p-dropdown>
+      <p-dropdown [options]="actives" styleClass="w-full" formControlName="active" optionLabel="label" optionValue="value" placeholder="..."></p-dropdown>
       <label for="active">Estado</label>
     </span>
 

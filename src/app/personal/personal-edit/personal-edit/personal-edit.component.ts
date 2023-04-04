@@ -8,6 +8,7 @@ import { Person } from '../../models/Person';
 import { PersonService } from '../../services/person.service';
 import { Role } from 'src/app/core/models/Role';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { timeStamp } from 'console';
 
 
 
@@ -44,14 +45,14 @@ export class PersonalEditComponent implements OnInit {
 
   ) {
     this.personForm = this.formBuilder.group({
-      saga: ['', Validators.required],
+      saga: [''],
       username: [''],
       name: ['', Validators.required],
       lastname: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      customer: ['', Validators.required],
-      grade: ['', Validators.required],
-      role: ['', Validators.required],
+      email: ['', [ Validators.email]],
+      customer: [''],
+      grade: [''],
+      role: [''],
       hours: ['', Validators.required],
       department: ['', Validators.required],
       manager: [''],
@@ -117,6 +118,7 @@ export class PersonalEditComponent implements OnInit {
 
   onPersonSelect(event) {
     this.personElement = event.value
+    this.matchByProvince();
     this.personForm.patchValue({
       saga: this.personElement.saga,
       username: this.personElement.username,
@@ -135,15 +137,23 @@ export class PersonalEditComponent implements OnInit {
       businesscode: this.personElement.businesscode
     });
 
-    this.matchByProvince();
+    const requiredFields = ['saga', 'email', 'customer', 'role'];
+
+    requiredFields.forEach(fieldName => {
+      const control = this.personForm.get(fieldName);
+      control.setValidators(Validators.required);
+      control.updateValueAndValidity();
+    });
+    
   }
   
   matchByProvince(){
-    this.personElement.province = this.provinces.find(province => province.province == this.personElement.center.name);
+    this.personElement.province = this.provinces.find(province => province?.province == this.personElement.center?.name);
   }
 
   showForm(){
     console.log(this.personForm.value)
+    console.log(this.personForm.status)
   }
 
 }
