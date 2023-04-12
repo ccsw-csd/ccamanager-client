@@ -7,7 +7,7 @@ import { Person } from '../../models/Person';
 import { PersonService } from '../../services/person.service';
 import { Role } from 'src/app/core/models/Role';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-
+import { SnackbarService } from 'src/app/core/services/snackbar.service';
 
 
 @Component({
@@ -38,10 +38,12 @@ export class PersonalEditComponent implements OnInit {
     private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
     private personService: PersonService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private snackbarService : SnackbarService
 
   ) {
     this.personForm = this.formBuilder.group({
+      id: [''],
       saga: [''],
       username: [''],
       name: ['', Validators.required],
@@ -66,6 +68,7 @@ export class PersonalEditComponent implements OnInit {
     this.roles = this.config.data.roles 
     this.centers=  this.config.data.centers
       this.personForm.patchValue({
+      id: this.personElement.id,
       saga: this.personElement.saga,
       username: this.personElement.username,
       name: this.personElement.name,
@@ -86,20 +89,18 @@ export class PersonalEditComponent implements OnInit {
   }
 
   saveItem(person: Person) {
-    console.log(person,"before")
-    person.role = person.role ? person.role['role'] : null;
-     console.log(person,"after")
-    //  this.personService.save(person).subscribe({
-    //    next: () => {
-    //      this.snackbarService.showMessage(
-    //        'El registro se ha guardado con éxito'
-    //      );
-    //      this.ref.close(true);
-    //    },
-    //    error: (errorResponse) => {
-    //      this.snackbarService.error(errorResponse['message']);
-    //    },
-    //  });
+     person.role = person.role ? person.role['role'] : null;
+      this.personService.save(person).subscribe({
+        next: () => {
+          this.snackbarService.showMessage(
+            'El registro se ha guardado con éxito'
+          );
+          this.ref.close(true);
+        },
+        error: (errorResponse) => {
+          this.snackbarService.error(errorResponse['message']);
+        },
+      });
   }
 
   closeWindow() {
@@ -135,6 +136,7 @@ export class PersonalEditComponent implements OnInit {
     this.personElement = event.value
     this.matchByProvince();
     this.personForm.patchValue({
+      id: this.personElement.id,
       saga: this.personElement.saga,
       username: this.personElement.username,
       name: this.personElement.name,
@@ -143,12 +145,12 @@ export class PersonalEditComponent implements OnInit {
       customer: this.personElement.customer,
       grade: this.personElement.grade,
       role: this.roles.find(role => role.role == this.personElement.role),
-      hours: this.personElement.hours,
+      hours: this.personElement.hours ? this.personElement.hours : 8,
       department: this.personElement.department,
       manager: this.personElement.manager,
       center: this.personElement.center ? this.personElement.center : this.centers.find(center => center.id == 6),
       province: this.personElement.province,
-      active: this.personElement.active,
+      active: this.personElement.active ? this.personElement.active:1,
       businesscode: this.personElement.businesscode
     });
 
@@ -164,11 +166,6 @@ export class PersonalEditComponent implements OnInit {
   
   matchByProvince(){
     this.personElement.province = this.provinces.find(province => province?.province == this.personElement.center?.name);
-  }
-
-  showForm(){
-    console.log(this.personForm.value)
-    console.log(this.personForm.status)
   }
 
 }

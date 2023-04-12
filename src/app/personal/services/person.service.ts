@@ -11,7 +11,7 @@ export class PersonService {
   constructor(private http: HttpClient) {}
 
   getAllPersons(): Observable<Person[]> {
-    return this.http.get<Person[]>(environment.server + '/person/');
+    return this.http.get<Person[]>(environment.server + '/person/bulk');
   }
   save(person: Person): Observable<Person> {
     return this.http.post<Person>(environment.server + '/person/', person);

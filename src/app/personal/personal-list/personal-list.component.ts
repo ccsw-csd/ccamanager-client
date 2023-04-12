@@ -15,6 +15,7 @@ import { Dropdown } from 'primeng/dropdown';
 import { ExportService } from 'src/app/core/services/export.service';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
 import { PersonalEditComponent } from '../personal-edit/personal-edit/personal-edit.component';
+import { TechnologyService } from 'src/app/maintenance/technology/services/technology.service';
 
 @Component({
   selector: 'app-personal-list',
