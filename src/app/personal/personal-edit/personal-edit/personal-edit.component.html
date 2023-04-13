@@ -62,12 +62,12 @@
     </div>
     
     <div class="flex flex-row gap-4">
-    <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText  formControlName="grade">
+    <span class="p-float-label flex-1" style="min-width: 196px;">
+      <input id="name" type="text" pInputText class="w-full" formControlName="grade">
       <label for="firstname1">Grado</label>
     </span>
 
-    <span class="p-float-label flex-2">
+    <span class="p-float-label flex-1">
       <p-dropdown [options]="roles" styleClass="w-full" formControlName="role" optionLabel="role" placeholder="..."></p-dropdown>
       <label for="role" style="position: absolute; top: -5px;  padding: 0 2px;">Rol</label>
 
@@ -75,8 +75,8 @@
     
    
 
-    <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText  formControlName="hours">
+    <span class="p-float-label flex-1" style="min-width: 196px;">
+      <input id="name" type="text" pInputText class="w-full" formControlName="hours">
       <label for="firstname1">Horas</label>
     </span>
 
@@ -85,19 +85,19 @@
 
   <div class="flex flex-row gap-4">
 
-    <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText formControlName="businesscode">
+    <span class="p-float-label flex-1" style="min-width: 196px;">
+      <input id="name" type="text" pInputText class="w-full" formControlName="businesscode" >
       <label for="firstname1">Práctica</label>
     </span>
 
-    <span class="p-float-label flex-2">
+    <span class="p-float-label flex-1" style="min-width: 196px;">
       <input id="name" type="text" pInputText class="w-full" formControlName="department">
       <label for="firstname1">Dpto</label>
     </span>
 
     
-    <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText  formControlName="manager">
+    <span class="p-float-label flex-1" style="min-width: 196px;">
+      <input id="name" type="text" pInputText class="w-full"  formControlName="manager">
       <label for="firstname1">Evaluador</label>
     </span>
 
@@ -105,16 +105,16 @@
 
   <div class="flex flex-row gap-4">
 
-    <span class="p-float-label" style="width: 186px;">
+    <span class="p-float-label flex-1">
       <p-dropdown  [options]="centers" styleClass="w-full" formControlName="center" optionLabel="name" placeholder="..."> </p-dropdown>
       <label for="center">Oficina</label>
     </span>
-    <span class="p-float-label flex-2" >
+    <span class="p-float-label flex-1" >
      <p-dropdown  [options]="provinces" styleClass="w-full" formControlName="province" optionLabel="province" placeholder="..."> </p-dropdown>
      <label for="province" style="position: absolute; top: -5px;  padding: 0 2px;">Provincia</label>
     </span> 
 
-    <span class="p-float-label" style="width: 186px;">
+    <span class="p-float-label flex-1">
       <p-dropdown [options]="actives" styleClass="w-full" formControlName="active" optionLabel="label" optionValue="value"></p-dropdown>
       <label for="active">Estado</label>
     </span>
