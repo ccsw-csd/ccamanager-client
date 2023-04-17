@@ -6,7 +6,7 @@ import { Province } from 'src/app/core/models/Province';
 import { Person } from '../../models/Person';
 import { PersonService } from '../../services/person.service';
 import { Role } from 'src/app/core/models/Role';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
 
 
@@ -85,7 +85,6 @@ export class PersonalEditComponent implements OnInit {
       active: this.personElement.active ? this.personElement.active : 1,
       businesscode: this.personElement.businesscode ? this.personElement.businesscode :'CCA'
     });
-
   }
 
   saveItem(person: Person) {
@@ -116,7 +115,6 @@ export class PersonalEditComponent implements OnInit {
       this.personService.searchPerson($event.query).subscribe({
         next: (res: Person[]) => {
           this.groupPerson = res.map((person) => this.mappingPerson(person));
-          
         },
         error: () => {},
         complete: () => {},
@@ -125,7 +123,6 @@ export class PersonalEditComponent implements OnInit {
   }
 
   mappingPerson(person: Person): any {
-    
     return {
       field: person.name + ' ' + person.lastname + ' - ' + person.username,
       value: person,
@@ -161,7 +158,6 @@ export class PersonalEditComponent implements OnInit {
       control.setValidators(Validators.required);
       control.updateValueAndValidity();
     });
-    
   }
   
   matchByProvince(){

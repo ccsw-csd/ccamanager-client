@@ -1,83 +1,82 @@
 <h1 *ngIf="personElement.id == null" class="text-center">Nueva Persona</h1>
 <h1 *ngIf="personElement.id != null" class="text-center">Modificar Persona</h1>
 
-<div [formGroup]= "personForm" class="flex flex-column gap-4">
-    
-    
-    
-    <div class="flex flex-row mb-5">
-      <span class="p-float-label w-full" *ngIf="personElement.id == null">
-        <p-autoComplete styleClass="w-full" inputStyleClass="w-full" [ngModelOptions]="{standalone: true}" [(ngModel)]="personSelected" (onSelect)="onPersonSelect($event)" [suggestions]="groupPerson"
-          [forceSelection]="true" [showEmptyMessage]="true" 
-          (completeMethod)="searchPerson($event)" field="field"
-          appendTo="body"></p-autoComplete>
-        <label>Persona</label>
-        <div class="p-input-icon-right">
-          <i class="pi pi-search"></i>
-        </div>
-      </span>
-    </div>
+<div [formGroup]="personForm" class="flex flex-column gap-4">
 
-    <div class="flex flex-row gap-4">
+  <div class="flex flex-row mb-5">
+    <span class="p-float-label w-full" *ngIf="personElement.id == null">
+      <p-autoComplete styleClass="w-full" inputStyleClass="w-full" [ngModelOptions]="{standalone: true}"
+        [(ngModel)]="personSelected" (onSelect)="onPersonSelect($event)" [suggestions]="groupPerson"
+        [forceSelection]="true" [showEmptyMessage]="true" (completeMethod)="searchPerson($event)" field="field"
+        appendTo="body"></p-autoComplete>
+      <label>Persona</label>
+      
+      <div class="p-input-icon-right">
+        <i class="pi pi-search"></i>
+      </div>
+
+    </span>
+
+  </div>
+
+  <div class="flex flex-row gap-4">
 
     <span class="p-float-label flex-1">
       <input id="name" type="text" pInputText class="w-full" formControlName="saga">
-      <label for="firstname1">Saga</label>
+      <label>Saga</label>
     </span>
 
     <span class="p-float-label flex-1">
       <input id="name" type="text" pInputText class="w-full" formControlName="username">
-      <label for="firstname1">Username</label>
-    </span>
-
-    </div>
-
-    <div class="flex flex-row gap-4">
-
-      <span class="p-float-label flex-1">
-        <input id="name" type="text" pInputText class="w-full" formControlName="name">
-        <label for="firstname1">Nombre</label>
-      </span>
-    
-    <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText class="w-full" formControlName="lastname">
-      <label for="firstname1">Apellidos</label>
+      <label>Username</label>
     </span>
 
   </div>
 
- 
-    
-    <div class="flex flex-row gap-4">
-      <span class="p-float-label mb-1 flex-1">
-        <input id="name" type="text" pInputText class="w-full" formControlName="email">
-        <label for="firstname1">Email</label>
-      </span> 
+  <div class="flex flex-row gap-4">
 
-      <span class="p-float-label flex-1">
-        <input id="name" type="text" pInputText class="w-full" formControlName="customer">
-        <label for="firstname1">Cliente</label>
-      </span>
-  
-    </div>
-    
-    <div class="flex flex-row gap-4">
-    <span class="p-float-label flex-1" style="min-width: 196px;">
-      <input id="name" type="text" pInputText class="w-full" formControlName="grade">
-      <label for="firstname1">Grado</label>
+    <span class="p-float-label flex-1">
+      <input id="name" type="text" pInputText class="w-full" formControlName="name">
+      <label>Nombre</label>
     </span>
 
     <span class="p-float-label flex-1">
-      <p-dropdown [options]="roles" styleClass="w-full" formControlName="role" optionLabel="role" placeholder="..."></p-dropdown>
-      <label for="role" style="position: absolute; top: -5px;  padding: 0 2px;">Rol</label>
-
+      <input id="name" type="text" pInputText class="w-full" formControlName="lastname">
+      <label>Apellidos</label>
     </span>
-    
-   
+
+  </div>
+
+
+
+  <div class="flex flex-row gap-4">
+    <span class="p-float-label mb-1 flex-1">
+      <input id="name" type="text" pInputText class="w-full" formControlName="email">
+      <label>Email</label>
+    </span>
+
+    <span class="p-float-label flex-1">
+      <input id="name" type="text" pInputText class="w-full" formControlName="customer">
+      <label>Cliente</label>
+    </span>
+
+  </div>
+
+  <div class="flex flex-row gap-4">
+    <span class="p-float-label flex-1" style="min-width: 196px;">
+      <input id="name" type="text" pInputText class="w-full" formControlName="grade">
+      <label>Grado</label>
+    </span>
+
+    <span class="p-float-label flex-1">
+      <p-dropdown [options]="roles" [autoDisplayFirst]="false" styleClass="w-full" formControlName="role"
+        optionLabel="role" inputId="float-label"></p-dropdown>
+      <label>Rol</label>
+    </span>
 
     <span class="p-float-label flex-1" style="min-width: 196px;">
       <input id="name" type="text" pInputText class="w-full" formControlName="hours">
-      <label for="firstname1">Horas</label>
+      <label>Horas</label>
     </span>
 
   </div>
@@ -86,19 +85,18 @@
   <div class="flex flex-row gap-4">
 
     <span class="p-float-label flex-1" style="min-width: 196px;">
-      <input id="name" type="text" pInputText class="w-full" formControlName="businesscode" >
-      <label for="firstname1">Práctica</label>
+      <input id="name" type="text" pInputText class="w-full" formControlName="businesscode">
+      <label>Práctica</label>
     </span>
 
     <span class="p-float-label flex-1" style="min-width: 196px;">
       <input id="name" type="text" pInputText class="w-full" formControlName="department">
-      <label for="firstname1">Dpto</label>
+      <label>Dpto</label>
     </span>
 
-    
     <span class="p-float-label flex-1" style="min-width: 196px;">
-      <input id="name" type="text" pInputText class="w-full"  formControlName="manager">
-      <label for="firstname1">Evaluador</label>
+      <input id="name" type="text" pInputText class="w-full" formControlName="manager">
+      <label>Evaluador</label>
     </span>
 
   </div>
@@ -106,34 +104,31 @@
   <div class="flex flex-row gap-4">
 
     <span class="p-float-label flex-1">
-      <p-dropdown  [options]="centers" styleClass="w-full" formControlName="center" optionLabel="name" placeholder="..."> </p-dropdown>
-      <label for="center">Oficina</label>
+      <p-dropdown [options]="centers" [autoDisplayFirst]="false" styleClass="w-full" appendTo="body"
+        formControlName="center" optionLabel="name"> </p-dropdown>
+      <label>Oficina</label>
     </span>
-    <span class="p-float-label flex-1" >
-     <p-dropdown  [options]="provinces" styleClass="w-full" formControlName="province" optionLabel="province" placeholder="..."> </p-dropdown>
-     <label for="province" style="position: absolute; top: -5px;  padding: 0 2px;">Provincia</label>
-    </span> 
 
     <span class="p-float-label flex-1">
-      <p-dropdown [options]="actives" styleClass="w-full" formControlName="active" optionLabel="label" optionValue="value"></p-dropdown>
-      <label for="active">Estado</label>
+      <p-dropdown [options]="provinces" [autoDisplayFirst]="false" styleClass="w-full" appendTo="body"
+        formControlName="province" optionLabel="province"> </p-dropdown>
+      <label>Provincia</label>
+    </span>
+
+    <span class="p-float-label flex-1">
+      <p-dropdown [options]="actives" [autoDisplayFirst]="false" styleClass="w-full" appendTo="body"
+        formControlName="active" optionLabel="label" optionValue="value"></p-dropdown>
+      <label>Estado</label>
     </span>
 
   </div>
 
- 
-  </div>
+</div>
 
-    <div class="h-3rem"></div>
+<div class="flex flex-row mt-5 gap-4 justify-content-end gap-2">
+  <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary"
+    (click)="closeWindow()"></button>
+  <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check" [disabled]="!personForm.valid"
+    (click)="saveItem(personForm.value)"></button>
 
-    <div class="flex flex-row gap-4 justify-content-end gap-2">    
-      <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
-      <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check"  [disabled]="!personForm.valid" (click)="saveItem(personForm.value)"></button>
-
-
-    </div>
-
-
- 
-
-
+</div>
