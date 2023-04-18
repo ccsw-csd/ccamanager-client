@@ -50,7 +50,7 @@ export class PersonalEditComponent implements OnInit {
       lastname: ['', Validators.required],
       email: ['', [ Validators.email]],
       customer: [''],
-      grade: [''],
+      grade: ['',[Validators.required, Validators.pattern('^[A-Z][0-9]$')]],
       role: [''],
       hours: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       department: ['', Validators.required],
@@ -161,7 +161,7 @@ export class PersonalEditComponent implements OnInit {
   }
   
   matchByProvince(){
-    this.personElement.province = this.provinces.find(province => province?.province == this.personElement.center?.name);
+    this.personForm.patchValue({province: this.provinces.find(province => province?.province == this.personForm.value.center?.name)});
   }
 
 }

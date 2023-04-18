@@ -4,16 +4,16 @@
 <div [formGroup]="personForm" class="flex flex-column gap-4">
 
   <div class="flex flex-row mb-5">
-    <span class="p-float-label w-full" *ngIf="personElement.id == null">
-      <p-autoComplete styleClass="w-full" inputStyleClass="w-full" [ngModelOptions]="{standalone: true}"
-        [(ngModel)]="personSelected" (onSelect)="onPersonSelect($event)" [suggestions]="groupPerson"
-        [forceSelection]="true" [showEmptyMessage]="true" (completeMethod)="searchPerson($event)" field="field"
-        appendTo="body"></p-autoComplete>
+    <span class="p-float-label w-full p-input-icon-right" *ngIf="!personElement.id">
+
+      <p-autoComplete [(ngModel)]="internSelected" styleClass="w-full" inputStyleClass="w-full"
+        (onSelect)="onPersonSelect($event)" [suggestions]="groupPerson" [forceSelection]="true"
+        [showEmptyMessage]="true" (completeMethod)="searchPerson($event)" field="field" dropdownIcon="pi pi-search"
+        [disabled]="checked" [ngModelOptions]="{standalone: true}"></p-autoComplete>
+
       <label>Persona</label>
-      
-      <div class="p-input-icon-right">
-        <i class="pi pi-search"></i>
-      </div>
+
+      <i class="pi pi-search"></i>
 
     </span>
 
@@ -104,16 +104,18 @@
   <div class="flex flex-row gap-4">
 
     <span class="p-float-label flex-1">
-      <p-dropdown [options]="centers" [autoDisplayFirst]="false" styleClass="w-full" appendTo="body"
-        formControlName="center" optionLabel="name"> </p-dropdown>
-      <label>Oficina</label>
-    </span>
-
-    <span class="p-float-label flex-1">
       <p-dropdown [options]="provinces" [autoDisplayFirst]="false" styleClass="w-full" appendTo="body"
         formControlName="province" optionLabel="province"> </p-dropdown>
       <label>Provincia</label>
     </span>
+
+    <span class="p-float-label flex-1">
+      <p-dropdown [options]="centers" [autoDisplayFirst]="false" styleClass="w-full" appendTo="body"
+        formControlName="center" optionLabel="name" (onChange)="matchByProvince()"> </p-dropdown>
+      <label>Oficina</label>
+    </span>
+
+
 
     <span class="p-float-label flex-1">
       <p-dropdown [options]="actives" [autoDisplayFirst]="false" styleClass="w-full" appendTo="body"
