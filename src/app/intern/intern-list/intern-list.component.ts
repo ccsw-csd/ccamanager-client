@@ -4,6 +4,7 @@ import { FilterService, PrimeNGConfig } from 'primeng/api';
 import { Calendar } from 'primeng/calendar';
 import { Dropdown } from 'primeng/dropdown';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ConfirmationService} from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Action } from 'src/app/core/models/Action';
 import { Center } from 'src/app/core/models/Center';
@@ -23,13 +24,14 @@ import { Technology } from 'src/app/maintenance/technology/models/Technology';
 import { TechnologyService } from 'src/app/maintenance/technology/services/technology.service';
 import { DialogComponent } from '../dialog/dialog.component';
 import { Intern } from '../models/Intern';
+import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { InternService } from '../services/intern.service';
 import { InternEditComponent } from '../intern-edit/intern-edit.component';
 @Component({
   selector: 'app-intern-list',
   templateUrl: './intern-list.component.html',
   styleUrls: ['./intern-list.component.scss'],
-  providers: [DialogService, DynamicDialogRef],
+  providers: [DialogService, DynamicDialogRef,ConfirmationService],
 })
 export class InternListComponent implements OnInit,AfterViewInit {
   @ViewChild(Table) table: Table;
@@ -65,6 +67,8 @@ export class InternListComponent implements OnInit,AfterViewInit {
     private navigatorService: NavigatorService,
     private ref: DynamicDialogRef,
     private dialogService: DialogService,
+    private confirmationService:ConfirmationService,
+    private snackbarService:SnackbarService,
     private exportService:ExportService,
     private translateService: TranslateService,
     private internService: InternService,
@@ -309,8 +313,8 @@ export class InternListComponent implements OnInit,AfterViewInit {
   }
   addOrEditIntern(intern?:Intern){
     this.ref = this.dialogService.open(InternEditComponent,{
-      height:"800px",
-      width:"1200px",
+      height:"89vh",//88%
+      width:"40%",
       data:{
         intern: intern,
         genders: this.genders,
@@ -322,8 +326,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
         actions:this.actions,
         englishLevels:this.englishLevels,
       },
-      closable:true
-
+      closable:false,
     });
     this.onClose();
   }
@@ -331,5 +334,29 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.ref.onClose.subscribe((results: any) => {
       this.getAllInterns();
     });
+  }
+
+  delete(id:number){
+    console.log(id);
+    this.confirmationService.confirm({
+      message:'¿Deseas borrar el Becario?',
+      accept:()=>{
+        this.confirmationService.close()
+        this.internService.delete(id).subscribe({
+          next:()=>{
+            this.snackbarService.showMessage("Se ha eliminado correctamente el Centro de Educacion");
+            this.getAllInterns();
+          },
+          error:(errorResponse)=>{
+            this.snackbarService.error(errorResponse.message);
+          } 
+
+        });
+      },
+      reject:()=>{
+        this.confirmationService.close();
+      }
+    });
+    
   }
 }
