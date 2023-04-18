@@ -16,6 +16,8 @@ import { InternListComponent } from './intern-list/intern-list.component';
 import { InternEditComponent } from './intern-edit/intern-edit.component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [InternListComponent, DialogComponent, InternEditComponent],
   imports: [
@@ -32,7 +34,10 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     InputTextModule,
     InputNumberModule,
     MultiSelectModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    CheckboxModule,
+    ReactiveFormsModule,
+    ConfirmDialogModule
   ],
 })
 export class InternModule {}
