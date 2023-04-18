@@ -1,0 +1,36 @@
+import { Action } from 'src/app/core/models/Action';
+import { Center } from 'src/app/core/models/Center';
+import { Province } from 'src/app/core/models/Province';
+import { EducationCenter } from 'src/app/maintenance/education-center/models/EducationCenter';
+import { Education } from 'src/app/maintenance/education/models/Education';
+import { Level } from 'src/app/maintenance/english-level/models/Level';
+import { Technology } from 'src/app/maintenance/technology/models/Technology';
+export class Intern {
+  id: number;
+  period: string;
+  username: string;
+  name: string;
+  lastname: string;
+  gender: number;
+  email: string;
+  education: Education;
+  educationCenter: EducationCenter;
+  center: Center;
+  province: Province;
+  startDate: Date;
+  endDate: Date;
+  hours: number;
+  customer: string;
+  code: string;
+  technologies: Technology[];
+  englishLevel: Level;
+  mentor: string;
+  coordinator: string;
+  hrManager: string;
+  action: Action;
+  contractDate: Date;
+  saga:string;
+  active: number;
+  link: string;
+  comment: string;
+}
