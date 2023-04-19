@@ -17,6 +17,7 @@ import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { DateRangeValidator } from 'src/app/core/models/DateRangeValidator';
 import { TranslateService } from 'src/app/core/services/translate.service';
 import { InternService } from '../services/intern.service';
+import { AbstractControl, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-intern-edit',
@@ -66,7 +67,7 @@ export class InternEditComponent implements OnInit {
     
    ngOnInit(): void {
      if(this.config.data.intern === undefined){
-       this.intern = new Intern();
+      this.intern = new Intern();
       this.intern.hours=5;
       this.isNew = true;
       this.intern.active = 1;
@@ -92,13 +93,13 @@ export class InternEditComponent implements OnInit {
         period: [this.getActualQuarter(),Validators.required],
         name: [this.intern.name,Validators.required],
         lastname:[this.intern.lastname,Validators.required],
-        email: [this.intern.email],
+        email: [this.intern.email,Validators.email],
         username: [this.intern.username],
         gender: [this.intern.gender,Validators.required],
-        education:[this.intern.education],
-        educationCenter:[this.intern.educationCenter],
-        center:[this.intern.center],
-        province:[this.intern.province],
+        education:[this.intern?.education],
+        educationCenter:[this.intern?.educationCenter],
+        center:[this.intern?.center],
+        province:[this.intern?.province],
         startDate:[this.intern?.startDate],
         endDate:[this.intern?.endDate],
         hours:[this.intern?.hours,Validators.required],
@@ -117,14 +118,19 @@ export class InternEditComponent implements OnInit {
   
   updateFormGroup(){
     this.profileForm.get('email').setValidators([Validators.required,Validators.email]);
-    this.profileForm.get('education').setValidators(Validators.required);
-    this.profileForm.get('educationCenter').setValidators(Validators.required);
-    this.profileForm.get('center').setValidators(Validators.required);
-    this.profileForm.get('province').setValidators(Validators.required);
+    this.profileForm.get('education').setValidators([Validators.required]);
+    this.profileForm.get('education').updateValueAndValidity();
+    this.profileForm.get('educationCenter').setValidators([Validators.required]);
+    this.profileForm.get('educationCenter').updateValueAndValidity();
+    this.profileForm.get('center').setValidators([Validators.required]);
+    this.profileForm.get('center').updateValueAndValidity();
+    this.profileForm.get('province').setValidators([Validators.required]);
     this.profileForm.get('startDate').setValidators([Validators.required]);
+    this.profileForm.get('startDate').updateValueAndValidity();
     this.profileForm.get('endDate').setValidators([Validators.required]);
-    this.profileForm.get('code').setValidators(Validators.required);
-    this.profileForm.get('mentor').setValidators(Validators.required);
+    this.profileForm.get('endDate').updateValueAndValidity();
+    this.profileForm.get('code').setValidators([Validators.required]);
+    this.profileForm.get('mentor').setValidators([Validators.required]);
   }
 
   getInfoUserLogin(){
