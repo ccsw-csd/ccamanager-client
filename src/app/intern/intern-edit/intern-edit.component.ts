@@ -143,8 +143,12 @@ export class InternEditComponent implements OnInit {
         });
         this.matchByProvince();
         this.intern.active=2;
+        this.intern.gender=0;
+        this.intern.englishLevel = this.englishLevels.find(english => english.name==="Pendiente");
         this.profileForm.patchValue({
           active:this.intern.active,
+          gender:this.intern.gender,
+          englishLevel:this.intern.englishLevel
         });
       }
       );
