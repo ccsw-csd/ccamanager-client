@@ -337,7 +337,6 @@ export class InternListComponent implements OnInit,AfterViewInit {
   }
 
   delete(id:number){
-    console.log(id);
     this.confirmationService.confirm({
       message:'¿Deseas borrar el Becario?',
       accept:()=>{
