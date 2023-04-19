@@ -123,15 +123,15 @@
 
     </div>
     <div class="flex flex-row gap-2">
-        <div class="flex-2 min-w-min">
-            <span class="p-float-label">
-                <p-multiSelect appendTo="body" [maxSelectedLabels]="2" [style]="{'height':'45px','width':'100%','max-width':'inherit'}" [options]="technologies" [ngModelOptions]="{standalone: true}" [(ngModel)]="intern.technologies" optionLabel="name"></p-multiSelect>
+        <div class="flex-2 overflow-hidden">
+            <span class="p-float-label mt-2" style="min-width: 20rem;">
+                <p-multiSelect appendTo="body" [maxSelectedLabels]="2" [style]="{'height':'45px'}" styleClass="w-full" [options]="technologies" [ngModelOptions]="{standalone: true}" [(ngModel)]="intern.technologies" optionLabel="name"></p-multiSelect>
                 <label for="technologies">Tecnologías</label>
             </span>
         </div>
         <div class="flex-1">
-            <span class="p-float-label">
-                <p-dropdown appendTo="body" styleClass="min-w-max w-full" [options]="englishLevels"  [autoDisplayFirst]="false" formControlName="englishLevel"  optionLabel="name" ></p-dropdown>
+            <span class="p-float-label mt-2" style="min-width:10rem">
+                <p-dropdown appendTo="body" styleClass="w-full" [options]="englishLevels"  [autoDisplayFirst]="false" formControlName="englishLevel"  optionLabel="name" ></p-dropdown>
                 <label for="float-label">Ingles<span class="text-red-600 text-base">*</span></label>
             </span>
         </div>
