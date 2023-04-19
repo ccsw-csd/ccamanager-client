@@ -13,7 +13,7 @@ import { PersonService } from 'src/app/personal/services/person.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { TranscodeService } from 'src/app/core/services/transcode.service';
-import { FormBuilder,Validators } from '@angular/forms';
+import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { DateRangeValidator } from 'src/app/core/models/DateRangeValidator';
 import { TranslateService } from 'src/app/core/services/translate.service';
 import { InternService } from '../services/intern.service';
@@ -112,8 +112,9 @@ export class InternEditComponent implements OnInit {
       }, {
       validators: DateRangeValidator.dateRange
       });
+      
   }
-
+  
   updateFormGroup(){
     this.profileForm.get('email').setValidators([Validators.required,Validators.email]);
     this.profileForm.get('education').setValidators(Validators.required);
@@ -152,6 +153,7 @@ export class InternEditComponent implements OnInit {
       this.profileForm.get("email").enable();
       this.profileForm.get("username").enable();
     }
+   
   }
 
   showGender(value: number): string {    
@@ -171,10 +173,6 @@ export class InternEditComponent implements OnInit {
       quarter = 3;
     }    
     return `Q${quarter}'${String(year).slice(-2)}`;
-  }
-
-  onInternSelect(event){
-    this.intern=event.value;
   }
 
   searchIntern($event){
