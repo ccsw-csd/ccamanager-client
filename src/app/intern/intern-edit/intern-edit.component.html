@@ -60,7 +60,7 @@
     </div>
     <div class="flex flex-row gap-2">
         <div class="flex-1 min-w-min mt-2" >
-            <span class="p-float-label">
+            <span class="p-float-label" style="min-width: 16.4rem;">
                 <p-dropdown appendTo="body" [options]="educations" styleClass="w-full"   [autoDisplayFirst]="false" formControlName="education" inputId="float-label" optionLabel="name"></p-dropdown>
                 <label for="float-label" >Titulación<span class="text-red-600 text-base" *ngIf="profileForm.get('education').validator">*</span></label>
             </span>
