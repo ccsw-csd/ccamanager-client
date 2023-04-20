@@ -68,6 +68,8 @@ export class PersonalEditComponent implements OnInit {
     this.roles = this.config.data.roles 
     this.centers=  this.config.data.centers
     this.setFormGroup();
+    if (this.config.data.person != null){ this.personForm.get('grade').markAsDirty(); }
+
   }
 
   setFormGroup(){
