@@ -148,19 +148,19 @@
     </div>
     <div class="flex flex-row gap-2 md:flex-wrap ">
         <div class="flex-1">
-            <span class="p-float-label" >
+            <span class="p-float-label mt-2" style="min-width: 10rem;" >
                 <input id="coordinator" class="w-full" type="text" formControlName="coordinator"  pInputText  >
                 <label for="coordinator">Coordinador<span class="text-red-600 text-base">*</span></label>
             </span>
         </div>
         <div class="flex-1">
-            <span class="p-float-label" >
+            <span class="p-float-label mt-2" style="min-width: 10rem;" >
                 <input id="hrManager" class="w-full" type="text" pInputText formControlName="rrhh"  >
                 <label for="hrManager">Resp. RRHH<span class="text-red-600 text-base">*</span></label>
             </span>
         </div>
-        <div class="flex-1 ">
-            <span class="p-float-label" >
+        <div class="flex-1 overflow-hidden">
+            <span class="p-float-label mt-2" style="min-width: 10rem;" >
                 <p-dropdown appendTo="body" pTooltip="{{intern.action?.name}}" tooltipPosition="top" [autoDisplayFirst]="false" styleClass="w-full" [options]="actions" [ngModelOptions]="{standalone: true}" [(ngModel)]="intern.action" optionLabel="name"></p-dropdown>
                 <label for="action" >Accion</label>
             </span>
