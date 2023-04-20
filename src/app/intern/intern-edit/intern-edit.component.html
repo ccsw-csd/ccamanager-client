@@ -21,7 +21,7 @@
             </div>
             <div class="flex-2">
                 <span class="p-float-label">
-                    <p-inputNumber inputStyleClass="w-full" styleClass="w-full" [inputStyle]="{'height':'45px'}" [disabled]="!checked" [min]="1" inputId="integeronly" formControlName="quantity"></p-inputNumber>
+                    <p-inputNumber inputStyleClass="w-full" styleClass="w-full" [inputStyle]="{'height':'45px'}" [min]="1" inputId="integeronly" formControlName="quantity"></p-inputNumber>
                     <label for="hours">Cantidad<span class="text-red-600 text-base" *ngIf="profileForm.get('quantity').validator">*</span></label>
                 </span>
             </div>
@@ -71,7 +71,7 @@
         </div>
         <div class="flex-2 overflow-hidden">
             <span class="p-float-label mt-2">
-                <p-dropdown appendTo="body" [options]="educationsCenter" styleClass="w-full"   [autoDisplayFirst]="false" formControlName="educationCenter" optionLabel="name" ></p-dropdown>
+                <p-dropdown appendTo="body" [options]="educationsCenter" styleClass="w-full" [autoDisplayFirst]="false" formControlName="educationCenter" optionLabel="name" ></p-dropdown>
                 <label for="educationCenter" >Centro<span class="text-red-600 text-base" *ngIf="profileForm.get('educationCenter').validator">*</span></label>
             </span>
         </div>

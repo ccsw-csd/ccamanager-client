@@ -13,11 +13,11 @@ import { PersonService } from 'src/app/personal/services/person.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { TranscodeService } from 'src/app/core/services/transcode.service';
-import { FormBuilder,FormGroup,Validators } from '@angular/forms';
+import { FormBuilder,Validators } from '@angular/forms';
 import { DateRangeValidator } from 'src/app/core/models/DateRangeValidator';
 import { TranslateService } from 'src/app/core/services/translate.service';
 import { InternService } from '../services/intern.service';
-import { AbstractControl, FormArray } from '@angular/forms';
+import { EducationCenterService } from 'src/app/maintenance/education-center/services/education-center.service';
 
 @Component({
   selector: 'app-intern-edit',
@@ -58,6 +58,7 @@ export class InternEditComponent implements OnInit {
     private elementRef: ElementRef,
     private personService:PersonService,
     private authService:AuthService,
+    private educationCenterService:EducationCenterService,
     private internService:InternService,
     private transCodeService:TranscodeService,
     private translateService: TranslateService,
@@ -79,7 +80,11 @@ export class InternEditComponent implements OnInit {
     this.primengConfig.setTranslation(this.translateService.getSpanish());
     this.educations = this.config.data.educations;
     this.technologies = this.config.data.technologies;
-    this.educationsCenter = this.config.data.educationsCenter;
+    this.educationCenterService.getAllEducationCentersSimple().subscribe({
+      next: (res: EducationCenter[]) => {
+        this.educationsCenter = res;
+      },
+    });
     this.centers = this.config.data.centers;
     this.englishLevels = this.config.data.englishLevels;
     this.provinces = this.config.data.provinces;
@@ -112,7 +117,7 @@ export class InternEditComponent implements OnInit {
         active:[this.intern?.active,Validators.required],
         saga:[this.intern?.saga],
         quantity:[]
-      }, {
+      },{
       validators: DateRangeValidator.dateRange
       });
   }
@@ -238,6 +243,7 @@ export class InternEditComponent implements OnInit {
       email: intern.email,
       center: intern.center,
       hours: intern.hours,
+      saga:intern.saga
     });
   }
 
@@ -301,7 +307,7 @@ export class InternEditComponent implements OnInit {
     this.intern.education = this.profileForm.get('education').value ? this.educations.find(education=>education.name === this.profileForm.get('education').value.name) : null;
     this.intern.educationCenter = this.profileForm.get('educationCenter').value ? this.educationsCenter.find(educationCenter=>educationCenter.name === this.profileForm.get('educationCenter').value.name) : null;
     this.intern.center = this.profileForm.get('center').value ? this.centers.find(center=>center.name === this.profileForm.get('center').value.name): null;
-    this.intern.province = this.profileForm.get('province').value ? this.provinces.find(province=>province.province === this.profileForm.get('province').value.name) : null; 
+    this.intern.province = this.profileForm.get('province').value ? this.provinces.find(province=>province.province === this.profileForm.get('province').value.province) : null; 
     this.intern.startDate = this.profileForm.get('startDate').value;
     this.intern.endDate = this.profileForm.get('endDate').value;
     this.intern.hours = this.profileForm.get('hours').value;
