@@ -222,7 +222,17 @@ export class InternListComponent implements OnInit,AfterViewInit {
       showHeader: false,
     });
     this.ref.onClose.subscribe((res)=>{
-      intern.comment = res;
+      if(res!=null && res!=''){
+        intern.comment = res;
+        this.internService.save(intern).subscribe(
+          (result)=>{
+            this.snackbarService.showMessage("Se ha añadido actualizado el Comentario");
+          },
+          (error)=>{
+            this.snackbarService.error(error.message);
+          }
+        );
+      }
     });
   }
   addLink(intern:Intern) {
@@ -237,7 +247,17 @@ export class InternListComponent implements OnInit,AfterViewInit {
       showHeader: false,
     });
     this.ref.onClose.subscribe((res)=>{
-      intern.link = res;
+      if(res!=null && res!=''){
+        intern.link = res;
+        this.internService.save(intern).subscribe(
+          (result)=>{
+            this.snackbarService.showMessage("Se ha añadido actualizado el Link");
+          },
+          (error)=>{
+            this.snackbarService.error(error.message);
+          }
+        );
+      }
     });
   }
 
