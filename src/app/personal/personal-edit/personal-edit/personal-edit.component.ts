@@ -137,7 +137,6 @@ export class PersonalEditComponent implements OnInit {
 
   onPersonSelect(event) {
     this.personElement = event.value
-    this.matchByProvince();
     this.setFormGroup();
     const requiredFields = ['saga', 'email', 'customer', 'role'];
 
@@ -147,6 +146,7 @@ export class PersonalEditComponent implements OnInit {
       control.updateValueAndValidity();
     });
     this.personForm.get('grade').markAsDirty();
+    this.matchByProvince();
   }
   
   matchByProvince(){
