@@ -93,14 +93,14 @@
         
         <div class="flex-1">
             <span class="p-float-label">
-                <p-calendar appendTo="body" [inputStyle]="{'height':'45px'}" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" formControlName="startDate"  ></p-calendar>
+                <p-calendar appendTo="body" styleClass="w-full" [inputStyle]="{'height':'45px'}" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" formControlName="startDate"  ></p-calendar>
                 <label for="startDate">Inicio<span class="text-red-600 text-base" *ngIf="profileForm.get('startDate').validator">*</span></label>
                 <small *ngIf="profileForm.invalid && profileForm.errors?.dateRange"  id="username-help" class="p-error ">La fecha de inicio no puede ser posterior a la fecha de fin</small>
             </span>
         </div>
         <div class="flex-1">
             <span class="p-float-label">
-                <p-calendar appendTo="body" [inputStyle]="{'height':'45px'}" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" formControlName="endDate" ></p-calendar>
+                <p-calendar appendTo="body" styleClass="w-full" [inputStyle]="{'height':'45px'}" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" formControlName="endDate" ></p-calendar>
                 <label for="endDate">Fin<span class="text-red-600 text-base" *ngIf="profileForm.get('endDate').validator">*</span></label>
             </span>
         </div>
