@@ -212,7 +212,6 @@ export class InternListComponent implements OnInit,AfterViewInit {
 
   addComment(intern:Intern) {
     this.ref = this.dialogService.open(DialogComponent, {
-      height: '420px',
       width: '600px',
       data: {
         action: 'Comment',
