@@ -67,7 +67,11 @@ export class PersonalEditComponent implements OnInit {
     this.provinces = this.config.data.provinces 
     this.roles = this.config.data.roles 
     this.centers=  this.config.data.centers
-      this.personForm.patchValue({
+    this.setFormGroup();
+  }
+
+  setFormGroup(){
+    this.personForm.patchValue({
       id: this.personElement.id,
       saga: this.personElement.saga,
       username: this.personElement.username,
@@ -132,25 +136,7 @@ export class PersonalEditComponent implements OnInit {
   onPersonSelect(event) {
     this.personElement = event.value
     this.matchByProvince();
-    this.personForm.patchValue({
-      id: this.personElement.id,
-      saga: this.personElement.saga,
-      username: this.personElement.username,
-      name: this.personElement.name,
-      lastname: this.personElement.lastname,
-      email: this.personElement.email,
-      customer: this.personElement.customer,
-      grade: this.personElement.grade,
-      role: this.roles.find(role => role.role == this.personElement.role),
-      hours: this.personElement.hours ? this.personElement.hours : 8,
-      department: this.personElement.department,
-      manager: this.personElement.manager,
-      center: this.personElement.center ? this.personElement.center : this.centers.find(center => center.id == 6),
-      province: this.personElement.province,
-      active: this.personElement.active ? this.personElement.active:1,
-      businesscode: this.personElement.businesscode
-    });
-
+    this.setFormGroup();
     const requiredFields = ['saga', 'email', 'customer', 'role'];
 
     requiredFields.forEach(fieldName => {
@@ -158,6 +144,7 @@ export class PersonalEditComponent implements OnInit {
       control.setValidators(Validators.required);
       control.updateValueAndValidity();
     });
+    this.personForm.get('grade').markAsDirty();
   }
   
   matchByProvince(){

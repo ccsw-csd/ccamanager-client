@@ -37,46 +37,42 @@
 
     <span class="p-float-label flex-1">
       <input id="name" type="text" pInputText class="w-full" formControlName="name">
-      <label>Nombre</label>
+      <label>Nombre <span class="text-red-600 text-base" *ngIf="personForm.get('name').validator">*</span></label>
     </span>
 
     <span class="p-float-label flex-1">
       <input id="name" type="text" pInputText class="w-full" formControlName="lastname">
-      <label>Apellidos</label>
+      <label>Apellidos <span class="text-red-600 text-base" *ngIf="personForm.get('lastname').validator">*</span></label>
     </span>
-
   </div>
-
-
 
   <div class="flex flex-row gap-4">
     <span class="p-float-label mb-1 flex-1">
       <input id="name" type="text" pInputText class="w-full" formControlName="email">
-      <label>Email</label>
-    </span>
+     <label for="email">Email<span class="text-red-600 text-base" *ngIf="personForm.get('email').validator">*</span></label></span>
 
     <span class="p-float-label flex-1">
       <input id="name" type="text" pInputText class="w-full" formControlName="customer">
-      <label>Cliente</label>
+      <label>Cliente <span class="text-red-600 text-base" *ngIf="personForm.get('customer').validator">*</span></label>
     </span>
 
   </div>
 
   <div class="flex flex-row gap-4">
     <span class="p-float-label flex-1" style="min-width: 196px;">
-      <input id="name" type="text" pInputText class="w-full" formControlName="grade">
-      <label>Grado</label>
+      <input id="name" type="text" pInputText class="w-full" formControlName="grade" >
+      <label>Grado <span class="text-red-600 text-base" *ngIf="personForm.get('grade').validator">*</span></label>
     </span>
 
     <span class="p-float-label flex-1">
       <p-dropdown [options]="roles" [autoDisplayFirst]="false" styleClass="w-full" formControlName="role"
         optionLabel="role" inputId="float-label"></p-dropdown>
-      <label>Rol</label>
+      <label>Rol <span class="text-red-600 text-base" *ngIf="personForm.get('role').validator">*</span></label>
     </span>
 
     <span class="p-float-label flex-1" style="min-width: 196px;">
       <input id="name" type="text" pInputText class="w-full" formControlName="hours">
-      <label>Horas</label>
+      <label>Horas <span class="text-red-600 text-base" *ngIf="personForm.get('hours').validator">*</span></label>
     </span>
 
   </div>
@@ -86,17 +82,17 @@
 
     <span class="p-float-label flex-1" style="min-width: 196px;">
       <input id="name" type="text" pInputText class="w-full" formControlName="businesscode">
-      <label>Práctica</label>
+      <label>Práctica <span class="text-red-600 text-base" *ngIf="personForm.get('businesscode').validator">*</span></label>
     </span>
 
     <span class="p-float-label flex-1" style="min-width: 196px;">
       <input id="name" type="text" pInputText class="w-full" formControlName="department">
-      <label>Dpto</label>
+      <label>Dpto <span class="text-red-600 text-base" *ngIf="personForm.get('department').validator">*</span></label>
     </span>
 
     <span class="p-float-label flex-1" style="min-width: 196px;">
       <input id="name" type="text" pInputText class="w-full" formControlName="manager">
-      <label>Evaluador</label>
+      <label>Evaluador <span class="text-red-600 text-base" *ngIf="personForm.get('manager').validator">*</span></label>
     </span>
 
   </div>
@@ -106,13 +102,13 @@
     <span class="p-float-label flex-1">
       <p-dropdown [options]="provinces" [autoDisplayFirst]="false" styleClass="w-full" appendTo="body"
         formControlName="province" optionLabel="province"> </p-dropdown>
-      <label>Provincia</label>
+      <label>Localización <span class="text-red-600 text-base" *ngIf="personForm.get('province').validator">*</span></label>
     </span>
 
     <span class="p-float-label flex-1">
       <p-dropdown [options]="centers" [autoDisplayFirst]="false" styleClass="w-full" appendTo="body"
         formControlName="center" optionLabel="name" (onChange)="matchByProvince()"> </p-dropdown>
-      <label>Oficina</label>
+      <label>Oficina <span class="text-red-600 text-base" *ngIf="personForm.get('center').validator">*</span></label>
     </span>
 
 
@@ -120,7 +116,7 @@
     <span class="p-float-label flex-1">
       <p-dropdown [options]="actives" [autoDisplayFirst]="false" styleClass="w-full" appendTo="body"
         formControlName="active" optionLabel="label" optionValue="value"></p-dropdown>
-      <label>Estado</label>
+      <label>Estado <span class="text-red-600 text-base" *ngIf="personForm.get('active').validator">*</span></label>
     </span>
 
   </div>
