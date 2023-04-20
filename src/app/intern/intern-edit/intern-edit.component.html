@@ -15,12 +15,16 @@
             </span>
         </div>
         <div class="flex flex-1 align-items-center gap-1" *ngIf="isNew">
-            <p-checkbox [(ngModel)]="checked" (onChange)="getInfoUserLogin()" [binary]="true" inputId="binary" [ngModelOptions]="{standalone: true}"></p-checkbox>
-            <label>Prevision</label>
-            <span class="p-float-label w-5rem">
-                <p-inputNumber inputStyleClass="w-full" [inputStyle]="{'height':'45px'}" [disabled]="!checked" [min]="1" inputId="integeronly" [ngModelOptions]="{standalone: true}" [(ngModel)]="quantity"></p-inputNumber>
-                <label for="hours">Cantidad</label>
-            </span>
+            <div class="flex flex-1 flex-column align-items-center">
+                <label>Prevision</label>
+                <p-checkbox [(ngModel)]="checked" (onChange)="getInfoUserLogin()" [binary]="true" inputId="binary" [ngModelOptions]="{standalone: true}"></p-checkbox>
+            </div>
+            <div class="flex-2">
+                <span class="p-float-label">
+                    <p-inputNumber inputStyleClass="w-full" styleClass="w-full" [inputStyle]="{'height':'45px'}" [disabled]="!checked" [min]="1" inputId="integeronly" formControlName="quantity"></p-inputNumber>
+                    <label for="hours">Cantidad<span class="text-red-600 text-base" *ngIf="profileForm.get('quantity').validator">*</span></label>
+                </span>
+            </div>
         </div>
         
     </div>
@@ -123,8 +127,8 @@
 
     </div>
     <div class="flex flex-row gap-2">
-        <div class="flex-2 overflow-hidden">
-            <span class="p-float-label mt-2" style="min-width: 20rem;">
+        <div class="flex-1 overflow-hidden">
+            <span class="p-float-label mt-2" style="min-width: 10rem;">
                 <p-multiSelect appendTo="body" [maxSelectedLabels]="2" [style]="{'height':'45px'}" styleClass="w-full" [options]="technologies" [ngModelOptions]="{standalone: true}" [(ngModel)]="intern.technologies" optionLabel="name"></p-multiSelect>
                 <label for="technologies">Tecnologías</label>
             </span>
@@ -135,15 +139,14 @@
                 <label for="float-label">Ingles<span class="text-red-600 text-base">*</span></label>
             </span>
         </div>
-        
-    </div>
-    <div class="flex flex-row gap-2 md:flex-wrap ">
-        <div class="flex-1">
+        <div class="flex-1 mt-2">
             <span class="p-float-label" >
                 <input id="mentor" class="w-full" type="text" formControlName="mentor"  pInputText  >
                 <label for="mentor">Mentor<span class="text-red-600 text-base" *ngIf="profileForm.get('mentor').validator">*</span></label>
             </span>
         </div>
+    </div>
+    <div class="flex flex-row gap-2 md:flex-wrap ">
         <div class="flex-1">
             <span class="p-float-label" >
                 <input id="coordinator" class="w-full" type="text" formControlName="coordinator"  pInputText  >
@@ -156,18 +159,24 @@
                 <label for="hrManager">Resp. RRHH<span class="text-red-600 text-base">*</span></label>
             </span>
         </div>
-    </div>
-    <div class="flex flex-row gap-2 md:flex-wrap ">
         <div class="flex-1 ">
             <span class="p-float-label" >
                 <p-dropdown appendTo="body" pTooltip="{{intern.action?.name}}" tooltipPosition="top" [autoDisplayFirst]="false" styleClass="w-full" [options]="actions" [ngModelOptions]="{standalone: true}" [(ngModel)]="intern.action" optionLabel="name"></p-dropdown>
                 <label for="action" >Accion</label>
             </span>
         </div>
+    </div>
+    <div class="flex flex-row gap-2 md:flex-wrap ">
         <div class="flex-1">
             <span class="p-float-label" >
                 <p-calendar appendTo="body" styleClass="w-full" [inputStyle]="{'height':'45px'}" [firstDayOfWeek]="1" dateFormat="dd/mm/yy"  [ngModelOptions]="{standalone: true}" [(ngModel)]="intern.contractDate"></p-calendar>
                 <label for="contractDate">F. Contrato</label>
+            </span>
+        </div>
+        <div class="flex-1">
+            <span class="p-float-label" >
+                <input id="saga" class="w-full" type="text" formControlName="saga"  pInputText  >
+                <label for="saga">Saga<span class="text-red-600 text-base" *ngIf="profileForm.get('saga').validator">*</span></label>
             </span>
         </div>
         <div class="flex-1">

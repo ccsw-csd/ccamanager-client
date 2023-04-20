@@ -110,10 +110,11 @@ export class InternEditComponent implements OnInit {
         coordinator:[this.intern?.coordinator,Validators.required],
         rrhh:[this.intern?.hrManager,Validators.required],
         active:[this.intern?.active,Validators.required],
+        saga:[this.intern?.saga],
+        quantity:[]
       }, {
       validators: DateRangeValidator.dateRange
       });
-      
   }
   
   updateFormGroup(){
@@ -130,6 +131,7 @@ export class InternEditComponent implements OnInit {
     this.profileForm.get('endDate').setValidators([Validators.required]);
     this.profileForm.get('endDate').updateValueAndValidity();
     this.profileForm.get('code').setValidators([Validators.required]);
+    this.profileForm.get('saga').setValidators([Validators.required]);
     this.profileForm.get('mentor').setValidators([Validators.required]);
   }
 
@@ -153,17 +155,24 @@ export class InternEditComponent implements OnInit {
       }
       );
     if(this.checked){
+      this.profileForm.get('quantity').setValidators([Validators.required]);
+      this.profileForm.get('quantity').updateValueAndValidity();
       this.profileForm.patchValue({
         email:"",
-        username:""
+        username:"",
+        saga:""
       });
       this.profileForm.get("email").disable();
       this.profileForm.get("username").disable();
+      this.profileForm.get("saga").disable();
+      
     }else{
+      this.profileForm.get('quantity').setValidators();
+      this.profileForm.get('quantity').updateValueAndValidity();
       this.profileForm.get("email").enable();
       this.profileForm.get("username").enable();
+      this.profileForm.get("saga").enable();
     }
-   
   }
 
   showGender(value: number): string {    
@@ -249,6 +258,7 @@ export class InternEditComponent implements OnInit {
     if(this.profileForm.valid){
       this.formToInternObject();
       if(this.checked){
+        this.quantity = this.profileForm.get('quantity').value;
         this.internService.saveBulk(this.intern,this.quantity).subscribe(
           (result)=>{
             if(this.isNew){
@@ -281,6 +291,7 @@ export class InternEditComponent implements OnInit {
   }
   
   formToInternObject(){
+    this.intern.saga = this.profileForm.get('saga').value;
     this.intern.period = this.profileForm.get('period').value;
     this.intern.username = this.profileForm.get('username').value;
     this.intern.name = this.profileForm.get('name').value;
