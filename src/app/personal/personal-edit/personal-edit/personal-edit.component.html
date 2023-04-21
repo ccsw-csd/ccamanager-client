@@ -23,12 +23,12 @@
 
     <span class="p-float-label flex-1">
       <input id="name" type="text" pInputText class="w-full" formControlName="saga">
-      <label>Saga</label>
+      <label>Saga <span class="text-red-600 text-base" *ngIf="personForm.get('saga').validator">*</span></label>
     </span>
 
     <span class="p-float-label flex-1">
       <input id="name" type="text" pInputText class="w-full" formControlName="username">
-      <label>Username</label>
+      <label>Username <span class="text-red-600 text-base" *ngIf="personForm.get('username').validator">*</span></label>
     </span>
 
   </div>
