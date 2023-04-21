@@ -332,8 +332,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
   }
   addOrEditIntern(intern?:Intern){
     this.ref = this.dialogService.open(InternEditComponent,{
-      height:"89vh",
-      width:"40%",
+      width:'35%',
       data:{
         intern: intern,
         genders: this.genders,
