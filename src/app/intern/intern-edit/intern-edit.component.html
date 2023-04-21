@@ -34,7 +34,7 @@
             <label for="period" >Periodo<span class="text-red-600 text-base">*</span></label>
         </span>
         <span class="p-float-label flex-1 min-w-max mt-2">
-            <input  id="username" formControlName="username" type="text" class="w-full"  pInputText >
+            <input  id="username" (ngModelChange)="onChangeUsername()" formControlName="username" type="text" class="w-full"  pInputText >
             <label for="username">Username</label>
         </span>
     </div>

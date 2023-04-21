@@ -89,7 +89,6 @@ export class InternEditComponent implements OnInit {
     this.englishLevels = this.config.data.englishLevels;
     this.provinces = this.config.data.provinces;
     this.actions = this.config.data.actions;
-    this.sizeHeight();
     this.setFormGroup();
   }
 
@@ -139,6 +138,31 @@ export class InternEditComponent implements OnInit {
     this.profileForm.get('code').setValidators([Validators.required]);
     this.profileForm.get('saga').setValidators([Validators.required]);
     this.profileForm.get('mentor').setValidators([Validators.required]);
+  }
+  resetFormGroup(){
+    this.profileForm.get('email').setValidators();
+    this.profileForm.get('education').setValidators();
+    this.profileForm.get('education').updateValueAndValidity();
+    this.profileForm.get('educationCenter').setValidators();
+    this.profileForm.get('educationCenter').updateValueAndValidity();
+    this.profileForm.get('center').setValidators();
+    this.profileForm.get('center').updateValueAndValidity();
+    this.profileForm.get('province').setValidators();
+    this.profileForm.get('startDate').setValidators();
+    this.profileForm.get('startDate').updateValueAndValidity();
+    this.profileForm.get('endDate').setValidators();
+    this.profileForm.get('endDate').updateValueAndValidity();
+    this.profileForm.get('code').setValidators();
+    this.profileForm.get('saga').setValidators();
+    this.profileForm.get('mentor').setValidators();
+  }
+
+  onChangeUsername(){
+      if(this.profileForm.get('username').value != ''){
+        this.updateFormGroup();
+      }else{
+        this.resetFormGroup();
+      }
   }
 
   getInfoUserLogin(){
@@ -248,15 +272,6 @@ export class InternEditComponent implements OnInit {
       hours: intern.hours,
       saga:intern.saga
     });
-  }
-
-  sizeHeight(){
-    const availableHeight = document.documentElement.clientHeight;
-    let proportion = 0.84;
-    if(this.isNew)proportion= 0.9;
-    const maxHeight = Math.floor(availableHeight * proportion);
-    const dialogEl = this.elementRef.nativeElement.parentElement.parentElement;
-    dialogEl.style.maxHeight = maxHeight + 'px';
   }
 
   closeWindow(){
