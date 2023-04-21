@@ -120,6 +120,7 @@ export class InternEditComponent implements OnInit {
       },{
       validators: DateRangeValidator.dateRange
       });
+      this.profileForm.get('quantity').disable();
   }
   
   updateFormGroup(){
@@ -162,6 +163,7 @@ export class InternEditComponent implements OnInit {
     if(this.checked){
       this.profileForm.get('quantity').setValidators([Validators.required]);
       this.profileForm.get('quantity').updateValueAndValidity();
+      this.profileForm.get("quantity").enable();
       this.profileForm.patchValue({
         email:"",
         username:"",
@@ -172,6 +174,7 @@ export class InternEditComponent implements OnInit {
       this.profileForm.get("saga").disable();
       
     }else{
+      this.profileForm.get("quantity").disable();
       this.profileForm.get('quantity').setValidators();
       this.profileForm.get('quantity').updateValueAndValidity();
       this.profileForm.get("email").enable();
