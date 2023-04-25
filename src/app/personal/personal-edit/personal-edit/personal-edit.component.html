@@ -71,7 +71,7 @@
     </span>
 
     <span class="p-float-label flex-1" style="min-width: 196px;">
-      <input id="name" type="text" pInputText class="w-full" formControlName="hours">
+      <p-inputNumber class="w-full"  inputStyleClass="w-full"  inputId="integeronly" formControlName="hours"></p-inputNumber>
       <label>Horas <span class="text-red-600 text-base" *ngIf="personForm.get('hours').hasValidator(requiredField)">*</span></label>
     </span>
 

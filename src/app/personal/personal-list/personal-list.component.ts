@@ -129,7 +129,9 @@ export class PersonalListComponent implements OnInit {
 
   onFilter(event) {
     this.personsToExport = event.filteredValue;
-    this.totalPersons = event.filteredValue.length;
+    setTimeout(()=>{
+      this.totalPersons = event.filteredValue.length;
+    },0);
   }
 
   setFilters(): void {
