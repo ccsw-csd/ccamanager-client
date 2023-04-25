@@ -26,6 +26,7 @@ export class PersonalEditComponent implements OnInit {
   groupPerson: any[] = [];
   personSelected;
   personForm: FormGroup;
+  requiredField : any = Validators.required;
 
 
   actives: any[] = [
@@ -48,9 +49,9 @@ export class PersonalEditComponent implements OnInit {
       username: [''],
       name: ['', Validators.required],
       lastname: ['', Validators.required],
-      email: ['', [ Validators.email]],
+      email: ['', [Validators.email]],
       customer: [''],
-      grade: ['',[Validators.required, Validators.pattern('^[A-Z][0-9]$')]],
+      grade: ['',[Validators.pattern('^[A-Z][0-9]$')]],
       role: [''],
       hours: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       department: ['', Validators.required],
@@ -67,12 +68,11 @@ export class PersonalEditComponent implements OnInit {
     this.provinces = this.config.data.provinces 
     this.roles = this.config.data.roles 
     this.centers=  this.config.data.centers
-    this.setFormGroup();
+    this.setValuesFormGroup();
     if (this.config.data.person != null){ this.personForm.get('grade').markAsDirty(); }
-
   }
 
-  setFormGroup(){
+  setValuesFormGroup(){
     this.personForm.patchValue({
       id: this.personElement.id,
       saga: this.personElement.saga,
@@ -137,16 +137,42 @@ export class PersonalEditComponent implements OnInit {
 
   onPersonSelect(event) {
     this.personElement = event.value
-    this.setFormGroup();
-    const requiredFields = ['saga', 'email', 'customer', 'role'];
+    this.setValuesFormGroup();
+    this.personForm.get('grade').markAsDirty();
+    this.matchByProvince();
+  }
 
+  updateFormValidators(){
+    const requiredFields = ['saga', 'email', 'customer', 'role','grade'];
     requiredFields.forEach(fieldName => {
       const control = this.personForm.get(fieldName);
       control.setValidators(Validators.required);
       control.updateValueAndValidity();
     });
-    this.personForm.get('grade').markAsDirty();
-    this.matchByProvince();
+  }
+
+  whenInformedUsername(event){
+    if(event!=""){
+     this.updateFormValidators();
+    }
+    else {
+      this.resetFormDefaultValidators();
+    }
+  }
+
+  resetFormDefaultValidators(){
+    Object.keys(this.personForm.controls).forEach(key => {
+      let control = this.personForm.get(key);
+      control.clearValidators();
+      control.updateValueAndValidity(); 
+    });
+    
+    const requiredFields = ['name', 'lastname', 'hours', 'businesscode','department','center','province','active'];
+    requiredFields.forEach(fieldName => {
+      const control = this.personForm.get(fieldName);
+      control.setValidators(Validators.required);
+      control.updateValueAndValidity();
+    });
   }
   
   matchByProvince(){
