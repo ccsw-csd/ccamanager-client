@@ -1,0 +1,21 @@
+<div class="flex flex-column" >
+    <h1>TimeLine Becarios</h1>
+    <div class="flex flex-row gap-2">
+        <span class="p-float-label mt-2" >
+            <p-calendar appendTo="body" styleClass="w-full" [inputStyle]="{'height':'45px'}" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" [(ngModel)]="sixMonthsAgo"></p-calendar>
+            <label for="contractDate">Fecha de Inicio</label>
+        </span>
+        <span class="p-float-label mt-2" >
+            <p-calendar appendTo="body" styleClass="w-full" [inputStyle]="{'height':'45px'}" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" [(ngModel)]="sixMonthsAfter"></p-calendar>
+            <label for="contractDate">Fecha de Fin</label>
+        </span>
+        <div class="mt-2">
+            <button pButton pRipple styleClass="" label="Buscar"class="p-button p-button" [disabled]="!sixMonthsAgo || !sixMonthsAfter" (click)="updateChar()"></button>
+        </div>
+    </div>
+    <p-chart type="bar" [data]="basicData" [options]="horizontalOptions"></p-chart>
+    <div class="flex flex-row justify-content-end gap-2 md:flex-wrap mt-3">    
+        <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
+    </div>
+
+</div>
