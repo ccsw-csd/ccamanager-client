@@ -26,6 +26,8 @@ export class PersonalEditComponent implements OnInit {
   groupPerson: any[] = [];
   personSelected;
   personForm: FormGroup;
+  requiredField : any = Validators.required;
+
 
   actives: any[] = [
     { label: 'Inactivo', value: 0 },
@@ -67,7 +69,10 @@ export class PersonalEditComponent implements OnInit {
     this.roles = this.config.data.roles 
     this.centers=  this.config.data.centers
     this.setValuesFormGroup();
-    if (this.config.data.person != null){ this.personForm.get('grade').markAsDirty(); }
+    if (this.config.data.person != null){ 
+      this.personForm.get('grade').markAsDirty();
+      this.whenInformedUsername(this.config.data.person.username);
+    }
   }
 
   setValuesFormGroup(){
@@ -141,12 +146,14 @@ export class PersonalEditComponent implements OnInit {
   }
 
   updateFormValidators(){
-    const requiredFields = ['saga', 'email', 'customer', 'role','grade'];
+    const requiredFields = ['saga', 'customer', 'role','email','grade'];
     requiredFields.forEach(fieldName => {
       const control = this.personForm.get(fieldName);
       control.setValidators(Validators.required);
       control.updateValueAndValidity();
     });
+    this.setValidatorsRestrictions()
+
   }
 
   whenInformedUsername(event){
@@ -171,6 +178,20 @@ export class PersonalEditComponent implements OnInit {
       control.setValidators(Validators.required);
       control.updateValueAndValidity();
     });
+    this.setValidatorsRestrictions()
+  }
+
+  setValidatorsRestrictions(){
+    const gradeValidator = this.personForm.get('grade');
+    const emailValidator = this.personForm.get('email');
+    const hoursValidator = this.personForm.get('hours');
+
+    gradeValidator.setValidators(Validators.pattern('^[A-Z][0-9]$'))
+    gradeValidator.updateValueAndValidity();
+    emailValidator.setValidators(Validators.email)
+    emailValidator.updateValueAndValidity();
+    hoursValidator.setValidators(Validators.pattern('^[0-9]+$'));
+    hoursValidator.updateValueAndValidity();
   }
   
   matchByProvince(){
