@@ -26,8 +26,6 @@ export class PersonalEditComponent implements OnInit {
   groupPerson: any[] = [];
   personSelected;
   personForm: FormGroup;
-  requiredField : any = Validators.required;
-
 
   actives: any[] = [
     { label: 'Inactivo', value: 0 },
