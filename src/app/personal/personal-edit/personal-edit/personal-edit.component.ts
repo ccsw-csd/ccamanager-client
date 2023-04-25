@@ -98,6 +98,7 @@ export class PersonalEditComponent implements OnInit {
 
   saveItem(person: Person) {
      person.role = person.role ? person.role['role'] : null;
+     if(person.username == '') {person.username=null} 
       this.personService.save(person).subscribe({
         next: () => {
           this.snackbarService.showMessage(
@@ -163,7 +164,7 @@ export class PersonalEditComponent implements OnInit {
   }
 
   whenInformedUsername(event){
-    if(event!=""){
+    if(event!="" && event!=null){
      this.updateFormValidators();
     }
     else {
@@ -178,7 +179,7 @@ export class PersonalEditComponent implements OnInit {
       control.updateValueAndValidity(); 
     });
     
-    const requiredFields = ['name', 'lastname', 'hours', 'businesscode','department','center','province','active'];
+    const requiredFields = ['name', 'lastname', 'businesscode','department','center','province','active'];
     requiredFields.forEach(fieldName => {
       const control = this.personForm.get(fieldName);
       control.setValidators(Validators.required);
