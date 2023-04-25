@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Intern } from '../models/Intern';
+import {TimeLine} from '../models/TimeLine'
 @Injectable({
   providedIn: 'root',
 })
@@ -22,5 +23,9 @@ export class InternService {
 
   delete(id:number):Observable<any>{
     return this.http.delete(environment.server+"/intern/"+id);
+  }
+
+  findTimelineByDate(startDate:Date,endDate:Date):Observable<TimeLine[]>{
+    return this.http.post<TimeLine[]>(environment.server+"/intern/dateFilter",{startDate:startDate,endDate:endDate});
   }
 }
