@@ -146,14 +146,20 @@ export class PersonalEditComponent implements OnInit {
   }
 
   updateFormValidators(){
-    const requiredFields = ['saga', 'customer', 'role','email','grade'];
+    const requiredFields = ['saga', 'customer', 'role'];
     requiredFields.forEach(fieldName => {
       const control = this.personForm.get(fieldName);
       control.setValidators(Validators.required);
       control.updateValueAndValidity();
     });
-    this.setValidatorsRestrictions()
 
+    const gradeValidator = this.personForm.get('grade');
+    const emailValidator = this.personForm.get('email');
+
+    gradeValidator.setValidators([Validators.required,Validators.pattern('^[A-Z][0-9]$')])
+    gradeValidator.updateValueAndValidity();
+    emailValidator.setValidators([Validators.required,Validators.email])
+    emailValidator.updateValueAndValidity();
   }
 
   whenInformedUsername(event){
@@ -178,20 +184,14 @@ export class PersonalEditComponent implements OnInit {
       control.setValidators(Validators.required);
       control.updateValueAndValidity();
     });
-    this.setValidatorsRestrictions()
-  }
 
-  setValidatorsRestrictions(){
     const gradeValidator = this.personForm.get('grade');
     const emailValidator = this.personForm.get('email');
-    const hoursValidator = this.personForm.get('hours');
 
     gradeValidator.setValidators(Validators.pattern('^[A-Z][0-9]$'))
     gradeValidator.updateValueAndValidity();
     emailValidator.setValidators(Validators.email)
     emailValidator.updateValueAndValidity();
-    hoursValidator.setValidators(Validators.pattern('^[0-9]+$'));
-    hoursValidator.updateValueAndValidity();
   }
   
   matchByProvince(){
