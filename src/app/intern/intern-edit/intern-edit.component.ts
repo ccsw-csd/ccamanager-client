@@ -97,7 +97,7 @@ export class InternEditComponent implements OnInit {
 
   setFormGroup(){
       this.profileForm =this.fb.group({
-        period: [this.getActualQuarter(),Validators.required],
+        period: [this.intern.period,Validators.required],
         name: [this.intern.name,Validators.required],
         lastname:[this.intern.lastname,Validators.required],
         email: [this.intern.email,Validators.email],
@@ -227,18 +227,8 @@ export class InternEditComponent implements OnInit {
   }
 
   getActualQuarter():string{
-    const actualDate = new Date();
-    const year = actualDate.getFullYear();
-    const month = actualDate.getMonth() + 1;    
-    let quarter = 0;
-    if (month >= 1 && month <= 4) {
-      quarter = 1;
-    } else if (month >= 5 && month <= 8) {
-      quarter = 2;
-    } else if (month >= 9 && month <= 12) {
-      quarter = 3;
-    }    
-    return `Q${quarter}'${String(year).slice(-2)}`;
+    var today = new Date();
+    return 'Q' + Math.floor((today.getMonth() + 3) / 3).toString() + "'"+today.getFullYear().toString().slice(2);
   }
 
   searchIntern($event){
