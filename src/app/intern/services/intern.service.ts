@@ -12,4 +12,15 @@ export class InternService {
   getAllInterns(): Observable<Intern[]> {
     return this.http.get<Intern[]>(environment.server + "/intern/");
   }
+  save(intern:Intern):Observable<Intern>{
+    return this.http.post<Intern>(environment.server+"/intern/",intern);
+  }
+
+  saveBulk(intern:Intern,quantity:number):Observable<Intern>{
+    return this.http.post<Intern>(environment.server+"/intern/predict/"+quantity,intern);
+  }
+
+  delete(id:number):Observable<any>{
+    return this.http.delete(environment.server+"/intern/"+id);
+  }
 }

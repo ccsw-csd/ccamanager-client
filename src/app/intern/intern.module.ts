@@ -6,14 +6,21 @@ import { CalendarModule } from 'primeng/calendar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogComponent } from './dialog/dialog.component';
 import { InternListComponent } from './intern-list/intern-list.component';
-
+import { InternEditComponent } from './intern-edit/intern-edit.component';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import {ToastModule} from 'primeng/toast';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
-  declarations: [InternListComponent, DialogComponent],
+  declarations: [InternListComponent, DialogComponent, InternEditComponent],
   imports: [
     CommonModule,
     ButtonModule,
@@ -25,6 +32,14 @@ import { InternListComponent } from './intern-list/intern-list.component';
     ConfirmDialogModule,
     InputTextareaModule,
     FormsModule,
+    InputTextModule,
+    InputNumberModule,
+    MultiSelectModule,
+    AutoCompleteModule,
+    CheckboxModule,
+    ReactiveFormsModule,
+    ConfirmDialogModule,
+    ToastModule,
   ],
 })
 export class InternModule {}

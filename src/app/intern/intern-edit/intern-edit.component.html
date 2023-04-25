@@ -1,0 +1,193 @@
+<h1 *ngIf="isNew" class="text-center">Nuevo Becario</h1>
+<h1 *ngIf="!isNew" class="text-center">Modificar Becario</h1>
+<div class="flex flex-column gap-2" [formGroup]="profileForm">
+
+    <div class="flex flex-row md:flex-wrap">
+        <div class="flex flex-2">
+            <span class="p-float-label w-full p-input-icon-right" *ngIf="isNew">
+                <p-autoComplete [(ngModel)]="internSelected" styleClass="w-full" inputStyleClass="w-full"  (onSelect)="onSelectIntern($event)" [suggestions]="groupIntern"
+                  [forceSelection]="true" [showEmptyMessage]="true" 
+                  (completeMethod)="searchIntern($event)" field="field" [inputStyle]="{'height':'45px'}"
+                  dropdownIcon="pi pi-search" [disabled]="checked" [ngModelOptions]="{standalone: true}"
+                  ></p-autoComplete>
+                <label>Persona</label>
+                <i class="pi pi-search"></i>
+            </span>
+        </div>
+        <div class="flex flex-1 align-items-center gap-1" *ngIf="isNew">
+            <div class="flex flex-1 flex-column align-items-center">
+                <label class="ml-1">Prevision</label>
+                <p-checkbox [(ngModel)]="checked" (onChange)="getInfoUserLogin()" [binary]="true" inputId="binary" [ngModelOptions]="{standalone: true}"></p-checkbox>
+            </div>
+            <div class="flex-2">
+                <span class="p-float-label">
+                    <p-inputNumber class="w-full" [style]="{'width':'100%'}" inputStyleClass="w-full" [inputStyle]="{'height':'45px','widht':'100%'}" [min]="1" inputId="integeronly" formControlName="quantity"></p-inputNumber>
+                    <label for="hours">Cantidad<span class="text-red-600 text-base" *ngIf="profileForm.get('quantity').hasValidator(requiredField)">*</span></label>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+    <div class="flex flex-row md:flex-wrap gap-2 md:flex-wrap">
+        <span class="p-float-label flex-1 min-w-max mt-2" >
+            <input id="period" type="text" formControlName="period" class="w-full" pInputText>
+            <label for="period" >Periodo<span class="text-red-600 text-base">*</span></label>
+        </span>
+        <span class="p-float-label flex-1 min-w-max mt-2">
+            <input  id="username" (ngModelChange)="onChangeUsername()" formControlName="username" type="text" class="w-full"  pInputText >
+            <label for="username">Username</label>
+        </span>
+    </div>
+    <div class="flex flex-row gap-2 md:flex-wrap md:flex-wrap ">
+        <span class="p-float-label flex-1 min-w-max mt-2">
+            <input class="p-inputtext-lg"  id="name" formControlName="name"  type="text" class="w-full" pInputText  >
+            <label for="name">Nombre<span class="text-red-600 text-base">*</span></label>
+        </span>
+        <span class="p-float-label flex-1 min-w-max mt-2" >
+            <input id="lastname" type="text" class="w-full" formControlName="lastname"  pInputText >
+            <label for="lastname">Apellidos<span class="text-red-600 text-base">*</span></label>
+        </span>
+    </div>
+    <div class="flex flex-row gap-2 md:flex-wrap">
+        <div class="flex flex-2">
+            <span class="p-float-label w-full mt-2">
+                <input id="email" type="text" class="w-full" pInputText formControlName="email" >
+                <label for="email">Email<span class="text-red-600 text-base" *ngIf="profileForm.get('email').hasValidator(requiredField)">*</span></label>
+            </span>
+        </div>
+        <div class="flex-1">
+            <span class="p-float-label mt-2">
+                <p-dropdown appendTo="body" styleClass="w-full"[options]="genders" formControlName="gender"   [autoDisplayFirst]="false" optionLabel="label" optionValue="value"> </p-dropdown>
+                <label for="gender">Genero<span class="text-red-600 text-base">*</span></label>
+            </span>
+        </div>
+    </div>
+    <div class="flex flex-row gap-2">
+        <div class="flex-1 min-w-min mt-2" >
+            <span class="p-float-label" style="min-width: 16.4rem;">
+                <p-dropdown appendTo="body" [options]="educations" styleClass="w-full"   [autoDisplayFirst]="false" formControlName="education" inputId="float-label" optionLabel="name"></p-dropdown>
+                <label for="float-label" >Titulación<span class="text-red-600 text-base" *ngIf="profileForm.get('education').hasValidator(requiredField)">*</span></label>
+            </span>
+        </div>
+        <div class="flex-2 overflow-hidden">
+            <span class="p-float-label mt-2">
+                <p-dropdown appendTo="body" [options]="educationsCenter" styleClass="w-full" [autoDisplayFirst]="false" formControlName="educationCenter" optionLabel="name" ></p-dropdown>
+                <label for="educationCenter" >Centro<span class="text-red-600 text-base" *ngIf="profileForm.get('educationCenter').hasValidator(requiredField)">*</span></label>
+            </span>
+        </div>
+    </div>
+      
+    <div class="flex flex-row gap-2 md:flex-wrap">
+        <div class="flex-1">
+            <span class="p-float-label mt-2">
+                <p-dropdown appendTo="body"  [options]="centers" styleClass="w-full" formControlName="center"   [autoDisplayFirst]="false" optionLabel="name"></p-dropdown>
+                <label for="center" >Oficina<span class="text-red-600 text-base" *ngIf="profileForm.get('center').hasValidator(requiredField)">*</span></label>
+            </span>
+        </div>
+        <div class="flex-1">
+            <span class="p-float-label mt-2">
+                <p-dropdown appendTo="body"  [options]="provinces" formControlName="province"   [autoDisplayFirst]="false" styleClass="w-full" optionLabel="province"></p-dropdown>
+                <label for="province">Localización<span class="text-red-600 text-base" *ngIf="profileForm.get('province').hasValidator(requiredField)">*</span></label>
+            </span>
+        </div>
+        
+        <div class="flex-1">
+            <span class="p-float-label mt-2">
+                <p-calendar appendTo="body" styleClass="w-full" [inputStyle]="{'height':'45px'}" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" formControlName="startDate"  ></p-calendar>
+                <label for="startDate">Inicio<span class="text-red-600 text-base" *ngIf="profileForm.get('startDate').hasValidator(requiredField)">*</span></label>
+                <small *ngIf="profileForm.invalid && profileForm.errors?.dateRange"  id="username-help" class="p-error ">La fecha de inicio no puede ser posterior a la fecha de fin</small>
+            </span>
+        </div>
+        <div class="flex-1">
+            <span class="p-float-label mt-2">
+                <p-calendar appendTo="body" styleClass="w-full" [inputStyle]="{'height':'45px'}" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" formControlName="endDate" ></p-calendar>
+                <label for="endDate">Fin<span class="text-red-600 text-base" *ngIf="profileForm.get('endDate').hasValidator(requiredField)">*</span></label>
+            </span>
+        </div>
+    </div>
+    <div class="flex flex-row gap-2 md:flex-wrap">    
+        <div class="flex flex-none">
+            <span class="p-float-label w-4rem mt-2" >
+                <p-inputNumber inputStyleClass="w-full" [inputStyle]="{'height': '45px', 'width': '1rem'}" formControlName="hours" inputId="integeronly" ></p-inputNumber>
+                <label for="hours">Horas<span class="text-red-600 text-base">*</span></label>
+            </span>
+        </div>
+        <div class="flex-2">
+            <span class="p-float-label mt-2" >
+                <input id="customer" class="w-full" type="text" formControlName="customer"  pInputText  >
+                <label for="customer">Cliente<span class="text-red-600 text-base">*</span></label>
+            </span>
+        </div>
+        <div class="flex-2">
+            <span class="p-float-label mt-2" >
+                <input id="code" type="text" class="w-full" pInputText formControlName="code"   >
+                <label for="code">Código<span class="text-red-600 text-base" *ngIf="profileForm.get('code').hasValidator(requiredField)">*</span></label>
+            </span>
+        </div>
+
+    </div>
+    <div class="flex flex-row gap-2">
+        <div class="flex-1 overflow-hidden">
+            <span class="p-float-label mt-2" style="min-width: 10rem;">
+                <p-multiSelect appendTo="body" [maxSelectedLabels]="2" [style]="{'height':'45px'}" styleClass="w-full" [options]="technologies" [ngModelOptions]="{standalone: true}" [(ngModel)]="intern.technologies" optionLabel="name"></p-multiSelect>
+                <label for="technologies">Tecnologías</label>
+            </span>
+        </div>
+        <div class="flex-1">
+            <span class="p-float-label mt-2" style="min-width:10rem">
+                <p-dropdown appendTo="body" styleClass="w-full" [options]="englishLevels"  [autoDisplayFirst]="false" formControlName="englishLevel"  optionLabel="name" ></p-dropdown>
+                <label for="float-label">Ingles<span class="text-red-600 text-base">*</span></label>
+            </span>
+        </div>
+        <div class="flex-1">
+            <span class="p-float-label mt-2" >
+                <input id="mentor" class="w-full" type="text" formControlName="mentor"  pInputText  >
+                <label for="mentor">Mentor<span class="text-red-600 text-base" *ngIf="profileForm.get('mentor').hasValidator(requiredField)">*</span></label>
+            </span>
+        </div>
+    </div>
+    <div class="flex flex-row gap-2 md:flex-wrap ">
+        <div class="flex-1">
+            <span class="p-float-label mt-2" style="min-width: 10rem;" >
+                <input id="coordinator" class="w-full" type="text" formControlName="coordinator"  pInputText  >
+                <label for="coordinator">Coordinador<span class="text-red-600 text-base">*</span></label>
+            </span>
+        </div>
+        <div class="flex-1">
+            <span class="p-float-label mt-2" style="min-width: 10rem;" >
+                <input id="hrManager" class="w-full" type="text" pInputText formControlName="rrhh"  >
+                <label for="hrManager">Resp. RRHH<span class="text-red-600 text-base">*</span></label>
+            </span>
+        </div>
+        <div class="flex-1 overflow-hidden">
+            <span class="p-float-label mt-2" style="min-width: 10rem;" >
+                <p-dropdown appendTo="body" pTooltip="{{intern.action?.name}}" tooltipPosition="top" [autoDisplayFirst]="false" styleClass="w-full" [options]="actions" [ngModelOptions]="{standalone: true}" [(ngModel)]="intern.action" optionLabel="name"></p-dropdown>
+                <label for="action" >Accion</label>
+            </span>
+        </div>
+    </div>
+    <div class="flex flex-row gap-2 md:flex-wrap ">
+        <div class="flex-1">
+            <span class="p-float-label mt-2" >
+                <p-calendar appendTo="body" styleClass="w-full" [inputStyle]="{'height':'45px'}" [firstDayOfWeek]="1" dateFormat="dd/mm/yy"  [ngModelOptions]="{standalone: true}" [(ngModel)]="intern.contractDate"></p-calendar>
+                <label for="contractDate">F. Contrato</label>
+            </span>
+        </div>
+        <div class="flex-1">
+            <span class="p-float-label mt-2" >
+                <input id="saga" class="w-full" type="text" formControlName="saga"  pInputText  >
+                <label for="saga">Saga<span class="text-red-600 text-base" *ngIf="profileForm.get('saga').hasValidator(requiredField)">*</span></label>
+            </span>
+        </div>
+        <div class="flex-1">
+            <span class="p-float-label mt-2" >
+                <p-dropdown appendTo="body" styleClass="w-full" [options]="actives" formControlName="active"   [autoDisplayFirst]="false" optionLabel="label" optionValue="value"></p-dropdown>
+                <label for="active" >Estado<span class="text-red-600 text-base">*</span></label>
+            </span>
+        </div>
+    </div>
+    <div class="flex flex-row justify-content-end gap-2 md:flex-wrap mt-3">    
+        <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
+        <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check"  [disabled]="!profileForm.valid" (click)="onSave()" ></button>
+    </div>
+</div>

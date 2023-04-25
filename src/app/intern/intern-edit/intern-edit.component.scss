@@ -1,0 +1,12 @@
+.hours{
+    min-width: 100px;
+    max-width: 100px;
+}
+.p-inputtext{
+    height: 45px;
+}
+.ellipsis-dropdown .p-dropdown-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}

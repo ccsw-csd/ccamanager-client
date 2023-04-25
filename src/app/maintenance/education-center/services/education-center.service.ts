@@ -21,4 +21,8 @@ export class EducationCenterService {
   delete(id:number):Observable<any>{
     return this.http.delete(environment.server+"/educationCenter/"+id);
   }
+
+  getAllEducationCentersSimple():Observable<EducationCenter[]>{
+    return this.http.get<EducationCenter[]>(environment.server+"/educationCenter/simple");
+  }
 }
