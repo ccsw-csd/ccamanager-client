@@ -179,7 +179,7 @@ export class PersonalEditComponent implements OnInit {
       control.updateValueAndValidity(); 
     });
     
-    const requiredFields = ['name', 'lastname', 'businesscode','department','center','province','active'];
+    const requiredFields = ['name', 'lastname', 'businesscode','department','center','province','active','hours'];
     requiredFields.forEach(fieldName => {
       const control = this.personForm.get(fieldName);
       control.setValidators(Validators.required);
