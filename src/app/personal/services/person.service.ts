@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Person } from '../models/Person';
 import { Intern } from 'src/app/intern/models/Intern';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -21,7 +22,12 @@ export class PersonService {
     return this.http.delete(environment.server + '/person/' + id);
   }
 
+  searchPerson(filter: string): Observable<Person[]> {
+    return this.http.get<Person[]>(environment.server + "/person/filter/" + filter)
+  }
+
   searchIntern(filter:string):Observable<Intern[]>{
     return this.http.get<Intern[]>(environment.server +"/person/scholar/"+filter)
   }
+
 }
