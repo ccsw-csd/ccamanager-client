@@ -16,9 +16,9 @@ import { InternListComponent } from './intern-list/intern-list.component';
 import { InternEditComponent } from './intern-edit/intern-edit.component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import {ToastModule} from 'primeng/toast';
+import { ToastModule } from 'primeng/toast';
 import { CheckboxModule } from 'primeng/checkbox';
-import {ChartModule} from 'primeng/chart';
+import { ChartModule } from 'primeng/chart';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InternTimelineComponent } from './intern-timeline/intern-timeline.component';
 @NgModule({
