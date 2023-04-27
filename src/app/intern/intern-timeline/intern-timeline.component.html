@@ -13,7 +13,7 @@
             <button pButton pRipple styleClass="" label="Buscar"class="p-button p-button" [disabled]="!sixMonthsAgo || !sixMonthsAfter" (click)="updateChar()"></button>
         </div>
     </div>
-    <p-chart type="bar" [data]="basicData" [options]="horizontalOptions"></p-chart>
+    <p-chart type="bar" [data]="basicData" [options]="config"></p-chart>
     <div class="flex flex-row justify-content-end gap-2 md:flex-wrap mt-3">    
         <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
     </div>
