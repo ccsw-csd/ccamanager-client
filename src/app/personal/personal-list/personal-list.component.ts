@@ -19,12 +19,14 @@ import { CenterService } from 'src/app/core/services/center.service';
 import { RoleService } from 'src/app/core/services/role.service';
 import { Person } from '../models/Person';
 import { PersonService } from '../services/person.service';
+import { LdapService } from '../services/ldap.service';
 import { Center } from 'src/app/core/models/Center';
 import { Role } from 'src/app/core/models/Role';
 import { Dropdown } from 'primeng/dropdown';
 import { ExportService } from 'src/app/core/services/export.service';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
 import { PersonalEditComponent } from '../personal-edit/personal-edit/personal-edit.component';
+import { LdapPerson } from '../models/LdapPerson';
 
 @Component({
   selector: 'app-personal-list',
@@ -65,7 +67,8 @@ export class PersonalListComponent implements OnInit {
     private exportService: ExportService,
     private navigatorService: NavigatorService,
     private confirmationService: ConfirmationService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private ldapService: LdapService
   ) {}
 
   ngOnInit(): void {
@@ -76,7 +79,8 @@ export class PersonalListComponent implements OnInit {
         if (menuVisible) this.tableWidth = 'calc(100vw - 255px)';
         else this.tableWidth = 'calc(100vw - 55px)';
       });
-
+    
+    this.trySynchronize();
     this.getAllProvinces();
     this.getAllPersons();
     this.getAllCenters();
@@ -91,7 +95,25 @@ export class PersonalListComponent implements OnInit {
   }
 
   trySynchronize(){
-    
+    this.ldapService.checkPersons().subscribe({
+      next: (res: Boolean) => {
+        this.canSynchronize = res;
+        console.log(res,"result sync")
+      },
+    });
+    this.ldapService.compareLdapToPersons().subscribe({
+      next: (res: LdapPerson[]) => {
+
+        console.log(res)
+      },
+    });
+
+    this.ldapService.comparePersonsToLdap().subscribe({
+      next: (res: LdapPerson[]) => {
+
+        console.log(res)
+      },
+    });
   }
 
   getAllProvinces() {
