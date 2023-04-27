@@ -42,6 +42,7 @@ export class PersonalListComponent implements OnInit {
   @ViewChildren('filterDropdown') filterDropdowns!: QueryList<Dropdown>;
 
   provinces: Province[];
+  canSynchronize: Boolean = false;
   persons: Person[];
   centers: Center[];
   roles: Role[];
@@ -87,6 +88,10 @@ export class PersonalListComponent implements OnInit {
       { label: 'Activo', value: '1' },
       { label: 'Pendiente', value: '2' },
     ];
+  }
+
+  trySynchronize(){
+    
   }
 
   getAllProvinces() {
