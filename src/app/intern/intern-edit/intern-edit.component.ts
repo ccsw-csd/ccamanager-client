@@ -40,6 +40,8 @@ export class InternEditComponent implements OnInit {
   quantity:number;
   groupIntern:any[] = [];
   profileForm :any;
+  requiredField : any = Validators.required;
+  
   genders: any[] = [
     { label: 'Otros', value:0 },
     { label: 'Mujer', value: 1 },
@@ -90,11 +92,12 @@ export class InternEditComponent implements OnInit {
     this.provinces = this.config.data.provinces;
     this.actions = this.config.data.actions;
     this.setFormGroup();
+    this.onChangeUsername();
   }
 
   setFormGroup(){
       this.profileForm =this.fb.group({
-        period: [this.getActualQuarter(),Validators.required],
+        period: [this.intern.period,Validators.required],
         name: [this.intern.name,Validators.required],
         lastname:[this.intern.lastname,Validators.required],
         email: [this.intern.email,Validators.email],
@@ -124,6 +127,7 @@ export class InternEditComponent implements OnInit {
   
   updateFormGroup(){
     this.profileForm.get('email').setValidators([Validators.required,Validators.email]);
+    this.profileForm.get('email').updateValueAndValidity();
     this.profileForm.get('education').setValidators([Validators.required]);
     this.profileForm.get('education').updateValueAndValidity();
     this.profileForm.get('educationCenter').setValidators([Validators.required]);
@@ -131,16 +135,21 @@ export class InternEditComponent implements OnInit {
     this.profileForm.get('center').setValidators([Validators.required]);
     this.profileForm.get('center').updateValueAndValidity();
     this.profileForm.get('province').setValidators([Validators.required]);
+    this.profileForm.get('province').updateValueAndValidity();
     this.profileForm.get('startDate').setValidators([Validators.required]);
     this.profileForm.get('startDate').updateValueAndValidity();
     this.profileForm.get('endDate').setValidators([Validators.required]);
     this.profileForm.get('endDate').updateValueAndValidity();
     this.profileForm.get('code').setValidators([Validators.required]);
+    this.profileForm.get('code').updateValueAndValidity();
     this.profileForm.get('saga').setValidators([Validators.required]);
+    this.profileForm.get('saga').updateValueAndValidity();
     this.profileForm.get('mentor').setValidators([Validators.required]);
+    this.profileForm.get('mentor').updateValueAndValidity();
   }
   resetFormGroup(){
     this.profileForm.get('email').setValidators();
+    this.profileForm.get('email').updateValueAndValidity();
     this.profileForm.get('education').setValidators();
     this.profileForm.get('education').updateValueAndValidity();
     this.profileForm.get('educationCenter').setValidators();
@@ -148,17 +157,23 @@ export class InternEditComponent implements OnInit {
     this.profileForm.get('center').setValidators();
     this.profileForm.get('center').updateValueAndValidity();
     this.profileForm.get('province').setValidators();
+    this.profileForm.get('province').updateValueAndValidity();
     this.profileForm.get('startDate').setValidators();
     this.profileForm.get('startDate').updateValueAndValidity();
     this.profileForm.get('endDate').setValidators();
     this.profileForm.get('endDate').updateValueAndValidity();
     this.profileForm.get('code').setValidators();
+    this.profileForm.get('code').updateValueAndValidity();
     this.profileForm.get('saga').setValidators();
+    this.profileForm.get('saga').updateValueAndValidity();
     this.profileForm.get('mentor').setValidators();
+    this.profileForm.get('mentor').updateValueAndValidity();
   }
 
   onChangeUsername(){
-      if(this.profileForm.get('username').value != ''){
+     let username : string = this.profileForm.get('username').value;
+     username = username ? username.trim() : null;
+     if(username != '' && username!=null){
         this.updateFormGroup();
       }else{
         this.resetFormGroup();
@@ -212,18 +227,8 @@ export class InternEditComponent implements OnInit {
   }
 
   getActualQuarter():string{
-    const actualDate = new Date();
-    const year = actualDate.getFullYear();
-    const month = actualDate.getMonth() + 1;    
-    let quarter = 0;
-    if (month >= 1 && month <= 4) {
-      quarter = 1;
-    } else if (month >= 5 && month <= 8) {
-      quarter = 2;
-    } else if (month >= 9 && month <= 12) {
-      quarter = 3;
-    }    
-    return `Q${quarter}'${String(year).slice(-2)}`;
+    var today = new Date();
+    return 'Q' + Math.floor((today.getMonth() + 3) / 3).toString() + "'"+today.getFullYear().toString().slice(2);
   }
 
   searchIntern($event){

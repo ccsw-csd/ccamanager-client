@@ -22,7 +22,7 @@
             <div class="flex-2">
                 <span class="p-float-label">
                     <p-inputNumber class="w-full" [style]="{'width':'100%'}" inputStyleClass="w-full" [inputStyle]="{'height':'45px','widht':'100%'}" [min]="1" inputId="integeronly" formControlName="quantity"></p-inputNumber>
-                    <label for="hours">Cantidad<span class="text-red-600 text-base" *ngIf="profileForm.get('quantity').validator">*</span></label>
+                    <label for="hours">Cantidad<span class="text-red-600 text-base" *ngIf="profileForm.get('quantity').hasValidator(requiredField)">*</span></label>
                 </span>
             </div>
         </div>
@@ -52,7 +52,7 @@
         <div class="flex flex-2">
             <span class="p-float-label w-full mt-2">
                 <input id="email" type="text" class="w-full" pInputText formControlName="email" >
-                <label for="email">Email<span class="text-red-600 text-base" *ngIf="profileForm.get('email').errors?.required">*</span></label>
+                <label for="email">Email<span class="text-red-600 text-base" *ngIf="profileForm.get('email').hasValidator(requiredField)">*</span></label>
             </span>
         </div>
         <div class="flex-1">
@@ -66,13 +66,13 @@
         <div class="flex-1 min-w-min mt-2" >
             <span class="p-float-label" style="min-width: 16.4rem;">
                 <p-dropdown appendTo="body" [options]="educations" styleClass="w-full"   [autoDisplayFirst]="false" formControlName="education" inputId="float-label" optionLabel="name"></p-dropdown>
-                <label for="float-label" >Titulación<span class="text-red-600 text-base" *ngIf="profileForm.get('education').validator">*</span></label>
+                <label for="float-label" >Titulación<span class="text-red-600 text-base" *ngIf="profileForm.get('education').hasValidator(requiredField)">*</span></label>
             </span>
         </div>
         <div class="flex-2 overflow-hidden">
             <span class="p-float-label mt-2">
                 <p-dropdown appendTo="body" [options]="educationsCenter" styleClass="w-full" [autoDisplayFirst]="false" formControlName="educationCenter" optionLabel="name" ></p-dropdown>
-                <label for="educationCenter" >Centro<span class="text-red-600 text-base" *ngIf="profileForm.get('educationCenter').validator">*</span></label>
+                <label for="educationCenter" >Centro<span class="text-red-600 text-base" *ngIf="profileForm.get('educationCenter').hasValidator(requiredField)">*</span></label>
             </span>
         </div>
     </div>
@@ -81,27 +81,27 @@
         <div class="flex-1">
             <span class="p-float-label mt-2">
                 <p-dropdown appendTo="body"  [options]="centers" styleClass="w-full" formControlName="center"   [autoDisplayFirst]="false" optionLabel="name"></p-dropdown>
-                <label for="center" >Oficina<span class="text-red-600 text-base" *ngIf="profileForm.get('center').validator">*</span></label>
+                <label for="center" >Oficina<span class="text-red-600 text-base" *ngIf="profileForm.get('center').hasValidator(requiredField)">*</span></label>
             </span>
         </div>
         <div class="flex-1">
             <span class="p-float-label mt-2">
                 <p-dropdown appendTo="body"  [options]="provinces" formControlName="province"   [autoDisplayFirst]="false" styleClass="w-full" optionLabel="province"></p-dropdown>
-                <label for="province">Localización<span class="text-red-600 text-base" *ngIf="profileForm.get('province').validator">*</span></label>
+                <label for="province">Localización<span class="text-red-600 text-base" *ngIf="profileForm.get('province').hasValidator(requiredField)">*</span></label>
             </span>
         </div>
         
         <div class="flex-1">
             <span class="p-float-label mt-2">
                 <p-calendar appendTo="body" styleClass="w-full" [inputStyle]="{'height':'45px'}" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" formControlName="startDate"  ></p-calendar>
-                <label for="startDate">Inicio<span class="text-red-600 text-base" *ngIf="profileForm.get('startDate').validator">*</span></label>
+                <label for="startDate">Inicio<span class="text-red-600 text-base" *ngIf="profileForm.get('startDate').hasValidator(requiredField)">*</span></label>
                 <small *ngIf="profileForm.invalid && profileForm.errors?.dateRange"  id="username-help" class="p-error ">La fecha de inicio no puede ser posterior a la fecha de fin</small>
             </span>
         </div>
         <div class="flex-1">
             <span class="p-float-label mt-2">
                 <p-calendar appendTo="body" styleClass="w-full" [inputStyle]="{'height':'45px'}" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" formControlName="endDate" ></p-calendar>
-                <label for="endDate">Fin<span class="text-red-600 text-base" *ngIf="profileForm.get('endDate').validator">*</span></label>
+                <label for="endDate">Fin<span class="text-red-600 text-base" *ngIf="profileForm.get('endDate').hasValidator(requiredField)">*</span></label>
             </span>
         </div>
     </div>
@@ -121,7 +121,7 @@
         <div class="flex-2">
             <span class="p-float-label mt-2" >
                 <input id="code" type="text" class="w-full" pInputText formControlName="code"   >
-                <label for="code">Código<span class="text-red-600 text-base" *ngIf="profileForm.get('code').validator">*</span></label>
+                <label for="code">Código<span class="text-red-600 text-base" *ngIf="profileForm.get('code').hasValidator(requiredField)">*</span></label>
             </span>
         </div>
 
@@ -142,7 +142,7 @@
         <div class="flex-1">
             <span class="p-float-label mt-2" >
                 <input id="mentor" class="w-full" type="text" formControlName="mentor"  pInputText  >
-                <label for="mentor">Mentor<span class="text-red-600 text-base" *ngIf="profileForm.get('mentor').validator">*</span></label>
+                <label for="mentor">Mentor<span class="text-red-600 text-base" *ngIf="profileForm.get('mentor').hasValidator(requiredField)">*</span></label>
             </span>
         </div>
     </div>
@@ -176,7 +176,7 @@
         <div class="flex-1">
             <span class="p-float-label mt-2" >
                 <input id="saga" class="w-full" type="text" formControlName="saga"  pInputText  >
-                <label for="saga">Saga<span class="text-red-600 text-base" *ngIf="profileForm.get('saga').validator">*</span></label>
+                <label for="saga">Saga<span class="text-red-600 text-base" *ngIf="profileForm.get('saga').hasValidator(requiredField)">*</span></label>
             </span>
         </div>
         <div class="flex-1">

@@ -18,7 +18,7 @@
     </div>
     <div class="flex justify-content-end ">
 
-        <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" (click)="null" pTooltip="Añadir usuario" >
+        <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir usuario"  (click)="editPerson(null)">
         </button>
 
         <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2" (click)="exportExcel()"
@@ -262,9 +262,9 @@
             <td class="buttons">
                 <div class="justify-content-between">
                     <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
-                        pTooltip="Editar"></button>
+                        pTooltip="Editar" (click)="editPerson(person)"></button>
                     <button pButton pRipple type="button" icon="pi pi-trash"
-                        class="p-button-rounded p-button-danger p-button-text" pTooltip="Eliminar"></button>
+                        class="p-button-rounded p-button-danger p-button-text" pTooltip="Eliminar" (click)="deletePerson(person.id)"></button>
                 </div>
             </td>
         </tr>
