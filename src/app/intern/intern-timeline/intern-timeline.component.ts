@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import annotationPlugin from 'chartjs-plugin-annotation';
-//import zoomPlugin from 'chartjs-plugin-zoom';
 import { PrimeNGConfig } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TranslateService } from 'src/app/core/services/translate.service';
@@ -43,15 +42,19 @@ export class InternTimelineComponent implements OnInit {
     );
     this.updateChar();
   }
-   updateChar() {
+
+  getLabel(config,labels) {
+    return labels.find(label => label.x.includes(config[0].label)).x;
+  }
+  
+  updateChar() {
     this.internService
       .findTimelineByDate(this.sixMonthsAgo, this.sixMonthsAfter)
       .subscribe({
         next: (res: TimeLine[]) => {
           this.timeLines = res;
-          console.log(this.timeLines);
           this.basicData = {
-            labels: this.timeLines.map((timeLine) => timeLine.x),
+            labels: this.timeLines.map((timeLine) => timeLine.x.split('|')[0]),
             datasets: [
               {
                 backgroundColor: this.timeLines.map(
@@ -104,6 +107,9 @@ export class InternTimelineComponent implements OnInit {
               ];
             },
           },
+          onClick: function(e, legendItem, legend) {
+            return null;
+          },
         },
         tooltip: {
           callbacks: {
@@ -115,18 +121,8 @@ export class InternTimelineComponent implements OnInit {
                 new Date(context.raw[1]).toLocaleDateString('es-ES')
               );
             },
+            title: (context) => this.getLabel(context,this.timeLines),
           },
-        },
-        zoom: {
-          zoom: {
-            wheel: {
-              enabled: true,
-            },
-            pinch: {
-              enabled: true
-            },
-            mode: 'xy',
-          }
         }
       },
       scales: {
