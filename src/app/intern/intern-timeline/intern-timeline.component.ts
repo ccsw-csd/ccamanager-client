@@ -7,6 +7,8 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TranslateService } from 'src/app/core/services/translate.service';
 import { TimeLine } from '../models/TimeLine';
 import { InternService } from '../services/intern.service';
+import { FormBuilder,Validators } from '@angular/forms';
+import { DateRangeValidator } from 'src/app/core/models/DateRangeValidator';
 @Component({
   selector: 'app-intern-timeline',
   templateUrl: './intern-timeline.component.html',
@@ -20,11 +22,13 @@ export class InternTimelineComponent implements OnInit {
   config: any;
   basicData: any;
   arrayLabels: string[];
+  profileForm:any;
   constructor(
     private ref: DynamicDialogRef,
     private internService: InternService,
     private primengConfig: PrimeNGConfig,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +44,17 @@ export class InternTimelineComponent implements OnInit {
       this.currentDate.getMonth() + 6,
       this.currentDate.getDate()
     );
+    this.setFormValidator();
     this.updateChar();
+  }
+
+  setFormValidator(){
+    this.profileForm = this.fb.group({
+      startDate:[this.sixMonthsAgo,Validators.required],
+      endDate:[this.sixMonthsAfter,Validators.required],
+    },{
+      validators: DateRangeValidator.dateRange
+      });
   }
 
   getLabel(config,labels) {
@@ -49,7 +63,7 @@ export class InternTimelineComponent implements OnInit {
   
   updateChar() {
     this.internService
-      .findTimelineByDate(this.sixMonthsAgo, this.sixMonthsAfter)
+      .findTimelineByDate(this.profileForm.get("startDate").value,this.profileForm.get("endDate").value)
       .subscribe({
         next: (res: TimeLine[]) => {
           this.timeLines = res;
