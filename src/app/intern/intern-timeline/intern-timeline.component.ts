@@ -36,7 +36,7 @@ export class InternTimelineComponent implements OnInit {
     this.primengConfig.setTranslation(this.translateService.getSpanish());
     this.sixMonthsAgo = new Date(
       this.currentDate.getFullYear(),
-      this.currentDate.getMonth() - 6,
+      this.currentDate.getMonth() - 2,
       this.currentDate.getDate()
     );
     this.sixMonthsAfter = new Date(
@@ -62,8 +62,10 @@ export class InternTimelineComponent implements OnInit {
   }
   
   updateChar() {
+    this.sixMonthsAgo = this.profileForm.get("startDate").value;
+    this.sixMonthsAfter = this.profileForm.get("endDate").value
     this.internService
-      .findTimelineByDate(this.profileForm.get("startDate").value,this.profileForm.get("endDate").value)
+      .findTimelineByDate(this.sixMonthsAgo,this.sixMonthsAfter)
       .subscribe({
         next: (res: TimeLine[]) => {
           this.timeLines = res;
@@ -151,7 +153,7 @@ export class InternTimelineComponent implements OnInit {
             color: '#495057',
           },
           grid: {
-            color: '#ebedef',
+            display:false,
           },
         },
         y: {
