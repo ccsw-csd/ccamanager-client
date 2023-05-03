@@ -82,90 +82,91 @@ export class InternTimelineComponent implements OnInit {
               },
             ],
           };
-        },
-      });
-    this.config = {
-      indexAxis: 'y',
-      plugins: {
-        annotation: {
-          annotations: [
-            {
-              type: 'line',
-              mode: 'vertical',
-              scaleID: 'x',
-              value: new Date().getTime(),
-              borderColor: '#333333',
-              borderWidth: 1,
-              label: {
-                display:true,
-                content: 'Hoy',
-                rotation: -90,
-                yAdjust: -7,
-                enabled: true,
-                position: 'start',
-                backgroundColor: '#775DD0',
-                font: {
-                  size: 12,
-                  weight: 'bold',
+          this.config = {
+            indexAxis: 'y',
+            plugins: {
+              annotation: {
+                annotations: [
+                  {
+                    type: 'line',
+                    mode: 'vertical',
+                    scaleID: 'x',
+                    value: new Date().getTime(),
+                    borderColor: '#333333',
+                    borderWidth: 1,
+                    label: {
+                      display:true,
+                      content: 'Hoy',
+                      rotation: -90,
+                      yAdjust: -7,
+                      enabled: true,
+                      position: 'start',
+                      backgroundColor: '#775DD0',
+                      font: {
+                        size: 12,
+                        weight: 'bold',
+                      },
+                    },
+                  },
+                ],
+              },
+              legend: {
+                display: true,
+                labels: {
+                  generateLabels: function (chart) {
+                    return [
+                      { text: 'Contrato', fillStyle: '#00E396' },
+                      { text: 'Pendiente', fillStyle: '#008FFB' },
+                      { text: 'Rechazado', fillStyle: '#FF4560' },
+                    ];
+                  },
+                },
+                onClick: function(e, legendItem, legend) {
+                  return null;
+                },
+              },
+              tooltip: {
+                callbacks: {
+                  label: function (context) {
+                    return (
+                      'Fecha: ' +
+                      new Date(context.raw[0]).toLocaleDateString('es-ES') +
+                      ' - ' +
+                      new Date(context.raw[1]).toLocaleDateString('es-ES')
+                    );
+                  },
+                  title: (context) => this.getLabel(context,this.timeLines),
+                },
+              }
+            },
+            scales: {
+              x: {
+                min: this.sixMonthsAgo,
+                type: 'time',
+                time: {
+                  unit: 'day',
+                },
+                position: 'bottom',
+                ticks: {
+                  color: '#495057',
+                },
+                grid: {
+                  display:false,
+                },
+              },
+              y: {
+                ticks: {
+                  color: '#495057',
+                },
+                grid: {
+                  color: '#ebedef',
                 },
               },
             },
-          ],
+          };
         },
-        legend: {
-          display: true,
-          labels: {
-            generateLabels: function (chart) {
-              return [
-                { text: 'Contrato', fillStyle: '#00E396' },
-                { text: 'Pendiente', fillStyle: '#008FFB' },
-                { text: 'Rechazado', fillStyle: '#FF4560' },
-              ];
-            },
-          },
-          onClick: function(e, legendItem, legend) {
-            return null;
-          },
-        },
-        tooltip: {
-          callbacks: {
-            label: function (context) {
-              return (
-                'Fecha: ' +
-                new Date(context.raw[0]).toLocaleDateString('es-ES') +
-                ' - ' +
-                new Date(context.raw[1]).toLocaleDateString('es-ES')
-              );
-            },
-            title: (context) => this.getLabel(context,this.timeLines),
-          },
-        }
-      },
-      scales: {
-        x: {
-          min: this.sixMonthsAgo,
-          type: 'time',
-          time: {
-            unit: 'day',
-          },
-          position: 'bottom',
-          ticks: {
-            color: '#495057',
-          },
-          grid: {
-            display:false,
-          },
-        },
-        y: {
-          ticks: {
-            color: '#495057',
-          },
-          grid: {
-            color: '#ebedef',
-          },
-        },
-      },
-    };
+      });
+    
   }
 
   closeWindow() {
