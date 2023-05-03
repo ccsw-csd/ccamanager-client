@@ -118,7 +118,7 @@ export class InternTimelineComponent implements OnInit {
             generateLabels: function (chart) {
               return [
                 { text: 'Contrato', fillStyle: '#00E396' },
-                { text: 'Vacio', fillStyle: '#008FFB' },
+                { text: 'Pendiente', fillStyle: '#008FFB' },
                 { text: 'Rechazado', fillStyle: '#FF4560' },
               ];
             },
