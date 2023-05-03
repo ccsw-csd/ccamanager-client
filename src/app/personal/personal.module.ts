@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PersonalListComponent } from './personal-list/personal-list.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
+import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { ToastModule } from 'primeng/toast';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ButtonModule } from 'primeng/button';
@@ -16,9 +17,10 @@ import { ConfirmationService } from 'primeng/api';
 import { PickListModule } from 'primeng/picklist';
 import { PersonalEditComponent } from './personal-edit/personal-edit/personal-edit.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { PersonalSynchronizeLdapComponent } from './personal-synchronize-ldap/personal-synchronize-ldap.component';
 
 @NgModule({
-  declarations: [PersonalListComponent, PersonalEditComponent],
+  declarations: [PersonalListComponent, PersonalEditComponent, PersonalSynchronizeLdapComponent],
 
   imports: [
     CommonModule,
@@ -37,6 +39,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     TreeModule,
     PickListModule,
     ReactiveFormsModule,
+    VirtualScrollerModule,
     FormsModule    
   ],
 })

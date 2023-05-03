@@ -1,32 +1,22 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ViewChildren,
-  QueryList,
-} from '@angular/core';
+import {Component,OnInit,ViewChild,ViewChildren,QueryList} from '@angular/core';
 import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
+import {DialogService,DynamicDialogConfig,DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Province } from 'src/app/core/models/Province';
 import { ProvinceService } from 'src/app/core/services/province.service';
 import { CenterService } from 'src/app/core/services/center.service';
 import { RoleService } from 'src/app/core/services/role.service';
 import { Person } from '../models/Person';
 import { PersonService } from '../services/person.service';
-import { LdapService } from '../services/ldap.service';
 import { Center } from 'src/app/core/models/Center';
 import { Role } from 'src/app/core/models/Role';
 import { Dropdown } from 'primeng/dropdown';
 import { ExportService } from 'src/app/core/services/export.service';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
 import { PersonalEditComponent } from '../personal-edit/personal-edit/personal-edit.component';
-import { LdapPerson } from '../models/LdapPerson';
+import { PersonalSynchronizeLdapComponent } from '../personal-synchronize-ldap/personal-synchronize-ldap.component';
+
 
 @Component({
   selector: 'app-personal-list',
@@ -44,7 +34,7 @@ export class PersonalListComponent implements OnInit {
   @ViewChildren('filterDropdown') filterDropdowns!: QueryList<Dropdown>;
 
   provinces: Province[];
-  canSynchronize: Boolean = false;
+  isSynchronized: Boolean = false;
   persons: Person[];
   centers: Center[];
   roles: Role[];
@@ -68,7 +58,6 @@ export class PersonalListComponent implements OnInit {
     private navigatorService: NavigatorService,
     private confirmationService: ConfirmationService,
     private snackbarService: SnackbarService,
-    private ldapService: LdapService
   ) {}
 
   ngOnInit(): void {
@@ -95,24 +84,15 @@ export class PersonalListComponent implements OnInit {
   }
 
   trySynchronize(){
-    this.ldapService.checkPersons().subscribe({
+    this.personService.checkPersons().subscribe({
       next: (res: Boolean) => {
-        this.canSynchronize = res;
-        console.log(res,"result sync")
+        this.isSynchronized = res;
       },
     });
-    this.ldapService.compareLdapToPersons().subscribe({
-      next: (res: LdapPerson[]) => {
-
-        console.log(res)
-      },
-    });
-
-    this.ldapService.comparePersonsToLdap().subscribe({
-      next: (res: LdapPerson[]) => {
-
-        console.log(res)
-      },
+   
+  }
+  synchronizeLdap(){
+    const ref = this.dialogService.open(PersonalSynchronizeLdapComponent, {
     });
   }
 

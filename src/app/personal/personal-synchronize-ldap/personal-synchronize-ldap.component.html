@@ -1,0 +1,52 @@
+<div>
+  <h1>Sincronizar LDAP</h1>
+
+  <div class="flex flex-row">
+    <div class="flex flex-column">
+      <p class="text-lg">La lista de distribución <strong>CCSW</strong> del LDAP no concuerda con la app:
+        <span ng-if="ldapToInterns">{{personsCCSW_app.length}} eliminar | </span>
+        <span ng-if="internsToLdap">{{personsApp_CCSW.length}} insertar</span>
+      </p>
+    </div>
+    <div class="flex flex-column ml-3 mb-3 ">
+      <button class="p-button p-button-primary" *ngIf="personsCCSW_app.length || personsApp_CCSW.length" (click)="copyList(true)">Sincronizar Manualmente</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="col-6">
+      <p-virtualScroller [value]="personsCCSW_app" scrollHeight="400px" >
+        <ng-template pTemplate="header" class="surface-700"> 
+          <span class="text-lg">Personas de CCSW que <strong>NO</strong> están en la<strong>
+              app</strong>
+            </span>
+          </ng-template>
+              <ng-template pTemplate="item" let-item>
+          <div>
+            <h3>{{ item.name }} {{ item.lastname }}</h3>
+            <span>{{ item.username }}</span>
+          </div>
+        </ng-template>
+      </p-virtualScroller>
+    </div>
+    <div class="col-6">
+      <p-virtualScroller [value]="personsApp_CCSW"  scrollHeight="400px" >
+        <ng-template pTemplate="header">
+          <span class="text-lg">Personas de la app que <strong>NO</strong> están en <strong>
+              CCSW</strong>
+            </span>
+          </ng-template>
+        <ng-template pTemplate="item" let-item>
+          <div>
+            <h3>{{ item.name }} {{ item.lastname }}</h3>
+            <span>{{ item.username }}</span>
+          </div>
+        </ng-template>
+      </p-virtualScroller>
+    </div>
+  </div>
+  <div class="flex flex-row mt-3 justify-content-end">
+    <button pButton pRipple styleClass="" label="Cancelar" class="p-button p-button-primary"
+      (click)="closeWindow()"></button>
+  </div>
+</div>

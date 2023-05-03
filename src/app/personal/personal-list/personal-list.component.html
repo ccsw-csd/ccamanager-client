@@ -28,8 +28,8 @@
             pTooltip="Limpiar filtros" (click)="cleanFilters()">
         </button>
 
-        <button pButton pRipple type="button" icon=" pi pi-sync" class="p-button-lg m-2" *ngIf="canSynchronize"
-            pTooltip="Sincronizar LDAP" (click)="trySynchronize()">
+        <button pButton pRipple type="button" icon=" pi pi-sync" class="p-button-lg m-2" *ngIf="!isSynchronized"
+            pTooltip="Sincronizar LDAP" (click)="synchronizeLdap()">
         </button>
     </div>
 </div>
