@@ -1,7 +1,8 @@
 <h1>Pyramid Index</h1>
-<div class="flex-column">
-    <div>
-        <p-table [value]="pyramids" responsiveLayout="scroll">
+
+<div class="flex-column">   
+    <div class="flex flex-row align-items-start">
+        <p-table [value]="pyramids" responsiveLayout="scroll" class="flex-2 ">
             <ng-template pTemplate="header">
                 <tr>
                     <th></th>
@@ -21,10 +22,10 @@
             <ng-template pTemplate="body" let-pyramid  let-rowIndex="rowIndex">
                 <tr>
                     <td>{{ rowIndex == 0 ? 'Index' : 'Cost' }}</td>
-                    <td pEditableColumn *ngIf="rowIndex == 0; else notEditable">
+                    <td pEditableColumn *ngIf="rowIndex == 1; else notEditable">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="numero" (onInput)="show(pyramid.A1)" required ></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="pyramid.A1" required mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" ></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{ pyramid.A1 }}
@@ -34,10 +35,10 @@
                     <ng-template #notEditable>
                         <td>{{ pyramid.A1 }}</td>
                     </ng-template>
-                    <td pEditableColumn *ngIf="rowIndex == 0; else notEditable">
+                    <td pEditableColumn *ngIf="rowIndex == 1; else notEditable">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="numero" (onInput)="show(pyramid.A2)" required ></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="pyramid.A2" required mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" ></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{ pyramid.A2 }}
@@ -47,10 +48,10 @@
                     <ng-template #notEditable>
                         <td>{{ pyramid.A2 }}</td>
                     </ng-template>
-                    <td pEditableColumn *ngIf="rowIndex == 0; else notEditable">
+                    <td pEditableColumn *ngIf="rowIndex == 1; else notEditable">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="numero" (onInput)="show(pyramid.B1)" required ></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="pyramid.B1" required mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" ></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{ pyramid.B1 }}
@@ -60,10 +61,10 @@
                     <ng-template #notEditable>
                         <td>{{ pyramid.B1 }}</td>
                     </ng-template>
-                    <td pEditableColumn *ngIf="rowIndex == 0; else notEditable">
+                    <td pEditableColumn *ngIf="rowIndex == 1; else notEditable">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="numero" (onInput)="show(pyramid.B2)" required ></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="pyramid.B2" required mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" ></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{ pyramid.B2 }}
@@ -73,10 +74,10 @@
                     <ng-template #notEditable>
                         <td>{{ pyramid.B2 }}</td>
                     </ng-template>
-                    <td pEditableColumn *ngIf="rowIndex == 0; else notEditable">
+                    <td pEditableColumn *ngIf="rowIndex == 1; else notEditable">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="numero" (onInput)="show(pyramid.B3)" required ></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="pyramid.B3" required mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" ></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{ pyramid.B3 }}
@@ -86,10 +87,10 @@
                     <ng-template #notEditable>
                         <td>{{ pyramid.B3 }}</td>
                     </ng-template>
-                    <td pEditableColumn *ngIf="rowIndex == 0; else notEditable">
+                    <td pEditableColumn *ngIf="rowIndex == 1; else notEditable">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="numero" (onInput)="show(pyramid.C1)" required ></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="pyramid.C1" required mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" ></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{ pyramid.C1 }}
@@ -99,10 +100,10 @@
                     <ng-template #notEditable>
                         <td>{{ pyramid.C1 }}</td>
                     </ng-template>
-                    <td pEditableColumn *ngIf="rowIndex == 0; else notEditable">
+                    <td pEditableColumn *ngIf="rowIndex == 1; else notEditable">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="numero" (onInput)="show(pyramid.C2)" required ></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="pyramid.C2" required mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" ></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{ pyramid.C2 }}
@@ -112,10 +113,10 @@
                     <ng-template #notEditable>
                         <td>{{ pyramid.C2 }}</td>
                     </ng-template>
-                    <td pEditableColumn *ngIf="rowIndex == 0; else notEditable">
+                    <td pEditableColumn *ngIf="rowIndex == 1; else notEditable">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="numero" (onInput)="show(pyramid.C3)" required ></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="pyramid.C3" required mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" ></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{ pyramid.C3 }}
@@ -125,10 +126,10 @@
                     <ng-template #notEditable>
                         <td>{{ pyramid.C3 }}</td>
                     </ng-template>
-                    <td pEditableColumn *ngIf="rowIndex == 0; else notEditable">
+                    <td pEditableColumn *ngIf="rowIndex == 1; else notEditable">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="numero" (onInput)="show(pyramid.D1)" required ></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="pyramid.D1" required mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" ></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{ pyramid.D1 }}
@@ -138,10 +139,10 @@
                     <ng-template #notEditable>
                         <td>{{ pyramid.D1 }}</td>
                     </ng-template>
-                    <td pEditableColumn *ngIf="rowIndex == 0; else notEditable">
+                    <td pEditableColumn *ngIf="rowIndex == 1; else notEditable">
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-inputNumber [(ngModel)]="numero" (onInput)="show(pyramid.D2)" required ></p-inputNumber>
+                                <p-inputNumber [(ngModel)]="pyramid.D2" required mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="2" ></p-inputNumber>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{ pyramid.D2 }}
@@ -154,8 +155,45 @@
                 </tr>
             </ng-template>
         </p-table>
+        <button class="align-content-start" style="margin-top:0px !important" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-lg m-2" pTooltip="Editar" ></button>
     </div>
-    <div class="flex-row">
-
+    <div class="h-3rem"></div>
+    <div class="flex flex-row gap-5">
+        <div class="flex flex-column">
+            <p-table [value]="countIndexGraphs" responsiveLayout="scroll" class="flex-2">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Perfil</th>
+                        <th>Count</th>
+                        <th>Index</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-countIndex>
+                    <tr>
+                        <td>{{countIndex.profile}}</td>
+                        <td>{{countIndex.count}}</td>
+                        <td>{{formatNumber(countIndex.index)}}</td> 
+                    </tr>
+                </ng-template>
+            </p-table>
+            <p-chart></p-chart>
+        </div>
+        <div class="flex flex-column">
+            <p-table [value]="countGraphs" responsiveLayout="scroll" class="flex-2 ">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Perfil</th>
+                        <th>Count</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-countGraph>
+                    <tr>
+                        <td>{{countGraph.profile}} </td>
+                        <td>{{countGraph.count}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <p-chart></p-chart>
+        </div>
     </div>
 </div>

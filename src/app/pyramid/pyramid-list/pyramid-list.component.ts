@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Pyramid } from '../models/Pyramid';
 import { PyramidService } from '../services/pyramid.service';
+import { CountGraph } from '../models/CountGraph';
+import { CountIndexGraph } from '../models/CountIndexGraph';
 @Component({
   selector: 'app-pyramid-list',
   templateUrl: './pyramid-list.component.html',
@@ -8,13 +11,17 @@ import { PyramidService } from '../services/pyramid.service';
 })
 export class PyramidListComponent implements OnInit {
   pyramids: Pyramid[];
-  numero:string;
+  countGraphs: CountGraph[];
+  countIndexGraphs:CountIndexGraph[];
   result: any;
-  constructor(private pyramidService: PyramidService) {}
+  constructor(
+    private pyramidService: PyramidService,
+    ) {}
 
   ngOnInit(): void {
-    this.numero = "HOLA";
     this.getAllPyramids();
+    this.getCountIndexGraphs();
+    this.getCountGraphs();
   }
 
   getAllPyramids() {
@@ -25,6 +32,28 @@ export class PyramidListComponent implements OnInit {
     });
   }
 
+  getCountGraphs(){
+    this.pyramidService.getProfileCountGraph().subscribe({
+      next: (res: CountGraph[]) => {
+        this.countGraphs = res;
+        console.log(res);
+      },
+    });
+  }
+
+  getCountIndexGraphs(){
+    this.pyramidService.getProfileCountIndexGraph().subscribe({
+      next: (res: CountIndexGraph[]) => {
+        this.countIndexGraphs = res;
+        console.log(res);
+      },
+    });
+  }
+
+  formatNumber(num: number): string {
+    return num.toFixed(2);
+  }
+  
   show(value:any){
     console.log(value);
   }
