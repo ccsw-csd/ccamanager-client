@@ -27,7 +27,7 @@ export class PersonalEditComponent implements OnInit {
   personSelected;
   personForm: FormGroup;
   requiredField : any = Validators.required;
-
+  loading:boolean;
 
   actives: any[] = [
     { label: 'Inactivo', value: 0 },
@@ -64,6 +64,7 @@ export class PersonalEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = false;
     this.personElement = Object.assign({ person: Person }, this.config.data.person)
     this.provinces = this.config.data.provinces 
     this.roles = this.config.data.roles 
@@ -97,6 +98,7 @@ export class PersonalEditComponent implements OnInit {
   }
 
   saveItem(person: Person) {
+     this.loading = true;
      person.role = person.role ? person.role['role'] : null;
      if(person.username == '') {person.username=null} 
       this.personService.save(person).subscribe({
@@ -107,8 +109,12 @@ export class PersonalEditComponent implements OnInit {
           this.ref.close(true);
         },
         error: (errorResponse) => {
+          this.loading = false;
           this.snackbarService.error(errorResponse['message']);
         },
+        complete:()=>{
+          this.loading= false;
+        }
       });
   }
 

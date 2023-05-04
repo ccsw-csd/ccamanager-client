@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Intern } from '../models/Intern';
 import { PrimeNGConfig } from 'primeng/api';
 import { Center } from 'src/app/core/models/Center';
@@ -17,7 +17,6 @@ import { FormBuilder,Validators } from '@angular/forms';
 import { DateRangeValidator } from 'src/app/core/models/DateRangeValidator';
 import { TranslateService } from 'src/app/core/services/translate.service';
 import { InternService } from '../services/intern.service';
-import { EducationCenterService } from 'src/app/maintenance/education-center/services/education-center.service';
 
 @Component({
   selector: 'app-intern-edit',
@@ -35,12 +34,12 @@ export class InternEditComponent implements OnInit {
   technologies:Technology[];
   englishLevels:Level[];
   actions:Action[];
-  internSelected;
   checked : boolean = false;
   quantity:number;
   groupIntern:any[] = [];
   profileForm :any;
   requiredField : any = Validators.required;
+  loading:boolean;
   
   genders: any[] = [
     { label: 'Otros', value:0 },
@@ -57,10 +56,8 @@ export class InternEditComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
-    private elementRef: ElementRef,
     private personService:PersonService,
     private authService:AuthService,
-    private educationCenterService:EducationCenterService,
     private internService:InternService,
     private transCodeService:TranscodeService,
     private translateService: TranslateService,
@@ -79,6 +76,7 @@ export class InternEditComponent implements OnInit {
       this.intern = Object.assign({intern:Intern},this.config.data.intern);
       this.isNew = false;
     }
+    this.loading = false;
     this.primengConfig.setTranslation(this.translateService.getSpanish());
     this.educations = this.config.data.educations;
     this.technologies = this.config.data.technologies;
@@ -281,25 +279,32 @@ export class InternEditComponent implements OnInit {
   
   onSave(){
     if(this.profileForm.valid){
+      this.loading = true;
       this.formToInternObject();
       if(this.checked){
         this.quantity = this.profileForm.get('quantity').value;
         this.internService.saveBulk(this.intern,this.quantity).subscribe(
-          (result)=>{
-            if(this.isNew){
-              this.snackbarService.showMessage("Se ha añadido correctamente el Becario");
-            }else{
-              this.snackbarService.showMessage("Se ha actualizado el Becario");
+          {
+            next:(result)=>{
+              if(this.isNew){
+                this.snackbarService.showMessage("Se ha añadido correctamente el Becario");
+              }else{
+                this.snackbarService.showMessage("Se ha actualizado el Becario");
+              }
+              this.closeWindow();
+            },
+            error:(error)=>{
+              this.loading = false;
+              this.snackbarService.error(error.message);
+            },
+            complete: ()=>{
+              this.loading = false;
             }
-            this.closeWindow();
-          },
-          (error)=>{
-            this.snackbarService.error(error.message);
           }
         );
       }else{
-        this.internService.save(this.intern).subscribe(
-          (result)=>{
+        this.internService.save(this.intern).subscribe({
+          next:(result)=>{
             if(this.isNew){
                 this.snackbarService.showMessage("Se ha añadido correctamente el Becario");
             }else{
@@ -307,9 +312,14 @@ export class InternEditComponent implements OnInit {
             }
             this.closeWindow();
           },
-          (error)=>{
+          error:(error)=>{
+            this.loading = false;
             this.snackbarService.error(error.message);
+          },
+          complete: ()=>{
+            this.loading = false;
           }
+        }
         );
       }
     }
