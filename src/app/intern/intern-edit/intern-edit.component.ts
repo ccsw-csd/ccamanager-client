@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Intern } from '../models/Intern';
 import { PrimeNGConfig } from 'primeng/api';
 import { Center } from 'src/app/core/models/Center';
@@ -17,7 +17,6 @@ import { FormBuilder,Validators } from '@angular/forms';
 import { DateRangeValidator } from 'src/app/core/models/DateRangeValidator';
 import { TranslateService } from 'src/app/core/services/translate.service';
 import { InternService } from '../services/intern.service';
-import { EducationCenterService } from 'src/app/maintenance/education-center/services/education-center.service';
 
 @Component({
   selector: 'app-intern-edit',
@@ -35,7 +34,6 @@ export class InternEditComponent implements OnInit {
   technologies:Technology[];
   englishLevels:Level[];
   actions:Action[];
-  internSelected;
   checked : boolean = false;
   quantity:number;
   groupIntern:any[] = [];
