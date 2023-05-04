@@ -27,6 +27,7 @@ import { Intern } from '../models/Intern';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { InternService } from '../services/intern.service';
 import { InternEditComponent } from '../intern-edit/intern-edit.component';
+import { InternTimelineComponent } from '../intern-timeline/intern-timeline.component';
 @Component({
   selector: 'app-intern-list',
   templateUrl: './intern-list.component.html',
@@ -210,6 +211,14 @@ export class InternListComponent implements OnInit,AfterViewInit {
     });
   }
 
+  showTimeLine(){
+    this.ref = this.dialogService.open(InternTimelineComponent,{
+      width:"66%",
+      closable:false,
+      showHeader:false
+    });
+  }
+
   addComment(intern:Intern) {
     this.ref = this.dialogService.open(DialogComponent, {
       width: '600px',
@@ -330,6 +339,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.setDefaultFilters();
     this.setDefaultOrders();
   }
+
   addOrEditIntern(intern?:Intern){
     this.ref = this.dialogService.open(InternEditComponent,{
       width:'35%',
