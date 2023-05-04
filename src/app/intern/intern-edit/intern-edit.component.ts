@@ -282,7 +282,6 @@ export class InternEditComponent implements OnInit {
   onSave(){
     if(this.profileForm.valid){
       this.loading = true;
-      console.log(this.loading);
       this.formToInternObject();
       if(this.checked){
         this.quantity = this.profileForm.get('quantity').value;
@@ -301,7 +300,6 @@ export class InternEditComponent implements OnInit {
             },
             complete: ()=>{
               this.loading = false;
-              console.log('BULK:'+this.loading);
             }
           }
         );
@@ -320,7 +318,6 @@ export class InternEditComponent implements OnInit {
           },
           complete: ()=>{
             this.loading = false;
-            console.log('normal:'+this.loading);
           }
         }
         );
