@@ -20,6 +20,7 @@ import { ToastModule } from 'primeng/toast';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ChartModule } from 'primeng/chart';
 import { ReactiveFormsModule } from '@angular/forms';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { InternTimelineComponent } from './intern-timeline/intern-timeline.component';
 @NgModule({
   declarations: [InternListComponent, DialogComponent, InternEditComponent, InternTimelineComponent],
@@ -42,7 +43,8 @@ import { InternTimelineComponent } from './intern-timeline/intern-timeline.compo
     ReactiveFormsModule,
     ConfirmDialogModule,
     ToastModule,
-    ChartModule
+    ChartModule,
+    ProgressSpinnerModule
   ],
 })
 export class InternModule {}

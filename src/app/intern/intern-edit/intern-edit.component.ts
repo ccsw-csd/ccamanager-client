@@ -41,6 +41,7 @@ export class InternEditComponent implements OnInit {
   groupIntern:any[] = [];
   profileForm :any;
   requiredField : any = Validators.required;
+  loading:boolean;
   
   genders: any[] = [
     { label: 'Otros', value:0 },
@@ -57,10 +58,8 @@ export class InternEditComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
-    private elementRef: ElementRef,
     private personService:PersonService,
     private authService:AuthService,
-    private educationCenterService:EducationCenterService,
     private internService:InternService,
     private transCodeService:TranscodeService,
     private translateService: TranslateService,
@@ -79,6 +78,7 @@ export class InternEditComponent implements OnInit {
       this.intern = Object.assign({intern:Intern},this.config.data.intern);
       this.isNew = false;
     }
+    this.loading = false;
     this.primengConfig.setTranslation(this.translateService.getSpanish());
     this.educations = this.config.data.educations;
     this.technologies = this.config.data.technologies;
@@ -281,25 +281,33 @@ export class InternEditComponent implements OnInit {
   
   onSave(){
     if(this.profileForm.valid){
+      this.loading = true;
+      console.log(this.loading);
       this.formToInternObject();
       if(this.checked){
         this.quantity = this.profileForm.get('quantity').value;
         this.internService.saveBulk(this.intern,this.quantity).subscribe(
-          (result)=>{
-            if(this.isNew){
-              this.snackbarService.showMessage("Se ha añadido correctamente el Becario");
-            }else{
-              this.snackbarService.showMessage("Se ha actualizado el Becario");
+          {
+            next:(result)=>{
+              if(this.isNew){
+                this.snackbarService.showMessage("Se ha añadido correctamente el Becario");
+              }else{
+                this.snackbarService.showMessage("Se ha actualizado el Becario");
+              }
+              this.closeWindow();
+            },
+            error:(error)=>{
+              this.snackbarService.error(error.message);
+            },
+            complete: ()=>{
+              this.loading = false;
+              console.log('BULK:'+this.loading);
             }
-            this.closeWindow();
-          },
-          (error)=>{
-            this.snackbarService.error(error.message);
           }
         );
       }else{
-        this.internService.save(this.intern).subscribe(
-          (result)=>{
+        this.internService.save(this.intern).subscribe({
+          next:(result)=>{
             if(this.isNew){
                 this.snackbarService.showMessage("Se ha añadido correctamente el Becario");
             }else{
@@ -307,9 +315,14 @@ export class InternEditComponent implements OnInit {
             }
             this.closeWindow();
           },
-          (error)=>{
+          error:(error)=>{
             this.snackbarService.error(error.message);
+          },
+          complete: ()=>{
+            this.loading = false;
+            console.log('normal:'+this.loading);
           }
+        }
         );
       }
     }
