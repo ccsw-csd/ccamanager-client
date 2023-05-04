@@ -10,5 +10,4 @@ export class Pyramid{
     D1: number;
     D2: number;
     rowName: number;
-    //values: any[];
 }
