@@ -172,7 +172,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
   }
 
   getAllEducationCenters() {
-    this.educationCenterService.getAllEducationCenters().subscribe({
+    this.educationCenterService.getAllEducationCentersSimple().subscribe({
       next: (res: EducationCenter[]) => {
         this.educationsCenter = res;
       },
@@ -232,13 +232,14 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.ref.onClose.subscribe((res)=>{
       if(res!=null && res!=''){
         intern.comment = res;
-        this.internService.save(intern).subscribe(
-          (result)=>{
+        this.internService.save(intern).subscribe({
+          next: (result)=>{
             this.snackbarService.showMessage("Se ha añadido actualizado el Comentario");
           },
-          (error)=>{
+          error:(error)=>{
             this.snackbarService.error(error.message);
           }
+        }
         );
       }
     });
@@ -257,13 +258,14 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.ref.onClose.subscribe((res)=>{
       if(res!=null && res!=''){
         intern.link = res;
-        this.internService.save(intern).subscribe(
-          (result)=>{
+        this.internService.save(intern).subscribe({
+          next:(result)=>{
             this.snackbarService.showMessage("Se ha añadido actualizado el Link");
           },
-          (error)=>{
+          error:(error)=>{
             this.snackbarService.error(error.message);
           }
+        }
         );
       }
     });
@@ -347,6 +349,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
         intern: intern,
         genders: this.genders,
         educations:this.educations,
+        educationsCenter:this.educationsCenter,
         centers:this.centers,
         provinces:this.provinces,
         technologies:this.technologies,
