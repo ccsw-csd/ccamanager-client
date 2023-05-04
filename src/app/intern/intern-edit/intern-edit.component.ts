@@ -82,11 +82,7 @@ export class InternEditComponent implements OnInit {
     this.primengConfig.setTranslation(this.translateService.getSpanish());
     this.educations = this.config.data.educations;
     this.technologies = this.config.data.technologies;
-    this.educationCenterService.getAllEducationCentersSimple().subscribe({
-      next: (res: EducationCenter[]) => {
-        this.educationsCenter = res;
-      },
-    });
+    this.educationsCenter = this.config.data.educationsCenter;
     this.centers = this.config.data.centers;
     this.englishLevels = this.config.data.englishLevels;
     this.provinces = this.config.data.provinces;
