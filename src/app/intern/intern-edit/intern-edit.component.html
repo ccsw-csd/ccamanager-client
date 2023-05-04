@@ -1,7 +1,9 @@
 <h1 *ngIf="isNew" class="text-center">Nuevo Becario</h1>
 <h1 *ngIf="!isNew" class="text-center">Modificar Becario</h1>
+<div class="spinner-overlay">
+    <p-progressSpinner *ngIf="loading"></p-progressSpinner>
+</div>
 <div class="flex flex-column gap-2" [formGroup]="profileForm">
-
     <div class="flex flex-row md:flex-wrap">
         <div class="flex flex-2">
             <span class="p-float-label w-full p-input-icon-right" *ngIf="isNew">
@@ -188,6 +190,6 @@
     </div>
     <div class="flex flex-row justify-content-end gap-2 md:flex-wrap mt-3">    
         <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
-        <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check"  [disabled]="!profileForm.valid" (click)="onSave()" ></button>
+        <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check"  [disabled]="(!profileForm.valid || loading)" (click)="onSave()" ></button>
     </div>
 </div>

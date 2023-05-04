@@ -16,7 +16,7 @@ import { ConfirmationService } from 'primeng/api';
 import { PickListModule } from 'primeng/picklist';
 import { PersonalEditComponent } from './personal-edit/personal-edit/personal-edit.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 @NgModule({
   declarations: [PersonalListComponent, PersonalEditComponent],
 
@@ -37,7 +37,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     TreeModule,
     PickListModule,
     ReactiveFormsModule,
-    FormsModule    
+    FormsModule,
+    ProgressSpinnerModule
   ],
 })
 export class PersonalModule {}
