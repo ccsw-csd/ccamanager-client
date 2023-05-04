@@ -16,7 +16,9 @@
     <div>
         <small *ngIf="profileForm.invalid && profileForm.errors?.dateRange"  id="username-help" class="p-error ">La fecha de inicio no puede ser posterior a la fecha de fin</small>
     </div>
-    <p-chart type="bar" [data]="basicData" [options]="config"></p-chart>
+    <div style="height: 450px; overflow: auto">
+        <p-chart id="chart" #chart type="bar" [data]="basicData" [options]="config" [height]="100" responsive="false"></p-chart>
+    </div>
     <div class="flex flex-row justify-content-end gap-2 md:flex-wrap mt-3">    
         <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
     </div>

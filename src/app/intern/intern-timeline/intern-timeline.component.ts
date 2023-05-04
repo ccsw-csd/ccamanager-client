@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import annotationPlugin from 'chartjs-plugin-annotation';
@@ -9,6 +9,7 @@ import { TimeLine } from '../models/TimeLine';
 import { InternService } from '../services/intern.service';
 import { FormBuilder,Validators } from '@angular/forms';
 import { DateRangeValidator } from 'src/app/core/models/DateRangeValidator';
+import { UIChart } from 'primeng/chart';
 @Component({
   selector: 'app-intern-timeline',
   templateUrl: './intern-timeline.component.html',
@@ -23,13 +24,17 @@ export class InternTimelineComponent implements OnInit {
   basicData: any;
   arrayLabels: string[];
   profileForm:any;
+
+  @ViewChild('chart', { static: true, read: UIChart }) chartElement: UIChart;
+
   constructor(
     private ref: DynamicDialogRef,
     private internService: InternService,
     private primengConfig: PrimeNGConfig,
     private translateService: TranslateService,
     private fb: FormBuilder
-  ) {}
+  ) {    
+  }
 
   ngOnInit(): void {
     Chart.register(annotationPlugin);
@@ -68,6 +73,8 @@ export class InternTimelineComponent implements OnInit {
       .findTimelineByDate(this.sixMonthsAgo,this.sixMonthsAfter)
       .subscribe({
         next: (res: TimeLine[]) => {
+          
+
           this.timeLines = res;
           this.basicData = {
             labels: this.timeLines.map((timeLine) => timeLine.x.split('|')[0]),
@@ -83,7 +90,7 @@ export class InternTimelineComponent implements OnInit {
             ],
           };
           this.config = {
-            indexAxis: 'y',
+            indexAxis: 'y',            
             plugins: {
               annotation: {
                 annotations: [
@@ -164,9 +171,13 @@ export class InternTimelineComponent implements OnInit {
               },
             },
           };
+
+          let heightChart = 100 + 40 * this.timeLines.length;          
+          this.chartElement.el.nativeElement.childNodes[0].style['height'] = heightChart + 'px';
         },
       });
     
+      
   }
 
   closeWindow() {
