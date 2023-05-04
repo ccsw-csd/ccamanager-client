@@ -294,6 +294,7 @@ export class InternEditComponent implements OnInit {
               this.closeWindow();
             },
             error:(error)=>{
+              this.loading = false;
               this.snackbarService.error(error.message);
             },
             complete: ()=>{
@@ -312,6 +313,7 @@ export class InternEditComponent implements OnInit {
             this.closeWindow();
           },
           error:(error)=>{
+            this.loading = false;
             this.snackbarService.error(error.message);
           },
           complete: ()=>{

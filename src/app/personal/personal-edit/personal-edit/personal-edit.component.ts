@@ -109,6 +109,7 @@ export class PersonalEditComponent implements OnInit {
           this.ref.close(true);
         },
         error: (errorResponse) => {
+          this.loading = false;
           this.snackbarService.error(errorResponse['message']);
         },
         complete:()=>{
