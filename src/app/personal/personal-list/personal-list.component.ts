@@ -93,8 +93,12 @@ export class PersonalListComponent implements OnInit {
   }
   synchronizeLdap(){
     const ref = this.dialogService.open(PersonalSynchronizeLdapComponent, {
+        closable: false,
+        width: '110vh',
+        
     });
-  }
+}
+
 
   getAllProvinces() {
     this.provinceService.getAllProvinces().subscribe({

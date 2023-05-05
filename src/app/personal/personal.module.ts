@@ -18,6 +18,7 @@ import { PickListModule } from 'primeng/picklist';
 import { PersonalEditComponent } from './personal-edit/personal-edit/personal-edit.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { PersonalSynchronizeLdapComponent } from './personal-synchronize-ldap/personal-synchronize-ldap.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [PersonalListComponent, PersonalEditComponent, PersonalSynchronizeLdapComponent],
@@ -30,6 +31,7 @@ import { PersonalSynchronizeLdapComponent } from './personal-synchronize-ldap/pe
     ButtonModule,
     TooltipModule,
     ConfirmDialogModule,
+    ProgressSpinnerModule,
     AutoCompleteModule,
     PaginatorModule,
     InputTextModule,

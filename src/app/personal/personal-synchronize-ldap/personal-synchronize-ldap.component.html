@@ -1,48 +1,59 @@
 <div>
   <h1>Sincronizar LDAP</h1>
-
   <div class="flex flex-row">
     <div class="flex flex-column">
-      <p class="text-lg">La lista de distribución <strong>CCSW</strong> del LDAP no concuerda con la app:
-        <span ng-if="ldapToInterns">{{personsCCSW_app.length}} eliminar | </span>
-        <span ng-if="internsToLdap">{{personsApp_CCSW.length}} insertar</span>
+      <p style="font-size: 1.24rem;">La lista de distribución <strong>CCSW</strong> del LDAP no concuerda con la app:
+        <span ng-if="ldapToInterns">{{totalPersonsCCSW_app}} eliminar | </span>
+        <span ng-if="internsToLdap">{{totalPersonsApp_CCSW}} insertar</span>
       </p>
     </div>
-    <div class="flex flex-column ml-3 mb-3 ">
-      <button class="p-button p-button-primary" *ngIf="personsCCSW_app.length || personsApp_CCSW.length" (click)="copyList(true)">Sincronizar Manualmente</button>
+
+    <div class="flex flex-column ml-2 mb-3 ">
+      <button class="p-button p-button-primary" style="width: 25px;" *ngIf="totalPersonsCCSW_app>0 || totalPersonsApp_CCSW>0"
+        (click)="copyList(true)">Sincronizar Manualmente</button>
     </div>
   </div>
 
   <div class="grid">
     <div class="col-6">
-      <p-virtualScroller [value]="personsCCSW_app" scrollHeight="400px" >
-        <ng-template pTemplate="header" class="surface-700"> 
-          <span class="text-lg">Personas de CCSW que <strong>NO</strong> están en la<strong>
+      <p-table [value]="personsCCSW_app" scrollHeight="400px"  [loading]="showSpinner1" [scrollable]="true">
+        <ng-template  pTemplate="header" >
+          
+          <div class="mb-3">
+          <span style="font-size: 1.24rem;">Personas de CCSW que <strong>NO</strong> están en la<strong>
               app</strong>
-            </span>
-          </ng-template>
-              <ng-template pTemplate="item" let-item>
-          <div>
-            <h3>{{ item.name }} {{ item.lastname }}</h3>
-            <span>{{ item.username }}</span>
+          </span>
+        </div>
+        <hr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-item >
+          <div style="margin-bottom: 10px;">
+            <h3 style="margin-bottom: 5px;">{{ item.name }} {{ item.lastname }}</h3>
+            <div style="margin-bottom: 30px;">{{ item.username }}</div>
           </div>
         </ng-template>
-      </p-virtualScroller>
+      </p-table>
     </div>
+
     <div class="col-6">
-      <p-virtualScroller [value]="personsApp_CCSW"  scrollHeight="400px" >
+      <p-table [value]="personsApp_CCSW" scrollHeight="400px" [loading]="showSpinner2" [scrollable]="true">
         <ng-template pTemplate="header">
-          <span class="text-lg">Personas de la app que <strong>NO</strong> están en <strong>
-              CCSW</strong>
+          <div class="mb-3">
+            <span class="text-xl">Personas de la app que <strong>NO</strong> están en <strong>
+                CCSW</strong>
             </span>
-          </ng-template>
-        <ng-template pTemplate="item" let-item>
-          <div>
-            <h3>{{ item.name }} {{ item.lastname }}</h3>
-            <span>{{ item.username }}</span>
+          </div>
+          <hr>
+        </ng-template>
+        
+        <ng-template pTemplate="body" let-item>
+          <div style="margin-bottom: 10px;">
+            <h3 style="margin-bottom: 5px;">{{ item.name }} {{ item.lastname }}</h3>
+            <div style="margin-bottom: 30px;">{{ item.username }}</div>
           </div>
         </ng-template>
-      </p-virtualScroller>
+      </p-table>
     </div>
   </div>
   <div class="flex flex-row mt-3 justify-content-end">

@@ -5,9 +5,6 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
-
-
-
 @Component({
   selector: 'app-personal-synchronize-ldap',
   templateUrl: './personal-synchronize-ldap.component.html',
@@ -18,26 +15,43 @@ export class PersonalSynchronizeLdapComponent implements OnInit {
   personsCCSW_app: LdapPerson[];
   personsApp_CCSW: LdapPerson[];
 
-  showSpinner1 = true;
-  showSpinner2 = true;
+  totalPersonsCCSW_app: number;
+  totalPersonsApp_CCSW: number;
+
+  showSpinner1: Boolean = true;
+  showSpinner2: Boolean = true;
 
   constructor(
     private personService: PersonService,
     private ref: DynamicDialogRef,
     private clipboard: Clipboard,
-    private snackbarService : SnackbarService
+    private snackbarService : SnackbarService,
   ) { }
 
   ngOnInit(): void {
+    this.showSpinner1 = true;
+    this.showSpinner2 = true;
+    console.log(this.showSpinner1)
+
     this.personService.compareLdapToPersons().subscribe({
       next: (res: LdapPerson[]) => {
         this.personsCCSW_app = res;
+        setTimeout(()=>{
+          this.totalPersonsCCSW_app = this.personsCCSW_app.length;
+          
+        },0);
+        this.showSpinner1 = false;
       },
     });
     
     this.personService.comparePersonsToLdap().subscribe({
       next: (res: LdapPerson[]) => {
         this.personsApp_CCSW = res;
+        setTimeout(()=>{
+          this.totalPersonsApp_CCSW = this.personsApp_CCSW.length;
+          
+        },0);
+        this.showSpinner2 = false;
       },
     });
   }
