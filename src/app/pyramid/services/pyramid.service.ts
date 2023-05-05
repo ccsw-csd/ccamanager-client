@@ -23,4 +23,8 @@ export class PyramidService {
   getProfileCountGraph(): Observable<CountGraph[]> {
     return this.http.get<CountGraph[]>(environment.server + "/pyramid/profileCountGraph");
   }
+
+  save(pyramid:Pyramid[]):Observable<Pyramid[]>{
+    return this.http.post<Pyramid[]>(environment.server+"/pyramid/",pyramid);
+  }
 }
