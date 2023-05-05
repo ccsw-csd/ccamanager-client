@@ -6,7 +6,10 @@ import { PyramidTeamListComponent } from './pyramid-team-list/pyramid-team-list.
 import { TableModule } from 'primeng/table';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {ButtonModule} from 'primeng/button';
+import {TooltipModule} from 'primeng/tooltip';
 import { ChartModule } from 'primeng/chart';
+import {ToastModule} from 'primeng/toast';
+
 @NgModule({
   declarations: [
     PyramidListComponent,
@@ -19,6 +22,8 @@ import { ChartModule } from 'primeng/chart';
     FormsModule,
     ChartModule,
     ButtonModule,
+    TooltipModule,
+    ToastModule
   ]
 })
 export class PyramidModule { }
