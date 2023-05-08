@@ -16,11 +16,14 @@ import { InternListComponent } from './intern-list/intern-list.component';
 import { InternEditComponent } from './intern-edit/intern-edit.component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import {ToastModule} from 'primeng/toast';
+import { ToastModule } from 'primeng/toast';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ChartModule } from 'primeng/chart';
 import { ReactiveFormsModule } from '@angular/forms';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import { InternTimelineComponent } from './intern-timeline/intern-timeline.component';
 @NgModule({
-  declarations: [InternListComponent, DialogComponent, InternEditComponent],
+  declarations: [InternListComponent, DialogComponent, InternEditComponent, InternTimelineComponent],
   imports: [
     CommonModule,
     ButtonModule,
@@ -40,6 +43,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     ConfirmDialogModule,
     ToastModule,
+    ChartModule,
+    ProgressSpinnerModule
   ],
 })
 export class InternModule {}

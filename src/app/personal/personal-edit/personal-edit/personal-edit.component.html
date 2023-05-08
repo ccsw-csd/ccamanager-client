@@ -1,6 +1,8 @@
 <h1 *ngIf="personElement.id == null" class="text-center">Nueva Persona</h1>
 <h1 *ngIf="personElement.id != null" class="text-center">Modificar Persona</h1>
-
+<div class="spinner-overlay">
+  <p-progressSpinner *ngIf="loading"></p-progressSpinner>
+</div>
 <div [formGroup]="personForm" class="flex flex-column gap-4">
 
   <div class="flex flex-row mb-1">
@@ -124,7 +126,7 @@
 <div class="flex flex-row mt-5 gap-4 justify-content-end gap-2">
   <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary"
     (click)="closeWindow()"></button>
-  <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check" [disabled]="!personForm.valid"
+  <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check" [disabled]="!personForm.valid || loading"
     (click)="saveItem(personForm.value)"></button>
 
 </div>

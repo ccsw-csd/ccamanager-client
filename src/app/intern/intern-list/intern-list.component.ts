@@ -27,6 +27,7 @@ import { Intern } from '../models/Intern';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { InternService } from '../services/intern.service';
 import { InternEditComponent } from '../intern-edit/intern-edit.component';
+import { InternTimelineComponent } from '../intern-timeline/intern-timeline.component';
 @Component({
   selector: 'app-intern-list',
   templateUrl: './intern-list.component.html',
@@ -171,7 +172,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
   }
 
   getAllEducationCenters() {
-    this.educationCenterService.getAllEducationCenters().subscribe({
+    this.educationCenterService.getAllEducationCentersSimple().subscribe({
       next: (res: EducationCenter[]) => {
         this.educationsCenter = res;
       },
@@ -210,6 +211,14 @@ export class InternListComponent implements OnInit,AfterViewInit {
     });
   }
 
+  showTimeLine(){
+    this.ref = this.dialogService.open(InternTimelineComponent,{
+      width:"66%",
+      closable:false,
+      showHeader:false
+    });
+  }
+
   addComment(intern:Intern) {
     this.ref = this.dialogService.open(DialogComponent, {
       width: '600px',
@@ -223,13 +232,14 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.ref.onClose.subscribe((res)=>{
       if(res!=null && res!=''){
         intern.comment = res;
-        this.internService.save(intern).subscribe(
-          (result)=>{
+        this.internService.save(intern).subscribe({
+          next: (result)=>{
             this.snackbarService.showMessage("Se ha añadido actualizado el Comentario");
           },
-          (error)=>{
+          error:(error)=>{
             this.snackbarService.error(error.message);
           }
+        }
         );
       }
     });
@@ -248,13 +258,14 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.ref.onClose.subscribe((res)=>{
       if(res!=null && res!=''){
         intern.link = res;
-        this.internService.save(intern).subscribe(
-          (result)=>{
+        this.internService.save(intern).subscribe({
+          next:(result)=>{
             this.snackbarService.showMessage("Se ha añadido actualizado el Link");
           },
-          (error)=>{
+          error:(error)=>{
             this.snackbarService.error(error.message);
           }
+        }
         );
       }
     });
@@ -330,6 +341,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.setDefaultFilters();
     this.setDefaultOrders();
   }
+
   addOrEditIntern(intern?:Intern){
     this.ref = this.dialogService.open(InternEditComponent,{
       width:'35%',
@@ -337,6 +349,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
         intern: intern,
         genders: this.genders,
         educations:this.educations,
+        educationsCenter:this.educationsCenter,
         centers:this.centers,
         provinces:this.provinces,
         technologies:this.technologies,
