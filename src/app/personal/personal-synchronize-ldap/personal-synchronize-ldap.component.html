@@ -16,7 +16,7 @@
 
   <div class="grid">
     <div class="col-6">
-      <p-table [value]="personsCCSW_app" scrollHeight="400px"  [loading]="showSpinner1" [scrollable]="true">
+      <p-table [value]="personsCCSW_app" scrollHeight="400px" styleClass="no-border" [loading]="showSpinner1" [scrollable]="true">
         <ng-template  pTemplate="header" >
           
           <div class="mb-3">
@@ -37,7 +37,7 @@
     </div>
 
     <div class="col-6">
-      <p-table [value]="personsApp_CCSW" scrollHeight="400px" [loading]="showSpinner2" [scrollable]="true">
+      <p-table [value]="personsApp_CCSW" scrollHeight="400px" styleClass="no-border" [loading]="showSpinner2" [scrollable]="true">
         <ng-template pTemplate="header">
           <div class="mb-3">
             <span class="text-xl">Personas de la app que <strong>NO</strong> están en <strong>

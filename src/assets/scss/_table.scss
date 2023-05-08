@@ -27,6 +27,12 @@
     border: 1px solid #babfc7;
 }
 
+.no-border.p-datatable-scrollable .p-datatable-wrapper {
+    position: relative;
+    overflow: auto;
+    border: none;
+}
+
 .p-datatable .p-sortable-column.p-highlight {
     background: #f8f8f8;
     color: #000000de;
