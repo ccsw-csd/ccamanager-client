@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {Pyramid} from '../models/Pyramid';
+import {PyramidTeam} from '../models/PyramidTeam';
 import { CountIndexGraph } from '../models/CountIndexGraph';
 import { CountGraph } from '../models/CountGraph';
 @Injectable({
@@ -26,5 +27,9 @@ export class PyramidService {
 
   save(pyramid:Pyramid[]):Observable<Pyramid[]>{
     return this.http.post<Pyramid[]>(environment.server+"/pyramid/",pyramid);
+  }
+
+  getAllPyramidsTeams(): Observable<PyramidTeam[]> {
+    return this.http.get<PyramidTeam[]>(environment.server + "/pyramid/team");
   }
 }
