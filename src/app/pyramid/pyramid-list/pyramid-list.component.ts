@@ -22,6 +22,9 @@ export class PyramidListComponent implements OnInit {
   editable:boolean = false;
   pyramidsEdit : Pyramid[];
   loading:boolean = false;
+  loadingIndexGraph:boolean = false;
+  loadingGraph:boolean = false;
+
   constructor(
     private pyramidService: PyramidService,
     private snackbarService:SnackbarService,
@@ -35,14 +38,23 @@ export class PyramidListComponent implements OnInit {
   }
 
   getAllPyramids() {
+    this.loading = true;
     this.pyramidService.getAllPyramids().subscribe({
       next: (res: Pyramid[]) => {
         this.pyramids = res;
       },
+      error: (error)=>{
+        this.loading = false;
+        this.snackbarService.error(error.message);
+      },
+      complete: ()=>{
+        this.loading = false;
+      }
     });
   }
 
   getCountIndexGraphs(){
+    this.loadingIndexGraph = true;
     this.pyramidService.getProfileCountIndexGraph().subscribe({
       next: (res: CountIndexGraph[]) => {
         this.countIndexGraphs = res;
@@ -83,11 +95,19 @@ export class PyramidListComponent implements OnInit {
             },
           },
         };
+        },
+        error:(error)=>{
+          this.loadingIndexGraph = false;
+          this.snackbarService.error(error.message);
+        },
+        complete: ()=>{
+          this.loadingIndexGraph= false;
         }
     });
   }
 
   getCountGraphs(){
+    this.loadingGraph = true;
     this.pyramidService.getProfileCountGraph().subscribe({
       next: (res: CountGraph[]) => {
         this.countGraphs = res;
@@ -129,6 +149,13 @@ export class PyramidListComponent implements OnInit {
           },
         };
       },
+      error:(error)=>{
+        this.loadingGraph = false;
+        this.snackbarService.error(error.message);
+      },
+      complete: ()=>{
+        this.loadingGraph= false;
+      }
     });
   }
 
@@ -150,17 +177,16 @@ export class PyramidListComponent implements OnInit {
     this.loading = true;
     this.pyramidService.save(this.pyramids).subscribe({
       next:(result)=>{
-        this.editable = false;
-        this.snackbarService.showMessage("Se ha actualizado correctamente");
         this.getAllPyramids();
         this.getCountIndexGraphs();
         this.getCountGraphs();
+        this.snackbarService.showMessage("Se ha actualizado correctamente");
       },
       error:(error)=>{
         this.snackbarService.error(error.message);
       },
-      complete: ()=>{
-        this.loading = false;
+      complete:()=>{     
+        this.editable = false;
       }
     });
   }
