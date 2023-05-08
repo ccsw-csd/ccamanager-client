@@ -33,7 +33,7 @@
                         </p-cellEditor>
                     </td>
                     <ng-template #notEditableA1>
-                        <td style="min-width:4.1rem">{{ formatNumber(pyramid.A1) }}</td>
+                        <td style="min-width:4.2rem">{{ formatNumber(pyramid.A1) }}</td>
                     </ng-template>
                     <td pEditableColumn *ngIf="rowIndex == 1 && editable; else notEditableA2" style="max-width:2.54rem">
                         <p-cellEditor>
@@ -46,7 +46,7 @@
                         </p-cellEditor>
                     </td>
                     <ng-template #notEditableA2>
-                        <td  style="min-width:4.1rem">{{ formatNumber(pyramid.A2) }}</td>
+                        <td  style="min-width:4.2rem">{{ formatNumber(pyramid.A2) }}</td>
                     </ng-template>
                     <td pEditableColumn *ngIf="rowIndex == 1 && editable; else notEditableB1" style="max-width:2.54rem">
                         <p-cellEditor>
@@ -59,7 +59,7 @@
                         </p-cellEditor>
                     </td>
                     <ng-template #notEditableB1>
-                        <td  style="min-width:4.1rem">{{ formatNumber(pyramid.B1) }}</td>
+                        <td  style="min-width:4.2rem">{{ formatNumber(pyramid.B1) }}</td>
                     </ng-template>
                     <td pEditableColumn *ngIf="rowIndex == 1 && editable; else notEditableB2" style="max-width:2.54rem">
                         <p-cellEditor>
@@ -72,7 +72,7 @@
                         </p-cellEditor>
                     </td>
                     <ng-template #notEditableB2>
-                        <td  style="min-width:4.1rem">{{ formatNumber(pyramid.B2) }}</td>
+                        <td  style="min-width:4.2rem">{{ formatNumber(pyramid.B2) }}</td>
                     </ng-template>
                     <td pEditableColumn *ngIf="rowIndex == 1 && editable; else notEditableB3" style="max-width:2.54rem">
                         <p-cellEditor>
@@ -85,7 +85,7 @@
                         </p-cellEditor>
                     </td>
                     <ng-template #notEditableB3>
-                        <td  style="min-width:4.1rem">{{ formatNumber(pyramid.B3) }}</td>
+                        <td  style="min-width:4.2rem">{{ formatNumber(pyramid.B3) }}</td>
                     </ng-template>
                     <td pEditableColumn *ngIf="rowIndex == 1 && editable; else notEditableC1" style="max-width:2.54rem">
                         <p-cellEditor>
@@ -98,7 +98,7 @@
                         </p-cellEditor>
                     </td>
                     <ng-template #notEditableC1>
-                        <td  style="min-width:4.1rem">{{ formatNumber(pyramid.C1) }}</td>
+                        <td  style="min-width:4.2rem">{{ formatNumber(pyramid.C1) }}</td>
                     </ng-template>
                     <td pEditableColumn *ngIf="rowIndex == 1 && editable; else notEditableC2" style="max-width:2.54rem">
                         <p-cellEditor>
@@ -111,7 +111,7 @@
                         </p-cellEditor>
                     </td>
                     <ng-template #notEditableC2>
-                        <td  style="min-width:4.1rem">{{ formatNumber(pyramid.C2) }}</td>
+                        <td  style="min-width:4.2rem">{{ formatNumber(pyramid.C2) }}</td>
                     </ng-template>
                     <td pEditableColumn *ngIf="rowIndex == 1 && editable; else notEditableC3" style="max-width:2.54rem">
                         <p-cellEditor>
@@ -124,7 +124,7 @@
                         </p-cellEditor>
                     </td>
                     <ng-template #notEditableC3>
-                        <td  style="min-width:4.1rem">{{ formatNumber(pyramid.C3)}}</td>
+                        <td  style="min-width:4.2rem">{{ formatNumber(pyramid.C3)}}</td>
                     </ng-template>
                     <td pEditableColumn *ngIf="rowIndex == 1 && editable ; else notEditableD1" style="max-width:2.54rem">
                         <p-cellEditor>
@@ -137,7 +137,7 @@
                         </p-cellEditor>
                     </td>
                     <ng-template #notEditableD1>
-                        <td  style="min-width:4.1rem">{{ formatNumber(pyramid.D1) }}</td>
+                        <td  style="min-width:4.2rem">{{ formatNumber(pyramid.D1) }}</td>
                     </ng-template>
                     <td pEditableColumn *ngIf="rowIndex == 1 && editable; else notEditableD2" style="max-width:2.54rem">
                         <p-cellEditor>
@@ -150,13 +150,13 @@
                         </p-cellEditor>
                     </td>
                     <ng-template #notEditableD2>
-                        <td style="min-width:4.1rem">{{ formatNumber(pyramid.D2)}}</td>
+                        <td style="min-width:4.2rem">{{ formatNumber(pyramid.D2)}}</td>
                     </ng-template>
                 </tr>
             </ng-template>
         </p-table>
         <button *ngIf="!editable" style="margin-top:0px !important" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-lg ml-3" pTooltip="Editar" (click)="onEdit()" ></button>
-        <div *ngIf="editable" class="flex flex-column flex gap-2 ml-3" style="margin-top:0.8rem">
+        <div *ngIf="editable" class="flex flex-column flex gap-2 ml-3">
             <button pButton pRipple pTooltip="Cancelar" type="button" icon="pi pi-times" class="p-button-secondary" (click)="onCancel()"></button>
             <button pButton pRipple pTooltip="Guardar" type="button" icon="pi pi-check"  (click)="onSave()"></button>
         </div>
