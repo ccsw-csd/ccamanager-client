@@ -9,7 +9,7 @@ import {ButtonModule} from 'primeng/button';
 import {TooltipModule} from 'primeng/tooltip';
 import { ChartModule } from 'primeng/chart';
 import {ToastModule} from 'primeng/toast';
-
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 @NgModule({
   declarations: [
     PyramidListComponent,
@@ -23,7 +23,8 @@ import {ToastModule} from 'primeng/toast';
     ChartModule,
     ButtonModule,
     TooltipModule,
-    ToastModule
+    ToastModule,
+    ProgressSpinnerModule
   ]
 })
 export class PyramidModule { }

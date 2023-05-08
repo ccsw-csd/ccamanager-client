@@ -21,7 +21,7 @@ export class PyramidListComponent implements OnInit {
   configCountIndexGraph:any; 
   editable:boolean = false;
   pyramidsEdit : Pyramid[];
-  
+  loading:boolean = false;
   constructor(
     private pyramidService: PyramidService,
     private snackbarService:SnackbarService,
@@ -31,6 +31,7 @@ export class PyramidListComponent implements OnInit {
     this.getAllPyramids();
     this.getCountIndexGraphs();
     this.getCountGraphs();
+
   }
 
   getAllPyramids() {
@@ -146,6 +147,7 @@ export class PyramidListComponent implements OnInit {
   }
   
   onSave(){
+    this.loading = true;
     this.pyramidService.save(this.pyramids).subscribe({
       next:(result)=>{
         this.editable = false;
@@ -156,6 +158,9 @@ export class PyramidListComponent implements OnInit {
       },
       error:(error)=>{
         this.snackbarService.error(error.message);
+      },
+      complete: ()=>{
+        this.loading = false;
       }
     });
   }
