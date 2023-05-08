@@ -60,7 +60,7 @@
     <div class="h-3rem"></div>
     <div class="flex flex-row gap-2 flex-wrap justify-content-center">
         <p-progressSpinner *ngIf="loadingTeam"></p-progressSpinner>
-        <div *ngFor="let pyramidTeam of pyramidTeams;let i = index" style="min-width:40rem" class="flex flex-column">
+        <div *ngFor="let pyramidTeam of pyramidTeams;let i = index" class="flex flex-column">
             <p class="font-bold font-italic">{{pyramidTeam.customerName}}</p>
             <div class="flex flex-row">
                 <p-table [value]="pyramidTeam.customerList">
