@@ -173,7 +173,7 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-countIndex>
-                    <tr>
+                    <tr [ngClass]="{'font-bold': countIndex.profile == 'TOTAL'}">
                         <td>{{countIndex.profile}}</td>
                         <td>{{countIndex.count}}</td>
                         <td>{{formatNumber(countIndex.index)}}</td> 
@@ -192,7 +192,7 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-countGraph>
-                    <tr>
+                    <tr [ngClass]="{'font-bold': countGraph.profile == 'TOTAL'}">
                         <td>{{countGraph.profile}} </td>
                         <td>{{countGraph.count}}</td>
                     </tr>
