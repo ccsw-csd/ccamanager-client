@@ -7,9 +7,9 @@
         <span ng-if="internsToLdap">{{totalPersonsApp_CCSW}} insertar</span>
       </p>
     </div>
-    <button pButton pRipple type="button" icon="pi pi-sync" class="p-button-lg ml-6 w-1"
-      pTooltip="Sincronizar manualmente" *ngIf="totalPersonsCCSW_app>0 || totalPersonsApp_CCSW>0"
-      (click)="copyList(true)"></button>
+    <button pButton pRipple type="button" icon=" pi pi-sync" class="p-button-lg m-2 ml-8"  *ngIf="totalPersonsCCSW_app>0 || totalPersonsApp_CCSW>0"
+      pTooltip="Sincronizar manualmente" (click)="copyList(true)">
+    </button>
 
   </div>
 
