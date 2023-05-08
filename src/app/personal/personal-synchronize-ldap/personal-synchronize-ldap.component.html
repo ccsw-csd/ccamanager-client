@@ -7,46 +7,24 @@
         <span ng-if="internsToLdap">{{totalPersonsApp_CCSW}} insertar</span>
       </p>
     </div>
+    <button pButton pRipple type="button" icon="pi pi-sync" class="p-button-lg ml-6 w-1"
+      pTooltip="Sincronizar manualmente" *ngIf="totalPersonsCCSW_app>0 || totalPersonsApp_CCSW>0"
+      (click)="copyList(true)"></button>
 
-    <div class="flex flex-column ml-2 mb-3 ">
-      <button class="p-button p-button-primary" style="width: 25px;" *ngIf="totalPersonsCCSW_app>0 || totalPersonsApp_CCSW>0"
-        (click)="copyList(true)">Sincronizar Manualmente</button>
-    </div>
   </div>
 
   <div class="grid">
-    <div class="col-6">
-      <p-table [value]="personsCCSW_app" scrollHeight="400px" styleClass="no-border" [loading]="showSpinner1" [scrollable]="true">
-        <ng-template  pTemplate="header" >
-          
-          <div class="mb-3">
-          <span style="font-size: 1.24rem;">Personas de CCSW que <strong>NO</strong> están en la<strong>
-              app</strong>
-          </span>
-        </div>
-        <hr>
-        </ng-template>
+    <div class="col-6 mt-4">
+      <div class="mb-3">
+        <span style="font-size: 1.24rem;">Personas de CCSW que <strong>NO</strong> están en la<strong>
+            app</strong>
+        </span>
+      </div>
+      <hr>
 
-        <ng-template pTemplate="body" let-item >
-          <div style="margin-bottom: 10px;">
-            <h3 style="margin-bottom: 5px;">{{ item.name }} {{ item.lastname }}</h3>
-            <div style="margin-bottom: 30px;">{{ item.username }}</div>
-          </div>
-        </ng-template>
-      </p-table>
-    </div>
+      <p-table [value]="personsCCSW_app" scrollHeight="400px" styleClass="no-border" [loading]="showSpinner1"
+        [scrollable]="true">
 
-    <div class="col-6">
-      <p-table [value]="personsApp_CCSW" scrollHeight="400px" styleClass="no-border" [loading]="showSpinner2" [scrollable]="true">
-        <ng-template pTemplate="header">
-          <div class="mb-3">
-            <span class="text-xl">Personas de la app que <strong>NO</strong> están en <strong>
-                CCSW</strong>
-            </span>
-          </div>
-          <hr>
-        </ng-template>
-        
         <ng-template pTemplate="body" let-item>
           <div style="margin-bottom: 10px;">
             <h3 style="margin-bottom: 5px;">{{ item.name }} {{ item.lastname }}</h3>
@@ -55,9 +33,24 @@
         </ng-template>
       </p-table>
     </div>
-  </div>
-  <div class="flex flex-row mt-3 justify-content-end">
-    <button pButton pRipple styleClass="" label="Cancelar" class="p-button p-button-primary"
-      (click)="closeWindow()"></button>
+
+    <div class="col-6 mt-4">
+      <div class="mb-3">
+        <span class="text-xl">Personas de la app que <strong>NO</strong> están en <strong>
+            CCSW</strong>
+        </span>
+      </div>
+      <hr>
+
+      <p-table [value]="personsApp_CCSW" scrollHeight="400px" styleClass="no-border" [loading]="showSpinner2"
+        [scrollable]="true">
+        <ng-template pTemplate="body" let-item>
+          <div style="margin-bottom: 10px;">
+            <h3 style="margin-bottom: 5px;">{{ item.name }} {{ item.lastname }}</h3>
+            <div style="margin-bottom: 30px;">{{ item.username }}</div>
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
   </div>
 </div>

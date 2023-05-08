@@ -3,7 +3,7 @@ import { PersonService } from '../services/person.service';
 import { LdapPerson } from '../models/LdapPerson';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-personal-synchronize-ldap',
@@ -29,28 +29,19 @@ export class PersonalSynchronizeLdapComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.showSpinner1 = true;
-    this.showSpinner2 = true;
-    console.log(this.showSpinner1)
-
+    
     this.personService.compareLdapToPersons().subscribe({
       next: (res: LdapPerson[]) => {
         this.personsCCSW_app = res;
-        setTimeout(()=>{
           this.totalPersonsCCSW_app = this.personsCCSW_app.length;
-          
-        },0);
-        this.showSpinner1 = false;
+          this.showSpinner1 = false;
       },
     });
     
     this.personService.comparePersonsToLdap().subscribe({
       next: (res: LdapPerson[]) => {
         this.personsApp_CCSW = res;
-        setTimeout(()=>{
-          this.totalPersonsApp_CCSW = this.personsApp_CCSW.length;
-          
-        },0);
+        this.totalPersonsApp_CCSW = this.personsApp_CCSW.length;
         this.showSpinner2 = false;
       },
     });
@@ -71,10 +62,6 @@ export class PersonalSynchronizeLdapComponent implements OnInit {
         'Se ha copiado la lista al clipboard, ya puede impotar la lista en el CorporateDirectory'
       );
       this.closeWindow();
-      // this.snackbar.open('Se ha copiado la lista al clipboard, ya puede impotar la lista en el CorporateDirectory', '', {
-      //   duration: 5000
-      // });
-
     });
   }
 
