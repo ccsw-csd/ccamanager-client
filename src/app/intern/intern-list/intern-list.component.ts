@@ -352,6 +352,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
   }
 
   addOrEditIntern(intern?:Intern){
+    let header = intern ? 'Modificar Becario' : 'Nuevo Becario';
     this.ref = this.dialogService.open(InternEditComponent,{
       width:'35%',
       data:{
@@ -366,6 +367,8 @@ export class InternListComponent implements OnInit,AfterViewInit {
         englishLevels:this.englishLevels,
       },
       closable:false,
+      showHeader: true,
+      header: header
     });
     this.onClose();
   }
