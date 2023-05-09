@@ -22,8 +22,9 @@ import { ChartModule } from 'primeng/chart';
 import { ReactiveFormsModule } from '@angular/forms';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { InternTimelineComponent } from './intern-timeline/intern-timeline.component';
+import { InternSynchronizeLdapComponent } from './intern-synchronize-ldap/intern-synchronize-ldap/intern-synchronize-ldap.component';
 @NgModule({
-  declarations: [InternListComponent, DialogComponent, InternEditComponent, InternTimelineComponent],
+  declarations: [InternListComponent, DialogComponent, InternEditComponent, InternTimelineComponent, InternSynchronizeLdapComponent],
   imports: [
     CommonModule,
     ButtonModule,

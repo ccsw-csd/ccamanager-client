@@ -1,0 +1,54 @@
+<div>
+    <h1 class="text-center">Sincronizar LDAP</h1>
+    <div class="flex flex-row">
+      <div class="flex flex-column">
+        <p style="font-size: 1.24rem;">La lista de distribución <strong>CCABecarios</strong> del LDAP no concuerda con la app:
+          <span ng-if="ldapToInterns">{{totalInternsCCSW_app}} eliminar | </span>
+          <span ng-if="internsToLdap">{{totalInternsApp_CCSW}} insertar</span>
+        </p>
+      </div>
+
+        <button pButton pRipple type="button" icon=" pi pi-sync" class="p-button-lg m-2 ml-6"  *ngIf="totalInternsCCSW_app>0 || totalInternsApp_CCSW>0"
+            pTooltip="Sincronizar manualmente" (click)="copyList(true)">
+        </button>
+    </div>
+  
+    <div class="grid">
+      <div class="col-6 mt-4">
+        <div class="mb-3">
+          <span style="font-size: 1.24rem;">Becarios que <strong>NO</strong> están en la app
+          </span>
+        </div>
+        <hr>
+  
+        <p-table [value]="internsCCSW_app" scrollHeight="400px" styleClass="no-border" [loading]="showSpinner1"
+          [scrollable]="true">
+  
+          <ng-template pTemplate="body" let-item>
+            <div style="margin-bottom: 10px;">
+              <h3 style="margin-bottom: 5px;">{{ item.name }} {{ item.lastname }}</h3>
+              <div style="margin-bottom: 30px;">{{ item.username }}</div>
+            </div>
+          </ng-template>
+        </p-table>
+      </div>
+  
+      <div class="col-6 mt-4">
+        <div class="mb-3">
+          <span style="font-size: 1.24rem;">Becarios de la app que <strong>NO</strong> están en <strong> CCABecarios</strong>
+          </span>
+        </div>
+        <hr>
+  
+        <p-table [value]="internsApp_CCSW" scrollHeight="400px" styleClass="no-border" [loading]="showSpinner2"
+          [scrollable]="true">
+          <ng-template pTemplate="body" let-item>
+            <div style="margin-bottom: 10px;">
+              <h3 style="margin-bottom: 5px;">{{ item.name }} {{ item.lastname }}</h3>
+              <div style="margin-bottom: 30px;">{{ item.username }}</div>
+            </div>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
