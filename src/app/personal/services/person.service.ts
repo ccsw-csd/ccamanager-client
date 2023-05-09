@@ -46,4 +46,19 @@ export class PersonService {
     return this.http.get<String[]>(environment.server + '/ldap/person/list');
   }
 
+  checkInterns(): Observable<Boolean> {
+    return this.http.get<Boolean>(environment.server + '/ldap/intern/');
+  }
+
+  compareLdapToInterns(): Observable<LdapPerson[]> {
+    return this.http.get<LdapPerson[]>(environment.server + '/ldap/intern/compare/ldap');
+  }
+  compareInternsToLdap(): Observable<LdapPerson[]> {
+    return this.http.get<LdapPerson[]>(environment.server + '/ldap/intern/compare/intern');
+  }
+
+  findListLdapUsernamesInterns(): Observable<String[]> {
+    return this.http.get<String[]>(environment.server + '/ldap/intern/list');
+  }
+
 }

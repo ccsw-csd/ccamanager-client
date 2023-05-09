@@ -19,6 +19,7 @@
         <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir becario" (click)="addOrEditIntern()"> </button>
         <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2" (click)="exportExcel()" pTooltip="Descargar listado"></button>
         <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2" pTooltip="Limpiar filtros" (click)="cleanFilters()" ></button>
+        <button pButton pRipple type="button" icon=" pi pi-sync" class="p-button-lg m-2" *ngIf="!isSynchronized" pTooltip="Sincronizar LDAP" (click)="synchronizeLdap()"></button>
     </div>
 </div>
 <p-table [style]="{'height': 'calc(100vh - 275px)', 'width': tableWidth}" [scrollable]="true"  selectionMode="single"  scrollHeight="flex"
