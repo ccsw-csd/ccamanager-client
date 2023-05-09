@@ -1,18 +1,8 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ViewChildren,
-  QueryList,
-} from '@angular/core';
+import {Component,OnInit,ViewChild,ViewChildren,QueryList} from '@angular/core';
 import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
+import {DialogService,DynamicDialogConfig,DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Province } from 'src/app/core/models/Province';
 import { ProvinceService } from 'src/app/core/services/province.service';
 import { CenterService } from 'src/app/core/services/center.service';
@@ -25,6 +15,8 @@ import { Dropdown } from 'primeng/dropdown';
 import { ExportService } from 'src/app/core/services/export.service';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
 import { PersonalEditComponent } from '../personal-edit/personal-edit/personal-edit.component';
+import { PersonalSynchronizeLdapComponent } from '../personal-synchronize-ldap/personal-synchronize-ldap.component';
+
 
 @Component({
   selector: 'app-personal-list',
@@ -42,6 +34,7 @@ export class PersonalListComponent implements OnInit {
   @ViewChildren('filterDropdown') filterDropdowns!: QueryList<Dropdown>;
 
   provinces: Province[];
+  isSynchronized: Boolean = false;
   persons: Person[];
   centers: Center[];
   roles: Role[];
@@ -64,7 +57,7 @@ export class PersonalListComponent implements OnInit {
     private exportService: ExportService,
     private navigatorService: NavigatorService,
     private confirmationService: ConfirmationService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
   ) {}
 
   ngOnInit(): void {
@@ -75,7 +68,8 @@ export class PersonalListComponent implements OnInit {
         if (menuVisible) this.tableWidth = 'calc(100vw - 255px)';
         else this.tableWidth = 'calc(100vw - 55px)';
       });
-
+    
+    this.trySynchronize();
     this.getAllProvinces();
     this.getAllPersons();
     this.getAllCenters();
@@ -88,6 +82,22 @@ export class PersonalListComponent implements OnInit {
       { label: 'Pendiente', value: '2' },
     ];
   }
+
+  trySynchronize(){
+    this.personService.checkPersons().subscribe({
+      next: (res: Boolean) => {
+        this.isSynchronized = res;
+      },
+    });
+   
+  }
+  synchronizeLdap(){
+    const ref = this.dialogService.open(PersonalSynchronizeLdapComponent, {
+        width: '110vh',
+        
+    });
+}
+
 
   getAllProvinces() {
     this.provinceService.getAllProvinces().subscribe({
