@@ -235,7 +235,8 @@ export class InternListComponent implements OnInit,AfterViewInit {
         value: intern.comment,
       },
       closable: false,
-      showHeader: false,
+      showHeader: true,
+      header:'Comment'
     });
     this.ref.onClose.subscribe((res)=>{
       if(res!=null && res!=''){
@@ -254,14 +255,14 @@ export class InternListComponent implements OnInit,AfterViewInit {
   }
   addLink(intern:Intern) {
     this.ref = this.dialogService.open(DialogComponent, {
-      height: '420px',
       width: '600px',
       data: {
         action: 'Link',
         value: intern.link,
       },
       closable: false,
-      showHeader: false,
+      showHeader: true,
+      header:'Link'
     });
     this.ref.onClose.subscribe((res)=>{
       if(res!=null && res!=''){
