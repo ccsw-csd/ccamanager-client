@@ -1,4 +1,4 @@
-<div class="flex flex-column" >
+<div class="flex flex-column" style="height: calc(100vh - 200px);">
     <h1 class="mt-0">TimeLine Becarios</h1>
     <div class="flex flex-row gap-2" [formGroup]="profileForm">
         <span class="p-float-label mt-2" >
@@ -16,7 +16,7 @@
     <div>
         <small *ngIf="profileForm.invalid && profileForm.errors?.dateRange"  id="username-help" class="p-error ">La fecha de inicio no puede ser posterior a la fecha de fin</small>
     </div>
-    <div style="height: 450px; overflow: auto">
+    <div class="overflow-y-scroll" style="height: 100%; overflow: auto">
         <p-chart id="chart" #chart type="bar" [data]="basicData" [options]="config" [height]="100" responsive="false"></p-chart>
     </div>
 
