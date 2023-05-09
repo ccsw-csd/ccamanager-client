@@ -222,7 +222,8 @@ export class InternListComponent implements OnInit,AfterViewInit {
       width:"66%",
       height:"89vh",
       closable:true,
-      showHeader:true
+      showHeader:true,
+      header:'TimeLine Becarios'
     });
   }
 
