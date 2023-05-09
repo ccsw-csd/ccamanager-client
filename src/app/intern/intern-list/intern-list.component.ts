@@ -220,8 +220,8 @@ export class InternListComponent implements OnInit,AfterViewInit {
   showTimeLine(){
     this.ref = this.dialogService.open(InternTimelineComponent,{
       width:"66%",
-      closable:false,
-      showHeader:false
+      closable:true,
+      showHeader:true
     });
   }
 

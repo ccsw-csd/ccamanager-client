@@ -1,5 +1,5 @@
 <div class="flex flex-column" >
-    <h1>TimeLine Becarios</h1>
+    <h1 class="mt-0">TimeLine Becarios</h1>
     <div class="flex flex-row gap-2" [formGroup]="profileForm">
         <span class="p-float-label mt-2" >
             <p-calendar appendTo="body" styleClass="w-full" [inputStyle]="{'height':'45px'}" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" formControlName="startDate"></p-calendar>
@@ -18,9 +18,6 @@
     </div>
     <div style="height: 450px; overflow: auto">
         <p-chart id="chart" #chart type="bar" [data]="basicData" [options]="config" [height]="100" responsive="false"></p-chart>
-    </div>
-    <div class="flex flex-row justify-content-end gap-2 md:flex-wrap mt-3">    
-        <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
     </div>
 
 </div>

@@ -176,11 +176,5 @@ export class InternTimelineComponent implements OnInit {
           this.chartElement.el.nativeElement.childNodes[0].style['height'] = heightChart + 'px';
         },
       });
-    
-      
-  }
-
-  closeWindow() {
-    this.ref.close();
   }
 }
