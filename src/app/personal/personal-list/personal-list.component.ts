@@ -61,7 +61,7 @@ export class PersonalListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.tableWidth = 'calc(100vw - 55px)';
+    this.resizeTable();
     this.navigatorService
       .getNavivagorChangeEmitter()
       .subscribe((menuVisible) => {
@@ -81,6 +81,14 @@ export class PersonalListComponent implements OnInit {
       { label: 'Activo', value: '1' },
       { label: 'Pendiente', value: '2' },
     ];
+  }
+
+  resizeTable(){
+    if(document.getElementById("p-slideMenu")){
+      this.tableWidth = 'calc(100vw - 255px)';
+    }else{
+      this.tableWidth = 'calc(100vw - 55px)';
+    }
   }
 
   trySynchronize(){
