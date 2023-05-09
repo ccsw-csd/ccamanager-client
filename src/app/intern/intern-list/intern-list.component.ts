@@ -28,6 +28,9 @@ import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { InternService } from '../services/intern.service';
 import { InternEditComponent } from '../intern-edit/intern-edit.component';
 import { InternTimelineComponent } from '../intern-timeline/intern-timeline.component';
+import { PersonService } from 'src/app/personal/services/person.service';
+import { InternSynchronizeLdapComponent } from '../intern-synchronize-ldap/intern-synchronize-ldap/intern-synchronize-ldap.component';
+
 @Component({
   selector: 'app-intern-list',
   templateUrl: './intern-list.component.html',
@@ -38,6 +41,8 @@ export class InternListComponent implements OnInit,AfterViewInit {
   @ViewChild(Table) table: Table;
   @ViewChildren('filterDropdown') filterDropdowns!: QueryList<Dropdown>;
   @ViewChildren('filterCalendar') filterCalendars!: QueryList<Calendar>;
+
+  isSynchronized: Boolean = false;
   selectedActive:string;
   selectedDate:Date;
   interns: Intern[];
@@ -80,6 +85,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
     private levelService: LevelService,
     private actionService: ActionService,
     private technologyService: TechnologyService,
+    private personService: PersonService,
     private filterService: FilterService
   ) {}
 
@@ -386,6 +392,20 @@ export class InternListComponent implements OnInit,AfterViewInit {
         this.confirmationService.close();
       }
     });
-    
   }
+
+  trySynchronize(){
+    this.personService.checkInterns().subscribe({
+      next: (res: Boolean) => {
+        this.isSynchronized = res;
+      },
+    });
+   
+  }
+  synchronizeLdap(){
+    const ref = this.dialogService.open(InternSynchronizeLdapComponent, {
+        width: '110vh',
+        
+    });
+}
 }
