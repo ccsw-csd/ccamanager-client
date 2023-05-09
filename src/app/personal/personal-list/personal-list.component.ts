@@ -175,6 +175,7 @@ export class PersonalListComponent implements OnInit {
         roles: this.roles,
         centers: this.centers,
       },
+      closable:false,
     });
 
     ref.onClose.subscribe((result: boolean) => {
