@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Person } from '../models/Person';
 import { Intern } from 'src/app/intern/models/Intern';
+import { LdapPerson } from '../models/LdapPerson';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,21 @@ export class PersonService {
 
   searchIntern(filter:string):Observable<Intern[]>{
     return this.http.get<Intern[]>(environment.server +"/person/scholar/"+filter)
+  }
+
+  checkPersons(): Observable<Boolean> {
+    return this.http.get<Boolean>(environment.server + '/ldap/person/');
+  }
+  
+  compareLdapToPersons(): Observable<LdapPerson[]> {
+    return this.http.get<LdapPerson[]>(environment.server + '/ldap/person/compare/ldap');
+  }
+  comparePersonsToLdap(): Observable<LdapPerson[]> {
+    return this.http.get<LdapPerson[]>(environment.server + '/ldap/person/compare/person');
+  }
+
+  findListLdapUsernames(): Observable<String[]> {
+    return this.http.get<String[]>(environment.server + '/ldap/person/list');
   }
 
 }
