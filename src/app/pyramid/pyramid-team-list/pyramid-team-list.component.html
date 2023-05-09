@@ -1,1 +1,85 @@
-<p>pyramid-team-list works!</p>
+<h1>Pyramid Team Index</h1>
+<p-toast position="top-center"></p-toast>
+<div style="height: calc(100vh - 400px);" class="flex-column"> 
+    <div class="flex flex-row align-items-start justify-content-around">
+        <p-table [value]="pyramids" class="flex-2" [loading]="loading">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th></th>
+                    <th>A1</th>
+                    <th>A2</th>
+                    <th>B1</th>
+                    <th>B2</th>
+                    <th>B3</th>
+                    <th>C1</th>
+                    <th>C2</th>
+                    <th>C3</th>
+                    <th>D1</th>
+                    <th>D2</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-pyramid  let-rowIndex="rowIndex">
+                <tr [ngClass]="{'editable-row': rowIndex == 0}" >
+                    <td class="font-bold" style="max-width:1rem">{{ rowIndex == 0 ? 'Index' : 'Cost' }}</td>
+                    <td>
+                        {{ formatNumber(pyramid.A1)}}
+                    </td>
+                    <td > 
+                        {{formatNumber(pyramid.A2)}} 
+                    </td>
+                    
+                    <td>
+                        {{ formatNumber(pyramid.B1)}}
+                    </td>
+                    <td>
+                        {{ formatNumber(pyramid.B2)}}
+                    </td>
+                    <td>
+                        {{ formatNumber(pyramid.B3) }}
+                    </td>
+                    <td>
+                        {{ formatNumber(pyramid.C1) }}
+                    </td>
+                    <td>
+                        {{ formatNumber(pyramid.C2)}}
+                    </td>
+                    <td>
+                        {{ formatNumber(pyramid.C3) }}
+                    </td>
+                    <td>
+                        {{formatNumber(pyramid.D1) }}
+                    </td>
+                    <td>
+                        {{ formatNumber(pyramid.D2) }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div class="h-3rem"></div>
+    <div style="height:100%" class="flex flex-row gap-8 flex-wrap justify-content-center overflow-y-scroll">
+        <p-progressSpinner *ngIf="loadingTeam"></p-progressSpinner>
+        <div *ngFor="let pyramidTeam of pyramidTeams;let i = index" class="flex flex-column justify-content-center align-items-center">
+            <p class="font-bold font-italic">{{pyramidTeam.customerName}}</p>
+            <div class="flex flex-row gap-3">
+                <p-table [value]="pyramidTeam.customerList">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Perfil</th>
+                            <th>Count</th>
+                            <th>Index</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-pyramid>
+                        <tr [ngClass]="{'font-bold': pyramid.profile == 'TOTAL'}">
+                            <td class="font-bold">{{pyramid.profile}}</td>
+                            <td>{{pyramid.count}}</td>
+                            <td>{{formatNumber(pyramid.index)}}</td> 
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <p-chart type="bar" class="flex" [data]="dataCharts[i]" [options]="configCharts"></p-chart>
+            </div>
+        </div>
+    </div>
+</div>
