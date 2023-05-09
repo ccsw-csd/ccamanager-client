@@ -1,14 +1,10 @@
-<div class="flex flex-column">
-  <h1 *ngIf="educationElement.id == null" class="text-center">Nueva titulación</h1>
-  <h1 *ngIf="educationElement.id != null" class="text-center">Modificar titulación</h1>
-  <div class="h-2rem">
-  </div>
+<div class="flex flex-column mt-2">
   <span class="p-float-label">
     <input id="name" type="text" pInputText class="w-full" [(ngModel)]="educationElement.name"  required>
     <label for="firstname1">Nombre</label>
   </span>
 
-  <div class="h-4rem"></div>
+  <div class="h-2rem"></div>
   
   <div class="flex flex-row justify-content-end gap-2">    
     <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>

@@ -76,11 +76,14 @@ export class EducationListComponent implements OnInit {
   }
 
   addOrEditItem(item: Education) {
+    let header = item ? 'Editar' : 'Modificar';
     let window = this.dialogService.open(EducationEditComponent, {
       width: '600px',
       data: {
         educationData: item,
       },
+      showHeader:true,
+      header:header
     });
 
     window.onClose.subscribe((result: boolean) => {
