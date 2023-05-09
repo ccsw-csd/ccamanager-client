@@ -8,6 +8,6 @@
   
   <div class="flex flex-row justify-content-end gap-2">    
     <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary" (click)="closeWindow()"></button>
-    <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check"  [disabled]="technologyElement.name=='' || technologyElement.name==null" (click)="saveItem(technologyElement)"></button>
+    <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check"  [disabled]="technologyElement.name=='' || technologyElement.name==null || loading" (click)="saveItem(technologyElement)"></button>
   </div>
 </div>
