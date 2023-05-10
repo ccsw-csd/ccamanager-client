@@ -50,14 +50,17 @@ export class EducationCenterListComponent implements OnInit {
     });
   }
   editEducationCenter(educationCenter?:EducationCenter){
+    let header = educationCenter ? 'Modicar Centro Educativo' : 'Nuevo Centro Educativo';
     this.ref = this.dialogService.open(EducationCenterEditComponent,{
-      height:"450px",
+      //height:"450px",
       width:"680px",
       data:{
         educationCenter: educationCenter,
         provinces: this.provinces
       },
-      closable:true
+      closable:true,
+      showHeader: true,
+      header:header
     });
     this.onClose();
   }

@@ -61,7 +61,7 @@ export class PersonalListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.tableWidth = 'calc(100vw - 55px)';
+    this.resizeTable();
     this.navigatorService
       .getNavivagorChangeEmitter()
       .subscribe((menuVisible) => {
@@ -83,6 +83,14 @@ export class PersonalListComponent implements OnInit {
     ];
   }
 
+  resizeTable(){
+    if(document.getElementById("p-slideMenu")){
+      this.tableWidth = 'calc(100vw - 255px)';
+    }else{
+      this.tableWidth = 'calc(100vw - 55px)';
+    }
+  }
+
   trySynchronize(){
     this.personService.checkPersons().subscribe({
       next: (res: Boolean) => {
@@ -94,7 +102,8 @@ export class PersonalListComponent implements OnInit {
   synchronizeLdap(){
     const ref = this.dialogService.open(PersonalSynchronizeLdapComponent, {
         width: '110vh',
-        
+        showHeader:true,
+        header:'Sincronizar LDAP'
     });
 }
 
@@ -159,6 +168,7 @@ export class PersonalListComponent implements OnInit {
   }
 
   editPerson(person?: Person) {
+    let header = person? 'Modificar Persona' : 'Nueva Persona';
     const ref = this.dialogService.open(PersonalEditComponent, {
       width: '75vh',
       data: {
@@ -167,6 +177,9 @@ export class PersonalListComponent implements OnInit {
         roles: this.roles,
         centers: this.centers,
       },
+      closable:false,
+      showHeader:true,
+      header:header
     });
 
     ref.onClose.subscribe((result: boolean) => {

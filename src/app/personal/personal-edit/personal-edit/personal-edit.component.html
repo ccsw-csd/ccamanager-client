@@ -1,12 +1,10 @@
-<h1 *ngIf="personElement.id == null" class="text-center">Nueva Persona</h1>
-<h1 *ngIf="personElement.id != null" class="text-center">Modificar Persona</h1>
 <div class="spinner-overlay">
   <p-progressSpinner *ngIf="loading"></p-progressSpinner>
 </div>
 <div [formGroup]="personForm" class="flex flex-column gap-4">
 
-  <div class="flex flex-row mb-1">
-    <span class="p-float-label w-full p-input-icon-right" *ngIf="!personElement.id">
+  <div class="flex flex-row pt-2" *ngIf="!personElement.id">
+    <span class="p-float-label w-full p-input-icon-right" >
 
       <p-autoComplete [(ngModel)]="internSelected" styleClass="w-full" inputStyleClass="w-full"
         (onSelect)="onPersonSelect($event)" [suggestions]="groupPerson" [forceSelection]="true"
@@ -21,7 +19,7 @@
 
   </div>
 
-  <div class="flex flex-row gap-4">
+  <div class="flex flex-row gap-4 " [ngClass]="{'pt-2': personElement.id != null}">
 
     <span class="p-float-label flex-1">
       <input id="name" type="text" pInputText class="w-full" formControlName="saga">

@@ -21,7 +21,7 @@ export class EducationCenterEditComponent implements OnInit {
   types : any[];
   educationCenterForm : FormGroup;
   isNew :boolean;
-  
+  loading : boolean = false;
   constructor(
     private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
@@ -43,10 +43,10 @@ export class EducationCenterEditComponent implements OnInit {
   }
 
   save(){
-
+    this.loading = true;
     if(this.validate()){
-      this.educationCenterService.save(this.educationCenter).subscribe(
-        (result)=>{
+      this.educationCenterService.save(this.educationCenter).subscribe({
+        next:(res)=>{
           if(this.isNew){
             this.snackbarService.showMessage("Se ha añadido correctamente el Centro Educativo");
           }else{
@@ -54,8 +54,13 @@ export class EducationCenterEditComponent implements OnInit {
           }
           this.closeWindow();
         },
-        (error)=>{
-          this.snackbarService.error(error.message);
+        error:(error)=>{
+            this.snackbarService.error(error.message);
+            this.loading = false;
+        },
+        complete:()=>{
+          this.loading = false;
+        }
         }
       );
     }
