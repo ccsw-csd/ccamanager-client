@@ -411,7 +411,8 @@ export class InternListComponent implements OnInit,AfterViewInit {
   synchronizeLdap(){
     const ref = this.dialogService.open(InternSynchronizeLdapComponent, {
         width: '110vh',
-        
+        showHeader:true,
+        header: 'Sincronizar LDAP'
     });
 }
 }
