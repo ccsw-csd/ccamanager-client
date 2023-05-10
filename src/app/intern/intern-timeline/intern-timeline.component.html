@@ -1,4 +1,4 @@
-<div class="flex flex-column" style="height: calc(100vh - 200px);">
+<div class="flex flex-column mb-1" style="height: calc(90vh - 150px);">
     <div class="flex flex-row gap-2" [formGroup]="profileForm">
         <span class="p-float-label mt-2" >
             <p-calendar appendTo="body" styleClass="w-full" [inputStyle]="{'height':'45px'}" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" formControlName="startDate"></p-calendar>
@@ -18,5 +18,4 @@
     <div class="overflow-y-scroll" style="height: 100%; overflow: auto">
         <p-chart id="chart" #chart type="bar" [data]="basicData" [options]="config" [height]="100" responsive="false"></p-chart>
     </div>
-
 </div>
