@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Person } from '../models/Person';
 import { Intern } from 'src/app/intern/models/Intern';
 import { LdapPerson } from '../models/LdapPerson';
+import { ListsLdapPerson } from '../models/ListsLdapPerson';
 
 @Injectable({
   providedIn: 'root',
@@ -50,15 +51,18 @@ export class PersonService {
     return this.http.get<Boolean>(environment.server + '/ldap/intern/');
   }
 
-  compareLdapToInterns(): Observable<LdapPerson[]> {
-    return this.http.get<LdapPerson[]>(environment.server + '/ldap/intern/compare/ldap');
-  }
-  compareInternsToLdap(): Observable<LdapPerson[]> {
-    return this.http.get<LdapPerson[]>(environment.server + '/ldap/intern/compare/intern');
-  }
 
   findListLdapUsernamesInterns(): Observable<String[]> {
     return this.http.get<String[]>(environment.server + '/ldap/intern/list');
+  }
+
+
+  compareLdapPersons(): Observable<ListsLdapPerson> {
+    return this.http.get<ListsLdapPerson>(environment.server + '/ldap/person/compare/personLdap');
+  }
+
+  compareLdapInterns(): Observable<ListsLdapPerson> {
+    return this.http.get<ListsLdapPerson>(environment.server + '/ldap/person/compare/internLdap');
   }
 
 }
