@@ -59,7 +59,7 @@
     <div class="h-3rem"></div>
     <div style="height:100%" class="flex flex-row gap-8 flex-wrap justify-content-center overflow-y-scroll">
         <p-progressSpinner *ngIf="loadingTeam"></p-progressSpinner>
-        <div *ngFor="let pyramidTeam of pyramidTeams;let i = index" class="flex flex-column justify-content-center align-items-center">
+        <div *ngFor="let pyramidTeam of pyramidTeams;let i = index" class="flex flex-column justify-content-center align-items-center" style="width:30rem">
             <p class="font-bold font-italic">{{pyramidTeam.customerName}}</p>
             <div class="flex flex-row gap-3">
                 <p-table [value]="pyramidTeam.customerList">
