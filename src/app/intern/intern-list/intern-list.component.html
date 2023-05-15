@@ -14,16 +14,17 @@
             <p>{{internsLength}}</p> Personas
         </div>
     </div>
-    <div class="flex justify-content-end ">
-        <button pButton pRipple type="button" icon="pi pi-chart-bar" class="p-button-lg m-2" pTooltip="TimeLine" (click)="showTimeLine()"> </button>
+    <div class="flex justify-content-end"> 
         <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir becario" (click)="addOrEditIntern()"> </button>
-        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2" (click)="exportExcel()" pTooltip="Descargar listado"></button>
-        <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2" pTooltip="Limpiar filtros" (click)="cleanFilters()" ></button>
-        <button pButton pRipple type="button" icon=" pi pi-sync" class="p-button-lg m-2" *ngIf="!isSynchronized" pTooltip="Sincronizar LDAP" (click)="synchronizeLdap()"></button>
+        <button pButton pRipple type="button" icon="pi pi-chart-bar" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="TimeLine" (click)="showTimeLine()"> </button>
+        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2 p-button-outlined p-button-secondary" (click)="exportExcel()" pTooltip="Descargar listado"></button>
+        <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="Limpiar filtros" (click)="cleanFilters()" ></button>
+        <button pButton pRipple type="button" icon=" pi pi-cloud-upload" class="p-button-lg m-2 p-button-outlined p-button-secondary" *ngIf="!isSynchronized" pTooltip="Sincronizar LDAP" (click)="synchronizeLdap()"></button>
+        <button pButton pRipple type="button" icon=" pi pi-cog" class="p-button-lg m-2 p-button-outlined p-button-secondary"></button>
     </div>
 </div>
-<p-table [style]="{'height': 'calc(100vh - 275px)', 'width': tableWidth}" [scrollable]="true"  selectionMode="single"  scrollHeight="flex"
-    [value]="interns" styleClass="p-datatable-striped"  [(filters)]="defaultFilters" (onFilter)="onFilter($event)"  sortMode="single"  >
+<p-table [style]="{'height': 'calc(100vh - 275px)', 'width': tableWidth}"   [scrollable]="true"  selectionMode="single"  scrollHeight="flex"
+    [value]="interns" [(filters)]="defaultFilters" (onFilter)="onFilter($event)"  sortMode="single"  >
     <ng-template pTemplate="header" >
         <tr>
             <th class="period" pSortableColumn="period">
@@ -39,10 +40,10 @@
                 Apellidos <p-sortIcon field="lastname"></p-sortIcon>
             </th>
             <th class="gender" pSortableColumn="gender">
-                Genero <p-sortIcon field="gender"></p-sortIcon>
+                Género <p-sortIcon field="gender"></p-sortIcon>
             </th>
             <th class="education" pSortableColumn="education.name">
-                Titulacion <p-sortIcon field="education.name"></p-sortIcon>
+                Titulación <p-sortIcon field="education.name"></p-sortIcon>
             </th>
             <th class="educationCenter" pSortableColumn="educationCenter.name">
                 Centro <p-sortIcon field="educationCenter.name"></p-sortIcon>
@@ -66,10 +67,10 @@
                 Cliente <p-sortIcon field="customer"></p-sortIcon>
             </th>
             <th class="code" pSortableColumn="code"> 
-                Codigo <p-sortIcon field="code"></p-sortIcon>
+                Código <p-sortIcon field="code"></p-sortIcon>
             </th>
             <th class="technologies">
-                Tecnologias 
+                Tecnologías 
             </th>
             <th class="englishLevel" pSortableColumn="englishLevel.name">
                 Inglés <p-sortIcon field="englishLevel.name"></p-sortIcon>
@@ -92,7 +93,7 @@
             <th class="saga" pSortableColumn="saga">
                 Saga <p-sortIcon field="saga"></p-sortIcon>
             </th>
-            <th class="active" pSortableColumn="active">
+            <th class="active" pSortableColumn="active" >
                 Estado <p-sortIcon field="active"></p-sortIcon>
             </th>
             <th class="buttons">
@@ -327,7 +328,7 @@
                 {{intern?.saga}}
                </div>
            </td>
-           <td class="active" >
+           <td class="active" > 
                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{showActive(intern?.active)}}" tooltipPosition="top">
                 {{showActive(intern?.active)}}
                </div>
