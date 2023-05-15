@@ -24,7 +24,7 @@
     </div>
 </div>
 <p-table [style]="{'height': 'calc(100vh - 275px)', 'width': tableWidth}"   [scrollable]="true"  selectionMode="single"  scrollHeight="flex"
-    [value]="interns" [(filters)]="defaultFilters" (onFilter)="onFilter($event)"  sortMode="single"  >
+    [value]="interns" styleClass="p-datatable-striped " [(filters)]="defaultFilters" (onFilter)="onFilter($event)"  sortMode="single"  >
     <ng-template pTemplate="header" >
         <tr>
             <th class="period" pSortableColumn="period">
