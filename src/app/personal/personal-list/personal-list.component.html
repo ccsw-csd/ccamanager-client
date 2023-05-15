@@ -31,6 +31,7 @@
         <button pButton pRipple type="button" icon=" pi pi-cloud-upload" class="p-button-lg m-2 p-button-outlined p-button-secondary" *ngIf="!isSynchronized"
             pTooltip="Sincronizar LDAP" (click)="synchronizeLdap()">
         </button>
+        <button pButton pRipple type="button" icon=" pi pi-cog" class="p-button-lg m-2 p-button-outlined p-button-secondary"></button>
     </div>
 </div>
 
@@ -253,8 +254,8 @@
                  {{showActive(person?.active)}}
                 </div>
             </td>
-            <td class="buttons" alignFrozen="right"  pFrozenColumn>
-                <div class="justify-content-between">
+            <td class="buttons pl-0">
+                <div class="flex flex-row">
                     <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
                         pTooltip="Editar" (click)="editPerson(person)"></button>
                     <button pButton pRipple type="button" icon="pi pi-trash"
