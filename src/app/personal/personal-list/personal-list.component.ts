@@ -90,6 +90,9 @@ export class PersonalListComponent implements OnInit {
       this.tableWidth = 'calc(100vw - 55px)';
     }
   }
+  showActive(value: number): string {
+    return this.states.find((state) => state.value === value.toString())?.label;
+  }
 
   trySynchronize(){
     this.personService.checkPersons().subscribe({
