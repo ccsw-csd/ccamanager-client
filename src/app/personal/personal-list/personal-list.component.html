@@ -21,14 +21,14 @@
         <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir usuario"  (click)="editPerson(null)">
         </button>
 
-        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2" (click)="exportExcel()"
+        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2 p-button-outlined p-button-secondary" (click)="exportExcel()"
             pTooltip="Descargar listado"></button>
 
-        <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2"
+        <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2 p-button-outlined p-button-secondary"
             pTooltip="Limpiar filtros" (click)="cleanFilters()">
         </button>
 
-        <button pButton pRipple type="button" icon=" pi pi-sync" class="p-button-lg m-2" *ngIf="!isSynchronized"
+        <button pButton pRipple type="button" icon=" pi pi-cloud-upload" class="p-button-lg m-2 p-button-outlined p-button-secondary" *ngIf="!isSynchronized"
             pTooltip="Sincronizar LDAP" (click)="synchronizeLdap()">
         </button>
     </div>
@@ -248,22 +248,12 @@
                     {{person.province?.province}}
                 </div>
             </td>
-            <td class="active" *ngIf="person.active == 0">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="Inactivo" tooltipPosition="top">
-                    Inactivo
+            <td class="active" >
+                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{showActive(person?.active)}}" tooltipPosition="top">
+                 {{showActive(person?.active)}}
                 </div>
             </td>
-            <td class="active" *ngIf="person.active == 1">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="Activo" tooltipPosition="top">
-                    Activo
-                </div>
-            </td>
-            <td class="active" *ngIf="person.active == 2">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.province?.province" tooltipPosition="top">
-                    Pendiente
-                </div>
-            </td>
-            <td class="buttons">
+            <td class="buttons" alignFrozen="right"  pFrozenColumn>
                 <div class="justify-content-between">
                     <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
                         pTooltip="Editar" (click)="editPerson(person)"></button>
