@@ -15,11 +15,11 @@
         </div>
     </div>
     <div class="flex justify-content-end"> 
-        <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir becario" (click)="addOrEditIntern()"> </button>
-        <button pButton pRipple type="button" icon="pi pi-chart-bar" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="TimeLine" (click)="showTimeLine()"> </button>
-        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2 p-button-outlined p-button-secondary" (click)="exportExcel()" pTooltip="Descargar listado"></button>
-        <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="Limpiar filtros" (click)="cleanFilters()" ></button>
-        <button pButton pRipple type="button" icon=" pi pi-cloud-upload" class="p-button-lg m-2 p-button-outlined p-button-secondary" *ngIf="!isSynchronized" pTooltip="Sincronizar LDAP" (click)="synchronizeLdap()"></button>
+        <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir becario" (click)="addOrEditIntern()" tooltipPosition="top"> </button>
+        <button pButton pRipple type="button" icon="pi pi-chart-bar" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="TimeLine" (click)="showTimeLine()" tooltipPosition="top"> </button>
+        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2 p-button-outlined p-button-secondary" (click)="exportExcel()" pTooltip="Descargar listado" tooltipPosition="top"></button>
+        <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="Limpiar filtros" (click)="cleanFilters()"  tooltipPosition="top"></button>
+        <button pButton pRipple type="button" icon=" pi pi-cloud-upload" class="p-button-lg m-2 p-button-outlined p-button-secondary" *ngIf="!isSynchronized" pTooltip="Sincronizar LDAP" (click)="synchronizeLdap()" tooltipPosition="top"></button>
         <button pButton pRipple type="button" icon=" pi pi-cog" class="p-button-lg m-2 p-button-outlined p-button-secondary"></button>
     </div>
 </div>
@@ -60,7 +60,7 @@
             <th class="endDate"pSortableColumn="endDate">
                 Fin <p-sortIcon field="endDate"></p-sortIcon>
             </th>
-            <th class="hours" pSortableColumn="hours">
+            <th class="hours justify-content-end" SortableColumn="hours">
                 Horas <p-sortIcon field="hours"></p-sortIcon>
             </th>
             <th class="customer" pSortableColumn="customer">
