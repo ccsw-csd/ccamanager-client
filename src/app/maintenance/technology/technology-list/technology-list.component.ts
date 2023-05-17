@@ -75,11 +75,14 @@ export class TechnologyListComponent implements OnInit {
   }
 
   addOrEditItem(item: Technology) {
+    let header = item ? 'Modificar Tecnología' : 'Nueva Tecnología';
     let window = this.dialogService.open(TechnologyEditComponent, {
       width: '600px',
       data: {
         technologyData: item,
       },
+      showHeader:true,
+      header:header
     });
 
     window.onClose.subscribe((result: boolean) => {

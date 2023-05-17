@@ -220,8 +220,10 @@ export class InternListComponent implements OnInit,AfterViewInit {
   showTimeLine(){
     this.ref = this.dialogService.open(InternTimelineComponent,{
       width:"66%",
-      closable:false,
-      showHeader:false
+      height:"89vh",
+      closable:true,
+      showHeader:true,
+      header:'TimeLine Becarios'
     });
   }
 
@@ -233,7 +235,8 @@ export class InternListComponent implements OnInit,AfterViewInit {
         value: intern.comment,
       },
       closable: false,
-      showHeader: false,
+      showHeader: true,
+      header:'Comment'
     });
     this.ref.onClose.subscribe((res)=>{
       if(res!=null && res!=''){
@@ -252,14 +255,14 @@ export class InternListComponent implements OnInit,AfterViewInit {
   }
   addLink(intern:Intern) {
     this.ref = this.dialogService.open(DialogComponent, {
-      height: '420px',
       width: '600px',
       data: {
         action: 'Link',
         value: intern.link,
       },
       closable: false,
-      showHeader: false,
+      showHeader: true,
+      header:'Link'
     });
     this.ref.onClose.subscribe((res)=>{
       if(res!=null && res!=''){
@@ -349,6 +352,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
   }
 
   addOrEditIntern(intern?:Intern){
+    let header = intern ? 'Modificar Becario' : 'Nuevo Becario';
     this.ref = this.dialogService.open(InternEditComponent,{
       width:'35%',
       data:{
@@ -363,6 +367,8 @@ export class InternListComponent implements OnInit,AfterViewInit {
         englishLevels:this.englishLevels,
       },
       closable:false,
+      showHeader: true,
+      header: header
     });
     this.onClose();
   }
@@ -405,7 +411,8 @@ export class InternListComponent implements OnInit,AfterViewInit {
   synchronizeLdap(){
     const ref = this.dialogService.open(InternSynchronizeLdapComponent, {
         width: '110vh',
-        
+        showHeader:true,
+        header: 'Sincronizar LDAP'
     });
 }
 }

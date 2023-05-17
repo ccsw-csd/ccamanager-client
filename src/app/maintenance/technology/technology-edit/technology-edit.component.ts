@@ -15,7 +15,7 @@ import { Technology } from '../models/Technology';
 })
 export class TechnologyEditComponent implements OnInit {
   technologyElement: Technology;
-
+  loading : boolean = false;
   item: any;
 
   constructor(
@@ -33,6 +33,7 @@ export class TechnologyEditComponent implements OnInit {
   }
 
   saveItem(item: Technology) {
+    this.loading = true;
     this.technologyService.save(item).subscribe({
       next: () => {
         this.snackbarService.showMessage(
@@ -41,7 +42,11 @@ export class TechnologyEditComponent implements OnInit {
         this.ref.close(true);
       },
       error: (errorResponse) => {
+        this.loading = false;
         this.snackbarService.error(errorResponse['message']);
+      },
+      complete() {
+          this.loading = false;
       },
     });
   }

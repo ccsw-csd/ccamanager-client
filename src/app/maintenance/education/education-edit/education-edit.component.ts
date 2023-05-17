@@ -13,7 +13,7 @@ import { Education } from '../models/Education';
 export class EducationEditComponent implements OnInit {
 
   educationElement: Education;
-
+  loading : boolean = false;
   item: any;
 
   constructor(
@@ -29,16 +29,18 @@ export class EducationEditComponent implements OnInit {
 
 
   saveItem(item: Education) {
+    this.loading = true;
     this.educationService.save(item).subscribe({
       next: () => {
         this.snackbarService.showMessage("El registro se ha guardado con éxito");
         this.ref.close(true);
-        
       },
       error: (errorResponse) => {
-
+        this.loading = false;
         this.snackbarService.error(errorResponse['message']);
-
+      },
+      complete:()=>{
+        this.loading = false;
       }
     })
   }

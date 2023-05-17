@@ -16,7 +16,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ng build --configuration=production  --base-href "/ccamanager/" --deploy-url "/ccamanager/"
 
-ng build --configuration=development  --base-href "/dev/ccamanager/" --deploy-url "/dev/ccamanager/"
+ng build --configuration=pre  --base-href "/dev/ccamanager/" --deploy-url "/dev/ccamanager/"
 
 
 ## Running unit tests

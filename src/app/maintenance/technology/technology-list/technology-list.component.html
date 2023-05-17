@@ -4,8 +4,8 @@
             Tecnologías
         </h1>
     </div> 
-<div class="mt-0 pt-0 flex justify-content-end pb-3">    
-    <button pButton pRipple type="button" class="w-9rem p-3" label="Añadir"(click)="addOrEditItem(null)"></button>
+<div class="mt-0 pt-0 flex justify-content-end align-items-center">    
+    <p-button icon="pi pi-plus" pTooltip="Añadir" tooltipPosition="left" (click)="addOrEditItem(null)"></p-button>
 </div>
 </div>
 <p-table [style]="{'height':'calc(100vh - 200px)'}" [scrollable]="true" scrollHeight="flex" selectionMode="single" 

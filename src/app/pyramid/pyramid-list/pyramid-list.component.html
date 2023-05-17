@@ -2,7 +2,6 @@
 <p-toast position="top-center"></p-toast>
 <div class="flex-column align-content-center"> 
     <div class="flex flex-row align-items-start justify-content-around">
-        <div class="w-6rem"></div>
         <p-table [value]="pyramids" class="flex-2" [loading]="loading">
             <ng-template pTemplate="header">
                 <tr>
@@ -155,10 +154,10 @@
                 </tr>
             </ng-template>
         </p-table>
-        <button *ngIf="!editable" style="margin-top:0px !important" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-lg ml-3" pTooltip="Editar" (click)="onEdit()" ></button>
+        <button *ngIf="!editable" style="margin-top:0px !important" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-lg ml-3" pTooltip="Editar" tooltipPosition="left" (click)="onEdit()" ></button>
         <div *ngIf="editable" class="flex flex-column flex gap-2 ml-3">
-            <button pButton pRipple pTooltip="Cancelar" type="button" icon="pi pi-times" class="p-button-secondary" (click)="onCancel()" [disabled]="loading"></button>
-            <button pButton pRipple pTooltip="Guardar" type="button" icon="pi pi-check"  (click)="onSave()" [disabled]="loading"></button>
+            <button pButton pRipple pTooltip="Cancelar" tooltipPosition="left" type="button" icon="pi pi-times" class="p-button-secondary" (click)="onCancel()" [disabled]="loading"></button>
+            <button pButton pRipple pTooltip="Guardar" tooltipPosition="left" type="button" icon="pi pi-check"  (click)="onSave()" [disabled]="loading"></button>
         </div>
     </div>
     <div class="h-3rem"></div>
