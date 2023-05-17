@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Person } from '../models/Person';
 import { Intern } from 'src/app/intern/models/Intern';
-import { LdapPerson } from '../models/LdapPerson';
 import { ListsLdapPerson } from '../models/ListsLdapPerson';
 
 @Injectable({
@@ -25,44 +24,35 @@ export class PersonService {
   }
 
   searchPerson(filter: string): Observable<Person[]> {
-    return this.http.get<Person[]>(environment.server + "/person/filter/" + filter)
+    return this.http.get<Person[]>(environment.server + '/person/filter/' + filter)
   }
 
   searchIntern(filter:string):Observable<Intern[]>{
-    return this.http.get<Intern[]>(environment.server +"/person/scholar/"+filter)
+    return this.http.get<Intern[]>(environment.server + '/person/scholar/' + filter)
   }
 
   checkPersons(): Observable<Boolean> {
-    return this.http.get<Boolean>(environment.server + '/ldap/person/');
+    return this.http.get<Boolean>(environment.server + '/ldap/person/check');
   }
-  
-  compareLdapToPersons(): Observable<LdapPerson[]> {
-    return this.http.get<LdapPerson[]>(environment.server + '/ldap/person/compare/ldap');
-  }
-  comparePersonsToLdap(): Observable<LdapPerson[]> {
-    return this.http.get<LdapPerson[]>(environment.server + '/ldap/person/compare/person');
+
+  checkInterns(): Observable<Boolean> {
+    return this.http.get<Boolean>(environment.server + '/ldap/intern/check');
   }
 
   findListLdapUsernames(): Observable<String[]> {
     return this.http.get<String[]>(environment.server + '/ldap/person/list');
   }
 
-  checkInterns(): Observable<Boolean> {
-    return this.http.get<Boolean>(environment.server + '/ldap/intern/');
-  }
-
-
   findListLdapUsernamesInterns(): Observable<String[]> {
     return this.http.get<String[]>(environment.server + '/ldap/intern/list');
   }
 
-
   compareLdapPersons(): Observable<ListsLdapPerson> {
-    return this.http.get<ListsLdapPerson>(environment.server + '/ldap/person/compare/personLdap');
+    return this.http.get<ListsLdapPerson>(environment.server + '/ldap/person/compare');
   }
 
   compareLdapInterns(): Observable<ListsLdapPerson> {
-    return this.http.get<ListsLdapPerson>(environment.server + '/ldap/person/compare/internLdap');
+    return this.http.get<ListsLdapPerson>(environment.server + '/ldap/intern/compare');
   }
 
 }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component,OnInit,QueryList,ViewChild,ViewChildren} from '@angular/core';
+import { AfterViewInit, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ExportService } from 'src/app/core/services/export.service';
 import { FilterService, PrimeNGConfig } from 'primeng/api';
 import { Calendar } from 'primeng/calendar';
@@ -35,14 +35,15 @@ import { InternSynchronizeLdapComponent } from '../intern-synchronize-ldap/inter
   selector: 'app-intern-list',
   templateUrl: './intern-list.component.html',
   styleUrls: ['./intern-list.component.scss'],
-  providers: [DialogService, DynamicDialogRef,ConfirmationService],
+  providers: [DialogService, DynamicDialogRef, ConfirmationService]
 })
-export class InternListComponent implements OnInit,AfterViewInit {
+export class InternListComponent implements OnInit, AfterViewInit {
+
   @ViewChild(Table) table: Table;
   @ViewChildren('filterDropdown') filterDropdowns!: QueryList<Dropdown>;
   @ViewChildren('filterCalendar') filterCalendars!: QueryList<Calendar>;
 
-  isSynchronized: Boolean = false;
+  isSynchronized: Boolean = true;
   selectedActive:string;
   selectedDate:Date;
   interns: Intern[];
@@ -66,8 +67,8 @@ export class InternListComponent implements OnInit,AfterViewInit {
   ];
   defaultFilters: any = { active: { value: '1' } };
   internsLength: number;
-  es: any;
-  tableWidth: string ;
+  tableWidth: string;
+
   constructor(
     private primengConfig: PrimeNGConfig,
     private navigatorService: NavigatorService,
@@ -94,9 +95,12 @@ export class InternListComponent implements OnInit,AfterViewInit {
     
     this.navigatorService.getNavivagorChangeEmitter().subscribe(menuVisible => {
       if (menuVisible) this.tableWidth = 'calc(100vw - 255px)';
-       else this.tableWidth = 'calc(100vw - 55px)';
-       });
+      else this.tableWidth = 'calc(100vw - 55px)';
+    });
+
     this.resizeTable();
+
+    this.trySynchronize();
     this.getAllInterns();
     this.getAllEducations();
     this.getAllEducationCenters();
@@ -105,7 +109,9 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.getAllLevels();
     this.getAllActions();
     this.getAllTechnologies();
+
     this.primengConfig.setTranslation(this.translateService.getSpanish());
+
     this.filterService.register('valueInArray', (value, filter): boolean => {
       if (filter === undefined || filter === null || filter.trim() === '') {
         return true;
@@ -135,6 +141,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.table.sortField='endDate';
     this.table.sort({field: this.table.sortField,order:-1});
   }
+
   setDefaultFilters(){
     this.selectedActive='1';
     this.table.filter(this.selectedActive,'active','contains');
@@ -157,7 +164,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
             element.contractDate = new Date(element.contractDate);
           }
         });
-      },
+      }
     });
   }
 
@@ -165,7 +172,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.technologyService.findAll().subscribe({
       next: (res: Technology[]) => {
         this.technologies = res;
-      },
+      }
     });
   }
 
@@ -173,7 +180,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.educationService.findAll().subscribe({
       next: (res: Education[]) => {
         this.educations = res;
-      },
+      }
     });
   }
 
@@ -181,7 +188,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.educationCenterService.getAllEducationCentersSimple().subscribe({
       next: (res: EducationCenter[]) => {
         this.educationsCenter = res;
-      },
+      }
     });
   }
 
@@ -189,7 +196,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.centerService.getAllCenters().subscribe({
       next: (res: Center[]) => {
         this.centers = res;
-      },
+      }
     });
   }
 
@@ -197,7 +204,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.provinceService.getAllProvinces().subscribe({
       next: (res: Province[]) => {
         this.provinces = res;
-      },
+      }
     });
   }
 
@@ -238,7 +245,8 @@ export class InternListComponent implements OnInit,AfterViewInit {
       showHeader: true,
       header:'Comment'
     });
-    this.ref.onClose.subscribe((res)=>{
+
+    this.ref.onClose.subscribe((res) => {
       if(res!=null && res!=''){
         intern.comment = res;
         this.internService.save(intern).subscribe({
@@ -248,11 +256,11 @@ export class InternListComponent implements OnInit,AfterViewInit {
           error:(error)=>{
             this.snackbarService.error(error.message);
           }
-        }
-        );
+        });
       }
     });
   }
+
   addLink(intern:Intern) {
     this.ref = this.dialogService.open(DialogComponent, {
       width: '600px',
@@ -264,8 +272,9 @@ export class InternListComponent implements OnInit,AfterViewInit {
       showHeader: true,
       header:'Link'
     });
-    this.ref.onClose.subscribe((res)=>{
-      if(res!=null && res!=''){
+
+    this.ref.onClose.subscribe((res) => {
+      if(res!=null && res!='') {
         intern.link = res;
         this.internService.save(intern).subscribe({
           next:(result)=>{
@@ -274,8 +283,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
           error:(error)=>{
             this.snackbarService.error(error.message);
           }
-        }
-        );
+        });
       }
     });
   }
@@ -291,8 +299,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
     },0);
   }
 
-  exportExcel(){
-
+  exportExcel() {
     let sendIntern = this.internsForExcel.map((intern) => {
       return {
         Periodo: intern.period,
@@ -331,7 +338,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
     return this.actives.find((active) => active.value === value.toString())?.label;
   }
 
-  showEducationCenter(educationCenter?:EducationCenter):string{
+  showEducationCenter(educationCenter?:EducationCenter): string {
     if(educationCenter){
       return '['+educationCenter?.type+'] '+educationCenter?.name;
     }
@@ -339,7 +346,6 @@ export class InternListComponent implements OnInit,AfterViewInit {
   }
 
   cleanFilters(): void {
-    
     this.filterDropdowns.forEach((dropdown) => dropdown.clear(null));
     this.filterCalendars.forEach((calendar) => {
       calendar.inputFieldValue = "";
@@ -351,7 +357,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.setDefaultOrders();
   }
 
-  addOrEditIntern(intern?:Intern){
+  addOrEditIntern(intern?:Intern) {
     let header = intern ? 'Modificar Becario' : 'Nuevo Becario';
     this.ref = this.dialogService.open(InternEditComponent,{
       width:'35%',
@@ -372,13 +378,14 @@ export class InternListComponent implements OnInit,AfterViewInit {
     });
     this.onClose();
   }
+
   onClose(): void {
     this.ref.onClose.subscribe((results: any) => {
       this.getAllInterns();
     });
   }
 
-  delete(id:number){
+  delete(id:number) {
     this.confirmationService.confirm({
       message:'¿Deseas borrar el Becario?',
       accept:()=>{
@@ -394,25 +401,26 @@ export class InternListComponent implements OnInit,AfterViewInit {
 
         });
       },
-      reject:()=>{
+      reject:() => {
         this.confirmationService.close();
       }
     });
   }
 
-  trySynchronize(){
+  trySynchronize() {
     this.personService.checkInterns().subscribe({
       next: (res: Boolean) => {
         this.isSynchronized = res;
       },
     });
-   
   }
-  synchronizeLdap(){
+
+  synchronizeLdap() {
     const ref = this.dialogService.open(InternSynchronizeLdapComponent, {
         width: '110vh',
         showHeader:true,
         header: 'Sincronizar LDAP'
     });
-}
+  }
+
 }
