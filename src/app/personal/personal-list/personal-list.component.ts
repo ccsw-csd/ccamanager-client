@@ -1,8 +1,8 @@
-import {Component,OnInit,ViewChild,ViewChildren,QueryList} from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
-import {DialogService,DynamicDialogConfig,DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Province } from 'src/app/core/models/Province';
 import { ProvinceService } from 'src/app/core/services/province.service';
 import { CenterService } from 'src/app/core/services/center.service';
@@ -22,21 +22,17 @@ import { PersonalSynchronizeLdapComponent } from '../personal-synchronize-ldap/p
   selector: 'app-personal-list',
   templateUrl: './personal-list.component.html',
   styleUrls: ['./personal-list.component.scss'],
-  providers: [
-    DialogService,
-    DynamicDialogConfig,
-    DynamicDialogRef,
-    ConfirmationService,
-  ],
+  providers: [DialogService, DynamicDialogConfig, DynamicDialogRef, ConfirmationService]
 })
 export class PersonalListComponent implements OnInit {
+
   @ViewChild(Table) table: Table;
   @ViewChildren('filterDropdown') filterDropdowns!: QueryList<Dropdown>;
 
-  provinces: Province[];
-  isSynchronized: Boolean = false;
+  isSynchronized: Boolean = true;
   persons: Person[];
   centers: Center[];
+  provinces: Province[];
   roles: Role[];
   totalPersons: number;
   states: any[];
@@ -57,24 +53,25 @@ export class PersonalListComponent implements OnInit {
     private exportService: ExportService,
     private navigatorService: NavigatorService,
     private confirmationService: ConfirmationService,
-    private snackbarService: SnackbarService,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
-    this.resizeTable();
-    this.navigatorService
-      .getNavivagorChangeEmitter()
-      .subscribe((menuVisible) => {
-        if (menuVisible) this.tableWidth = 'calc(100vw - 255px)';
-        else this.tableWidth = 'calc(100vw - 55px)';
-      });
+    this.defaultActive = '1';
     
+    this.navigatorService.getNavivagorChangeEmitter().subscribe((menuVisible) => {
+      if (menuVisible) this.tableWidth = 'calc(100vw - 255px)';
+      else this.tableWidth = 'calc(100vw - 55px)';
+    });
+    
+    this.resizeTable();
+
     this.trySynchronize();
     this.getAllProvinces();
     this.getAllPersons();
     this.getAllCenters();
     this.getAllRoles();
-    this.defaultActive = '1';
+    
 
     this.states = [
       { label: 'Inactivo', value: '0' },
@@ -86,33 +83,16 @@ export class PersonalListComponent implements OnInit {
   resizeTable(){
     if(document.getElementById("p-slideMenu")){
       this.tableWidth = 'calc(100vw - 255px)';
-    }else{
+    } else {
       this.tableWidth = 'calc(100vw - 55px)';
     }
   }
-
-  trySynchronize(){
-    this.personService.checkPersons().subscribe({
-      next: (res: Boolean) => {
-        this.isSynchronized = res;
-      },
-    });
-   
-  }
-  synchronizeLdap(){
-    const ref = this.dialogService.open(PersonalSynchronizeLdapComponent, {
-        width: '110vh',
-        showHeader:true,
-        header:'Sincronizar LDAP'
-    });
-}
-
 
   getAllProvinces() {
     this.provinceService.getAllProvinces().subscribe({
       next: (res: Province[]) => {
         this.provinces = res;
-      },
+      }
     });
   }
 
@@ -120,7 +100,7 @@ export class PersonalListComponent implements OnInit {
     this.roleService.getAllRoles().subscribe({
       next: (res: Role[]) => {
         this.roles = res;
-      },
+      }
     });
   }
 
@@ -132,7 +112,7 @@ export class PersonalListComponent implements OnInit {
     this.centerService.getAllCenters().subscribe({
       next: (res: Center[]) => {
         this.centers = res;
-      },
+      }
     });
   }
 
@@ -142,7 +122,7 @@ export class PersonalListComponent implements OnInit {
         this.persons = res;
         this.totalPersons = this.persons.length;
         this.personsToExport = this.persons;
-      },
+      }
     });
   }
 
@@ -203,12 +183,28 @@ export class PersonalListComponent implements OnInit {
           },
           error: (errorResponse) => {
             this.snackbarService.error(errorResponse['message']);
-          },
+          }
         });
       },
       reject: () => {
         this.confirmationService.close();
-      },
+      }
+    });
+  }
+
+  trySynchronize(){
+    this.personService.checkPersons().subscribe({
+      next: (res: Boolean) => {
+        this.isSynchronized = res;
+      }
+    });
+  }
+
+  synchronizeLdap(){
+    const ref = this.dialogService.open(PersonalSynchronizeLdapComponent, {
+        width: '110vh',
+        showHeader:true,
+        header:'Sincronizar LDAP'
     });
   }
 }
