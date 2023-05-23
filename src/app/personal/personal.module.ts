@@ -19,9 +19,10 @@ import { PersonalEditComponent } from './personal-edit/personal-edit/personal-ed
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { PersonalSynchronizeLdapComponent } from './personal-synchronize-ldap/personal-synchronize-ldap.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
+import {MultiSelectModule} from 'primeng/multiselect';
+import { PersonalConfigComponent } from './personal-config/personal-config.component';
 @NgModule({
-  declarations: [PersonalListComponent, PersonalEditComponent, PersonalSynchronizeLdapComponent],
+  declarations: [PersonalListComponent, PersonalEditComponent, PersonalSynchronizeLdapComponent, PersonalConfigComponent],
 
   imports: [
     CommonModule,
@@ -42,7 +43,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     PickListModule,
     ReactiveFormsModule,
     VirtualScrollerModule,
-    FormsModule    
+    FormsModule,
+    MultiSelectModule,
   ],
 })
 export class PersonalModule {}
