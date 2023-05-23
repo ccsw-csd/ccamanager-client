@@ -1,8 +1,19 @@
-import {Component,OnInit,ViewChild,ViewChildren,QueryList} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ViewChildren,
+  QueryList,
+  Input
+} from '@angular/core';
 import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
-import {DialogService,DynamicDialogConfig,DynamicDialogRef } from 'primeng/dynamicdialog';
+import {
+  DialogService,
+  DynamicDialogConfig,
+  DynamicDialogRef,
+} from 'primeng/dynamicdialog';
 import { Province } from 'src/app/core/models/Province';
 import { ProvinceService } from 'src/app/core/services/province.service';
 import { CenterService } from 'src/app/core/services/center.service';
@@ -14,9 +25,9 @@ import { Role } from 'src/app/core/models/Role';
 import { Dropdown } from 'primeng/dropdown';
 import { ExportService } from 'src/app/core/services/export.service';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
+import { PersonalConfigComponent } from '../personal-config/personal-config.component';
 import { PersonalEditComponent } from '../personal-edit/personal-edit/personal-edit.component';
 import { PersonalSynchronizeLdapComponent } from '../personal-synchronize-ldap/personal-synchronize-ldap.component';
-
 
 @Component({
   selector: 'app-personal-list',
@@ -35,6 +46,9 @@ export class PersonalListComponent implements OnInit {
 
   provinces: Province[];
   isSynchronized: Boolean = false;
+  columnNames: any[];
+  changeCols : boolean = false;
+  _selectedColumns : any[];
   persons: Person[];
   centers: Center[];
   roles: Role[];
@@ -57,7 +71,7 @@ export class PersonalListComponent implements OnInit {
     private exportService: ExportService,
     private navigatorService: NavigatorService,
     private confirmationService: ConfirmationService,
-    private snackbarService: SnackbarService,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -68,7 +82,7 @@ export class PersonalListComponent implements OnInit {
         if (menuVisible) this.tableWidth = 'calc(100vw - 255px)';
         else this.tableWidth = 'calc(100vw - 55px)';
       });
-    
+
     this.trySynchronize();
     this.getAllProvinces();
     this.getAllPersons();
@@ -81,12 +95,54 @@ export class PersonalListComponent implements OnInit {
       { label: 'Activo', value: '1' },
       { label: 'Pendiente', value: '2' },
     ];
+
+    this.columnNames = [
+      { label: 'Saga', class:'saga' },
+      { label: 'Username' , class:'username' },
+      { label: 'Nombre' , class:'name' },
+      { label: 'Apellidos' , class:'lastname' },
+      { label: 'Cliente' , class:'customer' },
+      { label: 'Grado' , class:'grade' },
+      { label: 'Rol' , class:'role' },
+      { label: 'Horas' , class:'hours' },
+      { label: 'Práctica' , class:'businesscode' },
+      { label: 'Dpto' , class:'department' },
+      { label: 'Evaluador' , class:'manager' },
+      { label: 'Oficina' , class:'center',extraClass:'name' },
+      { label: 'Localización' , class:'province',extraClass:'province' },
+      { label: 'Estado' , class:'active', function:(value:number):string=>{return this.states.find((state) => state.value === value.toString())?.label;} },
+    ];
+    this._selectedColumns = this.columnNames;
   }
 
-  resizeTable(){
-    if(document.getElementById("p-slideMenu")){
+  isColumnVisible(columnLabel: string): boolean {
+    return this._selectedColumns.some(column => column.class === columnLabel);
+  }
+
+  showConfig(){
+    const ref = this.dialogService.open(PersonalConfigComponent, {
+      width: '75vh',
+      data: {
+        columns:this.columnNames
+      },
+      closable: true,
+      showHeader: true,
+      autoZIndex:true,
+      header: "Configuracion de la tabla",
+    });
+
+    ref.onClose.subscribe((result: any) => {
+      if(result){
+        this._selectedColumns = this.columnNames.filter(column => result.some(otherColumn => otherColumn.name === column.label));
+      }
+      console.log(this._selectedColumns);
+    });
+  }
+
+  resizeTable() {
+    if (document.getElementById('p-slideMenu')) {
       this.tableWidth = 'calc(100vw - 255px)';
-    }else{
+    } else {
       this.tableWidth = 'calc(100vw - 55px)';
     }
   }
@@ -94,22 +150,20 @@ export class PersonalListComponent implements OnInit {
     return this.states.find((state) => state.value === value.toString())?.label;
   }
 
-  trySynchronize(){
+  trySynchronize() {
     this.personService.checkPersons().subscribe({
       next: (res: Boolean) => {
         this.isSynchronized = res;
       },
     });
-   
   }
-  synchronizeLdap(){
+  synchronizeLdap() {
     const ref = this.dialogService.open(PersonalSynchronizeLdapComponent, {
-        width: '110vh',
-        showHeader:true,
-        header:'Sincronizar LDAP'
+      width: '110vh',
+      showHeader: true,
+      header: 'Sincronizar LDAP',
     });
-}
-
+  }
 
   getAllProvinces() {
     this.provinceService.getAllProvinces().subscribe({
@@ -151,9 +205,9 @@ export class PersonalListComponent implements OnInit {
 
   onFilter(event) {
     this.personsToExport = event.filteredValue;
-    setTimeout(()=>{
+    setTimeout(() => {
       this.totalPersons = event.filteredValue.length;
-    },0);
+    }, 0);
   }
 
   setFilters(): void {
@@ -166,12 +220,12 @@ export class PersonalListComponent implements OnInit {
     this.filterDropdowns.forEach((dropdown) => dropdown.clear(null));
     this.table.reset();
     this.setFilters();
-    this.table.sortOrder=1;
-    this.table.sort({ field: 'lastname', order: this.table.sortOrder});
+    this.table.sortOrder = 1;
+    this.table.sort({ field: 'lastname', order: this.table.sortOrder });
   }
 
   editPerson(person?: Person) {
-    let header = person? 'Modificar Persona' : 'Nueva Persona';
+    let header = person ? 'Modificar Persona' : 'Nueva Persona';
     const ref = this.dialogService.open(PersonalEditComponent, {
       width: '75vh',
       data: {
@@ -180,9 +234,9 @@ export class PersonalListComponent implements OnInit {
         roles: this.roles,
         centers: this.centers,
       },
-      closable:false,
-      showHeader:true,
-      header:header
+      closable: false,
+      showHeader: true,
+      header: header,
     });
 
     ref.onClose.subscribe((result: boolean) => {
@@ -213,5 +267,9 @@ export class PersonalListComponent implements OnInit {
         this.confirmationService.close();
       },
     });
+  }
+
+  show(value:any){
+    console.log(value);
   }
 }
