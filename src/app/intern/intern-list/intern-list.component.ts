@@ -351,10 +351,6 @@ export class InternListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  showAllTech(techs: Technology[]): string {
-    return techs.map((t) => t.name).join(', ');
-  }
-
   onFilter(event) {
     this.internsForExcel = event.filteredValue;
     setTimeout(()=>{
@@ -397,15 +393,12 @@ export class InternListComponent implements OnInit, AfterViewInit {
     return this.genders.find((gender) => gender.value === value?.toString())?.label;
   }
 
-  showActive(value: number): string {
-    return this.actives.find((active) => active.value === value.toString())?.label;
+  showAllTech(techs: Technology[]): string {
+    return techs.map((t) => t.name).join(', ');
   }
 
-  showEducationCenter(educationCenter?: EducationCenter): string {
-    if(educationCenter){
-      return '['+educationCenter?.type+'] '+educationCenter?.name;
-    }
-    return '';
+  showActive(value: number): string {
+    return this.actives.find((active) => active.value === value.toString())?.label;
   }
 
   cleanFilters(): void {
