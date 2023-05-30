@@ -30,6 +30,7 @@ import { InternEditComponent } from '../intern-edit/intern-edit.component';
 import { InternTimelineComponent } from '../intern-timeline/intern-timeline.component';
 import { PersonService } from 'src/app/personal/services/person.service';
 import { InternSynchronizeLdapComponent } from '../intern-synchronize-ldap/intern-synchronize-ldap/intern-synchronize-ldap.component';
+import { ColumnConfigComponent } from 'src/app/core/views/column-config/column-config.component';
 
 @Component({
   selector: 'app-intern-list',
@@ -43,8 +44,10 @@ export class InternListComponent implements OnInit,AfterViewInit {
   @ViewChildren('filterCalendar') filterCalendars!: QueryList<Calendar>;
 
   isSynchronized: Boolean = false;
-  selectedActive:string;
-  selectedDate:Date;
+  columnNames: any[];
+  selectedColumnNames : any[];
+  selectedActive: string;
+  selectedDate: Date;
   interns: Intern[];
   internsForExcel: Intern[];
   educations: Education[];
@@ -67,7 +70,8 @@ export class InternListComponent implements OnInit,AfterViewInit {
   defaultFilters: any = { active: { value: '1' } };
   internsLength: number;
   es: any;
-  tableWidth: string ;
+  tableWidth: string;
+
   constructor(
     private primengConfig: PrimeNGConfig,
     private navigatorService: NavigatorService,
@@ -90,13 +94,12 @@ export class InternListComponent implements OnInit,AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.selectedActive="1";
-    
+    this.resizeTable();
     this.navigatorService.getNavivagorChangeEmitter().subscribe(menuVisible => {
       if (menuVisible) this.tableWidth = 'calc(100vw - 255px)';
-       else this.tableWidth = 'calc(100vw - 55px)';
-       });
-    this.resizeTable();
+      else this.tableWidth = 'calc(100vw - 55px)';
+    });
+    
     this.getAllInterns();
     this.getAllEducations();
     this.getAllEducationCenters();
@@ -105,6 +108,9 @@ export class InternListComponent implements OnInit,AfterViewInit {
     this.getAllLevels();
     this.getAllActions();
     this.getAllTechnologies();
+
+    this.selectedActive="1";
+
     this.primengConfig.setTranslation(this.translateService.getSpanish());
     this.filterService.register('valueInArray', (value, filter): boolean => {
       if (filter === undefined || filter === null || filter.trim() === '') {
@@ -114,6 +120,67 @@ export class InternListComponent implements OnInit,AfterViewInit {
         return false;
       }
       return value.some((t) => t.name === filter);
+    });
+
+    
+    this.columnNames = [
+      { header: 'Periodo', field: 'period' },
+      { header: 'Username', field: 'username' },
+      { header: 'Nombre', field: 'name' },
+      { header: 'Apellidos', field: 'lastname' },
+      { header: 'Género', field: 'gender', parse:(value: number): string => {return this.genders.find((state) => state.value === value.toString())?.label} },
+      { header: 'Titulación', field: 'education', fieldExtra: 'name' },
+      { header: 'Centro', field: 'educationCenter', fieldExtra: 'name', parse:(educationCenter?: EducationCenter): string => { return educationCenter ? ('[' + educationCenter?.type + '] ' + educationCenter?.name) : '' } },
+      { header: 'Oficina', field: 'center', fieldExtra: 'name' },
+      { header: 'Localización', field: 'province', fieldExtra: 'province' },
+      { header: 'Inicio', field: 'startDate', isDate: true },
+      { header: 'Fin', field: 'endDate', isDate: true },
+      { header: 'Horas', field: 'hours' },
+      { header: 'Cliente', field: 'customer' },
+      { header: 'Código', field: 'code' },
+      { header: 'Tecnologías', field: 'technologies', parse:(techs: Technology[]): string => {return techs.map((t) => t.name).join(', ')} },
+      { header: 'Inglés', field: 'englishLevel', fieldExtra: 'name' },
+      { header: 'Mentor', field: 'mentor' },
+      { header: 'Coordinador', field: 'coordinator' },
+      { header: 'Resp. RRHH', field: 'rrhh' },
+      { header: 'Acción', field: 'action', fieldExtra: 'name' },
+      { header: 'F.Contrato', field: 'contractDate', isDate: true },
+      { header: 'Saga', field: 'saga' },
+      { header: 'Estado', field: 'active', parse:(value: number): string => {return this.actives.find((state) => state.value === value.toString())?.label} }
+    ];
+    this.selectedColumnNames = this.loadSelected();
+  }
+
+  loadSelected(): any[] {
+    return localStorage.getItem('internListColumns') != null ? this.columnNames.filter(e => localStorage.getItem('internListColumns').indexOf(e.header) != -1) : this.columnNames;
+  }
+
+  saveSelected(selectedColumnNames: any[]) {
+    localStorage.setItem('internListColumns', JSON.stringify(selectedColumnNames.map(e => e.header)));
+  }
+
+  isColumnVisible(field: string): boolean {
+    return this.selectedColumnNames.some(column => column.field === field);
+  }
+
+  showConfig(){
+    const ref = this.dialogService.open(ColumnConfigComponent, {
+      width: '75vh',
+      data: {
+        columns: this.columnNames,
+        selected: this.selectedColumnNames
+      },
+      closable: true,
+      showHeader: true,
+      autoZIndex: true,
+      header: "Configuracion de la tabla"
+    });
+
+    ref.onClose.subscribe((result: any) => {
+      if(result) {
+        this.selectedColumnNames = result;
+        this.saveSelected(result);
+      }
     });
   }
 
@@ -232,7 +299,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
       width: '600px',
       data: {
         action: 'Comment',
-        value: intern.comment,
+        value: intern.comment
       },
       closable: false,
       showHeader: true,
@@ -253,6 +320,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
       }
     });
   }
+
   addLink(intern:Intern) {
     this.ref = this.dialogService.open(DialogComponent, {
       width: '600px',
@@ -331,7 +399,7 @@ export class InternListComponent implements OnInit,AfterViewInit {
     return this.actives.find((active) => active.value === value.toString())?.label;
   }
 
-  showEducationCenter(educationCenter?:EducationCenter):string{
+  showEducationCenter(educationCenter?: EducationCenter): string {
     if(educationCenter){
       return '['+educationCenter?.type+'] '+educationCenter?.name;
     }

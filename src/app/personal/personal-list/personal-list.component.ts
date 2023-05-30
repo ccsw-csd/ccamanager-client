@@ -14,7 +14,7 @@ import { Role } from 'src/app/core/models/Role';
 import { Dropdown } from 'primeng/dropdown';
 import { ExportService } from 'src/app/core/services/export.service';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
-import { PersonalConfigComponent } from '../personal-config/personal-config.component';
+import { ColumnConfigComponent } from 'src/app/core/views/column-config/column-config.component';
 import { PersonalEditComponent } from '../personal-edit/personal-edit/personal-edit.component';
 import { PersonalSynchronizeLdapComponent } from '../personal-synchronize-ldap/personal-synchronize-ldap.component';
 
@@ -113,7 +113,7 @@ export class PersonalListComponent implements OnInit {
   }
 
   showConfig(){
-    const ref = this.dialogService.open(PersonalConfigComponent, {
+    const ref = this.dialogService.open(ColumnConfigComponent, {
       width: '75vh',
       data: {
         columns: this.columnNames,

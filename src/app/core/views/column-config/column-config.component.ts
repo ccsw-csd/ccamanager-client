@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { DynamicDialogRef ,DynamicDialogConfig} from 'primeng/dynamicdialog';
+import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 @Component({
   selector: 'app-personal-config',
-  templateUrl: './personal-config.component.html',
-  styleUrls: ['./personal-config.component.scss']
+  templateUrl: './column-config.component.html',
+  styleUrls: ['./column-config.component.scss']
 })
-export class PersonalConfigComponent implements OnInit {
+export class ColumnConfigComponent implements OnInit {
 
   constructor(
     private ref: DynamicDialogRef,
