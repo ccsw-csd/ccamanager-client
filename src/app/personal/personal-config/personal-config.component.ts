@@ -7,40 +7,33 @@ import { DynamicDialogRef ,DynamicDialogConfig} from 'primeng/dynamicdialog';
 })
 export class PersonalConfigComponent implements OnInit {
 
-  constructor(private ref: DynamicDialogRef,
-    private config: DynamicDialogConfig) {
-   }
-  allColumns :any [] = [
-    { name: 'Saga', key:'saga' },
-    { name: 'Username' , key:'username' },
-    { name: 'Nombre' , key:'name' },
-    { name: 'Apellidos' , key:'lastname' },
-    { name: 'Cliente' , key:'customer' },
-    { name: 'Grado' , key:'grade' },
-    { name: 'Rol' , key:'role' },
-    { name: 'Horas' , key:'hours' },
-    { name: 'Práctica' , key:'businesscode' },
-    { name: 'Dpto' , key:'department' },
-    { name: 'Evaluador' , key:'manager' },
-    { name: 'Oficina' , key:'center' },
-    { name: 'Localización' , key:'province' },
-    { name: 'Estado' , key:'active' },
-  ];
-  selectedColumns: any[];
+  constructor(
+    private ref: DynamicDialogRef,
+    private config: DynamicDialogConfig
+  ) { }
 
   columns: any[] = [];
+  selectedColumns: any[];
 
   ngOnInit(): void {
-    this.selectedColumns= this.config.data.columns.slice();
-    console.log(typeof this.selectedColumns);
-    this.columns = this.allColumns.filter(column => !this.selectedColumns.some(otherColumn => otherColumn.name === column.label));
+    this.columns = this.getAviables(this.config.data.columns.slice(), this.config.data.selected.slice());
+    this.selectedColumns = this.config.data.selected.slice();
   }
+
   closeWindow() {
     this.ref.close();
   }
 
-  save(){
-  console.log(this.selectedColumns);
-    this.ref.close(this.selectedColumns);
+  save() {
+    this.ref.close(this.getSelected(this.config.data.columns.slice(), this.selectedColumns));
   }
+
+  getAviables(cols, sel) {
+    return cols.filter(e => sel.indexOf(e) == -1);
+  }
+
+  getSelected(cols, sel) {
+    return cols.filter(e => sel.indexOf(e) != -1);
+  }
+
 }

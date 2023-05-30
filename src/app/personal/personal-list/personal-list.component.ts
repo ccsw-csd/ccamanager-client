@@ -1,19 +1,8 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ViewChildren,
-  QueryList,
-  Input
-} from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Province } from 'src/app/core/models/Province';
 import { ProvinceService } from 'src/app/core/services/province.service';
 import { CenterService } from 'src/app/core/services/center.service';
@@ -33,12 +22,7 @@ import { PersonalSynchronizeLdapComponent } from '../personal-synchronize-ldap/p
   selector: 'app-personal-list',
   templateUrl: './personal-list.component.html',
   styleUrls: ['./personal-list.component.scss'],
-  providers: [
-    DialogService,
-    DynamicDialogConfig,
-    DynamicDialogRef,
-    ConfirmationService,
-  ],
+  providers: [DialogService, DynamicDialogConfig, DynamicDialogRef, ConfirmationService]
 })
 export class PersonalListComponent implements OnInit {
   @ViewChild(Table) table: Table;
@@ -47,8 +31,8 @@ export class PersonalListComponent implements OnInit {
   provinces: Province[];
   isSynchronized: Boolean = false;
   columnNames: any[];
+  selectedColumnNames : any[];
   changeCols : boolean = false;
-  _selectedColumns : any[];
   persons: Person[];
   centers: Center[];
   roles: Role[];
@@ -88,54 +72,64 @@ export class PersonalListComponent implements OnInit {
     this.getAllPersons();
     this.getAllCenters();
     this.getAllRoles();
+    
     this.defaultActive = '1';
 
     this.states = [
       { label: 'Inactivo', value: '0' },
       { label: 'Activo', value: '1' },
-      { label: 'Pendiente', value: '2' },
+      { label: 'Pendiente', value: '2' }
     ];
 
     this.columnNames = [
-      { label: 'Saga', class:'saga' },
-      { label: 'Username' , class:'username' },
-      { label: 'Nombre' , class:'name' },
-      { label: 'Apellidos' , class:'lastname' },
-      { label: 'Cliente' , class:'customer' },
-      { label: 'Grado' , class:'grade' },
-      { label: 'Rol' , class:'role' },
-      { label: 'Horas' , class:'hours' },
-      { label: 'Práctica' , class:'businesscode' },
-      { label: 'Dpto' , class:'department' },
-      { label: 'Evaluador' , class:'manager' },
-      { label: 'Oficina' , class:'center',extraClass:'name' },
-      { label: 'Localización' , class:'province',extraClass:'province' },
-      { label: 'Estado' , class:'active', function:(value:number):string=>{return this.states.find((state) => state.value === value.toString())?.label;} },
+      { header: 'Saga', field: 'saga' },
+      { header: 'Username', field: 'username' },
+      { header: 'Nombre', field: 'name' },
+      { header: 'Apellidos', field: 'lastname' },
+      { header: 'Cliente', field: 'customer' },
+      { header: 'Grado', field: 'grade' },
+      { header: 'Rol', field: 'role' },
+      { header: 'Horas', field: 'hours' },
+      { header: 'Práctica', field: 'businesscode' },
+      { header: 'Dpto', field: 'department' },
+      { header: 'Evaluador', field: 'manager' },
+      { header: 'Oficina', field: 'center', fieldExtra: 'name' },
+      { header: 'Localización', field: 'province', fieldExtra: 'province' },
+      { header: 'Estado', field: 'active', parse:(value: number): string => {return this.states.find((state) => state.value === value.toString())?.label} }
     ];
-    this._selectedColumns = this.columnNames;
+    this.selectedColumnNames = this.loadSelected();
   }
 
-  isColumnVisible(columnLabel: string): boolean {
-    return this._selectedColumns.some(column => column.class === columnLabel);
+  loadSelected(): any[] {
+    return localStorage.getItem('personListColumns') != null ? this.columnNames.filter(e => localStorage.getItem('personListColumns').indexOf(e.header) != -1) : this.columnNames;
+  }
+
+  saveSelected(selectedColumnNames: any[]) {
+    localStorage.setItem('personListColumns', JSON.stringify(selectedColumnNames.map(e => e.header)));
+  }
+
+  isColumnVisible(field: string): boolean {
+    return this.selectedColumnNames.some(column => column.field === field);
   }
 
   showConfig(){
     const ref = this.dialogService.open(PersonalConfigComponent, {
       width: '75vh',
       data: {
-        columns:this.columnNames
+        columns: this.columnNames,
+        selected: this.selectedColumnNames
       },
       closable: true,
       showHeader: true,
-      autoZIndex:true,
-      header: "Configuracion de la tabla",
+      autoZIndex: true,
+      header: "Configuracion de la tabla"
     });
 
     ref.onClose.subscribe((result: any) => {
-      if(result){
-        this._selectedColumns = this.columnNames.filter(column => result.some(otherColumn => otherColumn.name === column.label));
+      if(result) {
+        this.selectedColumnNames = result;
+        this.saveSelected(result);
       }
-      console.log(this._selectedColumns);
     });
   }
 
@@ -146,9 +140,6 @@ export class PersonalListComponent implements OnInit {
       this.tableWidth = 'calc(100vw - 55px)';
     }
   }
-  showActive(value: number): string {
-    return this.states.find((state) => state.value === value.toString())?.label;
-  }
 
   trySynchronize() {
     this.personService.checkPersons().subscribe({
@@ -157,11 +148,12 @@ export class PersonalListComponent implements OnInit {
       },
     });
   }
+
   synchronizeLdap() {
     const ref = this.dialogService.open(PersonalSynchronizeLdapComponent, {
       width: '110vh',
       showHeader: true,
-      header: 'Sincronizar LDAP',
+      header: 'Sincronizar LDAP'
     });
   }
 
@@ -169,7 +161,7 @@ export class PersonalListComponent implements OnInit {
     this.provinceService.getAllProvinces().subscribe({
       next: (res: Province[]) => {
         this.provinces = res;
-      },
+      }
     });
   }
 
@@ -177,19 +169,15 @@ export class PersonalListComponent implements OnInit {
     this.roleService.getAllRoles().subscribe({
       next: (res: Role[]) => {
         this.roles = res;
-      },
+      }
     });
-  }
-
-  exportExcel() {
-    this.exportService.exportPersons(this.personsToExport);
   }
 
   getAllCenters() {
     this.centerService.getAllCenters().subscribe({
       next: (res: Center[]) => {
         this.centers = res;
-      },
+      }
     });
   }
 
@@ -199,8 +187,12 @@ export class PersonalListComponent implements OnInit {
         this.persons = res;
         this.totalPersons = this.persons.length;
         this.personsToExport = this.persons;
-      },
+      }
     });
+  }
+
+  exportExcel() {
+    this.exportService.exportPersons(this.personsToExport);
   }
 
   onFilter(event) {
@@ -267,9 +259,5 @@ export class PersonalListComponent implements OnInit {
         this.confirmationService.close();
       },
     });
-  }
-
-  show(value:any){
-    console.log(value);
   }
 }

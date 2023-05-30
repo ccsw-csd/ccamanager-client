@@ -23,31 +23,36 @@
     min-width: 140px;
 }
 .hours{
-    min-width: 60px;
+    min-width: 80px;
     max-width: 80px;
-    justify-content: center;
+    justify-content: right;
 }
 .businesscode{
     min-width: 100px;
+    max-width: 100px;
 }
 .department{
     min-width: 100px;
+    max-width: 100px;
 }
 .manager{
     min-width: 140px;
 }
 .center{
-    min-width: 100px;
+    min-width: 115px;
+    max-width: 115px;
 }
 .province{
-    min-width: 115px;
+    min-width: 135px;
+    max-width: 135px;
 }
 .active{
     min-width: 100px;
-    max-width: 120px;
+    max-width: 100px;
 }
 .buttons{
-   width: 60px;
+    min-width: 80px;
+    max-width: 80px;
 }
 .p-button.p-button-icon-only.p-button-rounded{
     width: 2rem;

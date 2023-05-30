@@ -1,7 +1,7 @@
 <div class="flex flex-row justify-content-between">
     <div class="flex justify-content-start">
         <h1>
-            Gestión Becarios
+            Gestión becarios
         </h1>
     </div>
 </div>
@@ -15,12 +15,12 @@
         </div>
     </div>
     <div class="flex justify-content-end"> 
-        <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir becario" (click)="addOrEditIntern()" tooltipPosition="top"> </button>
+        <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2 p-button-outlined" pTooltip="Añadir becario" (click)="addOrEditIntern()" tooltipPosition="top"> </button>
         <button pButton pRipple type="button" icon="pi pi-chart-bar" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="TimeLine" (click)="showTimeLine()" tooltipPosition="top"> </button>
         <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2 p-button-outlined p-button-secondary" (click)="exportExcel()" pTooltip="Descargar listado" tooltipPosition="top"></button>
-        <button pButton pRipple type="button" icon=" pi pi-filter-slash" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="Limpiar filtros" (click)="cleanFilters()"  tooltipPosition="top"></button>
-        <button pButton pRipple type="button" icon=" pi pi-cloud-upload" class="p-button-lg m-2 p-button-outlined p-button-secondary" *ngIf="!isSynchronized" pTooltip="Sincronizar LDAP" (click)="synchronizeLdap()" tooltipPosition="top"></button>
-        <button pButton pRipple type="button" icon=" pi pi-cog" class="p-button-lg m-2 p-button-outlined p-button-secondary"></button>
+        <button pButton pRipple type="button" icon="pi pi-filter-slash" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="Limpiar filtros" (click)="cleanFilters()"  tooltipPosition="top"></button>
+        <button pButton pRipple type="button" icon="pi pi-cloud-upload" class="p-button-lg m-2 p-button-outlined p-button-secondary" *ngIf="!isSynchronized" pTooltip="Sincronizar LDAP" (click)="synchronizeLdap()" tooltipPosition="top"></button>
+        <button pButton pRipple type="button" icon="pi pi-cog" class="p-button-lg m-2 p-button-outlined p-button-secondary"></button>
     </div>
 </div>
 <p-table [style]="{'height': 'calc(100vh - 275px)', 'width': tableWidth}"   [scrollable]="true"  selectionMode="single"  scrollHeight="flex"
