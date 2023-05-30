@@ -4,6 +4,7 @@ import { LdapPerson } from 'src/app/personal/models/LdapPerson';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ListsLdapPerson } from 'src/app/personal/models/ListsLdapPerson';
 
 @Component({
   selector: 'app-intern-synchronize-ldap',
@@ -18,8 +19,8 @@ export class InternSynchronizeLdapComponent implements OnInit {
   totalInternsCCSW_app: number;
   totalInternsApp_CCSW: number;
 
-  showSpinner1: Boolean = true;
-  showSpinner2: Boolean = true;
+  showSpinner: Boolean = true;
+
 
   constructor(
     private personService: PersonService,
@@ -29,20 +30,13 @@ export class InternSynchronizeLdapComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
-    this.personService.compareLdapToInterns().subscribe({
-      next: (res: LdapPerson[]) => {
-        this.internsCCSW_app = res;
-          this.totalInternsCCSW_app = this.internsCCSW_app.length;
-          this.showSpinner1 = false;
-      },
-    });
-    
-    this.personService.compareInternsToLdap().subscribe({
-      next: (res: LdapPerson[]) => {
-        this.internsApp_CCSW = res;
-        this.totalInternsApp_CCSW = this.internsApp_CCSW.length;
-        this.showSpinner2 = false;
+    this.personService.compareLdapInterns().subscribe({
+      next: (res: ListsLdapPerson) => {
+      this.internsCCSW_app = res.ldapToPersons;
+      this.internsApp_CCSW = res.personsToLdap;
+      this.totalInternsCCSW_app = this.internsCCSW_app.length;
+      this.totalInternsApp_CCSW = this.internsApp_CCSW.length;
+      this.showSpinner = false;
       },
     });
   }

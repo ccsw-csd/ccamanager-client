@@ -25,16 +25,17 @@ import { PersonalSynchronizeLdapComponent } from '../personal-synchronize-ldap/p
   providers: [DialogService, DynamicDialogConfig, DynamicDialogRef, ConfirmationService]
 })
 export class PersonalListComponent implements OnInit {
+
   @ViewChild(Table) table: Table;
   @ViewChildren('filterDropdown') filterDropdowns!: QueryList<Dropdown>;
 
-  provinces: Province[];
   isSynchronized: Boolean = false;
   columnNames: any[];
   selectedColumnNames : any[];
   changeCols : boolean = false;
   persons: Person[];
   centers: Center[];
+  provinces: Province[];
   roles: Role[];
   totalPersons: number;
   states: any[];
@@ -60,12 +61,10 @@ export class PersonalListComponent implements OnInit {
 
   ngOnInit(): void {
     this.resizeTable();
-    this.navigatorService
-      .getNavivagorChangeEmitter()
-      .subscribe((menuVisible) => {
-        if (menuVisible) this.tableWidth = 'calc(100vw - 255px)';
-        else this.tableWidth = 'calc(100vw - 55px)';
-      });
+    this.navigatorService.getNavivagorChangeEmitter().subscribe((menuVisible) => {
+      if (menuVisible) this.tableWidth = 'calc(100vw - 255px)';
+      else this.tableWidth = 'calc(100vw - 55px)';
+    });
 
     this.trySynchronize();
     this.getAllProvinces();
@@ -139,22 +138,6 @@ export class PersonalListComponent implements OnInit {
     } else {
       this.tableWidth = 'calc(100vw - 55px)';
     }
-  }
-
-  trySynchronize() {
-    this.personService.checkPersons().subscribe({
-      next: (res: Boolean) => {
-        this.isSynchronized = res;
-      },
-    });
-  }
-
-  synchronizeLdap() {
-    const ref = this.dialogService.open(PersonalSynchronizeLdapComponent, {
-      width: '110vh',
-      showHeader: true,
-      header: 'Sincronizar LDAP'
-    });
   }
 
   getAllProvinces() {
@@ -252,12 +235,28 @@ export class PersonalListComponent implements OnInit {
           },
           error: (errorResponse) => {
             this.snackbarService.error(errorResponse['message']);
-          },
+          }
         });
       },
       reject: () => {
         this.confirmationService.close();
-      },
+      }
+    });
+  }
+
+  trySynchronize(){
+    this.personService.checkPersons().subscribe({
+      next: (res: Boolean) => {
+        this.isSynchronized = res;
+      }
+    });
+  }
+
+  synchronizeLdap(){
+    const ref = this.dialogService.open(PersonalSynchronizeLdapComponent, {
+        width: '110vh',
+        showHeader:true,
+        header:'Sincronizar LDAP'
     });
   }
 }
