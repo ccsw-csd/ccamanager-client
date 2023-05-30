@@ -14,9 +14,9 @@ import { Role } from 'src/app/core/models/Role';
 import { Dropdown } from 'primeng/dropdown';
 import { ExportService } from 'src/app/core/services/export.service';
 import { NavigatorService } from 'src/app/core/services/navigator.service';
+import { ColumnConfigComponent } from 'src/app/core/views/column-config/column-config.component';
 import { PersonalEditComponent } from '../personal-edit/personal-edit/personal-edit.component';
 import { PersonalSynchronizeLdapComponent } from '../personal-synchronize-ldap/personal-synchronize-ldap.component';
-
 
 @Component({
   selector: 'app-personal-list',
@@ -29,7 +29,10 @@ export class PersonalListComponent implements OnInit {
   @ViewChild(Table) table: Table;
   @ViewChildren('filterDropdown') filterDropdowns!: QueryList<Dropdown>;
 
-  isSynchronized: Boolean = true;
+  isSynchronized: Boolean = false;
+  columnNames: any[];
+  selectedColumnNames : any[];
+  changeCols : boolean = false;
   persons: Person[];
   centers: Center[];
   provinces: Province[];
@@ -57,14 +60,11 @@ export class PersonalListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.defaultActive = '1';
-    
+    this.resizeTable();
     this.navigatorService.getNavivagorChangeEmitter().subscribe((menuVisible) => {
       if (menuVisible) this.tableWidth = 'calc(100vw - 255px)';
       else this.tableWidth = 'calc(100vw - 55px)';
     });
-    
-    this.resizeTable();
 
     this.trySynchronize();
     this.getAllProvinces();
@@ -72,16 +72,68 @@ export class PersonalListComponent implements OnInit {
     this.getAllCenters();
     this.getAllRoles();
     
+    this.defaultActive = '1';
 
     this.states = [
       { label: 'Inactivo', value: '0' },
       { label: 'Activo', value: '1' },
-      { label: 'Pendiente', value: '2' },
+      { label: 'Pendiente', value: '2' }
     ];
+
+    this.columnNames = [
+      { header: 'Saga', field: 'saga' },
+      { header: 'Username', field: 'username' },
+      { header: 'Nombre', field: 'name' },
+      { header: 'Apellidos', field: 'lastname' },
+      { header: 'Cliente', field: 'customer' },
+      { header: 'Grado', field: 'grade' },
+      { header: 'Rol', field: 'role' },
+      { header: 'Horas', field: 'hours' },
+      { header: 'Práctica', field: 'businesscode' },
+      { header: 'Dpto', field: 'department' },
+      { header: 'Evaluador', field: 'manager' },
+      { header: 'Oficina', field: 'center', fieldExtra: 'name' },
+      { header: 'Localización', field: 'province', fieldExtra: 'province' },
+      { header: 'Estado', field: 'active', parse:(value: number): string => {return this.states.find((state) => state.value === value.toString())?.label} }
+    ];
+    this.selectedColumnNames = this.loadSelected();
   }
 
-  resizeTable(){
-    if(document.getElementById("p-slideMenu")){
+  loadSelected(): any[] {
+    return localStorage.getItem('personListColumns') != null ? this.columnNames.filter(e => localStorage.getItem('personListColumns').indexOf(e.header) != -1) : this.columnNames;
+  }
+
+  saveSelected(selectedColumnNames: any[]) {
+    localStorage.setItem('personListColumns', JSON.stringify(selectedColumnNames.map(e => e.header)));
+  }
+
+  isColumnVisible(field: string): boolean {
+    return this.selectedColumnNames.some(column => column.field === field);
+  }
+
+  showConfig(){
+    const ref = this.dialogService.open(ColumnConfigComponent, {
+      width: '75vh',
+      data: {
+        columns: this.columnNames,
+        selected: this.selectedColumnNames
+      },
+      closable: true,
+      showHeader: true,
+      autoZIndex: true,
+      header: "Configuracion de la tabla"
+    });
+
+    ref.onClose.subscribe((result: any) => {
+      if(result) {
+        this.selectedColumnNames = result;
+        this.saveSelected(result);
+      }
+    });
+  }
+
+  resizeTable() {
+    if (document.getElementById('p-slideMenu')) {
       this.tableWidth = 'calc(100vw - 255px)';
     } else {
       this.tableWidth = 'calc(100vw - 55px)';
@@ -104,10 +156,6 @@ export class PersonalListComponent implements OnInit {
     });
   }
 
-  exportExcel() {
-    this.exportService.exportPersons(this.personsToExport);
-  }
-
   getAllCenters() {
     this.centerService.getAllCenters().subscribe({
       next: (res: Center[]) => {
@@ -126,11 +174,15 @@ export class PersonalListComponent implements OnInit {
     });
   }
 
+  exportExcel() {
+    this.exportService.exportPersons(this.personsToExport);
+  }
+
   onFilter(event) {
     this.personsToExport = event.filteredValue;
-    setTimeout(()=>{
+    setTimeout(() => {
       this.totalPersons = event.filteredValue.length;
-    },0);
+    }, 0);
   }
 
   setFilters(): void {
@@ -143,12 +195,12 @@ export class PersonalListComponent implements OnInit {
     this.filterDropdowns.forEach((dropdown) => dropdown.clear(null));
     this.table.reset();
     this.setFilters();
-    this.table.sortOrder=1;
-    this.table.sort({ field: 'lastname', order: this.table.sortOrder});
+    this.table.sortOrder = 1;
+    this.table.sort({ field: 'lastname', order: this.table.sortOrder });
   }
 
   editPerson(person?: Person) {
-    let header = person? 'Modificar Persona' : 'Nueva Persona';
+    let header = person ? 'Modificar Persona' : 'Nueva Persona';
     const ref = this.dialogService.open(PersonalEditComponent, {
       width: '75vh',
       data: {
@@ -157,9 +209,9 @@ export class PersonalListComponent implements OnInit {
         roles: this.roles,
         centers: this.centers,
       },
-      closable:false,
-      showHeader:true,
-      header:header
+      closable: false,
+      showHeader: true,
+      header: header,
     });
 
     ref.onClose.subscribe((result: boolean) => {

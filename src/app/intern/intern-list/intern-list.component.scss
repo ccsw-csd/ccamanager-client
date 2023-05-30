@@ -8,14 +8,15 @@
     max-width: 100px;
 }
 .name{
-    min-width:100px;
+    min-width:80px;
+    max-width: 100px;
 }
 .lastname{
     min-width: 230px;
 }
 .gender{
-    min-width: 190px;
-    max-width: 190px;
+    min-width: 105px;
+    max-width: 105px;
 }
 .education{
     min-width: 200px;
@@ -24,20 +25,25 @@
     min-width: 200px;
 }
 .center{
-    min-width: 100px;
+    min-width: 115px;
+    max-width: 115px;
 }
 .province{
-    min-width: 100px;
+    min-width: 130px;
+    max-width: 130px;
 }
 .startDate{
-    min-width: 200px;
+    min-width: 100px;
+    max-width: 100px;
 }
 .endDate{
-    min-width: 200px;
+    min-width: 100px;
+    max-width: 100px;
 }
 .hours{
-    min-width: 60px;
+    min-width: 80px;
     max-width: 80px;
+    justify-content: right;
 }
 .customer{
     min-width: 100px;
@@ -47,10 +53,11 @@
     max-width: 130px;
 }
 .technologies{
-    min-width: 230px;
+    min-width: 300px;
 }
 .englishLevel{
-    min-width: 230px;
+    min-width: 135px;
+    max-width: 135px;
 }
 .mentor{
     min-width: 230px;
@@ -65,17 +72,18 @@
     min-width: 200px;
 }
 .contractDate{
-    min-width: 200px;
+    min-width: 100px;
+    max-width: 100px;
 }
 .saga{
-    min-width:80px;
+    min-width: 80px;
     max-width: 100px;
 }
 .active{
     min-width: 100px;
-    max-width: 120px;
+    max-width: 100px;
 }
 .buttons{
-    min-width: 170px;
-    max-width: 170px;
+    min-width: 150px;
+    max-width: 150px;
 }

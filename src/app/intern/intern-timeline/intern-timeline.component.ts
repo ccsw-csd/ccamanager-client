@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import annotationPlugin from 'chartjs-plugin-annotation';
@@ -28,7 +28,6 @@ export class InternTimelineComponent implements OnInit {
   @ViewChild('chart', { static: true, read: UIChart }) chartElement: UIChart;
 
   constructor(
-    private ref: DynamicDialogRef,
     private internService: InternService,
     private primengConfig: PrimeNGConfig,
     private translateService: TranslateService,
@@ -171,7 +170,6 @@ export class InternTimelineComponent implements OnInit {
               },
             },
           };
-
           let heightChart = 100 + 40 * this.timeLines.length;          
           this.chartElement.el.nativeElement.childNodes[0].style['height'] = heightChart + 'px';
         },

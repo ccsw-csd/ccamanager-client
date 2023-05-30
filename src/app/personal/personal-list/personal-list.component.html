@@ -12,253 +12,107 @@
             <i class="pi pi-users text-xl text-primary"></i>
         </div>
         <div class="flex flex-row align-items-center gap-1">
-            <p>{{this.totalPersons}}</p>
-            Personas
+            <p>{{this.totalPersons}}</p>Personas
         </div>
     </div>
-    <div class="flex justify-content-end ">
-        <button pButton pRipple type="button" icon="pi pi-sync" class="p-button-lg m-2 p-button-warning" pTooltip="Sincronizar LDAP" (click)="synchronizeLdap()" *ngIf="!isSynchronized"></button>
-        <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir usuario"  (click)="editPerson(null)"></button>
-        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2"pTooltip="Descargar listado" (click)="exportExcel()"></button>
-        <button pButton pRipple type="button" icon="pi pi-filter-slash" class="p-button-lg m-2"pTooltip="Limpiar filtros" (click)="cleanFilters()"></button>
+    <div>
+        <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2 p-button-outlined" pTooltip="Añadir usuario" (click)="editPerson(null)"></button>
+        <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2 p-button-outlined p-button-secondary" (click)="exportExcel()" pTooltip="Descargar listado"></button>
+        <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-filter-slash" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="Limpiar filtros" (click)="cleanFilters()"></button>
+        <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-cloud-upload" class="p-button-lg m-2 p-button-outlined p-button-secondary" *ngIf="!isSynchronized" pTooltip="Sincronizar LDAP" (click)="synchronizeLdap()"></button>
+        <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-cog" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="Visualización columnas" (click)="showConfig()"></button>
     </div>
 </div>
 
-
 <p-table [style]="{'height': 'calc(100vh - 275px)', 'width':tableWidth }" [scrollable]="true" scrollHeight="flex" selectionMode="single" [value]="persons"
     styleClass="p-datatable-striped " [paginator]="false" sortField="lastname" [sortOrder]="1"
-    [(filters)]="defaultFilters" (onFilter)="onFilter($event)">
-    <ng-template pTemplate="header">
+    [(filters)]="defaultFilters" (onFilter)="onFilter($event)" [columns]="selectedColumnNames">
+    <ng-template pTemplate="header" let-columns >
         <tr>
-            <th class="saga" pSortableColumn="saga">
-                Saga<p-sortIcon field="saga"></p-sortIcon>
+            <th *ngFor="let col of columns" pSortableColumn={{col.field}} class={{col.field}}>
+                {{col.header}}<p-sortIcon field={{col.field}}></p-sortIcon>
             </th>
-
-            <th class="username" pSortableColumn="username">
-                Username<p-sortIcon field="username"></p-sortIcon>
-            </th>
-
-            <th class="name" pSortableColumn="name">
-                Nombre<p-sortIcon field="name"></p-sortIcon>
-            </th>
-
-            <th class="lastname" pSortableColumn="lastname" >
-                Apellidos<p-sortIcon field="lastname"></p-sortIcon>
-            </th>
-
-            <th class="customer" pSortableColumn="customer">
-                Cliente<p-sortIcon field="customer"></p-sortIcon>
-            </th>
-
-            <th class="grade" pSortableColumn="grade">
-                Grado<p-sortIcon field="grade"></p-sortIcon>
-            </th>
-
-            <th class="role" pSortableColumn="role">
-                Rol<p-sortIcon field="role"></p-sortIcon>
-            </th>
-
-            <th class="hours" pSortableColumn="hours">
-                Horas<p-sortIcon field="hours"></p-sortIcon>
-            </th>
-
-            <th class="businesscode" pSortableColumn="businesscode">
-                Práctica<p-sortIcon field="businesscode"></p-sortIcon>
-            </th>
-
-            <th class="department" pSortableColumn="department">
-                Dpto<p-sortIcon field="department"></p-sortIcon>
-            </th>
-
-            <th class="manager" pSortableColumn="manager">
-                Evaluador<p-sortIcon field="manager"></p-sortIcon>
-            </th>
-
-            <th class="center" pSortableColumn="center.name">
-                Oficina<p-sortIcon field="center.name"></p-sortIcon>
-            </th>
-            <th class="province" pSortableColumn="province.province">
-                Localización<p-sortIcon field="province.province"></p-sortIcon>
-            </th>
-            <th class="active" pSortableColumn="active">
-                Estado<p-sortIcon field="active"></p-sortIcon>
-            </th>
-
             <th class="buttons"></th>
         </tr>
         <tr>
-            <th class="saga">
-                <p-columnFilter class="w-full " type="text" field="saga" matchMode="contains" [showMenu]="false"
-                    [showClearButton]="false"></p-columnFilter>
+            <th *ngIf="isColumnVisible('saga')" class="saga">
+                <p-columnFilter class="w-full" type="text" field="saga" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="username" >
-                <p-columnFilter class="w-full " type="text" field="username" matchMode="contains" [showMenu]="false"
-                    [showClearButton]="false"></p-columnFilter>
+            <th *ngIf="isColumnVisible('username')" class="username">
+                <p-columnFilter class="w-full" type="text" field="username" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="name">
-                <p-columnFilter class="w-full " type="text" field="name" matchMode="contains" [showMenu]="false"
-                    [showClearButton]="false"></p-columnFilter>
+            <th *ngIf="isColumnVisible('name')" class="name">
+                <p-columnFilter class="w-full" type="text" field="name" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="lastname">
-                <p-columnFilter class="w-full " type="text" field="lastname" matchMode="contains" [showMenu]="false"
-                    [showClearButton]="false"></p-columnFilter>
+            <th *ngIf="isColumnVisible('lastname')" class="lastname">
+                <p-columnFilter class="w-full" type="text" field="lastname" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="customer">
-                <p-columnFilter class="w-full " type="text" field="customer" matchMode="contains" [showMenu]="false"
-                    [showClearButton]="false"></p-columnFilter>
+            <th *ngIf="isColumnVisible('customer')" class="customer">
+                <p-columnFilter class="w-full" type="text" field="customer" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="grade">
-                <p-columnFilter class="w-full " type="text" field="grade" matchMode="contains" [showMenu]="false"
-                    [showClearButton]="false"></p-columnFilter>
+            <th *ngIf="isColumnVisible('grade')" class="grade">
+                <p-columnFilter class="w-full" type="text" field="grade" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="role">
-                <p-columnFilter class="w-full " field="role" matchMode="equals" [showMenu]="false"
-                    [showClearButton]="false">
+            <th *ngIf="isColumnVisible('role')" class="role">
+                <p-columnFilter class="w-full " field="role" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [options]="roles" optionLabel="role"
-                            (onChange)="filter($event.value?.role)" [showClear]="true" placeholder="..." 
-                            [showClearButton]="false">
-                        </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="roles" optionLabel="role" (onChange)="filter($event.value?.role)" [showClear]="true" placeholder="..." [showClearButton]="false"></p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="hours">
-                <p-columnFilter class="w-full " type="text" field="hours" matchMode="contains" [showMenu]="false"
-                    [showClearButton]="false"></p-columnFilter>
+            <th *ngIf="isColumnVisible('hours')" class="hours">
+                <p-columnFilter class="w-full" type="text" field="hours" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="businesscode">
-                <p-columnFilter class="w-full " type="text" field="businesscode" matchMode="contains" [showMenu]="false"
-                    [showClearButton]="false"></p-columnFilter>
+            <th *ngIf="isColumnVisible('businesscode')" class="businesscode">
+                <p-columnFilter class="w-full" type="text" field="businesscode" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="department">
-                <p-columnFilter class="w-full " type="text" field="department" matchMode="contains" [showMenu]="false"
-                    [showClearButton]="false"></p-columnFilter>
+            <th *ngIf="isColumnVisible('department')" class="department">
+                <p-columnFilter class="w-full" type="text" field="department" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="manager">
-                <p-columnFilter class="w-full " type="text" field="manager" matchMode="contains" [showMenu]="false"
-                    [showClearButton]="false"></p-columnFilter>
+            <th *ngIf="isColumnVisible('manager')" class="manager">
+                <p-columnFilter class="w-full" type="text" field="manager" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="center">
-                <p-columnFilter class="w-full " field="center.name" matchMode="equals" [showMenu]="false"
-                    [showClearButton]="false">
+            <th *ngIf="isColumnVisible('center')" class="center">
+                <p-columnFilter class="w-full" field="center.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [options]="centers" optionLabel="name"
-                            (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="...">
-                        </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="centers" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="..."></p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="province">
-                <p-columnFilter class="w-full " field="province.province" matchMode="equals" [showMenu]="false"
-                    [showClearButton]="false">
+            <th *ngIf="isColumnVisible('province')" class="province">
+                <p-columnFilter class="w-full" field="province.province" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [options]="provinces" optionLabel="province"
-                            (onChange)="filter($event.value?.province)" [showClear]="true" placeholder="...">
-                        </p-dropdown>
+                        <p-dropdown #filterDropdown [options]="provinces" optionLabel="province" (onChange)="filter($event.value?.province)" [showClear]="true" placeholder="..."></p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="active">
-                <p-columnFilter class="w-full" field="active" matchMode="equals" [showMenu]="false"
-                    [showClearButton]="false">
+            <th *ngIf="isColumnVisible('active')" class="active">
+                <p-columnFilter class="w-full" field="active" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown  [(ngModel)]="defaultActive" [options]="states" optionLabel="label" optionValue="value"
-                            (onChange)="filter($event.value)" [showClear]="true" placeholder="..."> </p-dropdown>
+                        <p-dropdown [(ngModel)]="defaultActive" [options]="states" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
             <th class="buttons"></th>
         </tr>
     </ng-template>
-
     <ng-template pTemplate="body" let-person let-columns="columns">
         <tr [pSelectableRow]="person">
-            <td class="saga">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.saga" tooltipPosition="top">
-                    {{person.saga}}
+            <td *ngFor="let col of selectedColumnNames" class={{col.field}}>
+                <div *ngIf="!col.fieldExtra && !col.parse" class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{person[col.field]}}" tooltipPosition="top">
+                    {{person[col.field]}}
+                </div>
+                <div *ngIf="col.fieldExtra && !col.parse" class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{person[col.field]?.[col.fieldExtra]}}" tooltipPosition="top">
+                    {{person[col.field]?.[col.fieldExtra]}}
+                </div>
+                <div *ngIf="col.parse" class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{col.parse(person[col.field])}}" tooltipPosition="top">
+                    {{col.parse(person[col.field])}}
                 </div>
             </td>
-            <td class="username" >
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.username" tooltipPosition="top">
-                    {{person.username}}
-                </div>
-            </td>
-            <td class="name">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.name" tooltipPosition="top">
-                    {{person.name}}
-                </div>
-            </td>
-            <td class="lastname">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.lastname" tooltipPosition="top">
-                    {{person.lastname}}
-                </div>
-            </td>
-            <td class="customer">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.customer" tooltipPosition="top">
-                    {{person.customer}}
-                </div>
-            </td>
-            <td class="grade">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.grade" tooltipPosition="top">
-                    {{person.grade}}
-                </div>
-            </td>
-            <td class="role">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.role" tooltipPosition="top">
-                    {{person.role}}
-                </div>
-            </td>
-            <td  class="hours">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.hours" tooltipPosition="top">
-                    {{person.hours}}
-                </div>
-            </td>
-            <td class="businesscode">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.businesscode" tooltipPosition="top">
-                    {{person.businesscode}}
-                </div>
-            </td>
-            <td class="department">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.department" tooltipPosition="top">
-                    {{person.department}}
-                </div>
-            </td>
-            <td class="manager">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.manager" tooltipPosition="top">
-                    {{person.manager}}
-                </div>
-            </td>
-            <td class="center">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.center?.name" tooltipPosition="top">
-                    {{person.center?.name}}
-                </div>
-            </td>
-            <td class="province">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.province?.province" tooltipPosition="top">
-                    {{person.province?.province}}
-                </div>
-            </td>
-            <td class="active" *ngIf="person.active == 0">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="Inactivo" tooltipPosition="top">
-                    Inactivo
-                </div>
-            </td>
-            <td class="active" *ngIf="person.active == 1">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="Activo" tooltipPosition="top">
-                    Activo
-                </div>
-            </td>
-            <td class="active" *ngIf="person.active == 2">
-                <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" [pTooltip]="person.province?.province" tooltipPosition="top">
-                    Pendiente
-                </div>
-            </td>
-            <td class="buttons">
-                <div class="justify-content-between">
-                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
-                        pTooltip="Editar" (click)="editPerson(person)"></button>
-                    <button pButton pRipple type="button" icon="pi pi-trash"
-                        class="p-button-rounded p-button-danger p-button-text" pTooltip="Eliminar" (click)="deletePerson(person.id)"></button>
+            <td class="buttons pl-0">
+                <div class="flex flex-row">
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text" pTooltip="Editar" (click)="editPerson(person)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text" pTooltip="Eliminar" (click)="deletePerson(person.id)"></button>
                 </div>
             </td>
         </tr>

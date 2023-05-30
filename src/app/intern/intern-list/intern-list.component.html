@@ -1,7 +1,7 @@
 <div class="flex flex-row justify-content-between">
     <div class="flex justify-content-start">
         <h1>
-            Gestión Becarios
+            Gestión becarios
         </h1>
     </div>
 </div>
@@ -14,332 +14,169 @@
             <p>{{internsLength}}</p> Personas
         </div>
     </div>
-    <div class="flex justify-content-end ">
-        <button pButton pRipple type="button" icon="pi pi-sync" class="p-button-lg m-2 p-button-warning" pTooltip="Sincronizar LDAP" (click)="synchronizeLdap()" *ngIf="!isSynchronized"></button>
-        <button pButton pRipple type="button" icon="pi pi-chart-bar" class="p-button-lg m-2" pTooltip="TimeLine" (click)="showTimeLine()"></button>
-        <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2" pTooltip="Añadir becario" (click)="addOrEditIntern()"></button>
-        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2" pTooltip="Descargar listado" (click)="exportExcel()"></button>
-        <button pButton pRipple type="button" icon="pi pi-filter-slash" class="p-button-lg m-2" pTooltip="Limpiar filtros" (click)="cleanFilters()"></button>
+    <div class="flex justify-content-end"> 
+        <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2 p-button-outlined" pTooltip="Añadir becario" (click)="addOrEditIntern()" tooltipPosition="top"> </button>
+        <button pButton pRipple type="button" icon="pi pi-chart-bar" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="TimeLine" (click)="showTimeLine()" tooltipPosition="top"> </button>
+        <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2 p-button-outlined p-button-secondary" (click)="exportExcel()" pTooltip="Descargar listado" tooltipPosition="top"></button>
+        <button pButton pRipple type="button" icon="pi pi-filter-slash" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="Limpiar filtros" (click)="cleanFilters()"  tooltipPosition="top"></button>
+        <button pButton pRipple type="button" icon="pi pi-cloud-upload" class="p-button-lg m-2 p-button-outlined p-button-secondary" *ngIf="!isSynchronized" pTooltip="Sincronizar LDAP" (click)="synchronizeLdap()" tooltipPosition="top"></button>
+        <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-cog" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="Visualización columnas" (click)="showConfig()"></button>
     </div>
 </div>
-<p-table [style]="{'height': 'calc(100vh - 275px)', 'width': tableWidth}" [scrollable]="true"  selectionMode="single"  scrollHeight="flex"
-    [value]="interns" styleClass="p-datatable-striped"  [(filters)]="defaultFilters" (onFilter)="onFilter($event)"  sortMode="single"  >
-    <ng-template pTemplate="header" >
+<p-table [style]="{'height': 'calc(100vh - 275px)', 'width': tableWidth}"   [scrollable]="true"  selectionMode="single"  scrollHeight="flex"
+    [value]="interns" styleClass="p-datatable-striped" [(filters)]="defaultFilters" (onFilter)="onFilter($event)" sortMode="single" [columns]="selectedColumnNames">
+    <ng-template pTemplate="header" let-columns>
         <tr>
-            <th class="period" pSortableColumn="period">
-                Periodo <p-sortIcon field="period"></p-sortIcon>
+            <th *ngFor="let col of columns" pSortableColumn={{col.field}} class={{col.field}}>
+                {{col.header}}<p-sortIcon field={{col.field}}></p-sortIcon>
             </th>
-            <th class="username" pSortableColumn="username">
-                Username <p-sortIcon field="username"></p-sortIcon>
-            </th>
-            <th class="name" pSortableColumn="name">
-                Nombre <p-sortIcon field="name"></p-sortIcon>
-            </th>
-            <th class="lastname" pSortableColumn="lastname">
-                Apellidos <p-sortIcon field="lastname"></p-sortIcon>
-            </th>
-            <th class="gender" pSortableColumn="gender">
-                Genero <p-sortIcon field="gender"></p-sortIcon>
-            </th>
-            <th class="education" pSortableColumn="education.name">
-                Titulacion <p-sortIcon field="education.name"></p-sortIcon>
-            </th>
-            <th class="educationCenter" pSortableColumn="educationCenter.name">
-                Centro <p-sortIcon field="educationCenter.name"></p-sortIcon>
-            </th>
-            <th class="center" pSortableColumn="center.name">
-                Oficina <p-sortIcon field="center.name"></p-sortIcon>
-            </th>
-            <th class="province" pSortableColumn="province.province">
-                Localización <p-sortIcon field="province.province"></p-sortIcon>
-            </th>
-            <th class="startDate" pSortableColumn="startDate">
-                Inicio <p-sortIcon field="startDate"></p-sortIcon>
-            </th>
-            <th class="endDate"pSortableColumn="endDate">
-                Fin <p-sortIcon field="endDate"></p-sortIcon>
-            </th>
-            <th class="hours" pSortableColumn="hours">
-                Horas <p-sortIcon field="hours"></p-sortIcon>
-            </th>
-            <th class="customer" pSortableColumn="customer">
-                Cliente <p-sortIcon field="customer"></p-sortIcon>
-            </th>
-            <th class="code" pSortableColumn="code"> 
-                Codigo <p-sortIcon field="code"></p-sortIcon>
-            </th>
-            <th class="technologies">
-                Tecnologias 
-            </th>
-            <th class="englishLevel" pSortableColumn="englishLevel.name">
-                Inglés <p-sortIcon field="englishLevel.name"></p-sortIcon>
-            </th> 
-            <th class="mentor" pSortableColumn="mentor">
-                Mentor <p-sortIcon field="mentor"></p-sortIcon>
-            </th>
-            <th class="coordinator" pSortableColumn="coordinator">
-                Coordinador <p-sortIcon field="coordinator"></p-sortIcon>
-            </th>
-            <th class="rrhh"pSortableColumn="hrManager">
-                Resp. RRHH <p-sortIcon field="hrManager"></p-sortIcon>
-            </th>
-            <th class="action" pSortableColumn="action.name">
-                Acción <p-sortIcon field="action.name"></p-sortIcon>
-            </th>
-            <th class="contractDate" pSortableColumn="contractDate">
-                F.Contrato <p-sortIcon field="contractDate"></p-sortIcon>
-            </th>
-            <th class="saga" pSortableColumn="saga">
-                Saga <p-sortIcon field="saga"></p-sortIcon>
-            </th>
-            <th class="active" pSortableColumn="active">
-                Estado <p-sortIcon field="active"></p-sortIcon>
-            </th>
-            <th class="buttons">
-            </th>
+            <th class="buttons"></th>
         </tr>
         <tr >
-            <th class="period">
+            <th *ngIf="isColumnVisible('period')" class="period">
                 <p-columnFilter class="w-full" type="text" field="period" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="username" >
+            <th *ngIf="isColumnVisible('username')" class="username" >
                 <p-columnFilter class="w-full" type="text" field="username" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="name" >
+            <th *ngIf="isColumnVisible('name')" class="name" >
                 <p-columnFilter class="w-full" type="text" field="name" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="lastname" >
+            <th *ngIf="isColumnVisible('lastname')" class="lastname" >
                 <p-columnFilter class="w-full" type="text" field="lastname" matchMode="contains" [showMenu]="false"[showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="gender" >
+            <th *ngIf="isColumnVisible('gender')" class="gender" >
                 <p-columnFilter class="w-full" field="gender" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                         <p-dropdown #filterDropdown [options]="genders" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="education" >
+            <th *ngIf="isColumnVisible('education')" class="education" >
                 <p-columnFilter class="w-full" field="education.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                         <p-dropdown #filterDropdown [options]="educations" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="educationCenter " >
+            <th *ngIf="isColumnVisible('educationCenter')" class="educationCenter" >
                 <p-columnFilter class="w-full" field="educationCenter.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                         <p-dropdown #filterDropdown [options]="educationsCenter" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>  
-            <th class="center " >
+            <th *ngIf="isColumnVisible('center')" class="center" >
                 <p-columnFilter class="w-full" field="center.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                         <p-dropdown #filterDropdown [options]="centers" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="province" >
+            <th *ngIf="isColumnVisible('province')" class="province" >
                 <p-columnFilter class="w-full" field="province.province" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                         <p-dropdown #filterDropdown [options]="provinces" optionLabel="province" (onChange)="filter($event.value?.province)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="startDate" >
+            <th *ngIf="isColumnVisible('startDate')" class="startDate" >
                 <p-columnFilter class="w-full" type="date" field="startDate" matchMode="dateIs" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-filter="filterCallback">
                         <p-calendar  #filterCalendar appendTo="body" readonlyInput="true" (onSelect)="filter($event)" (onClear)="filter($event)" (input)="filter()" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" [showClear]="true"></p-calendar>
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="endDate" >
+            <th *ngIf="isColumnVisible('endDate')" class="endDate" >
                 <p-columnFilter class="w-full" type="date" field="endDate" matchMode="dateIs" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-filter="filterCallback">
                         <p-calendar #filterCalendar appendTo="body" readonlyInput="true"  (onSelect)="filter($event)" (onClear)="filter($event)" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" [showClear]="true"></p-calendar>
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="hours" >
+            <th *ngIf="isColumnVisible('hours')" class="hours" >
                 <p-columnFilter class="w-full" type="text" field="hours" matchMode="equals" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="customer" >
+            <th *ngIf="isColumnVisible('customer')" class="customer" >
                 <p-columnFilter class="w-full" type="text" field="customer" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="code" >
+            <th *ngIf="isColumnVisible('code')" class="code" >
                 <p-columnFilter class="w-full" type="text" field="code" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="technologies">
+            <th *ngIf="isColumnVisible('technologies')" class="technologies">
                 <p-columnFilter class="w-full" field="technologies" matchMode="valueInArray" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                         <p-dropdown #filterDropdown [options]="technologies" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
-                
             </th>
-            <th class="englishLevel " >
+            <th *ngIf="isColumnVisible('englishLevel')" class="englishLevel" >
                 <p-columnFilter class="w-full" field="englishLevel.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                         <p-dropdown #filterDropdown [options]="englishLevels" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>                    
                 </p-columnFilter>
             </th>
-            <th class="mentor" >
+            <th *ngIf="isColumnVisible('mentor')" class="mentor" >
                 <p-columnFilter class="w-full" type="text" field="mentor" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="coordinator" >
+            <th *ngIf="isColumnVisible('coordinator')" class="coordinator" >
                 <p-columnFilter class="w-full" type="text" field="coordinator" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="rrhh " >
+            <th *ngIf="isColumnVisible('rrhh')" class="rrhh" >
                 <p-columnFilter class="w-full" type="text" field="hrManager" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="action " >
+            <th *ngIf="isColumnVisible('action')" class="action">
                 <p-columnFilter class="w-full" field="action.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                         <p-dropdown #filterDropdown [options]="actions" optionLabel="name" (onChange)="filter($event.value?.name)"  [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="contractDate " >
+            <th *ngIf="isColumnVisible('contractDate')" class="contractDate" >
                 <p-columnFilter class="w-full" type="date" field="contractDate" matchMode="dateIs" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-filter="filterCallback">
                         <p-calendar #filterCalendar appendTo="body" readonlyInput="true"  (onSelect)="filter($event)" (onClear)="filter($event)"[locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" [showClear]="true"></p-calendar>
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="saga" >
+            <th *ngIf="isColumnVisible('saga')" class="saga" >
                 <p-columnFilter class="w-full" type="text" field="saga" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
             </th>
-            <th class="active" >
+            <th *ngIf="isColumnVisible('active')" class="active" >
                 <p-columnFilter class="w-full" field="active" matchMode="equals" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                         <p-dropdown  [(ngModel)]="selectedActive" [options]="actives" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="..."> </p-dropdown>
                     </ng-template>
                 </p-columnFilter>
             </th>
-            <th class="buttons" >            
-            </th>
+            <th class="buttons"></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-intern let-columns="columns">
         <tr [pSelectableRow]="intern">
-           <td class="period">
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern?.period}}" tooltipPosition="top">
-                   {{intern?.period}}
-               </div>
-           </td>
-           <td class="username">
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern?.username}}" tooltipPosition="top">
-                {{intern?.username}}
-               </div>
-           </td>
-           <td class="name" >
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern?.name}}" tooltipPosition="top">
-                {{intern?.name}}
-               </div>
-           </td>
-           <td class="lastname">
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern?.lastname}}" tooltipPosition="top">
-                {{intern?.lastname}}
-               </div>
-           </td>
-           <td class="gender">
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{showGender(intern?.gender)}}" tooltipPosition="top">
-                {{showGender(intern?.gender)}}
-               </div>
-           </td>
-           <td class="education">
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.education?.name}}" tooltipPosition="top">
-             {{intern.education?.name}}
-               </div>
-           </td>
-           <td class="educationCenter" >
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{showEducationCenter(intern.educationCenter)}}" tooltipPosition="top">
-                {{showEducationCenter(intern.educationCenter)}}
-               </div>
-           </td>
-           <td class="center">
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.center?.name}}" tooltipPosition="top">
-                {{intern.center?.name}}
-               </div>
-           </td>
-           <td class="province">
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.province?.province}}" tooltipPosition="top">
-                {{intern.province?.province}}
-               </div>
-           </td>
-           <td class="startDate">
-               {{intern.startDate | date:"dd/MM/yyyy" }}
-           </td>
-           <td class="endDate">
-               {{intern.endDate | date:"dd/MM/yyyy"}}
-           </td>
-           <td class="hours ">
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern?.hours}}" tooltipPosition="top">
-                {{intern?.hours}}
-               </div>
-           </td>
-           <td class="customer">
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern?.customer}}" tooltipPosition="top">
-                {{intern?.customer}}
-               </div>
-           </td>
-           <td class="code">
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern?.code}}" tooltipPosition="top">
-                {{intern?.code}}
-               </div>
-           </td>
-           <td class="technologies">                 
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{showAllTech(intern?.technologies)}}" tooltipPosition="top">
-                {{showAllTech(intern?.technologies)}}
-               </div>
-           </td>
-           <td class="englishLevel" >
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.englishLevel?.name}}" tooltipPosition="top">
-                {{intern.englishLevel?.name}}
-               </div>
-           </td>
-           <td class="mentor">
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern?.mentor}}" tooltipPosition="top">
-                {{intern?.mentor}}
-               </div>
-           </td>
-           <td class="coordinator">
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis"pTooltip="{{intern?.coordinator}}" tooltipPosition="top">
-                {{intern?.coordinator}}
-               </div>
-           </td>
-           <td class="rrhh">
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern?.hrManager}}" tooltipPosition="top">
-                {{intern?.hrManager}}
-               </div>
-           </td>
-           <td class="action" >
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern.action?.name}}" tooltipPosition="top">
-                {{intern.action?.name}}
-               </div>
-           </td>
-           <td class="contractDate">
-               {{intern.contractDate | date : "dd/MM/yyyy"}}
-           </td>
-           <td class="saga">
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern?.saga}}" tooltipPosition="top">
-                {{intern?.saga}}
-               </div>
-           </td>
-           <td class="active" >
-               <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{showActive(intern?.active)}}" tooltipPosition="top">
-                {{showActive(intern?.active)}}
-               </div>
-           </td>
-           <td class="buttons">
+            <td *ngFor="let col of selectedColumnNames" class={{col.field}}>
+                <div *ngIf="!col.fieldExtra && !col.parse && !col.isDate" class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern[col.field]}}" tooltipPosition="top">
+                    {{intern[col.field]}}
+                </div>
+                <div *ngIf="col.fieldExtra && !col.parse && !col.isDate" class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{intern[col.field]?.[col.fieldExtra]}}" tooltipPosition="top">
+                    {{intern[col.field]?.[col.fieldExtra]}}
+                </div>
+                <div *ngIf="col.parse && !col.isDate" class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{col.parse(intern[col.field])}}" tooltipPosition="top">
+                    {{col.parse(intern[col.field])}}
+                </div>
+                <div *ngIf="col.isDate" class="white-space-nowrap overflow-hidden text-overflow-ellipsis">
+                    {{intern[col.field] | date : "dd/MM/yyyy"}}
+                </div>
+            </td>
+            <td class="buttons">
                 <button pButton pRipple type="button" pTooltip="Link" tooltipPosition="top" *ngIf="intern.link == null || intern.link == ''" icon="pi pi-link" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem" (click)="addLink(intern)" ></button>            
                 <button pButton pRipple type="button" pTooltip="Link" tooltipPosition="top" *ngIf="intern.link != null " icon="pi pi-link" class="p-button-rounded p-button-text w-2rem h-2rem" (click)="addLink(intern)" ></button>
                 <button pButton pRipple type="button" pTooltip="Comentario" tooltipPosition="top"  *ngIf="intern.comment == null || intern.comment == ''" icon="pi pi-comment" class="p-button-rounded p-button-plain p-button-text w-2rem h-2rem" (click)="addComment(intern)" ></button>            
                 <button pButton pRipple type="button" pTooltip="Comentario" tooltipPosition="top" *ngIf="intern.comment != null " icon="pi pi-comment" class="p-button-rounded p-button-text w-2rem h-2rem" (click)="addComment(intern)" ></button>
                 <button pButton pRipple type="button" pTooltip="Editar" tooltipPosition="top" icon="pi pi-pencil" class="p-button-rounded p-button-text w-2rem h-2rem" (click)="addOrEditIntern(intern)" ></button>
                 <button pButton pRipple type="button" pTooltip="Eliminar" tooltipPosition="top" icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text w-2rem h-2rem" (click)="delete(intern.id)"></button>            
-           </td>
+            </td>
         </tr>
     </ng-template>
 </p-table>

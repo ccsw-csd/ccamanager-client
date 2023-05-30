@@ -13,16 +13,18 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { PaginatorModule } from 'primeng/paginator';
 import { TabViewModule } from 'primeng/tabview';
 import { TreeModule } from 'primeng/tree';
-import { ConfirmationService } from 'primeng/api';
-import { PickListModule } from 'primeng/picklist';
 import { PersonalEditComponent } from './personal-edit/personal-edit/personal-edit.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { PersonalSynchronizeLdapComponent } from './personal-synchronize-ldap/personal-synchronize-ldap.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
-  declarations: [PersonalListComponent, PersonalEditComponent, PersonalSynchronizeLdapComponent],
-
+  declarations: [
+    PersonalListComponent, 
+    PersonalEditComponent, 
+    PersonalSynchronizeLdapComponent
+  ],
   imports: [
     CommonModule,
     TableModule,
@@ -39,10 +41,10 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     ToastModule,
     TabViewModule,
     TreeModule,
-    PickListModule,
     ReactiveFormsModule,
     VirtualScrollerModule,
-    FormsModule    
+    FormsModule,
+    MultiSelectModule,
   ],
 })
 export class PersonalModule {}
