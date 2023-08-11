@@ -145,7 +145,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
       { header: 'Inglés', composeField: 'englishLevel.name',field: 'englishLevel', fieldExtra: 'name', filterType: 'dropdown',  matchMode: 'equals-and-null', options:[], optionLabel: 'name' },
       { header: 'Mentor', composeField: 'mentor',field: 'mentor', filterType: 'input' },
       { header: 'Coordinador', composeField: 'coordinator',field: 'coordinator', filterType: 'input' },
-      { header: 'Resp. RRHH', composeField: 'rrhh',field: 'rrhh', filterType: 'input' },
+      { header: 'Resp. RRHH', composeField: 'hrManager',field: 'hrManager', filterType: 'input' },
       { header: 'Acción', composeField: 'action.name',field: 'action', fieldExtra: 'name', filterType: 'dropdown',  matchMode: 'equals-and-null', options:[], optionLabel: 'name' },
       { header: 'F.Contrato', composeField: 'contractDate',field: 'contractDate', filterType: 'date', isDate: true, matchMode: 'dateAfter' },
       { header: 'Saga', composeField: 'saga',field: 'saga', filterType: 'input' },
