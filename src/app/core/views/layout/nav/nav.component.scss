@@ -1,42 +1,57 @@
 @import "./src/assets/scss/master";
 
-.nav{
-  background-color: $primary;
-  ::ng-deep .p-slidemenu {
-    background-color: $primary;
-    border:none;
-    width: 200px;
-    margin-left: 0px;
-    padding-left: 0px;
 
-    .p-submenu-icon, .p-slidemenu-backward{
-      color: white;
-    }
-    .p-menuitem {
-      .p-menuitem-link {
-        box-shadow: none;
-
-        .p-menuitem-text {
-          color: white;
-        }
-      }
-      .p-menuitem-link:not(.p-disabled):hover {
-        background-color: rgba(0,0,0,.04);
-
-        .p-menuitem-text, .p-submenu-icon, .p-slidemenu-backward {
-          color: white;
-          padding-left: 2px;
-        }
-      }
-      .p-menuitem-link-active {
-        background-color: transparent;
-        font-weight: bold;
-        border-left: 6px solid $background;
-     }
-    }   
-  }
+::ng-deep .p-sidebar .p-sidebar-header {
+  padding: 0px;
 }
 
-::ng-deep .p-sidebar .p-sidebar-content {
-  padding: 0rem;
+::ng-deep .p-panelmenu .p-panelmenu-panel {
+  border: 0px !important;
+  box-shadow: none;
+}
+
+::ng-deep .menu {
+  
+  background-color: $primary;
+  border:none;
+  width: 200px;
+  margin-left: 0px;
+  padding-left: 0px;
+  
+  
+  a {
+    background-color: $primary !important;
+    color: white !important;
+    padding: 0.75rem 1.25rem 0.75rem 1.25rem !important;
+    font-size: 15px !important;
+  }
+
+
+  .p-panelmenu-content {
+    background-color: $primary;
+    color: white !important;
+
+    span {
+      color: white !important;
+      padding-left: 20px;
+    }
+  }
+
+  a:not(.p-menuitem-link-active):hover {
+    background-color: rgba(0,0,0,.04) !important;
+  }
+
+  a:not(.p-menuitem-link-active) {
+    border-left: 6px solid $primary !important;
+    color: white !important;
+
+  }
+
+  .p-menuitem-link-active {
+    font-weight: bold !important;
+    border-left: 6px solid $background !important;
+    border-radius: 0px !important;
+    color: white !important;
+  }
+
 }

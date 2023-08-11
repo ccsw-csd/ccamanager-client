@@ -1,8 +1,8 @@
 <div class="flex flex-row justify-content-between">
     <div class="flex justify-content-start">
-        <h1>
+        <h3 class="p-0 m-0 mb-2">
             Gestión personal
-        </h1>
+        </h3>
     </div>
 </div>
 
@@ -11,94 +11,49 @@
         <div class="pl-3">
             <i class="pi pi-users text-xl text-primary"></i>
         </div>
-        <div class="flex flex-row align-items-center gap-1">
-            <p>{{this.totalPersons}}</p>Personas
+        <div class="flex flex-row align-items-center gap-1 text-sm">
+            <p>{{totalPersons}}</p>Personas
         </div>
     </div>
     <div>
+        <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-cloud-upload" class="p-button-lg m-2 p-button-outlined p-button-secondary" *ngIf="!isSynchronized" pTooltip="Sincronizar LDAP" (click)="synchronizeLdap()"></button>
         <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2 p-button-outlined" pTooltip="Añadir usuario" (click)="editPerson(null)"></button>
         <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2 p-button-outlined p-button-secondary" (click)="exportExcel()" pTooltip="Descargar listado"></button>
         <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-filter-slash" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="Limpiar filtros" (click)="cleanFilters()"></button>
-        <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-cloud-upload" class="p-button-lg m-2 p-button-outlined p-button-secondary" *ngIf="!isSynchronized" pTooltip="Sincronizar LDAP" (click)="synchronizeLdap()"></button>
         <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-cog" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="Visualización columnas" (click)="showConfig()"></button>
     </div>
 </div>
 
-<p-table [style]="{'height': 'calc(100vh - 275px)', 'width':tableWidth }" [scrollable]="true" scrollHeight="flex" selectionMode="single" [value]="persons"
+<p-table [style]="{'height': 'calc(100vh - 210px)', 'width':tableWidth }" [scrollable]="true" scrollHeight="flex" selectionMode="single" [value]="persons"
     styleClass="p-datatable-striped " [paginator]="false" sortField="lastname" [sortOrder]="1"
-    [(filters)]="defaultFilters" (onFilter)="onFilter($event)" [columns]="selectedColumnNames">
+    [(filters)]="defaultFilters" (onFilter)="onFilter($event)" [columns]="selectedColumnNames" [reorderableColumns]="true" (onColReorder)="onColReorder($event)">
     <ng-template pTemplate="header" let-columns >
         <tr>
-            <th *ngFor="let col of columns" pSortableColumn={{col.field}} class={{col.field}}>
-                {{col.header}}<p-sortIcon field={{col.field}}></p-sortIcon>
-            </th>
-            <th class="buttons"></th>
-        </tr>
-        <tr>
-            <th *ngIf="isColumnVisible('saga')" class="saga">
-                <p-columnFilter class="w-full" type="text" field="saga" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
-            </th>
-            <th *ngIf="isColumnVisible('username')" class="username">
-                <p-columnFilter class="w-full" type="text" field="username" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
-            </th>
-            <th *ngIf="isColumnVisible('name')" class="name">
-                <p-columnFilter class="w-full" type="text" field="name" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
-            </th>
-            <th *ngIf="isColumnVisible('lastname')" class="lastname">
-                <p-columnFilter class="w-full" type="text" field="lastname" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
-            </th>
-            <th *ngIf="isColumnVisible('customer')" class="customer">
-                <p-columnFilter class="w-full" type="text" field="customer" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
-            </th>
-            <th *ngIf="isColumnVisible('grade')" class="grade">
-                <p-columnFilter class="w-full" type="text" field="grade" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
-            </th>
-            <th *ngIf="isColumnVisible('role')" class="role">
-                <p-columnFilter class="w-full " field="role" matchMode="equals" [showMenu]="false" [showClearButton]="false">
+
+            <th *ngFor="let col of selectedColumnNames" class="{{col.field}} flex flex-column" pReorderableColumn>
+                <div class="flex flex-row mb-2" pSortableColumn="{{col.composeField}}">{{col.header}}<p-sortIcon field="{{col.composeField}}"></p-sortIcon></div>
+
+                <p-columnFilter *ngIf="col.filterType == 'input'" class="w-full" type="text" field="{{col.composeField}}" [showMenu]="false" [showClearButton]="false" matchMode="contains-and-null"></p-columnFilter>
+
+                <p-columnFilter *ngIf="col.filterType == 'dropdown'" class="w-full " field="{{col.composeField}}" matchMode="contains-and-null" [showMenu]="false" [showClearButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [options]="roles" optionLabel="role" (onChange)="filter($event.value?.role)" [showClear]="true" placeholder="..." [showClearButton]="false"></p-dropdown>
+                        <p-dropdown #filterDropdown [options]="col.options" optionLabel="{{col.optionLabel}}" (onChange)="filter($event.value == null ? null : $event.value[col.optionLabel])" [showClear]="true" placeholder="..." [showClearButton]="false"></p-dropdown>
                     </ng-template>
                 </p-columnFilter>
-            </th>
-            <th *ngIf="isColumnVisible('hours')" class="hours">
-                <p-columnFilter class="w-full" type="text" field="hours" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
-            </th>
-            <th *ngIf="isColumnVisible('businesscode')" class="businesscode">
-                <p-columnFilter class="w-full" type="text" field="businesscode" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
-            </th>
-            <th *ngIf="isColumnVisible('department')" class="department">
-                <p-columnFilter class="w-full" type="text" field="department" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
-            </th>
-            <th *ngIf="isColumnVisible('manager')" class="manager">
-                <p-columnFilter class="w-full" type="text" field="manager" matchMode="contains" [showMenu]="false" [showClearButton]="false"></p-columnFilter>
-            </th>
-            <th *ngIf="isColumnVisible('center')" class="center">
-                <p-columnFilter class="w-full" field="center.name" matchMode="equals" [showMenu]="false" [showClearButton]="false">
+
+                <p-columnFilter *ngIf="col.filterType == 'multiple'" class="w-full" field="{{col.composeField}}" matchMode="multiple" [showMenu]="false" [showClearButton]="false" value="1">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [options]="centers" optionLabel="name" (onChange)="filter($event.value?.name)" [showClear]="true" placeholder="..."></p-dropdown>
-                    </ng-template>
-                </p-columnFilter>
-            </th>
-            <th *ngIf="isColumnVisible('province')" class="province">
-                <p-columnFilter class="w-full" field="province.province" matchMode="equals" [showMenu]="false" [showClearButton]="false">
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [options]="provinces" optionLabel="province" (onChange)="filter($event.value?.province)" [showClear]="true" placeholder="..."></p-dropdown>
-                    </ng-template>
-                </p-columnFilter>
-            </th>
-            <th *ngIf="isColumnVisible('active')" class="active">
-                <p-columnFilter class="w-full" field="active" matchMode="equals" [showMenu]="false" [showClearButton]="false">
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown [(ngModel)]="defaultActive" [options]="states" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="..."> </p-dropdown>
+                        <p-multiSelect [ngModel]="col.initialValue" [options]="col.options" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="..."> </p-multiSelect>
                     </ng-template>
                 </p-columnFilter>
             </th>
             <th class="buttons"></th>
         </tr>
+
     </ng-template>
     <ng-template pTemplate="body" let-person let-columns="columns">
-        <tr [pSelectableRow]="person">
-            <td *ngFor="let col of selectedColumnNames" class={{col.field}}>
+        <tr [pSelectableRow]="person" (dblclick)="editPerson(person)">
+            <td *ngFor="let col of selectedColumnNames" class="{{col.field}}">
                 <div *ngIf="!col.fieldExtra && !col.parse" class="white-space-nowrap overflow-hidden text-overflow-ellipsis" pTooltip="{{person[col.field]}}" tooltipPosition="top">
                     {{person[col.field]}}
                 </div>

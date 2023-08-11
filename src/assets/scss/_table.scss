@@ -1,6 +1,6 @@
 .p-datatable .p-datatable-thead>tr>th {
     text-align: left;
-    padding: 0.65rem;
+    padding: 8px 3px 5px 3px;
     border: 1px solid #babfc7;
     border-width: 0 0 1px 0;
     font-weight: 700;
@@ -8,23 +8,28 @@
     background: #f8f8f8;
     transition: none;
 
-    height: 2.5rem;
+    //height: 2.5rem;
 
-    input, .p-dropdown {
-        height: 1.5rem;
+    input, .p-dropdown, .p-multiselect {
+        height: 1.6rem;
         padding-left: 0.25rem;
 
-        span {
+        span, 
+        .p-multiselect-label {
             padding-top: 0.15rem;
             padding-left: 0px;
+            padding-right: 0px;
         }
 
-        .p-dropdown-trigger {
+        .p-dropdown-trigger,
+        .p-multiselect-trigger {
             padding-right: 5px;
             width: auto;
         }
 
-        .p-dropdown-clear-icon {
+
+        .p-dropdown-clear-icon,
+        .p-multiselect-clear-icon {
             margin-top: 0.15rem;
             margin-right: 5px;
             position: initial;
@@ -33,6 +38,7 @@
         .p-dropdown-label {
             padding-right: 0px;
         }
+        
     }    
 }
 

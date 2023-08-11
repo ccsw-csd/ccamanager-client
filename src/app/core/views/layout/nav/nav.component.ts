@@ -39,6 +39,7 @@ export class NavComponent implements OnInit {
       },
       {
         label: "Mantenimiento",
+        expanded: true,
         items: [
           {label: "Centros Educativos", routerLink: '/education-center'},
           {label: "Titulaciones", routerLink: '/education'},

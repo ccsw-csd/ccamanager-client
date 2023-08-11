@@ -52,6 +52,7 @@ export class TechnologyListComponent implements OnInit {
   deleteItem(id: number) {
     this.confirmationService.confirm({
       message: '¿Seguro/a que quieres borrar la tecnología?',
+      rejectButtonStyleClass: 'p-button p-button-secondary p-button-outlined',
       accept: () => {
         this.confirmationService.close();
         this.technologyService.deleteTechnology(id).subscribe({

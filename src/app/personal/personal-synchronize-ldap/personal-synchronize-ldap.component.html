@@ -1,55 +1,44 @@
 <div>
-  <div class="flex flex-row">
-    <div class="flex flex-column">
-      <p style="font-size: 1.24rem;">La lista de distribución <strong>CCSW</strong> del LDAP no concuerda con la app:
-        <span ng-if="ldapToInterns">{{totalPersonsCCSW_app}} eliminar | </span>
-        <span ng-if="internsToLdap">{{totalPersonsApp_CCSW}} insertar</span>
-      </p>
-    </div>
-    <button pButton pRipple type="button" icon=" pi pi-sync" class="p-button-lg m-2 ml-8"  *ngIf="totalPersonsCCSW_app>0 || totalPersonsApp_CCSW>0"
-      pTooltip="Sincronizar manualmente" (click)="copyList(true)">
+
+  <div class="flex w-full align-items-center pl-4 mb-4">
+    <span>
+      La lista de distribución <strong>CCSW</strong> del LDAP no concuerda con los becarios listados en la aplicación. Acciones: {{totalPersonsCCSW_app}} eliminar y {{totalPersonsApp_CCSW}} insertar
+    </span>
+    <button pButton pRipple type="button" icon=" pi pi-sync" class="p-button-lg ml-6"  [disabled]="(totalPersonsCCSW_app+totalPersonsApp_CCSW > 0) == false"
+        pTooltip="Sincronizar manualmente" (click)="copyList()">
     </button>
-
   </div>
 
-  <div class="grid">
-    <div class="col-6 mt-4">
-      <div class="mb-3">
-        <span style="font-size: 1.24rem;">Personas de CCSW que <strong>NO</strong> están en la<strong>
-            app</strong>
-        </span>
+  
+  <div class="flex flex-row">
+    <div class="flex flex-column flex-1">
+
+      <div class="flex w-full h-2rem align-items-center justify-content-center" style="color: #12abdb; background-color: #f5f5f5; text-align: center;">
+        <div>Personas de <strong>CCSW</strong> que <strong>NO</strong> están en la aplicación</div>
       </div>
-      <hr>
 
-      <p-table [value]="personsCCSW_app" scrollHeight="400px" styleClass="no-border" [loading]="showSpinner"
-        [scrollable]="true">
-
-        <ng-template pTemplate="body" let-item>
-          <div style="margin-bottom: 10px;">
-            <h3 style="margin-bottom: 5px;">{{ item.name }} {{ item.lastname }}</h3>
-            <div style="margin-bottom: 30px;">{{ item.username }}</div>
-          </div>
-        </ng-template>
-      </p-table>
+      <div class="flex flex-none flex-column gap-2 m-3" style="height: calc(90vh - 230px); overflow: auto;">
+        <div *ngFor="let item of personsCCSW_app">          
+          <div class="text-800">{{ item.name }} {{ item.lastname }} </div>
+          <div class="text-sm mb-3 font-italic">({{ item.username }})</div>
+        </div>
+      </div>
     </div>
 
-    <div class="col-6 mt-4">
-      <div class="mb-3">
-        <span class="text-xl">Personas de la app que <strong>NO</strong> están en <strong>
-            CCSW</strong>
-        </span>
-      </div>
-      <hr>
+    <div class="flex flex-column flex-1">
 
-      <p-table [value]="personsApp_CCSW" scrollHeight="400px" styleClass="no-border" [loading]="showSpinner"
-        [scrollable]="true">
-        <ng-template pTemplate="body" let-item>
-          <div style="margin-bottom: 10px;">
-            <h3 style="margin-bottom: 5px;">{{ item.name }} {{ item.lastname }}</h3>
-            <div style="margin-bottom: 30px;">{{ item.username }}</div>
-          </div>
-        </ng-template>
-      </p-table>
+      <div class="flex w-full h-2rem align-items-center justify-content-center" style="color: #12abdb; background-color: #f5f5f5; text-align: center;">
+        <div>Personas de la <strong>aplicación</strong> que <strong>NO</strong> están en CCSW</div>
+      </div>
+
+      <div class="flex flex-none flex-column gap-2 m-3" style="height: calc(90vh - 230px); overflow: auto;">
+        <div *ngFor="let item of personsApp_CCSW">          
+          <div class="text-800">{{ item.name }} {{ item.lastname }} </div>
+          <div class="text-sm mb-3 font-italic">({{ item.username }})</div>
+        </div>
+      </div>
+
     </div>
   </div>
+
 </div>

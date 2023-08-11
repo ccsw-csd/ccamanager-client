@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { Table } from 'primeng/table';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, FilterService } from 'primeng/api';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Province } from 'src/app/core/models/Province';
@@ -34,18 +34,15 @@ export class PersonalListComponent implements OnInit {
   selectedColumnNames : any[];
   changeCols : boolean = false;
   persons: Person[];
-  centers: Center[];
-  provinces: Province[];
-  roles: Role[];
+  databaseCenters: Center[];
+  databaseProvinces: Province[];
+  databaseRoles: Role[];
   totalPersons: number;
   states: any[];
   tableWidth: string;
   personsToExport: Person[];
-  defaultActive: string;
-  defaultFilters: any = {
-    active: { value: '1' },
-    department: { value: 'CCSw' },
-  };
+  defaultFilters: any = {};
+
 
   constructor(
     private provinceService: ProvinceService,
@@ -56,7 +53,7 @@ export class PersonalListComponent implements OnInit {
     private exportService: ExportService,
     private navigatorService: NavigatorService,
     private confirmationService: ConfirmationService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
   ) {}
 
   ngOnInit(): void {
@@ -71,8 +68,6 @@ export class PersonalListComponent implements OnInit {
     this.getAllPersons();
     this.getAllCenters();
     this.getAllRoles();
-    
-    this.defaultActive = '1';
 
     this.states = [
       { label: 'Inactivo', value: '0' },
@@ -81,29 +76,45 @@ export class PersonalListComponent implements OnInit {
     ];
 
     this.columnNames = [
-      { header: 'Saga', field: 'saga' },
-      { header: 'Username', field: 'username' },
-      { header: 'Nombre', field: 'name' },
-      { header: 'Apellidos', field: 'lastname' },
-      { header: 'Cliente', field: 'customer' },
-      { header: 'Grado', field: 'grade' },
-      { header: 'Rol', field: 'role' },
-      { header: 'Horas', field: 'hours' },
-      { header: 'Práctica', field: 'businesscode' },
-      { header: 'Dpto', field: 'department' },
-      { header: 'Evaluador', field: 'manager' },
-      { header: 'Oficina', field: 'center', fieldExtra: 'name' },
-      { header: 'Localización', field: 'province', fieldExtra: 'province' },
-      { header: 'Estado', field: 'active', parse:(value: number): string => {return this.states.find((state) => state.value === value.toString())?.label} }
+      { header: 'Saga', composeField: 'saga', field: 'saga', filterType: 'input' },
+      { header: 'Username', composeField: 'username', field: 'username', filterType: 'input' },
+      { header: 'Nombre', composeField: 'name', field: 'name', filterType: 'input' },
+      { header: 'Apellidos', composeField: 'lastname', field: 'lastname', filterType: 'input' },
+      { header: 'Cliente', composeField: 'customer', field: 'customer', filterType: 'input' },
+      { header: 'Grado', composeField: 'grade', field: 'grade', filterType: 'input' },
+      { header: 'Rol', composeField: 'role', field: 'role', filterType: 'dropdown', options:[], optionLabel: 'role' },
+      { header: 'Horas', composeField: 'hours', field: 'hours', filterType: 'input' },
+      { header: 'Práctica', composeField: 'businesscode', field: 'businesscode', filterType: 'input' },
+      { header: 'Dpto', composeField: 'department', field: 'department', filterType: 'input' },
+      { header: 'Evaluador', composeField: 'manager', field: 'manager', filterType: 'input' },
+      { header: 'Oficina', composeField: 'center.name', field: 'center', fieldExtra: 'name', filterType: 'dropdown', options:[], optionLabel: 'name' },
+      { header: 'Localización', composeField: 'province.province', field: 'province', fieldExtra: 'province', filterType: 'dropdown', options:[], optionLabel: 'province' },
+      { header: 'Estado', composeField: 'active', field: 'active', filterType: 'multiple', options: this.states, optionLabel: 'active', initialValue: ['1'], parse:(value: number): string => {return this.states.find((state) => state.value === value.toString())?.label} }
     ];
     this.selectedColumnNames = this.loadSelected();
+
+  }
+
+  onColReorder(event): void {
+    this.saveSelected(this.selectedColumnNames);
   }
 
   loadSelected(): any[] {
-    return localStorage.getItem('personListColumns') != null ? this.columnNames.filter(e => localStorage.getItem('personListColumns').indexOf(e.header) != -1) : this.columnNames;
+    let selectedColumnNames: any = localStorage.getItem('personListColumns');
+    if (selectedColumnNames == null) return this.columnNames;
+
+    selectedColumnNames = JSON.parse(selectedColumnNames);
+
+    let columns : any[] = [];
+    selectedColumnNames.forEach(item => {
+      let filterColumn = this.columnNames.filter(column => column.header == item);
+      columns = columns.concat(filterColumn);
+    });
+
+    return columns;
   }
 
-  saveSelected(selectedColumnNames: any[]) {
+  saveSelected(selectedColumnNames: any[]) {    
     localStorage.setItem('personListColumns', JSON.stringify(selectedColumnNames.map(e => e.header)));
   }
 
@@ -143,7 +154,9 @@ export class PersonalListComponent implements OnInit {
   getAllProvinces() {
     this.provinceService.getAllProvinces().subscribe({
       next: (res: Province[]) => {
-        this.provinces = res;
+
+        this.databaseProvinces = res;
+        this.columnNames.filter(item => item.field == 'province')[0].options = res.concat({id:0, province:'null'});
       }
     });
   }
@@ -151,7 +164,8 @@ export class PersonalListComponent implements OnInit {
   getAllRoles() {
     this.roleService.getAllRoles().subscribe({
       next: (res: Role[]) => {
-        this.roles = res;
+        this.databaseRoles = res;
+        this.columnNames.filter(item => item.field == 'role')[0].options = res.concat({id:0, role:'null'});
       }
     });
   }
@@ -159,7 +173,8 @@ export class PersonalListComponent implements OnInit {
   getAllCenters() {
     this.centerService.getAllCenters().subscribe({
       next: (res: Center[]) => {
-        this.centers = res;
+        this.databaseCenters = res;
+        this.columnNames.filter(item => item.field == 'center')[0].options = res.concat({id:0, name:'null'});
       }
     });
   }
@@ -170,6 +185,7 @@ export class PersonalListComponent implements OnInit {
         this.persons = res;
         this.totalPersons = this.persons.length;
         this.personsToExport = this.persons;
+        this.setFilters();
       }
     });
   }
@@ -186,9 +202,9 @@ export class PersonalListComponent implements OnInit {
   }
 
   setFilters(): void {
-    this.defaultActive = '1';
-    this.table.filter('CCSw', 'department', 'equals');
-    this.table.filter('1', 'active', 'equals');
+    this.defaultFilters.department.value='CCSw'
+    this.defaultFilters.active.value=['1'];
+
   }
 
   cleanFilters(): void {
@@ -202,12 +218,12 @@ export class PersonalListComponent implements OnInit {
   editPerson(person?: Person) {
     let header = person ? 'Modificar Persona' : 'Nueva Persona';
     const ref = this.dialogService.open(PersonalEditComponent, {
-      width: '75vh',
+      width: '50vw',
       data: {
         person: person,
-        provinces: this.provinces,
-        roles: this.roles,
-        centers: this.centers,
+        provinces: this.databaseProvinces,
+        roles: this.databaseRoles,
+        centers: this.databaseCenters,
       },
       closable: false,
       showHeader: true,
@@ -222,6 +238,7 @@ export class PersonalListComponent implements OnInit {
   deletePerson(id: number) {
     this.confirmationService.confirm({
       message: '¿Seguro/a que quieres borrar la persona?',
+      rejectButtonStyleClass: 'p-button p-button-secondary p-button-outlined',
       accept: () => {
         this.confirmationService.close();
         this.personService.delete(id).subscribe({
@@ -254,7 +271,8 @@ export class PersonalListComponent implements OnInit {
 
   synchronizeLdap(){
     const ref = this.dialogService.open(PersonalSynchronizeLdapComponent, {
-        width: '110vh',
+        width:"70vw",
+        height:"90vh",
         showHeader:true,
         header:'Sincronizar LDAP'
     });

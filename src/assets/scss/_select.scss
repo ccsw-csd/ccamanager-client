@@ -2,10 +2,17 @@
     display: none !important;
 }
 
-p-columnfilter p-dropdown span {
+p-columnfilter p-dropdown span,
+p-columnfilter p-multiselect span {
     font-size: .85rem!important;
 }
 
 .p-multiselect-header {
     display: none !important;
 }
+
+.p-dropdown {
+    height: 42px;
+}
+
+

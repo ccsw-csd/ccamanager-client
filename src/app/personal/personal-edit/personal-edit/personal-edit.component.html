@@ -1,7 +1,7 @@
 <div class="spinner-overlay">
   <p-progressSpinner *ngIf="loading"></p-progressSpinner>
 </div>
-<div [formGroup]="personForm" class="flex flex-column gap-4">
+<div [formGroup]="personForm" class="flex flex-column gap-3">
 
   <div class="flex flex-row pt-2" *ngIf="!personElement.id">
     <span class="p-float-label w-full p-input-icon-right" >
@@ -19,100 +19,100 @@
 
   </div>
 
-  <div class="flex flex-row gap-4 " [ngClass]="{'pt-2': personElement.id != null}">
+  <div class="flex flex-row gap-2 " [ngClass]="{'pt-2': personElement.id != null}">
 
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText class="w-full" formControlName="saga">
+      <input id="name" type="text" pInputText class="w-full {{getErrorClass('saga')}}" formControlName="saga">
       <label>Saga<span class="text-red-600 text-base" *ngIf="personForm.get('saga').hasValidator(requiredField)">*</span></label>
     </span>
 
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText class="w-full" formControlName="username" (ngModelChange)="whenInformedUsername($event)">
+      <input id="name" type="text" pInputText class="w-full {{getErrorClass('username')}}" formControlName="username" (ngModelChange)="whenInformedUsername($event)">
       <label>Username<span class="text-red-600 text-base" *ngIf="personForm.get('username').hasValidator(requiredField)">*</span></label>
     </span>
 
   </div>
 
-  <div class="flex flex-row gap-4">
+  <div class="flex flex-row gap-2">
 
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText class="w-full" formControlName="name">
+      <input id="name" type="text" pInputText class="w-full {{getErrorClass('name')}}" formControlName="name">
       <label>Nombre<span class="text-red-600 text-base" *ngIf="personForm.get('name').hasValidator(requiredField)">*</span></label>
     </span>
 
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText class="w-full" formControlName="lastname">
+      <input id="name" type="text" pInputText class="w-full {{getErrorClass('lastname')}}" formControlName="lastname">
       <label>Apellidos<span class="text-red-600 text-base" *ngIf="personForm.get('lastname').hasValidator(requiredField)">*</span></label>
     </span>
   </div>
 
-  <div class="flex flex-row gap-4">
+  <div class="flex flex-row gap-2">
     <span class="p-float-label mb-1 flex-1">
-      <input id="name" type="text" pInputText class="w-full" formControlName="email">
+      <input id="name" type="text" pInputText class="w-full {{getErrorClass('email')}}" formControlName="email">
      <label for="email">Email<span class="text-red-600 text-base" *ngIf="personForm.get('email').hasValidator(requiredField)">*</span></label></span>
 
     <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText class="w-full" formControlName="customer">
+      <input id="name" type="text" pInputText class="w-full {{getErrorClass('customer')}}" formControlName="customer">
       <label>Cliente<span class="text-red-600 text-base" *ngIf="personForm.get('customer').hasValidator(requiredField)">*</span></label>
     </span>
 
   </div>
 
-  <div class="flex flex-row gap-4">
+  <div class="flex flex-row gap-2">
     <span class="p-float-label flex-1" style="min-width: 196px;">
-      <input id="name" type="text" pInputText class="w-full" formControlName="grade" >
+      <input id="name" type="text" pInputText class="w-full {{getErrorClass('grade')}}" formControlName="grade" >
       <label>Grado<span class="text-red-600 text-base" *ngIf="personForm.get('grade').hasValidator(requiredField)">*</span></label>
     </span>
 
     <span class="p-float-label flex-1">
-      <p-dropdown [options]="roles" [autoDisplayFirst]="false" styleClass="w-full" formControlName="role"
-        optionLabel="role" inputId="float-label"></p-dropdown>
+      <p-dropdown [options]="roles" [autoDisplayFirst]="false" styleClass="w-full {{getErrorClass('role')}}" formControlName="role"
+        optionLabel="role" inputId="float-label" ></p-dropdown>
       <label>Rol<span class="text-red-600 text-base" *ngIf="personForm.get('role').hasValidator(requiredField)">*</span></label>
     </span>
 
     <span class="p-float-label flex-1" style="min-width: 196px;">
-      <p-inputNumber class="w-full"  inputStyleClass="w-full" [style]="{'width':'100%'}" [inputStyle]="{'height':'45px','widht':'100%'}" inputId="integeronly" formControlName="hours"></p-inputNumber>
+      <p-inputNumber class="w-full"  inputStyleClass="w-full {{getErrorClass('hours')}}" [style]="{'width':'100%'}" [inputStyle]="{'height':'42px','width':'100%'}" inputId="integeronly" formControlName="hours"></p-inputNumber>
       <label>Horas<span class="text-red-600 text-base" *ngIf="personForm.get('hours').hasValidator(requiredField)">*</span></label>
     </span>
 
   </div>
 
 
-  <div class="flex flex-row gap-4">
+  <div class="flex flex-row gap-2">
 
     <span class="p-float-label flex-1" style="min-width: 196px;">
-      <input id="name" type="text" pInputText class="w-full" formControlName="businesscode">
+      <input id="name" type="text" pInputText class="w-full {{getErrorClass('businesscode')}}" formControlName="businesscode">
       <label>Práctica<span class="text-red-600 text-base" *ngIf="personForm.get('businesscode').hasValidator(requiredField)">*</span></label>
     </span>
 
     <span class="p-float-label flex-1" style="min-width: 196px;">
-      <input id="name" type="text" pInputText class="w-full" formControlName="department">
+      <input id="name" type="text" pInputText class="w-full {{getErrorClass('department')}}" formControlName="department">
       <label>Departamento<span class="text-red-600 text-base" *ngIf="personForm.get('department').hasValidator(requiredField)">*</span></label>
     </span>
 
     <span class="p-float-label flex-1" style="min-width: 196px;">
-      <input id="name" type="text" pInputText class="w-full" formControlName="manager">
+      <input id="name" type="text" pInputText class="w-full {{getErrorClass('manager')}}" formControlName="manager">
       <label>Evaluador<span class="text-red-600 text-base" *ngIf="personForm.get('manager').hasValidator(requiredField)">*</span></label>
     </span>
 
   </div>
 
-  <div class="flex flex-row gap-4">
+  <div class="flex flex-row gap-2">
 
     <span class="p-float-label flex-1">
-      <p-dropdown [options]="centers" [autoDisplayFirst]="false" styleClass="w-full" appendTo="body"
+      <p-dropdown [options]="centers" [autoDisplayFirst]="false" styleClass="w-full {{getErrorClass('center')}}" appendTo="body"
         formControlName="center" optionLabel="name" (onChange)="matchByProvince()"> </p-dropdown>
       <label>Oficina<span class="text-red-600 text-base" *ngIf="personForm.get('center').hasValidator(requiredField)">*</span></label>
     </span>
 
     <span class="p-float-label flex-1">
-      <p-dropdown [options]="provinces" [autoDisplayFirst]="false" styleClass="w-full" appendTo="body"
+      <p-dropdown [options]="provinces" [autoDisplayFirst]="false" styleClass="w-full {{getErrorClass('province')}}" appendTo="body"
         formControlName="province" optionLabel="province"> </p-dropdown>
       <label>Localización<span class="text-red-600 text-base" *ngIf="personForm.get('province').hasValidator(requiredField)">*</span></label>
     </span>
 
     <span class="p-float-label flex-1">
-      <p-dropdown [options]="actives" [autoDisplayFirst]="false" styleClass="w-full" appendTo="body"
+      <p-dropdown [options]="actives" [autoDisplayFirst]="false" styleClass="w-full {{getErrorClass('active')}}" appendTo="body"
         formControlName="active" optionLabel="label" optionValue="value"></p-dropdown>
       <label>Estado<span class="text-red-600 text-base" *ngIf="personForm.get('active').hasValidator(requiredField)">*</span></label>
     </span>
@@ -121,8 +121,8 @@
 
 </div>
 
-<div class="flex flex-row mt-5 gap-4 justify-content-end gap-2">
-  <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary"
+<div class="flex flex-row mt-5 gap-3 justify-content-end gap-2">
+  <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary p-button-outlined"
     (click)="closeWindow()"></button>
   <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check" [disabled]="!personForm.valid || loading"
     (click)="saveItem(personForm.value)"></button>

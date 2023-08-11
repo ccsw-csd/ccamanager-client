@@ -11,7 +11,6 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
-import { SlideMenuModule } from 'primeng/slidemenu';
 import { MenuModule } from 'primeng/menu';
 import { MessageService } from 'primeng/api';
 import { PickListModule } from 'primeng/picklist';
@@ -21,7 +20,7 @@ import { HeaderComponent } from './views/layout/header/header.component';
 import { NavComponent } from './views/layout/nav/nav.component';
 import { RefreshTokenResolverService } from './services/refresh-token-resolver.service';
 import { ColumnConfigComponent } from './views/column-config/column-config.component';
-
+import { PanelMenuModule } from 'primeng/panelmenu';
 
 
 @NgModule({
@@ -43,8 +42,8 @@ import { ColumnConfigComponent } from './views/column-config/column-config.compo
     ButtonModule,
     TooltipModule,
     MenuModule,
-    SlideMenuModule,
-    PickListModule
+    PickListModule,
+    PanelMenuModule,    
   ],
   providers: [
     HttpClientModule,

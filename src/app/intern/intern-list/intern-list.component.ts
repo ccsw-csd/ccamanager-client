@@ -47,28 +47,31 @@ export class InternListComponent implements OnInit, AfterViewInit {
   isSynchronized: Boolean = false;
   columnNames: any[];
   selectedColumnNames : any[];
-  selectedActive: string;
   selectedDate: Date;
   interns: Intern[];
   internsForExcel: Intern[];
-  educations: Education[];
-  educationsCenter: EducationCenter[];
-  centers: Center[];
-  provinces: Province[];
-  englishLevels: Level[];
-  actions: Action[];
-  technologies: Technology[];
+
+  databaseEducations: Education[];
+  databaseEducationsCenter: EducationCenter[];
+  databaseCenters: Center[];
+  databaseProvinces: Province[];
+  databaseEnglishLevels: Level[];
+  databaseActions: Action[];
+  databaseTechnologies: Technology[];
+
   genders: any[] = [
     { label: 'Otros', value: '0' },
     { label: 'Mujer', value: '1' },
     { label: 'Hombre', value: '2' },
+    { label: 'null', value: '-1' },
   ];
-  actives: any[] = [
+  states: any[] = [
     { label: 'Inactivo', value: '0' },
     { label: 'Activo', value: '1' },
     { label: 'Pendiente', value: '2'},
   ];
-  defaultFilters: any = { active: { value: '1' } };
+
+  defaultFilters: any = { };
   internsLength: number;
   es: any;
   tableWidth: string;
@@ -110,8 +113,6 @@ export class InternListComponent implements OnInit, AfterViewInit {
     this.getAllActions();
     this.getAllTechnologies();
 
-    this.selectedActive="1";
-
     this.primengConfig.setTranslation(this.translateService.getSpanish());
 
     this.filterService.register('valueInArray', (value, filter): boolean => {
@@ -126,36 +127,52 @@ export class InternListComponent implements OnInit, AfterViewInit {
 
     
     this.columnNames = [
-      { header: 'Periodo', field: 'period' },
-      { header: 'Username', field: 'username' },
-      { header: 'Nombre', field: 'name' },
-      { header: 'Apellidos', field: 'lastname' },
-      { header: 'Género', field: 'gender', parse:(value: number): string => {return this.genders.find((state) => state.value === value.toString())?.label} },
-      { header: 'Titulación', field: 'education', fieldExtra: 'name' },
-      { header: 'Centro', field: 'educationCenter', fieldExtra: 'name', parse:(educationCenter?: EducationCenter): string => { return educationCenter ? ('[' + educationCenter?.type + '] ' + educationCenter?.name) : '' } },
-      { header: 'Oficina', field: 'center', fieldExtra: 'name' },
-      { header: 'Localización', field: 'province', fieldExtra: 'province' },
-      { header: 'Inicio', field: 'startDate', isDate: true },
-      { header: 'Fin', field: 'endDate', isDate: true },
-      { header: 'Horas', field: 'hours' },
-      { header: 'Cliente', field: 'customer' },
-      { header: 'Código', field: 'code' },
-      { header: 'Tecnologías', field: 'technologies', parse:(techs: Technology[]): string => {return techs.map((t) => t.name).join(', ')} },
-      { header: 'Inglés', field: 'englishLevel', fieldExtra: 'name' },
-      { header: 'Mentor', field: 'mentor' },
-      { header: 'Coordinador', field: 'coordinator' },
-      { header: 'Resp. RRHH', field: 'rrhh' },
-      { header: 'Acción', field: 'action', fieldExtra: 'name' },
-      { header: 'F.Contrato', field: 'contractDate', isDate: true },
-      { header: 'Saga', field: 'saga' },
-      { header: 'Estado', field: 'active', parse:(value: number): string => {return this.actives.find((state) => state.value === value.toString())?.label} }
+      { header: 'Periodo', composeField: 'period',field: 'period', filterType: 'input' },
+      { header: 'Username', composeField: 'username',field: 'username', filterType: 'input' },
+      { header: 'Nombre', composeField: 'name',field: 'name', filterType: 'input' },
+      { header: 'Apellidos', composeField: 'lastname',field: 'lastname', filterType: 'input' },
+      { header: 'Género', composeField: 'gender',field: 'gender', filterType: 'dropdown', matchMode: 'equals-and-null', options:this.genders, optionLabel: 'label', optionValue: 'value', parse:(value: number): string => {return this.genders.find((state) => state.value === value.toString())?.label} },
+      { header: 'Titulación', composeField: 'education.name',field: 'education', fieldExtra: 'name', filterType: 'dropdown', matchMode: 'equals-and-null', options:[], optionLabel: 'name' },
+      { header: 'Centro', composeField: 'educationCenter.name',field: 'educationCenter', fieldExtra: 'name', filterType: 'dropdown', matchMode: 'equals-and-null', options:[], optionLabel: 'name', parse:(educationCenter?: EducationCenter): string => { return educationCenter ? ('[' + educationCenter?.type + '] ' + educationCenter?.name) : '' } },
+      { header: 'Oficina', composeField: 'center.name',field: 'center', fieldExtra: 'name', filterType: 'dropdown', matchMode: 'equals-and-null', options:[], optionLabel: 'name' },
+      { header: 'Localización', composeField: 'province.province',field: 'province', fieldExtra: 'province', filterType: 'dropdown',  matchMode: 'equals-and-null', options:[], optionLabel: 'province' },
+      { header: 'Inicio', composeField: 'startDate',field: 'startDate', filterType: 'date', isDate: true, matchMode: 'dateAfter' },
+      { header: 'Fin', composeField: 'endDate',field: 'endDate', filterType: 'date', isDate: true, matchMode: 'dateBefore' },
+      { header: 'Horas', composeField: 'hours',field: 'hours', filterType: 'input' },
+      { header: 'Cliente', composeField: 'customer',field: 'customer', filterType: 'input' },
+      { header: 'Código', composeField: 'code',field: 'code', filterType: 'input' },
+      { header: 'Tecnologías', composeField: 'technologies',field: 'technologies', filterType: 'dropdown',  matchMode: 'array-and-null', options:[], optionLabel: 'name', parse:(techs: Technology[]): string => {return techs.map((t) => t.name).join(', ')} },
+      { header: 'Inglés', composeField: 'englishLevel.name',field: 'englishLevel', fieldExtra: 'name', filterType: 'dropdown',  matchMode: 'equals-and-null', options:[], optionLabel: 'name' },
+      { header: 'Mentor', composeField: 'mentor',field: 'mentor', filterType: 'input' },
+      { header: 'Coordinador', composeField: 'coordinator',field: 'coordinator', filterType: 'input' },
+      { header: 'Resp. RRHH', composeField: 'rrhh',field: 'rrhh', filterType: 'input' },
+      { header: 'Acción', composeField: 'action.name',field: 'action', fieldExtra: 'name', filterType: 'dropdown',  matchMode: 'equals-and-null', options:[], optionLabel: 'name' },
+      { header: 'F.Contrato', composeField: 'contractDate',field: 'contractDate', filterType: 'date', isDate: true, matchMode: 'dateAfter' },
+      { header: 'Saga', composeField: 'saga',field: 'saga', filterType: 'input' },
+      { header: 'Estado', composeField: 'active', field: 'active', filterType: 'multiple', options: this.states, optionLabel: 'active', initialValue: ['1'], parse:(value: number): string => {return this.states.find((state) => state.value === value.toString())?.label} }
     ];
     this.selectedColumnNames = this.loadSelected();
   }
 
-  loadSelected(): any[] {
-    return localStorage.getItem('internListColumns') != null ? this.columnNames.filter(e => localStorage.getItem('internListColumns').indexOf(e.header) != -1) : this.columnNames;
+  onColReorder(event): void {
+    this.saveSelected(this.selectedColumnNames);
   }
+
+  loadSelected(): any[] {
+    let selectedColumnNames: any = localStorage.getItem('internListColumns');
+    if (selectedColumnNames == null) return this.columnNames;
+
+    selectedColumnNames = JSON.parse(selectedColumnNames);
+
+    let columns : any[] = [];
+    selectedColumnNames.forEach(item => {
+      let filterColumn = this.columnNames.filter(column => column.header == item);
+      columns = columns.concat(filterColumn);
+    });
+
+    return columns;
+  }  
+
 
   saveSelected(selectedColumnNames: any[]) {
     localStorage.setItem('internListColumns', JSON.stringify(selectedColumnNames.map(e => e.header)));
@@ -206,8 +223,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
   }
 
   setDefaultFilters(){
-    this.selectedActive='1';
-    this.table.filter(this.selectedActive,'active','contains');
+    this.defaultFilters.active.value=['1'];
   }
 
   getAllInterns() {
@@ -227,6 +243,8 @@ export class InternListComponent implements OnInit, AfterViewInit {
             element.contractDate = new Date(element.contractDate);
           }
         });
+
+        this.setDefaultFilters();
       }
     });
   }
@@ -234,7 +252,8 @@ export class InternListComponent implements OnInit, AfterViewInit {
   getAllTechnologies() {
     this.technologyService.findAll().subscribe({
       next: (res: Technology[]) => {
-        this.technologies = res;
+        this.databaseTechnologies = res;
+        this.columnNames.filter(item => item.field == 'technologies')[0].options = res.concat({id:0, name:'null'});
       }
     });
   }
@@ -242,7 +261,8 @@ export class InternListComponent implements OnInit, AfterViewInit {
   getAllEducations() {
     this.educationService.findAll().subscribe({
       next: (res: Education[]) => {
-        this.educations = res;
+        this.databaseEducations = res;
+        this.columnNames.filter(item => item.field == 'education')[0].options = res.concat({id:0, name:'null'});
       }
     });
   }
@@ -250,7 +270,8 @@ export class InternListComponent implements OnInit, AfterViewInit {
   getAllEducationCenters() {
     this.educationCenterService.getAllEducationCentersSimple().subscribe({
       next: (res: EducationCenter[]) => {
-        this.educationsCenter = res;
+        this.databaseEducationsCenter = res;
+        this.columnNames.filter(item => item.field == 'educationCenter')[0].options = res.concat({id:0, name:'null',type:'',province:null});
       }
     });
   }
@@ -258,7 +279,8 @@ export class InternListComponent implements OnInit, AfterViewInit {
   getAllCenters() {
     this.centerService.getAllCenters().subscribe({
       next: (res: Center[]) => {
-        this.centers = res;
+        this.databaseCenters = res;
+        this.columnNames.filter(item => item.field == 'center')[0].options = res.concat({id:0, name:'null'});
       }
     });
   }
@@ -266,7 +288,8 @@ export class InternListComponent implements OnInit, AfterViewInit {
   getAllProvinces() {
     this.provinceService.getAllProvinces().subscribe({
       next: (res: Province[]) => {
-        this.provinces = res;
+        this.databaseProvinces = res;
+        this.columnNames.filter(item => item.field == 'province')[0].options = res.concat({id:0, province:'null'});
       }
     });
   }
@@ -274,7 +297,8 @@ export class InternListComponent implements OnInit, AfterViewInit {
   getAllLevels() {
     this.levelService.getAllLevels().subscribe({
       next: (res: Level[]) => {
-        this.englishLevels = res;
+        this.databaseEnglishLevels = res;
+        this.columnNames.filter(item => item.field == 'englishLevel')[0].options = res.concat({id:0, name:'null'});
       },
     });
   }
@@ -282,14 +306,15 @@ export class InternListComponent implements OnInit, AfterViewInit {
   getAllActions() {
     this.actionService.getAllActions().subscribe({
       next: (res: Action[]) => {
-        this.actions = res;
+        this.databaseActions = res;
+        this.columnNames.filter(item => item.field == 'action')[0].options = res.concat({id:0, name:'null'});
       },
     });
   }
 
   showTimeLine(){
     this.ref = this.dialogService.open(InternTimelineComponent,{
-      width:"66%",
+      width:"66vw",
       height:"89vh",
       closable:true,
       showHeader:true,
@@ -398,7 +423,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
   }
 
   showActive(value: number): string {
-    return this.actives.find((active) => active.value === value.toString())?.label;
+    return this.states.find((active) => active.value === value.toString())?.label;
   }
 
   cleanFilters(): void {
@@ -416,17 +441,16 @@ export class InternListComponent implements OnInit, AfterViewInit {
   addOrEditIntern(intern?:Intern) {
     let header = intern ? 'Modificar Becario' : 'Nuevo Becario';
     this.ref = this.dialogService.open(InternEditComponent,{
-      width:'35%',
+      width:'75vw',
       data:{
         intern: intern,
-        genders: this.genders,
-        educations:this.educations,
-        educationsCenter:this.educationsCenter,
-        centers:this.centers,
-        provinces:this.provinces,
-        technologies:this.technologies,
-        actions:this.actions,
-        englishLevels:this.englishLevels,
+        educations:this.databaseEducations,
+        educationsCenter:this.databaseEducationsCenter,
+        centers:this.databaseCenters,
+        provinces:this.databaseProvinces,
+        technologies:this.databaseTechnologies,
+        actions:this.databaseActions,
+        englishLevels:this.databaseEnglishLevels,
       },
       closable:false,
       showHeader: true,
@@ -444,6 +468,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
   delete(id:number) {
     this.confirmationService.confirm({
       message:'¿Deseas borrar el Becario?',
+      rejectButtonStyleClass: 'p-button p-button-secondary p-button-outlined',
       accept:()=>{
         this.confirmationService.close()
         this.internService.delete(id).subscribe({
@@ -473,7 +498,8 @@ export class InternListComponent implements OnInit, AfterViewInit {
 
   synchronizeLdap() {
     const ref = this.dialogService.open(InternSynchronizeLdapComponent, {
-        width: '110vh',
+        width:"70vw",
+        height:"90vh",
         showHeader:true,
         header: 'Sincronizar LDAP'
     });

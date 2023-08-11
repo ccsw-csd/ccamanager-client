@@ -77,6 +77,7 @@ export class EducationCenterListComponent implements OnInit {
 
     this.confirmationService.confirm({
       message:'¿Deseas borrar el Centro de Educacion?',
+      rejectButtonStyleClass: 'p-button p-button-secondary p-button-outlined',
       accept:()=>{
         this.confirmationService.close()
         this.educationCenterService.delete(id).subscribe({

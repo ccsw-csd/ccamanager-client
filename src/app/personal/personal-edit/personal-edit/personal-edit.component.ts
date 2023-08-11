@@ -205,4 +205,10 @@ export class PersonalEditComponent implements OnInit {
     this.personForm.patchValue({province: this.provinces.find(province => province?.province == this.personForm.value.center?.name)});
   }
 
+  getErrorClass(field: string): string {
+
+    if (this.personForm.controls[field].status == 'INVALID') return 'field-error';
+    return '';
+  }
+
 }

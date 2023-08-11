@@ -1,11 +1,11 @@
 <div class="flex flex-row justify-content-between">
     <div class="flex justify-content-start">
-        <h1>
+        <h3>
             Tecnologías
-        </h1>
+        </h3>
     </div> 
 <div class="mt-0 pt-0 flex justify-content-end align-items-center">    
-    <p-button icon="pi pi-plus" pTooltip="Añadir" tooltipPosition="left" (click)="addOrEditItem(null)"></p-button>
+    <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-plus" class="p-button-lg m-2 p-button-outlined" pTooltip="Añadir" (click)="addOrEditItem(null)"></button>
 </div>
 </div>
 <p-table [style]="{'height':'calc(100vh - 200px)'}" [scrollable]="true" scrollHeight="flex" selectionMode="single" 

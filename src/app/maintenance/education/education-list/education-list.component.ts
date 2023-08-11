@@ -53,6 +53,7 @@ export class EducationListComponent implements OnInit {
   deleteItem(id: number) {
     this.confirmationService.confirm({
       message: '¿Seguro/a que quieres borrar la titulación?',
+      rejectButtonStyleClass: 'p-button p-button-secondary p-button-outlined',
       accept: () => {
         this.confirmationService.close();
         this.educationService.deleteEducation(id).subscribe({
