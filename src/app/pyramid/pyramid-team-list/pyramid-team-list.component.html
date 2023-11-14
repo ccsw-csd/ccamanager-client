@@ -1,4 +1,11 @@
-<h3>Pyramid Team Index</h3>
+<div class="flex flex-row justify-content-between">
+    <div class="flex justify-content-start">
+        <h3 class="p-0 m-0 mb-2">
+            Pyramid Team Index
+        </h3>
+    </div>
+</div>
+
 <p-toast position="top-center"></p-toast>
 <div class="flex-column"> 
     <div class="flex flex-row w-full justify-content-center">
@@ -36,7 +43,7 @@
         </p-table>
     </div>
     <div class="h-3rem"></div>
-    <div style="height: calc(100vh - 345px);" class="flex flex-row gap-8 flex-wrap justify-content-center overflow-y-scroll">
+    <div style="height: calc(100vh - 300px);" class="flex flex-row gap-8 flex-wrap justify-content-center overflow-y-scroll">
         <p-progressSpinner *ngIf="loadingTeam"></p-progressSpinner>
         <div *ngFor="let pyramidTeam of pyramidTeams;let i = index" class="flex flex-column justify-content-center align-items-center">
             <p class="font-bold font-italic">{{pyramidTeam.customerName}}</p>

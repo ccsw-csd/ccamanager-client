@@ -1,6 +1,6 @@
 <div class="flex flex-row justify-content-between">
     <div class="flex justify-content-start">
-        <h3>
+        <h3 class="p-0 m-0 mb-2">
             Centros Educativos
         </h3>
     </div> 
@@ -8,7 +8,7 @@
     <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-plus" class="p-button-lg m-2 p-button-outlined" pTooltip="Añadir" (click)="editEducationCenter()"></button>
 </div>
 </div>
-<p-table [style]="{'height':'calc(100vh - 200px)'}" [scrollable]="true" scrollHeight="flex" selectionMode="single" 
+<p-table [style]="{'height':'calc(100vh - 175px)'}" [scrollable]="true" scrollHeight="flex" selectionMode="single" 
     [value]="educationCenters" styleClass="p-datatable-striped" [paginator]="true" [rows]="50" sortField="name" [sortOrder]="1" >
     <ng-template pTemplate="header" >
         <tr>

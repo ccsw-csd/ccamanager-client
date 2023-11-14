@@ -202,7 +202,6 @@ export class PersonalListComponent implements OnInit {
   }
 
   setFilters(): void {
-    this.defaultFilters.department.value='CCSw'
     this.defaultFilters.active.value=['1'];
 
   }

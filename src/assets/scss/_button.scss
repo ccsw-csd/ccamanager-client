@@ -1,11 +1,31 @@
-.p-button-outlined {
-    background-color: #f5f5f5;
-    color: #12abdb;
-    border:0px solid #29abe2 !important;
+
+$button-primary: #0070AD;
+$button-secondary: #FF5770;
+
+.p-button.p-button-outlined {
+  color: $button-primary !important;
+  border:0px solid $button-primary !important;
+}
+
+.p-button-secondary.p-button-outlined {
+  color: $button-secondary !important;
+  border:0px solid $button-secondary !important;
+}
+
+.p-button.p-button-text {
+  color: $button-primary !important;
+}
+
+.p-button.p-button-text.p-button-danger {
+  color: $button-secondary !important;
+}
+
+.p-button-outlined {   
     height: 45px;
 }
 
 .p-button {
+  background-color: $button-primary;
   height: 45px;
   min-width: 150px;
 }
