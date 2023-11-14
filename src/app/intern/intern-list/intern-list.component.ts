@@ -63,7 +63,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
     { label: 'Otros', value: '0' },
     { label: 'Mujer', value: '1' },
     { label: 'Hombre', value: '2' },
-    { label: 'null', value: '-1' },
+    { label: '-- Vacío --', value: '-1' },
   ];
   states: any[] = [
     { label: 'Inactivo', value: '0' },
@@ -184,12 +184,12 @@ export class InternListComponent implements OnInit, AfterViewInit {
 
   showConfig(){
     const ref = this.dialogService.open(ColumnConfigComponent, {
-      width: '75vh',
+      width: '50vw',
       data: {
         columns: this.columnNames,
         selected: this.selectedColumnNames
       },
-      closable: true,
+      closable: false,
       showHeader: true,
       autoZIndex: true,
       header: "Configuracion de la tabla"
@@ -253,7 +253,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
     this.technologyService.findAll().subscribe({
       next: (res: Technology[]) => {
         this.databaseTechnologies = res;
-        this.columnNames.filter(item => item.field == 'technologies')[0].options = res.concat({id:0, name:'null'});
+        this.columnNames.filter(item => item.field == 'technologies')[0].options = res.concat({id:0, name:'-- Vacío --'});
       }
     });
   }
@@ -262,7 +262,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
     this.educationService.findAll().subscribe({
       next: (res: Education[]) => {
         this.databaseEducations = res;
-        this.columnNames.filter(item => item.field == 'education')[0].options = res.concat({id:0, name:'null'});
+        this.columnNames.filter(item => item.field == 'education')[0].options = res.concat({id:0, name:'-- Vacío --'});
       }
     });
   }
@@ -271,7 +271,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
     this.educationCenterService.getAllEducationCentersSimple().subscribe({
       next: (res: EducationCenter[]) => {
         this.databaseEducationsCenter = res;
-        this.columnNames.filter(item => item.field == 'educationCenter')[0].options = res.concat({id:0, name:'null',type:'',province:null});
+        this.columnNames.filter(item => item.field == 'educationCenter')[0].options = res.concat({id:0, name:'-- Vacío --',type:'',province:null});
       }
     });
   }
@@ -280,7 +280,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
     this.centerService.getAllCenters().subscribe({
       next: (res: Center[]) => {
         this.databaseCenters = res;
-        this.columnNames.filter(item => item.field == 'center')[0].options = res.concat({id:0, name:'null'});
+        this.columnNames.filter(item => item.field == 'center')[0].options = res.concat({id:0, name:'-- Vacío --'});
       }
     });
   }
@@ -289,7 +289,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
     this.provinceService.getAllProvinces().subscribe({
       next: (res: Province[]) => {
         this.databaseProvinces = res;
-        this.columnNames.filter(item => item.field == 'province')[0].options = res.concat({id:0, province:'null'});
+        this.columnNames.filter(item => item.field == 'province')[0].options = res.concat({id:0, province:'-- Vacía --'});
       }
     });
   }
@@ -298,7 +298,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
     this.levelService.getAllLevels().subscribe({
       next: (res: Level[]) => {
         this.databaseEnglishLevels = res;
-        this.columnNames.filter(item => item.field == 'englishLevel')[0].options = res.concat({id:0, name:'null'});
+        this.columnNames.filter(item => item.field == 'englishLevel')[0].options = res.concat({id:0, name:'-- Vacío --'});
       },
     });
   }
@@ -307,7 +307,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
     this.actionService.getAllActions().subscribe({
       next: (res: Action[]) => {
         this.databaseActions = res;
-        this.columnNames.filter(item => item.field == 'action')[0].options = res.concat({id:0, name:'null'});
+        this.columnNames.filter(item => item.field == 'action')[0].options = res.concat({id:0, name:'-- Vacío --'});
       },
     });
   }
@@ -316,7 +316,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
     this.ref = this.dialogService.open(InternTimelineComponent,{
       width:"66vw",
       height:"89vh",
-      closable:true,
+      closable:false,
       showHeader:true,
       header:'TimeLine Becarios'
     });
@@ -469,6 +469,8 @@ export class InternListComponent implements OnInit, AfterViewInit {
     this.confirmationService.confirm({
       message:'¿Deseas borrar el Becario?',
       rejectButtonStyleClass: 'p-button p-button-secondary p-button-outlined',
+      acceptIcon: 'false',
+      rejectIcon: 'false',      
       accept:()=>{
         this.confirmationService.close()
         this.internService.delete(id).subscribe({
@@ -501,6 +503,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
         width:"70vw",
         height:"90vh",
         showHeader:true,
+        closable: false,
         header: 'Sincronizar LDAP'
     });
   }

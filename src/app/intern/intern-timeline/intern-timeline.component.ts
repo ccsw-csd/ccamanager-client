@@ -31,7 +31,8 @@ export class InternTimelineComponent implements OnInit {
     private internService: InternService,
     private primengConfig: PrimeNGConfig,
     private translateService: TranslateService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private ref: DynamicDialogRef,
   ) {    
   }
 
@@ -175,4 +176,8 @@ export class InternTimelineComponent implements OnInit {
         },
       });
   }
+
+  closeWindow() {
+    this.ref.close(false);
+  }  
 }

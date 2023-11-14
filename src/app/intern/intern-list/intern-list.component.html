@@ -32,31 +32,45 @@
         <tr>
 
             <th *ngFor="let col of selectedColumnNames" class="{{col.field}} flex flex-column" pReorderableColumn>
-                <div class="flex flex-row mb-2" pSortableColumn="{{col.composeField}}">{{col.header}}<p-sortIcon field="{{col.composeField}}"></p-sortIcon></div>
 
-                <p-columnFilter *ngIf="col.filterType == 'input'" class="w-full" type="text" field="{{col.composeField}}" [showMenu]="false" [showClearButton]="false" matchMode="{{col.matchMode != null ? col.matchMode : 'contains-and-null'}}"></p-columnFilter>
+                <div class="flex flex-row w-full top-header" pSortableColumn="{{col.composeField}}">
+                    <span class="flex flex-1 justify-content-center">{{col.header}}</span>
+                    <p-sortIcon field="{{col.composeField}}"></p-sortIcon>
+                </div>
 
-                <p-columnFilter *ngIf="col.filterType == 'dropdown'" class="w-full " field="{{col.composeField}}" matchMode="{{col.matchMode != null ? col.matchMode : 'contains-and-null'}}" [showMenu]="false" [showClearButton]="false">
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown *ngIf="col.optionValue" #filterDropdown [options]="col.options" optionLabel="{{col.optionLabel}}" optionValue="{{col.optionValue}}" (onChange)="filter($event.value)" [showClear]="true" placeholder="..." [showClearButton]="false"></p-dropdown>
-                        <p-dropdown *ngIf="!col.optionValue" #filterDropdown [options]="col.options" optionLabel="{{col.optionLabel}}" (onChange)="filter($event.value == null ? null : $event.value[col.optionLabel])" [showClear]="true" placeholder="..." [showClearButton]="false"></p-dropdown>
-                    </ng-template>
-                </p-columnFilter>
+                <div class="w-full foot-header">
 
-                <p-columnFilter *ngIf="col.filterType == 'multiple'" class="w-full" field="{{col.composeField}}" matchMode="multiple" [showMenu]="false" [showClearButton]="false" value="1">
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-multiSelect [ngModel]="col.initialValue" [options]="col.options" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="..."> </p-multiSelect>
-                    </ng-template>
-                </p-columnFilter>
+                    <p-columnFilter *ngIf="col.filterType == 'input'" class="w-full" type="text" field="{{col.composeField}}" [showMenu]="false" [showClearButton]="false" matchMode="{{col.matchMode != null ? col.matchMode : 'contains-and-null'}}">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <input tabindex="1" type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext">
+                        </ng-template>
+                    </p-columnFilter>
 
-                <p-columnFilter *ngIf="col.filterType == 'date'" class="w-full" type="date" field="{{col.composeField}}" matchMode="{{col.matchMode != null ? col.matchMode : 'dateIn'}}" [showMenu]="false" [showClearButton]="false">
-                    <ng-template pTemplate="filter" let-filter="filterCallback">
-                        <p-calendar  #filterCalendar appendTo="body" readonlyInput="true" (onSelect)="filter($event)" (onClear)="filter($event)" (input)="filter()" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" [showClear]="true"></p-calendar>
-                    </ng-template>
-                </p-columnFilter>
+                    <p-columnFilter *ngIf="col.filterType == 'dropdown'" class="w-full " field="{{col.composeField}}" matchMode="{{col.matchMode != null ? col.matchMode : 'contains-and-null'}}" [showMenu]="false" [showClearButton]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-dropdown tabindex="1" *ngIf="col.optionValue" #filterDropdown [options]="col.options" optionLabel="{{col.optionLabel}}" optionValue="{{col.optionValue}}" (onChange)="filter($event.value)" [showClear]="true" placeholder="..." [showClearButton]="false"></p-dropdown>
+                            <p-dropdown tabindex="1" *ngIf="!col.optionValue" #filterDropdown [options]="col.options" optionLabel="{{col.optionLabel}}" (onChange)="filter($event.value == null ? null : $event.value[col.optionLabel])" [showClear]="true" placeholder="..." [showClearButton]="false"></p-dropdown>
+                        </ng-template>
+                    </p-columnFilter>
 
+                    <p-columnFilter *ngIf="col.filterType == 'multiple'" class="w-full" field="{{col.composeField}}" matchMode="multiple" [showMenu]="false" [showClearButton]="false" value="1">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-multiSelect tabindex="1" [ngModel]="col.initialValue" [options]="col.options" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="..."> </p-multiSelect>
+                        </ng-template>
+                    </p-columnFilter>
+
+                    <p-columnFilter *ngIf="col.filterType == 'date'" class="w-full" type="date" field="{{col.composeField}}" matchMode="{{col.matchMode != null ? col.matchMode : 'dateIn'}}" [showMenu]="false" [showClearButton]="false">
+                        <ng-template pTemplate="filter" let-filter="filterCallback">
+                            <p-calendar tabindex="1" #filterCalendar appendTo="body" readonlyInput="true" (onSelect)="filter($event)" (onClear)="filter($event)" (input)="filter()" [locale]="es" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" [showClear]="true"></p-calendar>
+                        </ng-template>
+                    </p-columnFilter>
+                </div>
             </th>
-            <th class="buttons"></th>
+
+            <th class="buttons flex flex-column">
+                <div class="flex flex-row w-full top-header"></div>
+                <div class="w-full foot-header"></div>
+            </th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-intern let-columns="columns">
@@ -87,4 +101,4 @@
     </ng-template>
 </p-table>
 <p-toast position="top-center"></p-toast>
-<p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle" #confirmDialog></p-confirmDialog>
+<p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle" #confirmDialog [closable]="false"></p-confirmDialog>

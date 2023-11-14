@@ -4,7 +4,7 @@
     <span>
       La lista de distribución <strong>CCSW</strong> del LDAP no concuerda con los becarios listados en la aplicación. Acciones: {{totalPersonsCCSW_app}} eliminar y {{totalPersonsApp_CCSW}} insertar
     </span>
-    <button pButton pRipple type="button" icon=" pi pi-sync" class="p-button-lg ml-6"  [disabled]="(totalPersonsCCSW_app+totalPersonsApp_CCSW > 0) == false"
+    <button pButton pRipple type="button" label="Sincronización Manual" class="p-button-lg ml-6"  [disabled]="(totalPersonsCCSW_app+totalPersonsApp_CCSW > 0) == false"
         pTooltip="Sincronizar manualmente" (click)="copyList()">
     </button>
   </div>
@@ -17,7 +17,7 @@
         <div>Personas de <strong>CCSW</strong> que <strong>NO</strong> están en la aplicación</div>
       </div>
 
-      <div class="flex flex-none flex-column gap-2 m-3" style="height: calc(90vh - 230px); overflow: auto;">
+      <div class="flex flex-none flex-column gap-2 m-3" style="height: calc(90vh - 300px); overflow: auto;">
         <div *ngFor="let item of personsCCSW_app">          
           <div class="text-800">{{ item.name }} {{ item.lastname }} </div>
           <div class="text-sm mb-3 font-italic">({{ item.username }})</div>
@@ -31,7 +31,7 @@
         <div>Personas de la <strong>aplicación</strong> que <strong>NO</strong> están en CCSW</div>
       </div>
 
-      <div class="flex flex-none flex-column gap-2 m-3" style="height: calc(90vh - 230px); overflow: auto;">
+      <div class="flex flex-none flex-column gap-2 m-3" style="height: calc(90vh - 300px); overflow: auto;">
         <div *ngFor="let item of personsApp_CCSW">          
           <div class="text-800">{{ item.name }} {{ item.lastname }} </div>
           <div class="text-sm mb-3 font-italic">({{ item.username }})</div>
@@ -40,5 +40,10 @@
 
     </div>
   </div>
+
+  <div class="flex flex-row mt-5 gap-4 justify-content-end gap-2">
+    <button pButton pRipple styleClass="" label="Cerrar" class="p-button p-button-secondary p-button-outlined" (click)="closeWindow()"></button>
+  </div>
+
 
 </div>

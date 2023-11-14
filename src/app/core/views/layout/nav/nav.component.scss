@@ -10,6 +10,10 @@
   box-shadow: none;
 }
 
+::ng-deep .p-panelmenu .p-panelmenu-content {
+  padding: 0px;
+}
+
 ::ng-deep .menu {
   
   background-color: $primary;
@@ -21,19 +25,22 @@
   
   a {
     background-color: $primary !important;
-    color: white !important;
+    color: #15011D !important;
     padding: 0.75rem 1.25rem 0.75rem 1.25rem !important;
     font-size: 15px !important;
+    height: 40px !important;
   }
 
 
   .p-panelmenu-content {
     background-color: $primary;
-    color: white !important;
+    color: #15011D !important;
 
     span {
-      color: white !important;
-      padding-left: 20px;
+      color: #15011D !important;
+      padding-left: 15px;
+      padding-top: 0.75rem !important;
+      padding-bottom: 0.75rem !important;
     }
   }
 
@@ -43,15 +50,15 @@
 
   a:not(.p-menuitem-link-active) {
     border-left: 6px solid $primary !important;
-    color: white !important;
+    color: #15011D !important;
 
   }
 
   .p-menuitem-link-active {
     font-weight: bold !important;
-    border-left: 6px solid $background !important;
+    border-left: 6px solid #0070AD !important;
     border-radius: 0px !important;
-    color: white !important;
+    color: #0070AD !important;
   }
 
 }

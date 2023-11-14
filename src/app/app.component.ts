@@ -19,6 +19,10 @@ export class AppComponent implements OnInit {
 
   }
 
+  filterIsNull(filter) : boolean {
+    return filter === '-- Vacío --' || filter === '-- Vacía --' || (filter.length != filter.trim().length && filter.trim().length == 0);
+  }
+
 
   registerCustomFilter(): void {
 
@@ -27,7 +31,7 @@ export class AppComponent implements OnInit {
         return true;
       }
 
-      if (filter == 'null' && (value == null || value.length == 0)) return true;
+      if (this.filterIsNull(filter) && (value == null || value.length == 0)) return true;
       if (value == null || value.length == 0) return false;
       
       return value == filter;
@@ -38,7 +42,10 @@ export class AppComponent implements OnInit {
         return true;
       }
 
-      if (filter == 'null' && (value == null || value.length == 0)) return true;
+      if (this.filterIsNull(filter)) {
+        if (value == null || value.length == 0) return true;
+        return false;
+      } 
       if (value == null || value.length == 0) return false;
       
       if (value.indexOf)
@@ -52,7 +59,7 @@ export class AppComponent implements OnInit {
         return true;
       }
 
-      if (filter == 'null' && (value == null || value.length == 0)) return true;
+      if (this.filterIsNull(filter) && (value == null || value.length == 0)) return true;
       if (value == null || value.length == 0) return false;
       
       return value.filter(item => item.name == filter).length > 0;

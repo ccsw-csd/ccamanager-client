@@ -1,4 +1,5 @@
-<div class="flex flex-column mb-1" style="height: calc(90vh - 150px);">
+<div class="flex flex-column mb-1" style="height: calc(90vh - 100px);">
+    
     <div class="flex flex-row gap-2" [formGroup]="profileForm">
         <span class="p-float-label mt-2" >
             <p-calendar appendTo="body" styleClass="w-full" [inputStyle]="{'height':'45px'}" [firstDayOfWeek]="1" dateFormat="dd/mm/yy" formControlName="startDate"></p-calendar>
@@ -12,10 +13,17 @@
             <button pButton pRipple styleClass="" label="Buscar"class="p-button p-button" [disabled]="!profileForm.valid" (click)="updateChar()"></button>
         </div>
     </div>
+    
     <div>
         <small *ngIf="profileForm.invalid && profileForm.errors?.dateRange"  id="username-help" class="p-error ">La fecha de inicio no puede ser posterior a la fecha de fin</small>
     </div>
+
     <div class="overflow-y-scroll" style="height: 100%; overflow: auto">
         <p-chart id="chart" #chart type="bar" [data]="basicData" [options]="config" [height]="100" responsive="false"></p-chart>
     </div>
+
+    <div class="flex flex-row mt-5 gap-4 justify-content-end gap-2">
+        <button pButton pRipple styleClass="" label="Cerrar" class="p-button p-button-secondary p-button-outlined" (click)="closeWindow()"></button>
+    </div>
+    
 </div>

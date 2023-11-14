@@ -51,14 +51,14 @@ export class EducationCenterListComponent implements OnInit {
   }
   editEducationCenter(educationCenter?:EducationCenter){
     let header = educationCenter ? 'Modicar Centro Educativo' : 'Nuevo Centro Educativo';
-    this.ref = this.dialogService.open(EducationCenterEditComponent,{
+    this.ref = this.dialogService.open(EducationCenterEditComponent,{      
       //height:"450px",
       width:"680px",
       data:{
         educationCenter: educationCenter,
         provinces: this.provinces
       },
-      closable:true,
+      closable:false,
       showHeader: true,
       header:header
     });
@@ -78,6 +78,8 @@ export class EducationCenterListComponent implements OnInit {
     this.confirmationService.confirm({
       message:'¿Deseas borrar el Centro de Educacion?',
       rejectButtonStyleClass: 'p-button p-button-secondary p-button-outlined',
+      acceptIcon: 'false',
+      rejectIcon: 'false',      
       accept:()=>{
         this.confirmationService.close()
         this.educationCenterService.delete(id).subscribe({

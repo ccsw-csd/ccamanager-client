@@ -54,6 +54,8 @@ export class EducationListComponent implements OnInit {
     this.confirmationService.confirm({
       message: '¿Seguro/a que quieres borrar la titulación?',
       rejectButtonStyleClass: 'p-button p-button-secondary p-button-outlined',
+      acceptIcon: 'false',
+      rejectIcon: 'false',      
       accept: () => {
         this.confirmationService.close();
         this.educationService.deleteEducation(id).subscribe({
@@ -83,6 +85,7 @@ export class EducationListComponent implements OnInit {
       data: {
         educationData: item,
       },
+      closable: false,
       showHeader:true,
       header:header
     });

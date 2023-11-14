@@ -1,14 +1,12 @@
 .p-datatable .p-datatable-thead>tr>th {
     text-align: left;
-    padding: 8px 3px 5px 3px;
+    padding: 0px;
     border: 1px solid #babfc7;
     border-width: 0 0 1px 0;
     font-weight: 700;
     color: #000000de;
     background: #f8f8f8;
     transition: none;
-
-    //height: 2.5rem;
 
     input, .p-dropdown, .p-multiselect {
         height: 1.6rem;
@@ -65,6 +63,18 @@
 .p-datatable .p-sortable-column.p-highlight {
     background: #f8f8f8;
     color: #000000de;
+}
+
+.top-header {
+    padding: 8px 3px 8px 3px; 
+    height: 34px;
+    margin-bottom: 0px !important;
+}
+
+.foot-header {
+    padding: 8px 3px 8px 3px; 
+    margin-bottom: 0px !important;
+    border-top: 1px solid #babfc7;
 }
 
 .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr {

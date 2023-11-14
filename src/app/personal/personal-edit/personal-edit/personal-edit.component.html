@@ -122,9 +122,7 @@
 </div>
 
 <div class="flex flex-row mt-5 gap-3 justify-content-end gap-2">
-  <button pButton pRipple styleClass="" label="Cancelar" icon="pi pi-times" class="p-button p-button-secondary p-button-outlined"
-    (click)="closeWindow()"></button>
-  <button pButton pRipple p-button-label="10px" label="Guardar" icon="pi pi-check" [disabled]="!personForm.valid || loading"
-    (click)="saveItem(personForm.value)"></button>
+  <button pButton pRipple styleClass="" label="Cancelar" class="p-button p-button-secondary p-button-outlined" (click)="closeWindow()"></button>
+  <button pButton pRipple p-button-label="10px" label="Guardar" [disabled]="!personForm.valid || loading" (click)="saveItem(personForm.value)"></button>
 
 </div>

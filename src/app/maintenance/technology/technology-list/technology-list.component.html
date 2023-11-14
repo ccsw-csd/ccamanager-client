@@ -12,15 +12,26 @@
     [value]="listOfData" styleClass="p-datatable-striped" [paginator]="true" [rows]="50" sortField="name" [sortOrder]="1" >
     <ng-template pTemplate="header" >
         <tr>
-            <th class="flex-1 align-items-center justify-content-center"  pSortableColumn="name" >
-                Nombre<p-sortIcon field="name"></p-sortIcon>
+            <th class="flex flex-1 flex-column align-items-center justify-content-center">
+
+                <div class="flex flex-row w-full top-header" pSortableColumn="name">
+                    <span class="flex flex-1 justify-content-center">Nombre</span>
+                    <p-sortIcon field="name"></p-sortIcon>
+                </div>
+
+                <div class="w-full foot-header">
+                    <p-columnFilter class="w-full" type="text" field="name" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <input type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext">
+                        </ng-template>
+                    </p-columnFilter>
+                </div>
             </th>
-        </tr>
-        <tr>
-            <th class="flex-1" >
-                <p-columnFilter class="w-full" type="text" field="name" matchMode="contains" [showMenu]="false"></p-columnFilter>
+
+            <th class="buttons flex-none flex-column" style="width: 125px;">
+                <div class="flex flex-row w-full top-header"></div>
+                <div class="w-full foot-header"></div>
             </th>
-            <th class="flex-none" style="width: 125px;"></th>            
         </tr>
     </ng-template>
     
@@ -40,4 +51,4 @@
 </p-table>
 
 <p-toast position="top-center"></p-toast>
-<p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle" #confirmDialog></p-confirmDialog>
+<p-confirmDialog [closable]="false" header="Confirmación" icon="pi pi-exclamation-triangle" #confirmDialog></p-confirmDialog>

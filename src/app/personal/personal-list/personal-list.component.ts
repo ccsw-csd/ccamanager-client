@@ -124,12 +124,12 @@ export class PersonalListComponent implements OnInit {
 
   showConfig(){
     const ref = this.dialogService.open(ColumnConfigComponent, {
-      width: '75vh',
+      width: '50vw',
       data: {
         columns: this.columnNames,
         selected: this.selectedColumnNames
       },
-      closable: true,
+      closable: false,
       showHeader: true,
       autoZIndex: true,
       header: "Configuracion de la tabla"
@@ -156,7 +156,7 @@ export class PersonalListComponent implements OnInit {
       next: (res: Province[]) => {
 
         this.databaseProvinces = res;
-        this.columnNames.filter(item => item.field == 'province')[0].options = res.concat({id:0, province:'null'});
+        this.columnNames.filter(item => item.field == 'province')[0].options = res.concat({id:0, province:'-- Vacía --'});
       }
     });
   }
@@ -165,7 +165,7 @@ export class PersonalListComponent implements OnInit {
     this.roleService.getAllRoles().subscribe({
       next: (res: Role[]) => {
         this.databaseRoles = res;
-        this.columnNames.filter(item => item.field == 'role')[0].options = res.concat({id:0, role:'null'});
+        this.columnNames.filter(item => item.field == 'role')[0].options = res.concat({id:0, role:'-- Vacío --'});
       }
     });
   }
@@ -174,7 +174,7 @@ export class PersonalListComponent implements OnInit {
     this.centerService.getAllCenters().subscribe({
       next: (res: Center[]) => {
         this.databaseCenters = res;
-        this.columnNames.filter(item => item.field == 'center')[0].options = res.concat({id:0, name:'null'});
+        this.columnNames.filter(item => item.field == 'center')[0].options = res.concat({id:0, name:'-- Vacío --'});
       }
     });
   }
@@ -239,6 +239,8 @@ export class PersonalListComponent implements OnInit {
     this.confirmationService.confirm({
       message: '¿Seguro/a que quieres borrar la persona?',
       rejectButtonStyleClass: 'p-button p-button-secondary p-button-outlined',
+      acceptIcon: 'false',
+      rejectIcon: 'false',      
       accept: () => {
         this.confirmationService.close();
         this.personService.delete(id).subscribe({
@@ -274,6 +276,7 @@ export class PersonalListComponent implements OnInit {
         width:"70vw",
         height:"90vh",
         showHeader:true,
+        closable: false,
         header:'Sincronizar LDAP'
     });
   }

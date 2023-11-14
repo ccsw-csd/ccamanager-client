@@ -31,23 +31,36 @@
         <tr>
 
             <th *ngFor="let col of selectedColumnNames" class="{{col.field}} flex flex-column" pReorderableColumn>
-                <div class="flex flex-row mb-2" pSortableColumn="{{col.composeField}}">{{col.header}}<p-sortIcon field="{{col.composeField}}"></p-sortIcon></div>
 
-                <p-columnFilter *ngIf="col.filterType == 'input'" class="w-full" type="text" field="{{col.composeField}}" [showMenu]="false" [showClearButton]="false" matchMode="contains-and-null"></p-columnFilter>
+                <div class="flex flex-row w-full top-header" pSortableColumn="{{col.composeField}}">
+                    <span class="flex flex-1 justify-content-center">{{col.header}}</span>
+                    <p-sortIcon field="{{col.composeField}}"></p-sortIcon>
+                </div>
 
-                <p-columnFilter *ngIf="col.filterType == 'dropdown'" class="w-full " field="{{col.composeField}}" matchMode="contains-and-null" [showMenu]="false" [showClearButton]="false">
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown #filterDropdown [options]="col.options" optionLabel="{{col.optionLabel}}" (onChange)="filter($event.value == null ? null : $event.value[col.optionLabel])" [showClear]="true" placeholder="..." [showClearButton]="false"></p-dropdown>
-                    </ng-template>
-                </p-columnFilter>
-
-                <p-columnFilter *ngIf="col.filterType == 'multiple'" class="w-full" field="{{col.composeField}}" matchMode="multiple" [showMenu]="false" [showClearButton]="false" value="1">
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-multiSelect [ngModel]="col.initialValue" [options]="col.options" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="..."> </p-multiSelect>
-                    </ng-template>
-                </p-columnFilter>
+                <div class="w-full foot-header">
+                    <p-columnFilter *ngIf="col.filterType == 'input'" class="w-full" type="text" field="{{col.composeField}}" [showMenu]="false" [showClearButton]="false" matchMode="contains-and-null">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <input tabindex="1" type="text" pInputText [ngModel]="value" (ngModelChange)="filter($event)" class="p-inputtext">
+                        </ng-template>                    
+                    </p-columnFilter>
+                    
+                    <p-columnFilter *ngIf="col.filterType == 'dropdown'" class="w-full " field="{{col.composeField}}" matchMode="contains-and-null" [showMenu]="false" [showClearButton]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-dropdown tabindex="1" #filterDropdown [options]="col.options" optionLabel="{{col.optionLabel}}" (onChange)="filter($event.value == null ? null : $event.value[col.optionLabel])" [showClear]="true" placeholder="..." [showClearButton]="false"></p-dropdown>
+                        </ng-template>
+                    </p-columnFilter>
+                
+                    <p-columnFilter *ngIf="col.filterType == 'multiple'" class="w-full" field="{{col.composeField}}" matchMode="multiple" [showMenu]="false" [showClearButton]="false" value="1">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-multiSelect tabindex="1" [ngModel]="col.initialValue" [options]="col.options" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="..."> </p-multiSelect>
+                        </ng-template>
+                    </p-columnFilter>
+                </div>
             </th>
-            <th class="buttons"></th>
+            <th class="buttons flex flex-column">
+                <div class="flex flex-row w-full top-header"></div>
+                <div class="w-full foot-header"></div>
+            </th>
         </tr>
 
     </ng-template>
@@ -75,4 +88,4 @@
 </p-table>
 
 <p-toast position="top-center"></p-toast>
-<p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle" #confirmDialog></p-confirmDialog>
+<p-confirmDialog [closable]="false" header="Confirmación" icon="pi pi-exclamation-triangle" #confirmDialog></p-confirmDialog>

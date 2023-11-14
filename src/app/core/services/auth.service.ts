@@ -24,7 +24,13 @@ export class AuthService {
     private jwtHelper: JwtHelperService,
     private router: Router,
     private http: HttpClient,
-  ) { }
+  ) {
+
+    if (environment.production == false) {
+      this.ssoCredentialsKey += 'Dev';
+    }
+
+   }
 
 
   // *************************** //
