@@ -104,7 +104,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
       else this.tableWidth = 'calc(100vw - 55px)';
     });
     
-    this.getAllInterns();
+    this.getAllInterns(true);
     this.getAllEducations();
     this.getAllEducationCenters();
     this.getAllCenters();
@@ -131,7 +131,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
       { header: 'Username', composeField: 'username',field: 'username', filterType: 'input' },
       { header: 'Nombre', composeField: 'name',field: 'name', filterType: 'input' },
       { header: 'Apellidos', composeField: 'lastname',field: 'lastname', filterType: 'input' },
-      { header: 'Género', composeField: 'gender',field: 'gender', filterType: 'dropdown', matchMode: 'equals-and-null', options:this.genders, optionLabel: 'label', optionValue: 'value', parse:(value: number): string => {return this.genders.find((state) => state.value === value.toString())?.label} },
+      { header: 'Género', composeField: 'gender',field: 'gender', filterType: 'dropdown', matchMode: 'equals-and-null', options:this.genders, optionLabel: 'label', optionValue: 'value', parse:(value: number): string => {return this.genders.find((gender) => gender.value === value?.toString())?.label;} },
       { header: 'Titulación', composeField: 'education.name',field: 'education', fieldExtra: 'name', filterType: 'dropdown', matchMode: 'equals-and-null', options:[], optionLabel: 'name' },
       { header: 'Centro', composeField: 'educationCenter.name',field: 'educationCenter', fieldExtra: 'name', filterType: 'dropdown', matchMode: 'equals-and-null', options:[], optionLabel: 'name', parse:(educationCenter?: EducationCenter): string => { return educationCenter ? ('[' + educationCenter?.type + '] ' + educationCenter?.name) : '' } },
       { header: 'Oficina', composeField: 'center.name',field: 'center', fieldExtra: 'name', filterType: 'dropdown', matchMode: 'equals-and-null', options:[], optionLabel: 'name' },
@@ -226,7 +226,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
     this.defaultFilters.active.value=['1'];
   }
 
-  getAllInterns() {
+  getAllInterns(defaultFilters : boolean) {
     this.internService.getAllInterns().subscribe({
       next: (res: Intern[]) => {
         this.interns = res;
@@ -244,7 +244,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
           }
         });
 
-        this.setDefaultFilters();
+        if (defaultFilters) this.setDefaultFilters();
       }
     });
   }
@@ -416,6 +416,8 @@ export class InternListComponent implements OnInit, AfterViewInit {
   }
 
   showGender(value: number): string {    
+    if (value == null || value == undefined) return '';
+
     return this.genders.find((gender) => gender.value === value?.toString())?.label;
   }
 
@@ -462,7 +464,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
 
   onClose(): void {
     this.ref.onClose.subscribe((results: any) => {
-      this.getAllInterns();
+      this.getAllInterns(false);
     });
   }
 
@@ -477,7 +479,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
         this.internService.delete(id).subscribe({
           next:()=>{
             this.snackbarService.showMessage("Se ha eliminado correctamente el Centro de Educacion");
-            this.getAllInterns();
+            this.getAllInterns(false);
           },
           error:(errorResponse)=>{
             this.snackbarService.error(errorResponse.message);
