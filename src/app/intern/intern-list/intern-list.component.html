@@ -20,7 +20,7 @@
         <button pButton pRipple type="button" icon="pi pi-chart-bar" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="TimeLine" (click)="showTimeLine()" tooltipPosition="top"> </button>
         <button pButton pRipple type="button" icon="pi pi-user-plus" class="p-button-lg m-2 p-button-outlined" pTooltip="Añadir becario" (click)="addOrEditIntern()" tooltipPosition="top"> </button>
         <button pButton pRipple type="button" icon="pi pi-download" class="p-button-lg m-2 p-button-outlined p-button-secondary" (click)="exportExcel()" pTooltip="Descargar listado" tooltipPosition="top"></button>
-        <button pButton pRipple type="button" icon="pi pi-filter-slash" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="Limpiar filtros" (click)="cleanFilters()"  tooltipPosition="top"></button>
+        <button pButton pRipple type="button" icon="pi pi-filter-slash" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="Limpiar filtros" (click)="cleanFilters($event);"  tooltipPosition="top"></button>
         <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-cog" class="p-button-lg m-2 p-button-outlined p-button-secondary" pTooltip="Visualización columnas" (click)="showConfig()"></button>
     </div>
 </div>

@@ -16,7 +16,7 @@ import { TranscodeService } from 'src/app/core/services/transcode.service';
 import { FormBuilder,Validators } from '@angular/forms';
 import { DateRangeValidator } from 'src/app/core/models/DateRangeValidator';
 import { TranslateService } from 'src/app/core/services/translate.service';
-import { InternService } from '../services/intern.service';
+import { InternService } from '../services/InternService';
 
 @Component({
   selector: 'app-intern-edit',

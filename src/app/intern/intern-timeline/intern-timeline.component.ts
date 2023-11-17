@@ -6,7 +6,7 @@ import { PrimeNGConfig } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TranslateService } from 'src/app/core/services/translate.service';
 import { TimeLine } from '../models/TimeLine';
-import { InternService } from '../services/intern.service';
+import { InternService } from '../services/InternService';
 import { FormBuilder,Validators } from '@angular/forms';
 import { DateRangeValidator } from 'src/app/core/models/DateRangeValidator';
 import { UIChart } from 'primeng/chart';

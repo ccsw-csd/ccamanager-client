@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ExportService } from 'src/app/core/services/export.service';
 import { FilterService, PrimeNGConfig } from 'primeng/api';
 import { Calendar } from 'primeng/calendar';
@@ -25,7 +25,7 @@ import { TechnologyService } from 'src/app/maintenance/technology/services/techn
 import { DialogComponent } from '../dialog/dialog.component';
 import { Intern } from '../models/Intern';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
-import { InternService } from '../services/intern.service';
+import { InternService } from '../services/InternService';
 import { InternEditComponent } from '../intern-edit/intern-edit.component';
 import { InternTimelineComponent } from '../intern-timeline/intern-timeline.component';
 import { PersonService } from 'src/app/personal/services/person.service';
@@ -429,7 +429,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
     return this.states.find((active) => active.value === value.toString())?.label;
   }
 
-  cleanFilters(): void {
+  cleanFilters(ev : PointerEvent): void {
     this.filterDropdowns.forEach((dropdown) => dropdown.clear(null));
     this.filterCalendars.forEach((calendar) => {
       calendar.inputFieldValue = "";

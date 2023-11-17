@@ -23,6 +23,9 @@ export class AppComponent implements OnInit {
     return filter === '-- Vacío --' || filter === '-- Vacía --' || (filter.length != filter.trim().length && filter.trim().length == 0);
   }
 
+  normalizeText(text : string): string {
+    return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
 
   registerCustomFilter(): void {
 
@@ -34,7 +37,7 @@ export class AppComponent implements OnInit {
       if (this.filterIsNull(filter) && (value == null || value.length == 0)) return true;
       if (value == null || value.length == 0) return false;
       
-      return value == filter;
+      return this.normalizeText(value) == this.normalizeText(filter);
     });    
     
     this.filterService.register('contains-and-null', (value, filter): boolean => {  
@@ -49,9 +52,9 @@ export class AppComponent implements OnInit {
       if (value == null || value.length == 0) return false;
       
       if (value.indexOf)
-      return value.indexOf(filter) >= 0;
+      return this.normalizeText(value).indexOf(this.normalizeText(filter)) >= 0;
       
-      return value == filter;
+      return this.normalizeText(value) == this.normalizeText(filter);
     });    
     
     this.filterService.register('array-and-null', (value, filter): boolean => {  

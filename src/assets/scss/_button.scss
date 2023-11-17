@@ -24,6 +24,10 @@ $button-secondary: #FF5770;
     height: 45px;
 }
 
+.p-button-outlined:focus {
+  background: none !important;
+}
+
 .p-button {
   background-color: $button-primary;
   height: 45px;

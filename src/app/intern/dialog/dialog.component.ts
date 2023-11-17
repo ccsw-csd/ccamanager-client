@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
-import { InternService } from '../services/intern.service';
+import { InternService } from '../services/InternService';
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
