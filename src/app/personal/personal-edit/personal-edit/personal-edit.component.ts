@@ -8,6 +8,7 @@ import { PersonService } from '../../services/person.service';
 import { Role } from 'src/app/core/models/Role';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
+import { CustomerSimple } from 'src/app/maintenance/customer/models/CustomerSimple';
 
 
 @Component({
@@ -22,12 +23,14 @@ export class PersonalEditComponent implements OnInit {
   roles: Role[]
   provinces: Province[]
   centers: Center[]
+  customers: CustomerSimple[];
+  customersHidden: CustomerSimple[];
   item: any;
   groupPerson: any[] = [];
   personSelected;
   personForm: FormGroup;
-  requiredField : any = Validators.required;
-  loading:boolean;
+  requiredField: any = Validators.required;
+  loading: boolean;
 
   actives: any[] = [
     { label: 'Inactivo', value: 0 },
@@ -50,7 +53,7 @@ export class PersonalEditComponent implements OnInit {
       name: ['', Validators.required],
       lastname: ['', Validators.required],
       email: ['', [Validators.email]],
-      customer: [''],
+      customers: [''],
       grade: ['',[Validators.pattern('^[A-Z][0-9]$')]],
       role: [''],
       hours: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
@@ -65,14 +68,19 @@ export class PersonalEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = false;
-    this.personElement = Object.assign({ person: Person }, this.config.data.person)
-    this.provinces = this.config.data.provinces 
-    this.roles = this.config.data.roles 
-    this.centers=  this.config.data.centers
+
+    this.personElement = Object.assign({ person: Person }, this.config.data.person);
+
+    this.provinces = this.config.data.provinces;
+    this.roles = this.config.data.roles;
+    this.centers = this.config.data.centers;
+    this.customers = this.config.data.customers;
+
     this.setValuesFormGroup();
     if (this.config.data.person != null){ 
       this.personForm.get('grade').markAsDirty();
       this.whenInformedUsername(this.config.data.person.username);
+      this.loadCustomersHidden();
     }
   }
 
@@ -84,38 +92,49 @@ export class PersonalEditComponent implements OnInit {
       name: this.personElement.name,
       lastname: this.personElement.lastname,
       email: this.personElement.email,
-      customer: this.personElement.customer,
+      customers: this.personElement.customers,
       grade: this.personElement.grade,
       role: this.roles.find(role => role.role == this.personElement.role),
-      hours: this.personElement.hours ? this.personElement.hours:8,
-      department: this.personElement.department ? this.personElement.department:'CCSW',
+      hours: this.personElement.hours ? this.personElement.hours : 8,
+      department: this.personElement.department ? this.personElement.department :'CCSW',
       manager: this.personElement.manager,
       center: this.personElement.center ? this.personElement.center : this.centers.find(center => center.id == 6),
       province: this.personElement.province,
-      active: this.personElement.active ? this.personElement.active : 1,
+      active: this.personElement.active != null ? this.personElement.active : 1,
       businesscode: this.personElement.businesscode ? this.personElement.businesscode :'CCA'
     });
   }
 
+  loadCustomersHidden() {
+    this.personService.getPerson(this.config.data.person.id).subscribe({
+      next: (res: Person) => {
+        this.customersHidden = res.customers.filter( c => !this.config.data.person.customers.some(e => e.id === c.id));
+      },
+      error: (errorResponse) => {},
+      complete:() => {}
+    });
+  }
+
   saveItem(person: Person) {
-     this.loading = true;
-     person.role = person.role ? person.role['role'] : null;
-     if(person.username == '') {person.username=null} 
-      this.personService.save(person).subscribe({
-        next: () => {
-          this.snackbarService.showMessage(
-            'El registro se ha guardado con éxito'
-          );
-          this.ref.close(true);
-        },
-        error: (errorResponse) => {
-          this.loading = false;
-          this.snackbarService.error(errorResponse['message']);
-        },
-        complete:()=>{
-          this.loading= false;
-        }
-      });
+    this.loading = true;
+
+    person.role = person.role ? person.role['role'] : null;
+    person.username = person.username == '' ? null : person.username;
+    person.customers = person.customers != null ? person.customers.concat(this.customersHidden) : null;
+
+    this.personService.save(person).subscribe({
+      next: () => {
+        this.snackbarService.showMessage('El registro se ha guardado con éxito');
+        this.ref.close(true);
+      },
+      error: (errorResponse) => {
+        this.loading = false;
+        this.snackbarService.error(errorResponse['message']);
+      },
+      complete:() => {
+        this.loading = false;
+      }
+    });
   }
 
   closeWindow() {
@@ -153,7 +172,7 @@ export class PersonalEditComponent implements OnInit {
   }
 
   updateFormValidators(){
-    const requiredFields = ['saga', 'customer', 'role'];
+    const requiredFields = ['saga', 'customers', 'role'];
     requiredFields.forEach(fieldName => {
       const control = this.personForm.get(fieldName);
       control.setValidators(Validators.required);
@@ -163,17 +182,16 @@ export class PersonalEditComponent implements OnInit {
     const gradeValidator = this.personForm.get('grade');
     const emailValidator = this.personForm.get('email');
 
-    gradeValidator.setValidators([Validators.required,Validators.pattern('^[A-Z][0-9]$')])
+    gradeValidator.setValidators([Validators.required, Validators.pattern('^[A-Z][0-9]$')])
     gradeValidator.updateValueAndValidity();
-    emailValidator.setValidators([Validators.required,Validators.email])
+    emailValidator.setValidators([Validators.required, Validators.email])
     emailValidator.updateValueAndValidity();
   }
 
   whenInformedUsername(event){
-    if(event!="" && event!=null){
+    if(event != "" && event != null) {
      this.updateFormValidators();
-    }
-    else {
+    } else {
       this.resetFormDefaultValidators();
     }
   }
@@ -185,7 +203,7 @@ export class PersonalEditComponent implements OnInit {
       control.updateValueAndValidity(); 
     });
     
-    const requiredFields = ['name', 'lastname', 'businesscode','department','center','province','active','hours'];
+    const requiredFields = ['name', 'lastname', 'businesscode', 'department', 'center', 'province', 'active', 'hours'];
     requiredFields.forEach(fieldName => {
       const control = this.personForm.get(fieldName);
       control.setValidators(Validators.required);

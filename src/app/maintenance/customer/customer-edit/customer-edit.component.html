@@ -1,0 +1,32 @@
+<div class="flex flex-column mt-1 gap-3">
+    
+    <span class="p-float-label">
+        <input id="name" type="text" pInputText class="w-full" [(ngModel)]="customer.name"  required>
+        <label>Nombre</label>
+    </span>
+
+    <span class="p-float-label w-full p-input-icon-right">
+        <p-autoComplete [(ngModel)]="personSelected" styleClass="w-full" inputStyleClass="w-full" type="search"
+        (onSelect)="onPersonSelect($event)" [suggestions]="groupPerson" [forceSelection]="true"
+        [showEmptyMessage]="true" (completeMethod)="searchPerson($event)" field="field" dropdownIcon="pi pi-search"
+        [ngModelOptions]="{standalone: true}"></p-autoComplete>
+        <label>Añadir gestor</label>
+        <i style="margin-right: 20px;"class="pi pi-search"></i>
+    </span>
+
+    <span class="p-float-label">
+        <p-listbox [options]="customer.managers" [metaKeySelection]="false"
+        [showToggleAll]="false" optionLabel="manager" styleClass="w-full"
+        [listStyle]="{'height': 'calc(25vh)'}">
+            <p-header>Gestores</p-header>
+            <ng-template let-manager pTemplate="item">
+                <button pButton type="button" (click)="deleteAssign(manager)" icon="pi pi-trash" class="p-button-text"></button>
+                {{manager.name}} {{manager.lastname}} - {{manager.username}}
+            </ng-template>
+        </p-listbox>
+    </span>
+    <div class="flex flex-row justify-content-end gap-2">    
+      <button pButton pRipple styleClass="" label="Cancelar" class="p-button p-button-secondary p-button-outlined" (click)="closeWindow()"></button>
+      <button pButton pRipple p-button-label="10px" label="Guardar" [disabled]="customer.name=='' || customer.name==null || loading" (click)="save()"></button>
+    </div>
+  </div>

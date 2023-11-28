@@ -41,6 +41,7 @@ export class NavComponent implements OnInit {
         label: "Mantenimiento",
         expanded: true,
         items: [
+          {label: "Clientes", routerLink: '/customer'},
           {label: "Centros Educativos", routerLink: '/education-center'},
           {label: "Titulaciones", routerLink: '/education'},
           {label: "Tecnologías", routerLink: '/technology'}

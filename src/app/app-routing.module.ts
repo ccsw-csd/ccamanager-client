@@ -5,6 +5,7 @@ import { RefreshTokenResolverService } from './core/services/refresh-token-resol
 import { LayoutComponent } from './core/views/layout/layout.component';
 import { InternListComponent } from './intern/intern-list/intern-list.component';
 import { LoginComponent } from './login/views/login/login.component';
+import { CustomerListComponent } from './maintenance/customer/customer-list/customer-list.component';
 import { EducationCenterListComponent } from './maintenance/education-center/education-center-list/education-center-list.component';
 import { EducationListComponent } from './maintenance/education/education-list/education-list.component';
 import { EnglishLevelListComponent } from './maintenance/english-level/english-level-list/english-level-list.component';
@@ -33,6 +34,7 @@ const routes: Routes = [
       { path: 'intern', component: InternListComponent, data:{role:['INTERN']}},
       { path: 'pyramid', component: PyramidListComponent, data:{role:['PERSONAL']}},
       { path: 'pyramid-team', component: PyramidTeamListComponent, data:{role:['PERSONAL']}},
+      { path: 'customer', component: CustomerListComponent, data:{role:['MAINTENANCE']}},
       { path: 'education', component: EducationListComponent, data:{role:['MAINTENANCE']}},
       { path: 'education-center', component: EducationCenterListComponent, data:{role:['MAINTENANCE']}},
       { path: 'level', component: EnglishLevelListComponent, data:{role:['MAINTENANCE']}},

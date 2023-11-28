@@ -14,6 +14,7 @@ export class EducationCenterService {
   getAllEducationCenters():Observable<EducationCenter[]>{
     return this.http.get<EducationCenter[]>(environment.server+"/educationCenter/");
   }
+  
   save(educationCenter:EducationCenter):Observable<EducationCenter>{
     return this.http.post<EducationCenter>(environment.server+"/educationCenter/",educationCenter);
   }

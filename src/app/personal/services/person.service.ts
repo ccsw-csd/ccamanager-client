@@ -15,6 +15,15 @@ export class PersonService {
   getAllPersons(): Observable<Person[]> {
     return this.http.get<Person[]>(environment.server + '/person/');
   }
+
+  getPersonsSecured(): Observable<Person[]> {
+    return this.http.get<Person[]>(environment.server + '/person/secured');
+  }
+
+  getPerson(id: number): Observable<any> {
+    return this.http.get(environment.server + '/person/' + id);
+  }
+
   save(person: Person): Observable<Person> {
     return this.http.post<Person>(environment.server + '/person/', person);
   }
@@ -53,6 +62,10 @@ export class PersonService {
 
   compareLdapInterns(): Observable<ListsLdapPerson> {
     return this.http.get<ListsLdapPerson>(environment.server + '/ldap/intern/compare');
+  }
+
+  searchPersonPerson(filter: string): Observable<Person[]> {
+    return this.http.get<Person[]>(environment.server + '/person/filter/person/' + filter)
   }
 
 }

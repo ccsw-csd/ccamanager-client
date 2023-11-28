@@ -1,5 +1,6 @@
 import { Province } from 'src/app/core/models/Province';
 import { Center } from 'src/app/core/models/Center';
+import { CustomerSimple } from 'src/app/maintenance/customer/models/CustomerSimple';
 
 export class Person {
   id: number;
@@ -7,8 +8,9 @@ export class Person {
   username: string;
   name: string;
   lastname: string;
-  email:string;
+  email: string;
   customer: string;
+  customers: CustomerSimple[];
   grade: string;
   role: string;
   hours: number;

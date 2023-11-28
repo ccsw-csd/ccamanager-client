@@ -17,6 +17,10 @@ import { NavigatorService } from 'src/app/core/services/navigator.service';
 import { ColumnConfigComponent } from 'src/app/core/views/column-config/column-config.component';
 import { PersonalEditComponent } from '../personal-edit/personal-edit/personal-edit.component';
 import { PersonalSynchronizeLdapComponent } from '../personal-synchronize-ldap/personal-synchronize-ldap.component';
+import { CustomerService } from 'src/app/maintenance/customer/services/customer.service';
+import { CustomerSimple } from 'src/app/maintenance/customer/models/CustomerSimple';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { UserInfoSSO } from 'src/app/core/models/UserInfoSSO';
 
 @Component({
   selector: 'app-personal-list',
@@ -37,6 +41,7 @@ export class PersonalListComponent implements OnInit {
   databaseCenters: Center[];
   databaseProvinces: Province[];
   databaseRoles: Role[];
+  databaseCustomers: CustomerSimple[];
   totalPersons: number;
   states: any[];
   tableWidth: string;
@@ -45,9 +50,11 @@ export class PersonalListComponent implements OnInit {
 
 
   constructor(
+    public auth: AuthService,
     private provinceService: ProvinceService,
     private personService: PersonService,
     private centerService: CenterService,
+    private customerService: CustomerService,
     private dialogService: DialogService,
     private roleService: RoleService,
     private exportService: ExportService,
@@ -57,6 +64,7 @@ export class PersonalListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     this.resizeTable();
     this.navigatorService.getNavivagorChangeEmitter().subscribe((menuVisible) => {
       if (menuVisible) this.tableWidth = 'calc(100vw - 255px)';
@@ -68,6 +76,7 @@ export class PersonalListComponent implements OnInit {
     this.getAllPersons();
     this.getAllCenters();
     this.getAllRoles();
+    this.getCustomersSecured();
 
     this.states = [
       { label: 'Inactivo', value: '0' },
@@ -80,7 +89,7 @@ export class PersonalListComponent implements OnInit {
       { header: 'Username', composeField: 'username', field: 'username', filterType: 'input' },
       { header: 'Nombre', composeField: 'name', field: 'name', filterType: 'input' },
       { header: 'Apellidos', composeField: 'lastname', field: 'lastname', filterType: 'input' },
-      { header: 'Cliente', composeField: 'customer', field: 'customer', filterType: 'input' },
+      { header: 'Clientes', composeField: 'customers', field: 'customers', filterType: 'dropdown', matchMode: 'array-and-null', options:[], optionLabel: 'name', parse:(cust: CustomerSimple[]): string => {return cust.map((t) => t.name).join(', ')} },
       { header: 'Grado', composeField: 'grade', field: 'grade', filterType: 'input' },
       { header: 'Rol', composeField: 'role', field: 'role', filterType: 'dropdown', options:[], optionLabel: 'role' },
       { header: 'Horas', composeField: 'hours', field: 'hours', filterType: 'input' },
@@ -89,7 +98,7 @@ export class PersonalListComponent implements OnInit {
       { header: 'Evaluador', composeField: 'manager', field: 'manager', filterType: 'input' },
       { header: 'Oficina', composeField: 'center.name', field: 'center', fieldExtra: 'name', filterType: 'dropdown', options:[], optionLabel: 'name' },
       { header: 'Localización', composeField: 'province.province', field: 'province', fieldExtra: 'province', filterType: 'dropdown', options:[], optionLabel: 'province' },
-      { header: 'Estado', composeField: 'active', field: 'active', filterType: 'multiple', options: this.states, optionLabel: 'active', initialValue: ['1'], parse:(value: number): string => {return this.states.find((state) => state.value === value.toString())?.label} }
+      { header: 'Estado', composeField: 'active', field: 'active', filterType: 'multiple', options: this.states, initialValue: ['1'], parse:(value: number): string => {return this.states.find((state) => state.value === value.toString())?.label} }
     ];
     this.selectedColumnNames = this.loadSelected();
 
@@ -154,7 +163,6 @@ export class PersonalListComponent implements OnInit {
   getAllProvinces() {
     this.provinceService.getAllProvinces().subscribe({
       next: (res: Province[]) => {
-
         this.databaseProvinces = res;
         this.columnNames.filter(item => item.field == 'province')[0].options = res.concat({id:0, province:'-- Vacía --'});
       }
@@ -179,8 +187,17 @@ export class PersonalListComponent implements OnInit {
     });
   }
 
+  getCustomersSecured() {
+    this.customerService.getCustomersSecured().subscribe({
+      next: (res: CustomerSimple[]) => {
+        this.databaseCustomers = res;
+        this.columnNames.filter(item => item.field == 'customers')[0].options = res.concat({id:0, name:'-- Vacío --'});
+      }
+    });
+  }
+
   getAllPersons() {
-    this.personService.getAllPersons().subscribe({
+    this.personService.getPersonsSecured().subscribe({
       next: (res: Person[]) => {
         this.persons = res;
         this.totalPersons = this.persons.length;
@@ -223,6 +240,7 @@ export class PersonalListComponent implements OnInit {
         provinces: this.databaseProvinces,
         roles: this.databaseRoles,
         centers: this.databaseCenters,
+        customers: this.databaseCustomers
       },
       closable: false,
       showHeader: true,

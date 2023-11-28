@@ -30,7 +30,7 @@
       <input id="name" type="text" pInputText class="w-full {{getErrorClass('username')}}" formControlName="username" (ngModelChange)="whenInformedUsername($event)">
       <label>Username<span class="text-red-600 text-base" *ngIf="personForm.get('username').hasValidator(requiredField)">*</span></label>
     </span>
-
+    
   </div>
 
   <div class="flex flex-row gap-2">
@@ -49,13 +49,14 @@
   <div class="flex flex-row gap-2">
     <span class="p-float-label mb-1 flex-1">
       <input id="name" type="text" pInputText class="w-full {{getErrorClass('email')}}" formControlName="email">
-     <label for="email">Email<span class="text-red-600 text-base" *ngIf="personForm.get('email').hasValidator(requiredField)">*</span></label></span>
-
-    <span class="p-float-label flex-1">
-      <input id="name" type="text" pInputText class="w-full {{getErrorClass('customer')}}" formControlName="customer">
-      <label>Cliente<span class="text-red-600 text-base" *ngIf="personForm.get('customer').hasValidator(requiredField)">*</span></label>
+      <label for="email">Email<span class="text-red-600 text-base" *ngIf="personForm.get('email').hasValidator(requiredField)">*</span></label>
     </span>
 
+    <span class="p-float-label flex-1">
+      <p-multiSelect [options]="customers" [maxSelectedLabels]="2" styleClass="w-full {{getErrorClass('customers')}}" appendTo="body"
+        formControlName="customers" optionLabel="name"> </p-multiSelect>
+      <label>Clientes<span class="text-red-600 text-base" *ngIf="personForm.get('customers').hasValidator(requiredField)">*</span></label>
+    </span>
   </div>
 
   <div class="flex flex-row gap-2">
