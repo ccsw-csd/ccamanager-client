@@ -9,7 +9,7 @@
 </div>
 </div>
 <p-table [style]="{'height':'calc(100vh - 175px)'}" [scrollable]="true" scrollHeight="flex" selectionMode="single" 
-    [value]="customers" styleClass="p-datatable-striped" [paginator]="true" [rows]="50" sortField="name" [sortOrder]="1" >
+    [value]="customers" styleClass="p-datatable-striped" [paginator]="true" [rows]="50" sortField="name" [sortOrder]="1" (sortFunction)="customSort($event)" [customSort]="true">
     <ng-template pTemplate="header" >
         <tr>
             <th class="flex flex-column align-items-center justify-content-center">

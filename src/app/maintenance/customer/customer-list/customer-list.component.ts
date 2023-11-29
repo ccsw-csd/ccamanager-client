@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfirmationService} from 'primeng/api';
+import { ConfirmationService, SortEvent} from 'primeng/api';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
 import { SnackbarService } from "../../../core/services/snackbar.service";
 import { CustomerService } from '../services/customer.service';
@@ -93,6 +93,25 @@ export class CustomerListComponent implements OnInit {
   
   closeWindow(){
     this.ref.close();
+  }
+
+  customSort(event: SortEvent) {
+    event.data.sort((data1, data2) => {
+        let value1 = data1[event.field];
+        let value2 = data2[event.field];
+        let result = null;
+
+        if (value1 == null && value2 != null) result = -1;
+        else if (value1 != null && value2 == null) result = 1;
+        else if (value1 == null && value2 == null) result = 0;
+        else if (typeof value1 === 'string' && typeof value2 === 'string') result = value1.localeCompare(value2);
+        else if (Array.isArray(value1) && Array.isArray(value2)){
+          result = value1.sort((a, b) => a.name.localeCompare(b.name)).map((t) => t.name).join(', ').localeCompare(value2.sort((a, b) => a.name.localeCompare(b.name)).map((t) => t.name).join(', '));
+        } 
+        else result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
+
+        return event.order * result;
+    });
   }
 
 }

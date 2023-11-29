@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { Table } from 'primeng/table';
-import { ConfirmationService, FilterService } from 'primeng/api';
+import { ConfirmationService, FilterService, SortEvent } from 'primeng/api';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Province } from 'src/app/core/models/Province';
@@ -34,6 +34,7 @@ export class PersonalListComponent implements OnInit {
   @ViewChildren('filterDropdown') filterDropdowns!: QueryList<Dropdown>;
 
   isSynchronized: Boolean = false;
+  allowSynchronize: Boolean = false;
   columnNames: any[];
   selectedColumnNames : any[];
   changeCols : boolean = false;
@@ -190,7 +191,7 @@ export class PersonalListComponent implements OnInit {
   getCustomersSecured() {
     this.customerService.getCustomersSecured().subscribe({
       next: (res: CustomerSimple[]) => {
-        this.databaseCustomers = res;
+        this.databaseCustomers = res.sort((a, b) => a.name.localeCompare(b.name));
         this.columnNames.filter(item => item.field == 'customers')[0].options = res.concat({id:0, name:'-- Vacío --'});
       }
     });
@@ -280,12 +281,16 @@ export class PersonalListComponent implements OnInit {
     });
   }
 
-  trySynchronize(){
-    this.personService.checkPersons().subscribe({
-      next: (res: Boolean) => {
-        this.isSynchronized = res;
-      }
-    });
+  trySynchronize() {
+    if(this.auth.hasRole('MAINTENANCE')){
+      this.personService.checkPersons().subscribe({
+        next: (res: Boolean) => {
+          this.isSynchronized = res;
+        }
+      });
+    } else {
+      this.isSynchronized = true;
+    } 
   }
 
   synchronizeLdap(){
@@ -295,6 +300,25 @@ export class PersonalListComponent implements OnInit {
         showHeader:true,
         closable: false,
         header:'Sincronizar LDAP'
+    });
+  }
+
+  customSort(event: SortEvent) {
+    event.data.sort((data1, data2) => {
+        let value1 = data1[event.field];
+        let value2 = data2[event.field];
+        let result = null;
+
+        if (value1 == null && value2 != null) result = -1;
+        else if (value1 != null && value2 == null) result = 1;
+        else if (value1 == null && value2 == null) result = 0;
+        else if (typeof value1 === 'string' && typeof value2 === 'string') result = value1.localeCompare(value2);
+        else if (Array.isArray(value1) && Array.isArray(value2)){
+          result = value1.sort((a, b) => a.name.localeCompare(b.name)).map((t) => t.name).join(', ').localeCompare(value2.sort((a, b) => a.name.localeCompare(b.name)).map((t) => t.name).join(', '));
+        } 
+        else result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
+
+        return event.order * result;
     });
   }
 }

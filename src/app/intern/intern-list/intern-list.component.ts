@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ExportService } from 'src/app/core/services/export.service';
-import { FilterService, PrimeNGConfig } from 'primeng/api';
+import { FilterService, PrimeNGConfig, SortEvent } from 'primeng/api';
 import { Calendar } from 'primeng/calendar';
 import { Dropdown } from 'primeng/dropdown';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmationService} from 'primeng/api';
 import { Table } from 'primeng/table';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { Action } from 'src/app/core/models/Action';
 import { Center } from 'src/app/core/models/Center';
 import { Province } from 'src/app/core/models/Province';
@@ -31,6 +32,7 @@ import { InternTimelineComponent } from '../intern-timeline/intern-timeline.comp
 import { PersonService } from 'src/app/personal/services/person.service';
 import { InternSynchronizeLdapComponent } from '../intern-synchronize-ldap/intern-synchronize-ldap/intern-synchronize-ldap.component';
 import { ColumnConfigComponent } from 'src/app/core/views/column-config/column-config.component';
+
 
 @Component({
   selector: 'app-intern-list',
@@ -77,6 +79,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
   tableWidth: string;
 
   constructor(
+    public auth: AuthService,
     private primengConfig: PrimeNGConfig,
     private navigatorService: NavigatorService,
     private ref: DynamicDialogRef,
@@ -104,6 +107,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
       else this.tableWidth = 'calc(100vw - 55px)';
     });
     
+    this.trySynchronize();
     this.getAllInterns(true);
     this.getAllEducations();
     this.getAllEducationCenters();
@@ -494,11 +498,15 @@ export class InternListComponent implements OnInit, AfterViewInit {
   }
 
   trySynchronize() {
-    this.personService.checkInterns().subscribe({
-      next: (res: Boolean) => {
-        this.isSynchronized = res;
-      },
-    });
+    if(this.auth.hasRole('MAINTENANCE')){
+      this.personService.checkInterns().subscribe({
+        next: (res: Boolean) => {
+          this.isSynchronized = res;
+        },
+      });
+    } else {
+      this.isSynchronized = true;
+    }
   }
 
   synchronizeLdap() {
@@ -508,6 +516,25 @@ export class InternListComponent implements OnInit, AfterViewInit {
         showHeader:true,
         closable: false,
         header: 'Sincronizar LDAP'
+    });
+  }
+
+  customSort(event: SortEvent) {
+    event.data.sort((data1, data2) => {
+        let value1 = data1[event.field];
+        let value2 = data2[event.field];
+        let result = null;
+
+        if (value1 == null && value2 != null) result = -1;
+        else if (value1 != null && value2 == null) result = 1;
+        else if (value1 == null && value2 == null) result = 0;
+        else if (typeof value1 === 'string' && typeof value2 === 'string') result = value1.localeCompare(value2);
+        else if (Array.isArray(value1) && Array.isArray(value2)){
+          result = value1.sort((a, b) => a.name.localeCompare(b.name)).map((t) => t.name).join(', ').localeCompare(value2.sort((a, b) => a.name.localeCompare(b.name)).map((t) => t.name).join(', '));
+        } 
+        else result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
+
+        return event.order * result;
     });
   }
 
