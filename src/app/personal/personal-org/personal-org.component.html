@@ -1,0 +1,15 @@
+<div class="flex flex-column mb-1">
+    
+    <div class="card flex justify-content-center overflow-x-auto">
+        <p-organizationChart [value]="data">
+            <ng-template let-node pTemplate="default">
+                <div class="p-2 text-center">
+                    <img [src]="node.data.image" class="mb-3 w-3rem h-3rem" style="border-radius: 50%;" />
+                    <div class="font-bold">{{ node.label }}</div>
+                    <div>{{ node.data.role }}</div>
+                </div>
+            </ng-template>
+        </p-organizationChart>
+    </div>
+    
+</div>

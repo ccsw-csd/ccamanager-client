@@ -91,9 +91,20 @@
       <label>Departamento<span class="text-red-600 text-base" *ngIf="personForm.get('department').hasValidator(requiredField)">*</span></label>
     </span>
 
-    <span class="p-float-label flex-1" style="min-width: 196px;">
+  </div>
+
+  <div class="flex flex-row gap-2">
+
+    <span class="p-float-label flex-1">
       <input id="name" type="text" pInputText class="w-full {{getErrorClass('manager')}}" formControlName="manager">
       <label>Evaluador<span class="text-red-600 text-base" *ngIf="personForm.get('manager').hasValidator(requiredField)">*</span></label>
+    </span>
+
+    <span class="p-float-label flex-1 p-input-icon-right">
+      <p-autoComplete formControlName="parent" styleClass="w-full" inputStyleClass="w-full" type="search" [suggestions]="parents" [forceSelection]="true" appendTo="body"
+      [showEmptyMessage]="true" (completeMethod)="searchParent($event)" field="field" dropdownIcon="pi pi-search" [field]="displayPerson"></p-autoComplete>
+      <label>Gestor</label>
+      <i style="margin-right: 20px;" class="pi pi-search"></i>
     </span>
 
   </div>

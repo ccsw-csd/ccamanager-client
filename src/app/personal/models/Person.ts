@@ -16,6 +16,7 @@ export class Person {
   hours: number;
   department: string;
   manager: string;
+  parent: Person;
   center: Center;
   province: Province;
   active: number;

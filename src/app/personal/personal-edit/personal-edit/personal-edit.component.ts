@@ -28,6 +28,7 @@ export class PersonalEditComponent implements OnInit {
   item: any;
   groupPerson: any[] = [];
   personSelected;
+  parents: any[] = [];
   personForm: FormGroup;
   requiredField: any = Validators.required;
   loading: boolean;
@@ -59,6 +60,7 @@ export class PersonalEditComponent implements OnInit {
       hours: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       department: ['', Validators.required],
       manager: [''],
+      parent: [''],
       center: ['', Validators.required],
       province: ['', Validators.required],
       active: ['', Validators.required],
@@ -98,6 +100,7 @@ export class PersonalEditComponent implements OnInit {
       hours: this.personElement.hours ? this.personElement.hours : 8,
       department: this.personElement.department ? this.personElement.department :'CCSW',
       manager: this.personElement.manager,
+      parent: this.personElement.parent,
       center: this.personElement.center ? this.personElement.center : this.centers.find(center => center.id == 6),
       province: this.personElement.province,
       active: this.personElement.active != null ? this.personElement.active : 1,
@@ -164,6 +167,22 @@ export class PersonalEditComponent implements OnInit {
     };
   }
 
+  searchParent($event) {
+    if ($event.query != null) {
+      this.personService.searchPersonPerson($event.query).subscribe({
+        next: (res: Person[]) => {
+          this.parents = res;
+        },
+        error: () => {},
+        complete: () => {},
+      });
+    }
+  }
+
+  displayPerson(p : Person): string {
+    return `${p.name} ${p.lastname} - ${p.username}`;
+  }
+
   onPersonSelect(event) {
     this.personElement = event.value
     this.setValuesFormGroup();
@@ -228,5 +247,7 @@ export class PersonalEditComponent implements OnInit {
     if (this.personForm.controls[field].status == 'INVALID') return 'field-error';
     return '';
   }
+
+
 
 }
