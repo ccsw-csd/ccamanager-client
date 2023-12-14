@@ -80,7 +80,7 @@ export class PersonalEditComponent implements OnInit {
     this.provinces = this.config.data.provinces;
     this.roles = this.config.data.roles;
     this.centers = this.config.data.centers;
-    this.customers = this.config.data.customers;
+    this.customers = this.config.data.customers.map(item => {return {'id': item.id, 'name': item.name}});
 
     this.setValuesFormGroup();
     if (this.config.data.person != null){ 
@@ -88,7 +88,7 @@ export class PersonalEditComponent implements OnInit {
       this.whenInformedUsername(this.config.data.person.username);
       this.loadCustomersHidden();
     }
-
+    
     if (this.config.data.person == null || this.config.data.person.id == null) {
         const control = this.personForm.get('customers');
         control.setValidators(Validators.required);
