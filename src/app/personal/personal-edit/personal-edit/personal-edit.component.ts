@@ -9,6 +9,8 @@ import { Role } from 'src/app/core/models/Role';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { SnackbarService } from 'src/app/core/services/snackbar.service';
 import { CustomerSimple } from 'src/app/maintenance/customer/models/CustomerSimple';
+import { PersonCustomer } from 'src/app/organization/models/PersonCustomer';
+import { Customer } from 'src/app/maintenance/customer/models/Customer';
 
 
 @Component({
@@ -25,6 +27,7 @@ export class PersonalEditComponent implements OnInit {
   centers: Center[]
   customers: CustomerSimple[];
   customersHidden: CustomerSimple[];
+  personCustomersHidden: PersonCustomer[];
   item: any;
   groupPerson: any[] = [];
   personSelected;
@@ -55,12 +58,13 @@ export class PersonalEditComponent implements OnInit {
       lastname: ['', Validators.required],
       email: ['', [Validators.email]],
       customers: [''],
+      personCustomers: [''],
       grade: ['',[Validators.pattern('^[A-Z][0-9]$')]],
       role: [''],
       hours: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       department: ['', Validators.required],
       manager: [''],
-      parent: [''],
+      parents: [''],
       center: ['', Validators.required],
       province: ['', Validators.required],
       active: ['', Validators.required],
@@ -70,7 +74,7 @@ export class PersonalEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = false;
-
+    
     this.personElement = Object.assign({ person: Person }, this.config.data.person);
 
     this.provinces = this.config.data.provinces;
@@ -84,6 +88,13 @@ export class PersonalEditComponent implements OnInit {
       this.whenInformedUsername(this.config.data.person.username);
       this.loadCustomersHidden();
     }
+
+    if (this.config.data.person == null || this.config.data.person.id == null) {
+        const control = this.personForm.get('customers');
+        control.setValidators(Validators.required);
+        control.updateValueAndValidity();
+    }
+
   }
 
   setValuesFormGroup(){
@@ -100,11 +111,12 @@ export class PersonalEditComponent implements OnInit {
       hours: this.personElement.hours ? this.personElement.hours : 8,
       department: this.personElement.department ? this.personElement.department :'CCSW',
       manager: this.personElement.manager,
-      parent: this.personElement.parent,
+      parents: this.personElement.parents,
       center: this.personElement.center ? this.personElement.center : this.centers.find(center => center.id == 6),
       province: this.personElement.province,
       active: this.personElement.active != null ? this.personElement.active : 1,
-      businesscode: this.personElement.businesscode ? this.personElement.businesscode :'CCA'
+      businesscode: this.personElement.businesscode ? this.personElement.businesscode :'CCA',
+      personCustomers: this.personElement.personCustomers
     });
   }
 
@@ -112,6 +124,7 @@ export class PersonalEditComponent implements OnInit {
     this.personService.getPerson(this.config.data.person.id).subscribe({
       next: (res: Person) => {
         this.customersHidden = res.customers.filter( c => !this.config.data.person.customers.some(e => e.id === c.id));
+        this.personCustomersHidden = res.personCustomers.filter ( c => !this.config.data.person.customers.some(e => e.id === c.customer.id));
       },
       error: (errorResponse) => {},
       complete:() => {}
@@ -121,9 +134,27 @@ export class PersonalEditComponent implements OnInit {
   saveItem(person: Person) {
     this.loading = true;
 
+    if (person.customers == null) person.personCustomers = [];
+    else {
+      person.personCustomers = person.personCustomers.filter(item => person.customers.some(e => e.id === item.customer.id));
+      person.customers.filter(item => !person.personCustomers.some(e => e.customer.id === item.id)).forEach( customer => {
+
+        let newPersonCustomer = new PersonCustomer();
+
+        newPersonCustomer.customer = new Customer();                
+        newPersonCustomer.customer.id = customer.id;
+
+        person.personCustomers.push(newPersonCustomer);
+
+      });
+    }
+
     person.role = person.role ? person.role['role'] : null;
     person.username = person.username == '' ? null : person.username;
     person.customers = person.customers != null ? person.customers.concat(this.customersHidden) : null;
+    if (this.personCustomersHidden != null)
+      person.personCustomers = person.personCustomers.concat(this.personCustomersHidden);
+    
 
     this.personService.save(person).subscribe({
       next: () => {
@@ -191,7 +222,8 @@ export class PersonalEditComponent implements OnInit {
   }
 
   updateFormValidators(){
-    const requiredFields = ['saga', 'customers', 'role'];
+    const requiredFields = ['saga', 'role'];
+
     requiredFields.forEach(fieldName => {
       const control = this.personForm.get(fieldName);
       control.setValidators(Validators.required);
@@ -223,6 +255,7 @@ export class PersonalEditComponent implements OnInit {
     });
     
     const requiredFields = ['name', 'lastname', 'businesscode', 'department', 'center', 'province', 'active', 'hours'];
+
     requiredFields.forEach(fieldName => {
       const control = this.personForm.get(fieldName);
       control.setValidators(Validators.required);

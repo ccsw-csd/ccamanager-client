@@ -5,4 +5,5 @@ export class Customer {
     name: string;
     managers: Person[];
     managersParsed: string;
+    numberOfPersonWithoutOrganization: number;
 }

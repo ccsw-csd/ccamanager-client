@@ -19,14 +19,12 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { PersonalSynchronizeLdapComponent } from './personal-synchronize-ldap/personal-synchronize-ldap.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { PersonalOrgComponent } from './personal-org/personal-org.component';
 
 @NgModule({
   declarations: [
     PersonalListComponent, 
     PersonalEditComponent, 
     PersonalSynchronizeLdapComponent, 
-    PersonalOrgComponent
   ],
   imports: [
     CommonModule,

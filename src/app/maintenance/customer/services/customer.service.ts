@@ -28,4 +28,5 @@ export class CustomerService {
   getCustomersSecured() : Observable<CustomerSimple[]> {
     return this.http.get<Customer[]>(environment.server + "/customer/secured");
   }
+
 }

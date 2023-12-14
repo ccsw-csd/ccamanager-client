@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, SortEvent} from 'primeng/api';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
-import { SnackbarService } from "../../../core/services/snackbar.service";
-import { CustomerService } from '../services/customer.service';
-import { Customer } from '../models/Customer';
-import { CustomerEditComponent } from '../customer-edit/customer-edit.component';
+import { SnackbarService } from "../../core/services/snackbar.service";
+import { Customer } from 'src/app/maintenance/customer/models/Customer';
+import { CustomerService } from 'src/app/maintenance/customer/services/customer.service';
+import { OrganizationEditComponent } from '../organization-edit/organization-edit.component';
+import { OrganizationChartComponent } from '../organization-chart/organization-chart.component';
 
 
 @Component({
-  selector: 'app-customer-list',
-  templateUrl: './customer-list.component.html',
-  styleUrls: ['./customer-list.component.scss'],
+  selector: 'app-organization-list',
+  templateUrl: './organization-list.component.html',
+  styleUrls: ['./organization-list.component.scss'],
   providers: [DialogService, DynamicDialogRef, DynamicDialogConfig, ConfirmationService]
 })
-export class CustomerListComponent implements OnInit {
+export class OrganizationListComponent implements OnInit {
 
   customers: Customer[];
 
   cols: any[];
 
   constructor(
-    private ref: DynamicDialogRef,
     private snackbarService: SnackbarService,
     private confirmationService:ConfirmationService,
     private dialogService: DialogService,
@@ -28,12 +28,11 @@ export class CustomerListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
     this.getAllCustomers();
   }
 
   getAllCustomers() {
-    this.customerService.getAllCustomers().subscribe({
+    this.customerService.getCustomersSecured().subscribe({
       next: (res: Customer[]) => {
         this.customers = res;
         this.customers.forEach((e) =>  e.managersParsed = e.managers.map((p) => p.name + " " + p.lastname).join(', '));
@@ -41,11 +40,12 @@ export class CustomerListComponent implements OnInit {
     });
   }
 
-  editCustomer(customer?: Customer) {
-    let header = customer ? 'Modificar Cliente' : 'Nuevo Cliente';
-    this.ref = this.dialogService.open(CustomerEditComponent, {      
-      //height:"450px",
-      width:"680px",
+  editCustomer(customer: Customer) {
+    let header = 'Organización de '+customer.name;
+    
+    let ref = this.dialogService.open(OrganizationEditComponent, {      
+      height:"800px",
+      width:"800px",
       data:{
         customer: customer,
       },
@@ -53,48 +53,38 @@ export class CustomerListComponent implements OnInit {
       showHeader: true,
       header: header
     });
-    this.onClose();
-  }
-
-  onClose(): void {
-
-    this.ref.onClose.subscribe((results: any) => {
-      this.ngOnInit();
-    });
-  }
-
-  delete(id:number){
-
-    this.confirmationService.confirm({
-      message: '¿Deseas borrar el Cliente?',
-      rejectButtonStyleClass: 'p-button p-button-secondary p-button-outlined',
-      acceptIcon: 'false',
-      rejectIcon: 'false',      
-      accept:()=>{
-        this.confirmationService.close()
-        this.customerService.delete(id).subscribe({
-
-          next:()=>{
-            this.snackbarService.showMessage("Se ha eliminado correctamente el Cliente");
-            this.getAllCustomers();
-          },
-          error:(errorResponse)=>{
-            this.snackbarService.error(errorResponse.message);
-          } 
-
-        });
-      },
-      reject:()=>{
-        this.confirmationService.close();
+    
+    ref.onClose.subscribe((results: any) => {
+      if (results) {
+        this.getAllCustomers();
       }
     });
-    
   }
   
-  closeWindow(){
-    this.ref.close();
+
+  openOrganization() {
+    let ids = this.customers.map(item => item.id).join();
+
+    this.viewChart(ids);
   }
 
+  viewChart(customerId: string) {
+
+    this.dialogService.open(OrganizationChartComponent, {      
+      height:"90vh",
+      width:"90vw",
+      data:{
+        customers: customerId,
+      },
+      closable: false,
+      showHeader: true,
+      header: 'Organigrama'
+    });
+
+    
+
+  }
+  
   customSort(event: SortEvent) {
     event.data.sort((data1, data2) => {
         let value1 = data1[event.field];

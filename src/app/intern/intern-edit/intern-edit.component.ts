@@ -136,7 +136,7 @@ export class InternEditComponent implements OnInit {
     this.profileForm.get('endDate').updateValueAndValidity();
     this.profileForm.get('code').setValidators([Validators.required]);
     this.profileForm.get('code').updateValueAndValidity();
-    this.profileForm.get('saga').setValidators([Validators.required]);
+    this.profileForm.get('saga').setValidators([]);
     this.profileForm.get('saga').updateValueAndValidity();
     this.profileForm.get('mentor').setValidators([Validators.required]);
     this.profileForm.get('mentor').updateValueAndValidity();

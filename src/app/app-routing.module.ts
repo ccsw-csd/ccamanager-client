@@ -13,6 +13,7 @@ import { TechnologyListComponent } from './maintenance/technology/technology-lis
 import { PersonalListComponent } from './personal/personal-list/personal-list.component';
 import { PyramidListComponent } from './pyramid/pyramid-list/pyramid-list.component';
 import { PyramidTeamListComponent } from './pyramid/pyramid-team-list/pyramid-team-list.component';
+import { OrganizationListComponent } from './organization/organization-list/organization-list.component';
 
 export const DefaultRoutes = [
   {role:'PERSONAL', path: '/personal'},
@@ -34,6 +35,7 @@ const routes: Routes = [
       { path: 'intern', component: InternListComponent, data:{role:['INTERN']}},
       { path: 'pyramid', component: PyramidListComponent, data:{role:['PERSONAL']}},
       { path: 'pyramid-team', component: PyramidTeamListComponent, data:{role:['PERSONAL']}},
+      { path: 'organization', component: OrganizationListComponent, data:{role:['PERSONAL']}},      
       { path: 'customer', component: CustomerListComponent, data:{role:['MAINTENANCE']}},
       { path: 'education', component: EducationListComponent, data:{role:['MAINTENANCE']}},
       { path: 'education-center', component: EducationCenterListComponent, data:{role:['MAINTENANCE']}},

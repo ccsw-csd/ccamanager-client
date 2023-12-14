@@ -20,7 +20,6 @@ import { PersonalSynchronizeLdapComponent } from '../personal-synchronize-ldap/p
 import { CustomerService } from 'src/app/maintenance/customer/services/customer.service';
 import { CustomerSimple } from 'src/app/maintenance/customer/models/CustomerSimple';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { PersonalOrgComponent } from '../personal-org/personal-org.component';
 
 @Component({
   selector: 'app-personal-list',
@@ -97,7 +96,7 @@ export class PersonalListComponent implements OnInit {
       { header: 'Práctica', composeField: 'businesscode', field: 'businesscode', filterType: 'input' },
       { header: 'Dpto', composeField: 'department', field: 'department', filterType: 'input' },
       { header: 'Evaluador', composeField: 'manager', field: 'manager', filterType: 'input' },
-      { header: 'Gestor', composeField: 'parent', field: 'parent', filterType: 'input', parse:(p: Person): string => {return p != null ? p.name + ' ' + p.lastname : null } },
+      { header: 'Gestor', composeField: 'parents', field: 'parents', filterType: 'input' },
       { header: 'Oficina', composeField: 'center.name', field: 'center', fieldExtra: 'name', filterType: 'dropdown', options:[], optionLabel: 'name' },
       { header: 'Localización', composeField: 'province.province', field: 'province', fieldExtra: 'province', filterType: 'dropdown', options:[], optionLabel: 'province' },
       { header: 'Estado', composeField: 'active', field: 'active', filterType: 'multiple', options: this.states, initialValue: ['1'], parse:(value: number): string => {return this.states.find((state) => state.value === value.toString())?.label} }
@@ -230,18 +229,6 @@ export class PersonalListComponent implements OnInit {
     this.setFilters();
     this.table.sortOrder = 1;
     this.table.sort({ field: 'lastname', order: this.table.sortOrder });
-  }
-
-  openOrg() {
-    const ref = this.dialogService.open(PersonalOrgComponent, {
-      width: '95vw',
-      data: {
-        persons: this.personsToExport
-      },
-      closable: true,
-      showHeader: true,
-      header: 'Organigrama',
-    });
   }
 
   editPerson(person?: Person) {

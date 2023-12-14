@@ -44,15 +44,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
     MenuModule,
     PickListModule,
     PanelMenuModule,    
-  ],
-  providers: [
-    HttpClientModule,
-    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
-    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
-    JwtHelperService,
-    DialogService,
-    MessageService,
-    RefreshTokenResolverService
-  ],
+  ]
+  
 })
 export class CoreModule { }

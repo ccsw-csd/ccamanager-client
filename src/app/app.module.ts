@@ -11,6 +11,13 @@ import { PyramidModule } from './pyramid/pyramid.module';
 import { MaintenanceModule } from './maintenance/maintenance.module';
 import { PersonalModule } from './personal/personal.module';
 import { InternModule } from './intern/intern.module';
+import { OrganizationModule } from './organization/organization.module';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpInterceptorService } from './core/services/http-interceptor.service';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
+import { MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { RefreshTokenResolverService } from './core/services/refresh-token-resolver.service';
 
 
 registerLocaleData(localeEs,'es');
@@ -27,10 +34,18 @@ registerLocaleData(localeEs,'es');
     LoginModule,
     PersonalModule,
     InternModule,
+    OrganizationModule,
     PyramidModule,
     MaintenanceModule,
   ],
   providers: [
+    HttpClientModule,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService,
+    DialogService,
+    MessageService,
+    RefreshTokenResolverService,
     DatePipe
   ],
   bootstrap: [AppComponent]

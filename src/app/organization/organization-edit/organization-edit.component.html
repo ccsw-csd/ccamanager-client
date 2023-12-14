@@ -1,0 +1,26 @@
+
+<div class="flex flex-column">
+
+    <div class="flex flex-row pb-3">
+        <div class="flex-1 text-center"><b>Integrante del equipo</b></div>
+        <div class="flex-1 text-center"><b>Responsable dentro del equipo</b></div>
+    </div>
+
+
+    <div class="flex flex-none flex-column overflow-auto gap-1" style="height: 600px">
+
+        <div *ngFor="let item of personCustomerList" class="flex flex-row">
+            <div class="flex-1 align-self-center">{{item.person.name}} {{item.person.lastname}} <i class="text-xs">({{item.person.username}})</i></div>
+            <div class="flex-1 mr-2">
+                <p-dropdown appendTo="body" styleClass="w-full" [options]="personWithout(item.person.id)" [(ngModel)]="item.parent.id" placeholder="Sin responsable" [editable]="true" [showClear]="true" optionLabel="fullName" optionValue="id"></p-dropdown>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="flex flex-row justify-content-end gap-2 pt-4">    
+        <button pButton pRipple styleClass="" label="Cancelar" class="p-button p-button-secondary p-button-outlined" (click)="closeWindow()"></button>
+        <button pButton pRipple p-button-label="10px" label="Guardar" (click)="save()"></button>
+    </div>
+
+</div>

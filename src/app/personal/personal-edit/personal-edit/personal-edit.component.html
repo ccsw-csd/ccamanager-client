@@ -101,10 +101,8 @@
     </span>
 
     <span class="p-float-label flex-1 p-input-icon-right">
-      <p-autoComplete formControlName="parent" styleClass="w-full" inputStyleClass="w-full" type="search" [suggestions]="parents" [forceSelection]="true" appendTo="body"
-      [showEmptyMessage]="true" (completeMethod)="searchParent($event)" field="field" dropdownIcon="pi pi-search" [field]="displayPerson"></p-autoComplete>
-      <label>Gestor</label>
-      <i style="margin-right: 20px;" class="pi pi-search"></i>
+      <input id="parents" type="text" pInputText class="w-full" formControlName="parents" readonly>
+      <label>Gestores</label>
     </span>
 
   </div>
