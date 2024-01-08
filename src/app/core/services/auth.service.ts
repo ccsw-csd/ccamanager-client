@@ -14,8 +14,10 @@ import { UserInfoSSO } from '../models/UserInfoSSO';
 })
 export class AuthService {
 
-  ssoCredentialsKey : string = 'ssoCredentials';
+  ssoCredentialsKey: string = 'ssoCredentials';
+  ssoPictureKey : string = 'ssoPicture';
   ssoToken : string = null;
+  ssoPicture : string = null;
 
   userInfoSSO: UserInfoSSO | null = null;
   userInfoDetailed: UserInfoDetailed | null = null;
@@ -40,7 +42,10 @@ export class AuthService {
 
   public putSSOCredentials(res: ResponseCredentials) : void {
     this.ssoToken = res.token;
+    this.ssoPicture = res.photo;
+
     localStorage.setItem(this.ssoCredentialsKey, this.ssoToken);
+    localStorage.setItem(this.ssoPictureKey, this.ssoPicture);
   }
 
   public getSSOToken(): string | null {
@@ -54,6 +59,15 @@ export class AuthService {
   }
 
   
+  public getSSOPicture(): string | null {
+
+    if (this.ssoPicture == null) {
+      this.ssoPicture = localStorage.getItem(this.ssoPictureKey);
+    }
+
+    if (this.ssoPicture == null || this.ssoPicture == "null") return null;
+    return 'data:image/jpg;base64,'+this.ssoPicture;
+  }  
 
   // *************************** //
   // **       LOGOUT          ** //
@@ -67,8 +81,10 @@ export class AuthService {
 
   public clearCredentials() {
     localStorage.removeItem(this.ssoCredentialsKey);
+    localStorage.removeItem(this.ssoPictureKey);
 
     this.ssoToken = null;    
+    this.ssoPicture = null;
     this.userInfoDetailed = null;
     this.userInfoSSO = null;
   }  
