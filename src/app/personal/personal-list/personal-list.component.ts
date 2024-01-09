@@ -304,8 +304,8 @@ export class PersonalListComponent implements OnInit {
 
   customSort(event: SortEvent) {
     event.data.sort((data1, data2) => {
-        let value1 = data1[event.field];
-        let value2 = data2[event.field];
+        let value1 = this.getData(data1, event.field);
+        let value2 = this.getData(data2, event.field);
         let result = null;
 
         if (value1 == null && value2 != null) result = -1;
@@ -320,4 +320,17 @@ export class PersonalListComponent implements OnInit {
         return event.order * result;
     });
   }
+
+  getData(data, att) {
+    let atts = att.split('.');
+    atts.forEach(a => {
+      if(data[a] != undefined){
+        data = data[a];
+      } else {
+        return null;
+      } 
+    });
+    return data;
+  }
+  
 }

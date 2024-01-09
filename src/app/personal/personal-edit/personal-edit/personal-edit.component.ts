@@ -109,7 +109,7 @@ export class PersonalEditComponent implements OnInit {
       grade: this.personElement.grade,
       role: this.roles.find(role => role.role == this.personElement.role),
       hours: this.personElement.hours ? this.personElement.hours : 8,
-      department: this.personElement.department ? this.personElement.department :'CCSW',
+      department: this.personElement.department ? this.personElement.department :'CCSw',
       manager: this.personElement.manager,
       parents: this.personElement.parents,
       center: this.personElement.center ? this.personElement.center : this.centers.find(center => center.id == 6),
