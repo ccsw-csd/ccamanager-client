@@ -7,9 +7,8 @@
         </div>
     </div>
 
-    <div class="card flex justify-content-center overflow-x-auto" style="height: calc(90vh - 180px)">
+    <div class="card flex" style="height: calc(90vh - 190px)">
         <div class="container">
-
             <p-organizationChart [value]="data">
                 <ng-template let-node pTemplate="default">
                     <div *ngIf="node.data.title" class="p-2 text-center">
@@ -20,14 +19,9 @@
                         <div class="font-bold text-xs">{{ node.label }}</div>
                         <div class="text-xs mt-2">{{ node.data.role }}</div>
                     </div>
-
                 </ng-template>
             </p-organizationChart>
         </div>
-    </div>
-    
-    <div class="flex flex-row justify-content-end pt-4">    
-        <button pButton pRipple p-button-label="10px" label="Cerrar" (click)="closeWindow()"></button>
     </div>
     
 </div>

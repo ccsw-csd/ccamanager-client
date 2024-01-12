@@ -28,14 +28,15 @@ export class NavComponent implements OnInit {
       {label: "Gestión Personal", routerLink: '/personal', visible: this.authService.hasRole('PERSONAL')},
       {label: "Gestión Becarios", routerLink: '/intern', visible: this.authService.hasRole('INTERN')},
       {label: "Organigrama", routerLink: '/organization', visible: this.authService.hasRole('PERSONAL')},
-      {label: "Pyramid Index", routerLink: '/pyramid', visible: this.authService.hasRole('PERSONAL')},
-      {label: "Pyramid Team Index", routerLink: '/pyramid-team', visible: this.authService.hasRole('PERSONAL')},
+      {label: "Pyramid Index", routerLink: '/pyramid-graph', visible: this.authService.hasRole('PERSONAL')},
+      {label: "Pyramid Team Index", routerLink: '/pyramid-graph-customer', visible: this.authService.hasRole('PERSONAL')},
       {
         label: "Mantenimiento",
         expanded: true,
         visible: this.authService.hasRole('MAINTENANCE'),
         items: [
           {label: "Clientes", routerLink: '/customer'},
+          {label: "Centros de Coste", routerLink: '/cost-center'},
           {label: "Centros Educativos", routerLink: '/education-center'},
           {label: "Titulaciones", routerLink: '/education'},
           {label: "Tecnologías", routerLink: '/technology'}

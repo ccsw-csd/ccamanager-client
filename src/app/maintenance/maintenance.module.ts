@@ -10,6 +10,8 @@ import { EnglishLevelEditComponent } from './english-level/english-level-edit/en
 import { EnglishLevelListComponent } from './english-level/english-level-list/english-level-list.component';
 import { CustomerEditComponent } from './customer/customer-edit/customer-edit.component';
 import { CustomerListComponent } from './customer/customer-list/customer-list.component';
+import { CostCenterListComponent } from './cost-center/cost-center-list/cost-center-list.component';
+import { CostCenterEditComponent } from './cost-center/cost-center-edit/cost-center-edit.component';
 
 import { TableModule } from "primeng/table";
 import { ToastModule } from "primeng/toast";
@@ -24,6 +26,8 @@ import { TreeModule } from 'primeng/tree';
 import { PickListModule } from 'primeng/picklist';
 import { ListboxModule } from 'primeng/listbox';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { DividerModule } from 'primeng/divider'
+
 
 
 @NgModule({
@@ -38,7 +42,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     EnglishLevelListComponent,
     CustomerEditComponent,
     CustomerListComponent,
-    
+    CostCenterListComponent,
+    CostCenterEditComponent,
   ],
   imports: [
     CommonModule,
@@ -56,7 +61,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     TreeModule,
     PickListModule,
     ListboxModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    DividerModule
   ]
 })
 export class MaintenanceModule { }

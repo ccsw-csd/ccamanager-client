@@ -90,9 +90,9 @@ export class PersonalEditComponent implements OnInit {
     }
     
     if (this.config.data.person == null || this.config.data.person.id == null) {
-        const control = this.personForm.get('customers');
-        control.setValidators(Validators.required);
-        control.updateValueAndValidity();
+      const control = this.personForm.get('customers');
+      control.setValidators(Validators.required);
+      control.updateValueAndValidity();
     }
 
   }
@@ -134,7 +134,9 @@ export class PersonalEditComponent implements OnInit {
   saveItem(person: Person) {
     this.loading = true;
 
-    if (person.customers == null) person.personCustomers = [];
+    if (person.customers == null){
+      person.personCustomers = [];
+    } 
     else {
       person.personCustomers = person.personCustomers.filter(item => person.customers.some(e => e.id === item.customer.id));
       person.customers.filter(item => !person.personCustomers.some(e => e.customer.id === item.id)).forEach( customer => {
@@ -145,16 +147,16 @@ export class PersonalEditComponent implements OnInit {
         newPersonCustomer.customer.id = customer.id;
 
         person.personCustomers.push(newPersonCustomer);
-
       });
     }
 
     person.role = person.role ? person.role['role'] : null;
     person.username = person.username == '' ? null : person.username;
     person.customers = person.customers != null ? person.customers.concat(this.customersHidden) : null;
-    if (this.personCustomersHidden != null)
+
+    if (this.personCustomersHidden != null){
       person.personCustomers = person.personCustomers.concat(this.personCustomersHidden);
-    
+    }
 
     this.personService.save(person).subscribe({
       next: () => {
@@ -186,7 +188,7 @@ export class PersonalEditComponent implements OnInit {
           this.groupPerson = res.map((person) => this.mappingPerson(person));
         },
         error: () => {},
-        complete: () => {},
+        complete: () => {}
       });
     }
   }
@@ -280,7 +282,5 @@ export class PersonalEditComponent implements OnInit {
     if (this.personForm.controls[field].status == 'INVALID') return 'field-error';
     return '';
   }
-
-
 
 }

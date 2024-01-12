@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PyramidService } from './pyramid.service';
+import { CostCenterService } from './cost-center.service';
 
-describe('PyramidService', () => {
-  let service: PyramidService;
+describe('CostCenterService', () => {
+  let service: CostCenterService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(PyramidService);
+    service = TestBed.inject(CostCenterService);
   });
 
   it('should be created', () => {

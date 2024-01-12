@@ -11,9 +11,10 @@ import { EducationListComponent } from './maintenance/education/education-list/e
 import { EnglishLevelListComponent } from './maintenance/english-level/english-level-list/english-level-list.component';
 import { TechnologyListComponent } from './maintenance/technology/technology-list/technology-list.component';
 import { PersonalListComponent } from './personal/personal-list/personal-list.component';
-import { PyramidListComponent } from './pyramid/pyramid-list/pyramid-list.component';
-import { PyramidTeamListComponent } from './pyramid/pyramid-team-list/pyramid-team-list.component';
 import { OrganizationListComponent } from './organization/organization-list/organization-list.component';
+import { CostCenterListComponent } from './maintenance/cost-center/cost-center-list/cost-center-list.component';
+import { PyramidGraphComponent } from './pyramid/pyramid-graph/pyramid-graph.component';
+import { PyramidGraphCustomerComponent } from './pyramid/pyramid-graph-customer/pyramid-graph-customer.component';
 
 export const DefaultRoutes = [
   {role:'PERSONAL', path: '/personal'},
@@ -33,10 +34,11 @@ const routes: Routes = [
     children: [
       { path: 'personal', component: PersonalListComponent, data:{role:['PERSONAL']}},
       { path: 'intern', component: InternListComponent, data:{role:['INTERN']}},
-      { path: 'pyramid', component: PyramidListComponent, data:{role:['PERSONAL']}},
-      { path: 'pyramid-team', component: PyramidTeamListComponent, data:{role:['PERSONAL']}},
+      { path: 'pyramid-graph', component: PyramidGraphComponent, data:{role:['PERSONAL']}},
+      { path: 'pyramid-graph-customer', component: PyramidGraphCustomerComponent, data:{role:['PERSONAL']}},
       { path: 'organization', component: OrganizationListComponent, data:{role:['PERSONAL']}},      
       { path: 'customer', component: CustomerListComponent, data:{role:['MAINTENANCE']}},
+      { path: 'cost-center', component: CostCenterListComponent, data:{role:['MAINTENANCE']}},
       { path: 'education', component: EducationListComponent, data:{role:['MAINTENANCE']}},
       { path: 'education-center', component: EducationCenterListComponent, data:{role:['MAINTENANCE']}},
       { path: 'level', component: EnglishLevelListComponent, data:{role:['MAINTENANCE']}},

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PyramidListComponent } from './pyramid-list.component';
+import { CostCenterEditComponent } from './cost-center-edit.component';
 
-describe('PyramidListComponent', () => {
-  let component: PyramidListComponent;
-  let fixture: ComponentFixture<PyramidListComponent>;
+describe('CostCenterEditComponent', () => {
+  let component: CostCenterEditComponent;
+  let fixture: ComponentFixture<CostCenterEditComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PyramidListComponent ]
+      declarations: [ CostCenterEditComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PyramidListComponent);
+    fixture = TestBed.createComponent(CostCenterEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

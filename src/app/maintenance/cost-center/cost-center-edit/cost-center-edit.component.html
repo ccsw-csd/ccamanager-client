@@ -1,0 +1,43 @@
+<div class="flex flex-column mt-1 gap-3">
+    
+    <span class="p-float-label">
+        <input id="name" type="text" pInputText class="w-full" [(ngModel)]="costCenter.name" required>
+        <label>Nombre</label>
+    </span>
+
+    <div class="flex flex-row ml-1 gap-4">
+    
+        <span class="p-float-label">
+            <p-listbox [options]="centers" [metaKeySelection]="false" [(ngModel)]="costCenter.centers" [multiple]="true" [checkbox]="true"
+            [showToggleAll]="false" optionLabel="name" styleClass="w-full" [listStyle]="{'height': '450px', 'width':'260px'}">
+                <p-header>Centros</p-header>
+                <ng-template let-manager pTemplate="item">
+                    {{manager.name}}
+                </ng-template>
+            </p-listbox>
+        </span>
+
+        <p-divider layout="vertical"></p-divider>
+    
+        <div>
+            <div class="flex flex-row pb-3">
+                <div class="flex-1 text-center"><b>Grado</b></div>
+                <div class="flex-1 text-center"><b>Coste</b></div>
+            </div>
+        
+            <div class="flex flex-none flex-column overflow-auto gap-1" style="height: 470px; width: 290px">
+                <div *ngFor="let item of costCenter.costs" class="flex flex-row">
+                    <div class="flex-1 align-self-center">{{item.grade}}</div>
+                    <div class="flex-1 mr-2">
+                        <input id="cost" type="number" pInputText class="w-full" [(ngModel)]="item.cost" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-row justify-content-end gap-2">    
+      <button pButton pRipple styleClass="" label="Cancelar" class="p-button p-button-secondary p-button-outlined" (click)="closeWindow()"></button>
+      <button pButton pRipple p-button-label="10px" label="Guardar" [disabled]="costCenter.name=='' || costCenter.name==null || loading" (click)="save()"></button>
+    </div>
+</div>

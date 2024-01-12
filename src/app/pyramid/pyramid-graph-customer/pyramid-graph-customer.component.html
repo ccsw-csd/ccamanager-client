@@ -1,0 +1,78 @@
+<div class="flex flex-row justify-content-between">
+    <div class="flex justify-content-start">
+        <h3 class="p-0 m-0 mb-2">
+            Pyramid Team Index
+        </h3>
+    </div>
+</div>
+
+<p-toast position="top-center"></p-toast>
+
+<div class="flex-column">
+
+    <div style="height: calc(100vh - 150px);" class="flex flex-row gap-8 flex-wrap justify-content-center overflow-y-scroll">
+
+        <p-progressSpinner *ngIf="loadingGraph"></p-progressSpinner>
+
+        <div *ngFor="let elem of pyramidGraph; let i = index" class="flex flex-column justify-content-center align-items-center">
+            <p class="font-bold font-italic">{{elem.customer}}</p>
+            <div class="flex flex-row gap-3" style="width:100%">
+                <p-table [value]="elem.data" responsiveLayout="scroll" [loading]="loadingGraph" [paginator]="false" [scrollable]="true" scrollHeight="flex">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width:80px;flex-direction: column; align-items: center;">Grado</th>
+                            <th style="width:80px;flex-direction: column; align-items: center;">Count</th>
+                            <th style="width:80px;flex-direction: column; align-items: center;">Index</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-pyramid>
+                        <tr [ngClass]="{'font-bold': pyramid.grade == 'TOTAL'}">
+                            <td style="width:80px;flex-direction: column; align-items: center;">{{pyramid.grade}}</td>
+                            <td style="width:80px;flex-direction: column; align-items: end;padding-right: 1rem;">{{pyramid.count}}</td>
+                            <td style="width:80px;flex-direction: column; align-items: end;padding-right: 1rem;">{{formatNumber(pyramid.index)}}</td> 
+                        </tr>                        
+                    </ng-template>
+                </p-table>
+                <p-chart type="bar" class="flex" [data]="data[i]" [options]="config"></p-chart>
+            </div>
+        </div>
+
+        <div class="flex flex-column w-full justify-content-center">
+            <div *ngFor="let elem of costCenterCostIndex; let i = index" class="flex flex-column justify-content-center align-items-center">
+                <p class="font-bold font-italic">{{elem.costCenter}}</p>
+                <p-table [value]="elem.costIndex" [loading]="loading" [paginator]="false" [scrollable]="true" scrollHeight="flex">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width:80px;flex-direction:column;align-items:center;"></th>
+                            <th style="width:80px;flex-direction:column;align-items:center;">A1</th>
+                            <th style="width:80px;flex-direction:column;align-items:center;">A2</th>
+                            <th style="width:80px;flex-direction:column;align-items:center;">B1</th>
+                            <th style="width:80px;flex-direction:column;align-items:center;">B2</th>
+                            <th style="width:80px;flex-direction:column;align-items:center;">B3</th>
+                            <th style="width:80px;flex-direction:column;align-items:center;">C1</th>
+                            <th style="width:80px;flex-direction:column;align-items:center;">C2</th>
+                            <th style="width:80px;flex-direction:column;align-items:center;">C3</th>
+                            <th style="width:80px;flex-direction:column;align-items:center;">D1</th>
+                            <th style="width:80px;flex-direction:column;align-items:center;">D2</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-cost let-rowIndex="rowIndex">
+                        <tr>
+                            <td class="font-bold" style="width:80px;flex-direction:column;align-items:end;padding:0.75rem 0.75rem 0.75rem 0">{{ rowIndex == 0 ? 'Index' : 'Cost' }}</td>
+                            <td style="width:80px;flex-direction:column;align-items:end;padding:0.75rem 0.75rem 0.75rem 0">{{ formatNumber(cost.A1) }}</td>
+                            <td style="width:80px;flex-direction:column;align-items:end;padding:0.75rem 0.75rem 0.75rem 0">{{ formatNumber(cost.A2) }}</td>
+                            <td style="width:80px;flex-direction:column;align-items:end;padding:0.75rem 0.75rem 0.75rem 0">{{ formatNumber(cost.B1) }}</td>
+                            <td style="width:80px;flex-direction:column;align-items:end;padding:0.75rem 0.75rem 0.75rem 0">{{ formatNumber(cost.B2) }}</td>
+                            <td style="width:80px;flex-direction:column;align-items:end;padding:0.75rem 0.75rem 0.75rem 0">{{ formatNumber(cost.B3) }}</td>
+                            <td style="width:80px;flex-direction:column;align-items:end;padding:0.75rem 0.75rem 0.75rem 0">{{ formatNumber(cost.C1) }}</td>
+                            <td style="width:80px;flex-direction:column;align-items:end;padding:0.75rem 0.75rem 0.75rem 0">{{ formatNumber(cost.C2) }}</td>
+                            <td style="width:80px;flex-direction:column;align-items:end;padding:0.75rem 0.75rem 0.75rem 0">{{ formatNumber(cost.C3) }}</td>
+                            <td style="width:80px;flex-direction:column;align-items:end;padding:0.75rem 0.75rem 0.75rem 0">{{ formatNumber(cost.D1) }}</td>
+                            <td style="width:80px;flex-direction:column;align-items:end;padding:0.75rem 0.75rem 0.75rem 0">{{ formatNumber(cost.D2) }}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

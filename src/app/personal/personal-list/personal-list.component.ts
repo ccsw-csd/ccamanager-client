@@ -201,6 +201,7 @@ export class PersonalListComponent implements OnInit {
     this.personService.getPersonsSecured().subscribe({
       next: (res: Person[]) => {
         this.persons = res;
+        this.persons.forEach((e) =>  e.parents = e.personCustomers.filter(pc => pc.parent != null).map((p) => p.parent.name + " " + p.parent.lastname).join(', '));
         this.totalPersons = this.persons.length;
         this.personsToExport = this.persons;
         this.setFilters();

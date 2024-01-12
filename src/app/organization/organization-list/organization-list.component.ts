@@ -21,8 +21,6 @@ export class OrganizationListComponent implements OnInit {
   cols: any[];
 
   constructor(
-    private snackbarService: SnackbarService,
-    private confirmationService:ConfirmationService,
     private dialogService: DialogService,
     private customerService: CustomerService
   ) {}
@@ -35,13 +33,12 @@ export class OrganizationListComponent implements OnInit {
     this.customerService.getCustomersSecured().subscribe({
       next: (res: Customer[]) => {
         this.customers = res;
-        this.customers.forEach((e) =>  e.managersParsed = e.managers.map((p) => p.name + " " + p.lastname).join(', '));
       }
     });
   }
 
   editCustomer(customer: Customer) {
-    let header = 'Organización de '+customer.name;
+    let header = 'Organización de ' + customer.name;
     
     let ref = this.dialogService.open(OrganizationEditComponent, {      
       height:"800px",
@@ -61,7 +58,6 @@ export class OrganizationListComponent implements OnInit {
     });
   }
   
-
   openOrganization() {
     let ids = this.customers.map(item => item.id).join();
 
@@ -69,20 +65,16 @@ export class OrganizationListComponent implements OnInit {
   }
 
   viewChart(customerId: string) {
-
     this.dialogService.open(OrganizationChartComponent, {      
       height:"90vh",
-      width:"90vw",
+      width:"80vw",
       data:{
         customers: customerId,
       },
-      closable: false,
+      closable: true,
       showHeader: true,
       header: 'Organigrama'
     });
-
-    
-
   }
   
   customSort(event: SortEvent) {

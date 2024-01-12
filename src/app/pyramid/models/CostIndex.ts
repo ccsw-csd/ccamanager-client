@@ -1,4 +1,4 @@
-export class Pyramid{
+export class CostIndex {
     A1: number;
     A2: number;
     B1: number;
