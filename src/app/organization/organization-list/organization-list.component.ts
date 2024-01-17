@@ -32,7 +32,12 @@ export class OrganizationListComponent implements OnInit {
   getAllCustomers() {
     this.customerService.getCustomersSecured().subscribe({
       next: (res: Customer[]) => {
-        this.customers = res;
+        this.customerService.getPersonWithoutParentByCustomer().subscribe({
+          next: (personWithoutParent: any) => {
+            this.customers = res;
+            this.customers.forEach(e => e.numberOfPersonWithoutOrganization = personWithoutParent[e.id]);
+          }
+        });
       }
     });
   }
@@ -67,7 +72,7 @@ export class OrganizationListComponent implements OnInit {
   viewChart(customerId: string) {
     this.dialogService.open(OrganizationChartComponent, {      
       height:"90vh",
-      width:"80vw",
+      width:"90vw",
       data:{
         customers: customerId,
       },

@@ -57,7 +57,7 @@ export class PersonalEditComponent implements OnInit {
       name: ['', Validators.required],
       lastname: ['', Validators.required],
       email: ['', [Validators.email]],
-      customers: [''],
+      customers: ['', Validators.required],
       personCustomers: [''],
       grade: ['',[Validators.pattern('^[A-Z][0-9]$')]],
       role: [''],

@@ -1,13 +1,17 @@
 <div class="flex flex-column">
     
-    <div class="flex justify-content-end">
-        <span>Zoom:&nbsp;&nbsp;&nbsp;</span>
+    <div class="flex gap-2">
+        <span>Zoom:</span>
         <div class="w-10rem h-1rem pt-2">    
             <p-slider [(ngModel)]="zoomValue" [min]="1" [max]="20" (onSlideEnd)="changeZoom()"></p-slider>
         </div>
     </div>
 
-    <div class="card flex" style="height: calc(90vh - 190px)">
+    <div class="flex flex-row justify-content-center">
+        <p-progressSpinner *ngIf="loading"></p-progressSpinner>
+    </div>
+
+    <div class="card flex mt-5">
         <div class="container">
             <p-organizationChart [value]="data">
                 <ng-template let-node pTemplate="default">

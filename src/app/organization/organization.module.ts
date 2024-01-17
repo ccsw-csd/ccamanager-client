@@ -20,8 +20,7 @@ import { ListboxModule } from 'primeng/listbox';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { OrganizationChartModule } from 'primeng/organizationchart';
 import { SliderModule } from 'primeng/slider';
-
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -47,7 +46,8 @@ import { SliderModule } from 'primeng/slider';
     ListboxModule,
     AutoCompleteModule,
     OrganizationChartModule,
-    SliderModule
+    SliderModule,
+    ProgressSpinnerModule
   ]
 })
 export class OrganizationModule { }

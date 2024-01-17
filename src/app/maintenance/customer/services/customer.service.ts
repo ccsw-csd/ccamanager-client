@@ -29,4 +29,8 @@ export class CustomerService {
     return this.http.get<Customer[]>(environment.server + "/customer/secured");
   }
 
+  getPersonWithoutParentByCustomer() : Observable<any> {
+    return this.http.get<any>(environment.server + "/customer/person-without-parent");
+  }
+
 }

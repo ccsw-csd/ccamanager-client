@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
-import { Customer } from 'src/app/maintenance/customer/models/Customer';
-import { CustomerSimple } from 'src/app/maintenance/customer/models/CustomerSimple';
 import { environment } from 'src/environments/environment';
 import { PersonCustomer } from '../models/PersonCustomer';
 import { OrganizationCustomer } from '../models/OrganizationCustomer';
@@ -26,7 +24,5 @@ export class OrganizationService {
   getOrganizationCustomer(customersId: string) : Observable<OrganizationCustomer[]> {
     return this.http.get<OrganizationCustomer[]>(environment.server + "/customer/organization-chart?ids="+customersId);
   }
-
-  
 
 }

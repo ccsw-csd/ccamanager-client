@@ -10,8 +10,6 @@
     <button tooltipPosition="top" pButton pRipple type="button" icon="pi pi-chart-pie" class="p-button-lg p-button-outlined p-button-secondary" pTooltip="Organigrama" (click)="openOrganization()"></button>
 </div>
 
-
-
 <p-table [style]="{'height':'calc(100vh - 175px)'}" [scrollable]="true" scrollHeight="flex" selectionMode="single" 
     [value]="customers" styleClass="p-datatable-striped" [paginator]="true" [rows]="50" sortField="name" [sortOrder]="1" (sortFunction)="customSort($event)" [customSort]="true">
     <ng-template pTemplate="header" >

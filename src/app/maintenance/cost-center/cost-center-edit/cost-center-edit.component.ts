@@ -69,7 +69,7 @@ export class CostCenterEditComponent implements OnInit {
 
   save() {
     this.loading = true;
-    if(this.validate()){
+    if(this.validate() && this.checkCosts(this.costCenter)){
       this.costCenterService.save(this.costCenter).subscribe({
         next:(res)=>{
           if(this.isNew){
@@ -87,6 +87,8 @@ export class CostCenterEditComponent implements OnInit {
           this.loading = false;
         }
       });
+    } else {
+      this.loading = false;
     }
   }
 
@@ -96,6 +98,15 @@ export class CostCenterEditComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  checkCosts(costCenter: CostCenter): boolean {
+
+    if(this.costCenter.costs.filter(e => e.cost == 0 || e.cost == null).length > 0){
+      this.snackbarService.error("El coste no puede estar vacio o ser cero");
+      return false;
+    }
+    return true;
   }
 
   closeWindow(){

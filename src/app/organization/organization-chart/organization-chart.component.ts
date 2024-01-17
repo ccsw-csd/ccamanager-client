@@ -11,6 +11,8 @@ import { OrganizationCustomer } from '../models/OrganizationCustomer';
 })
 export class OrganizationChartComponent implements OnInit {
 
+  loading: boolean = false;
+
   data: TreeNode[] = [];
   zoomValue: number = 10;
 
@@ -21,6 +23,8 @@ export class OrganizationChartComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.loading = true;
 
     this.organizationService.getOrganizationCustomer(this.config.data.customers).subscribe((res) => {
 
@@ -35,9 +39,10 @@ export class OrganizationChartComponent implements OnInit {
       this.data = [];
       this.data.push(rootNode);
 
+      this.loading = false;
+
       //this.showVal(10);
     });
-
   }
 
   makeCustomTree(customer : OrganizationCustomer) : TreeNode {
@@ -49,7 +54,6 @@ export class OrganizationChartComponent implements OnInit {
     return customerNode;
   }
 
-
   makeTree(customer : OrganizationCustomer, idParent: number, rootNode: TreeNode) {
 
     customer.members.filter(member => member.parent == idParent).forEach(member => {
@@ -59,11 +63,10 @@ export class OrganizationChartComponent implements OnInit {
 
       this.makeTree(customer, member.person.id, node);
     });
-
   }
 
-
   closeWindow(): void {
+
     this.ref.close();
   }
 
@@ -83,10 +86,10 @@ export class OrganizationChartComponent implements OnInit {
 
     el.style["transform"] = s;
     el.style["transformOrigin"] = oString;
-    
   }
 
   changeZoom() : void {
+
     var zoomScale = Number(this.zoomValue) / 10;
     this.setZoom(zoomScale,document.getElementsByClassName('container')[0]);
   }

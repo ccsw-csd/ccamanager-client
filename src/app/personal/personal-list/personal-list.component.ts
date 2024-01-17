@@ -263,12 +263,8 @@ export class PersonalListComponent implements OnInit {
         this.confirmationService.close();
         this.personService.delete(id).subscribe({
           next: () => {
-            this.personService.getAllPersons().subscribe((result: any) => {
-              this.persons = result;
-              this.snackbarService.showMessage(
-                'El registro se ha borrado con éxito'
-              );
-            });
+            this.getAllPersons();
+            this.snackbarService.showMessage('El registro se ha borrado con éxito');
           },
           error: (errorResponse) => {
             this.snackbarService.error(errorResponse['message']);
