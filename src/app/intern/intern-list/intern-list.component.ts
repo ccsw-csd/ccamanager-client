@@ -32,6 +32,8 @@ import { InternTimelineComponent } from '../intern-timeline/intern-timeline.comp
 import { PersonService } from 'src/app/personal/services/person.service';
 import { InternSynchronizeLdapComponent } from '../intern-synchronize-ldap/intern-synchronize-ldap/intern-synchronize-ldap.component';
 import { ColumnConfigComponent } from 'src/app/core/views/column-config/column-config.component';
+import { emitDistinctChangesOnlyDefaultValue } from '@angular/compiler';
+import { MultiSelect } from 'primeng/multiselect';
 
 
 @Component({
@@ -45,6 +47,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
   @ViewChild(Table) table: Table;
   @ViewChildren('filterDropdown') filterDropdowns!: QueryList<Dropdown>;
   @ViewChildren('filterCalendar') filterCalendars!: QueryList<Calendar>;
+  @ViewChild('estado') estado: MultiSelect;
 
   isSynchronized: Boolean = false;
   columnNames: any[];
@@ -228,6 +231,7 @@ export class InternListComponent implements OnInit, AfterViewInit {
 
   setDefaultFilters(){
     this.defaultFilters.active.value=['1'];
+    this.estado.value = ['1'];
   }
 
   getAllInterns(defaultFilters : boolean) {

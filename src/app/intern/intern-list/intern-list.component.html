@@ -55,7 +55,7 @@
 
                     <p-columnFilter *ngIf="col.filterType == 'multiple'" class="w-full" field="{{col.composeField}}" matchMode="multiple" [showMenu]="false" [showClearButton]="false" value="1">
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-multiSelect tabindex="1" [showHeader]="false" [ngModel]="col.initialValue" [options]="col.options" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="..."> </p-multiSelect>
+                            <p-multiSelect #estado tabindex="1" [showHeader]="false" [ngModel]="col.initialValue" [options]="col.options" optionLabel="label" optionValue="value" (onChange)="filter($event.value)" [showClear]="true" placeholder="..."> </p-multiSelect>
                         </ng-template>
                     </p-columnFilter>
 
