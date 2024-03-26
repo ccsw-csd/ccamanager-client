@@ -68,14 +68,20 @@ export class InternTimelineComponent implements OnInit {
   
   updateChar() {
     this.sixMonthsAgo = this.profileForm.get("startDate").value;
-    this.sixMonthsAfter = this.profileForm.get("endDate").value
+    this.sixMonthsAfter = this.profileForm.get("endDate").value;
+
+    const invisibleTimeline: TimeLine = {
+      x: "",
+      y: [this.sixMonthsAgo.getTime(), this.sixMonthsAfter.getTime()], 
+      fillColor: 'transparent',
+    };
     this.internService
       .findTimelineByDate(this.sixMonthsAgo,this.sixMonthsAfter)
       .subscribe({
         next: (res: TimeLine[]) => {
-          
 
-          this.timeLines = res;
+          this.timeLines = [invisibleTimeline, ...res];
+
           this.basicData = {
             labels: this.timeLines.map((timeLine) => timeLine.x.split('|')[0]),
             datasets: [
