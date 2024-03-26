@@ -98,7 +98,17 @@ export class InternTimelineComponent implements OnInit {
                 order: 2,
               },
               {
-                backgroundColor: 'blue',
+                backgroundColor: this.timeLines.map((timeLine) => {
+                  const actionId = timeLine.action.id;
+          
+                  if (actionId === 3) {
+                    return '#008FFB';
+                  } else if (actionId === 4) {
+                    return '#00E396';
+                  } else {
+                    return '#FF4560';
+                  }
+                }),
                 data: this.timeLinesAux.map((timeLineAux) => timeLineAux.y), 
                 barPercentage: 0.8,
                 order: 2,
