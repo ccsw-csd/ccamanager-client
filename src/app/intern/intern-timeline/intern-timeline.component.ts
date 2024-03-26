@@ -10,7 +10,6 @@ import { InternService } from '../services/InternService';
 import { FormBuilder,Validators } from '@angular/forms';
 import { DateRangeValidator } from 'src/app/core/models/DateRangeValidator';
 import { UIChart } from 'primeng/chart';
-import { start } from 'repl';
 @Component({
   selector: 'app-intern-timeline',
   templateUrl: './intern-timeline.component.html',
@@ -25,7 +24,6 @@ export class InternTimelineComponent implements OnInit {
   basicData: any;
   arrayLabels: string[];
   profileForm:any;
-  timeLinesAux: TimeLine[];
 
   @ViewChild('chart', { static: true, read: UIChart }) chartElement: UIChart;
 
@@ -40,7 +38,6 @@ export class InternTimelineComponent implements OnInit {
 
   ngOnInit(): void {
     Chart.register(annotationPlugin);
-    this.timeLinesAux = [];
     this.primengConfig.setTranslation(this.translateService.getSpanish());
     this.sixMonthsAgo = new Date(
       this.currentDate.getFullYear(),
@@ -72,20 +69,19 @@ export class InternTimelineComponent implements OnInit {
   updateChar() {
     this.sixMonthsAgo = this.profileForm.get("startDate").value;
     this.sixMonthsAfter = this.profileForm.get("endDate").value;
+
+    const invisibleTimeline: TimeLine = {
+      x: "",
+      y: [this.sixMonthsAgo.getTime(), this.sixMonthsAfter.getTime()], 
+      fillColor: 'transparent',
+    };
     this.internService
       .findTimelineByDate(this.sixMonthsAgo,this.sixMonthsAfter)
       .subscribe({
         next: (res: TimeLine[]) => {
-          
 
-          this.timeLines = res;
-          this.timeLinesAux = this.timeLines.map(() => new TimeLine());
-          for (let i = 0; i < this.timeLines.length; i++) {
-            let startDateAux = this.timeLines[i].y[1] + 1;
-            let endDateAux = this.sixMonthsAfter.getTime();
-        
-            this.timeLinesAux[i].y = [startDateAux, endDateAux];
-        }
+          this.timeLines = [invisibleTimeline, ...res];
+
           this.basicData = {
             labels: this.timeLines.map((timeLine) => timeLine.x.split('|')[0]),
             datasets: [
@@ -97,22 +93,6 @@ export class InternTimelineComponent implements OnInit {
                 barPercentage: 0.8,
                 order: 2,
               },
-              {
-                backgroundColor: this.timeLines.map((timeLine) => {
-                  const actionId = timeLine.action.id;
-          
-                  if (actionId === 3) {
-                    return '#008FFB';
-                  } else if (actionId === 4) {
-                    return '#00E396';
-                  } else {
-                    return '#FF4560';
-                  }
-                }),
-                data: this.timeLinesAux.map((timeLineAux) => timeLineAux.y), 
-                barPercentage: 0.8,
-                order: 2,
-              }
             ],
           };
           this.config = {
