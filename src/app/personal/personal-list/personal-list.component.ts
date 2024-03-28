@@ -319,6 +319,8 @@ export class PersonalListComponent implements OnInit {
   }
 
   getData(data, att) {
+    if (att.indexOf('.') == -1) return data[att];
+
     let atts = att.split('.');
     atts.forEach(a => {
       if(data[a] != undefined){

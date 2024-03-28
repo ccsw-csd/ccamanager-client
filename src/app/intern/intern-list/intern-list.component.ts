@@ -34,6 +34,7 @@ import { InternSynchronizeLdapComponent } from '../intern-synchronize-ldap/inter
 import { ColumnConfigComponent } from 'src/app/core/views/column-config/column-config.component';
 import { emitDistinctChangesOnlyDefaultValue } from '@angular/compiler';
 import { MultiSelect } from 'primeng/multiselect';
+import moment from 'moment';
 
 
 @Component({
@@ -523,8 +524,22 @@ export class InternListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  isDateColumn(columnTitle: string) {
+    for (const row of this.columnNames) {
+      if (row.field == columnTitle) {
+        return row.isDate;
+      }
+    }
+
+    return false;
+}
+
+
+  public dateFieldFormat:string = 'DD/MM/YYYY';
+
   customSort(event: SortEvent) {
     event.data.sort((data1, data2) => {
+
         let value1 = this.getData(data1, event.field);
         let value2 = this.getData(data2, event.field);
         let result = null;
@@ -532,6 +547,13 @@ export class InternListComponent implements OnInit, AfterViewInit {
         if (value1 == null && value2 != null) result = -1;
         else if (value1 != null && value2 == null) result = 1;
         else if (value1 == null && value2 == null) result = 0;
+        else if (this.isDateColumn(event.field)) {          
+          const date1 = moment(value1, this.dateFieldFormat);
+          const date2 = moment(value2, this.dateFieldFormat);
+  
+          if (moment(date2).isBefore(date1, 'day')) result = 1;
+          else result = -1;
+        }
         else if (typeof value1 === 'string' && typeof value2 === 'string') result = value1.localeCompare(value2);
         else if (Array.isArray(value1) && Array.isArray(value2)){
           result = value1.sort((a, b) => a.name.localeCompare(b.name)).map((t) => t.name).join(', ').localeCompare(value2.sort((a, b) => a.name.localeCompare(b.name)).map((t) => t.name).join(', '));
@@ -543,6 +565,8 @@ export class InternListComponent implements OnInit, AfterViewInit {
   }
 
   getData(data, att) {
+    if (att.indexOf('.') == -1) return data[att];
+
     let atts = att.split('.');
     atts.forEach(a => {
       if(data[a] != undefined){
